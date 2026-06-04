@@ -42,6 +42,7 @@
    - 使用 `electron-builder` 打包。
    - 打包指令：`npm run electron:build`
    - 生成目标：单文件便携绿色版 (`portable`)，生成于 `dist-electron/` 文件夹下。
+   - **打包资源包含**: 在 `build.files` 中明确包含了 `"images/**/*"`，将根目录的 `images` 文件夹一同打包进 `app.asar` 根目录，与 `dist` 同级，确保渲染进程使用 `getImagePath` 计算的相对路径 `../images/...` 能够正常加载图片，解决打包后图片裂开的问题。
 
 ---
 

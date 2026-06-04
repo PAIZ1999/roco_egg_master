@@ -58,7 +58,8 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
-      "package.json"
+      "package.json",
+      "images/**/*"
     ]
   }
 }
