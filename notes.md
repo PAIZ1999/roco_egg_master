@@ -31,3 +31,11 @@
   - 在 commit message 中使用特定关键词直接关联或关闭 Issue：
     - 关联：`git commit -m "feat: 增加小婉与小粗统计信息 (#12)"` （其中 `#12` 为 Issue 编号）。
     - 关闭：`git commit -m "fix: 修复长图导出裁剪问题 (close #15)"` 或 `closes #15`、`fixes #15`。推送后 GitHub 会自动将对应的 Issue 状态更新为 Closed。
+
+## 4. 解决网络与登录凭据挂起问题
+- 当使用 HTTPS 链接在后台推送时，可能因为缺乏 Git 凭证管理器弹窗而导致进程挂起。
+- 解决方案：使用 GitHub Personal Access Token (PAT) 经典版，赋予 `repo` 权限。
+- 将 Token 嵌入 URL 中进行无交互推送：
+  `git remote set-url origin https://<TOKEN>@github.com/PAIZ1999/roco_egg_master.git`
+  `git push -u origin main`
+- 该方法可绕过系统弹窗直接完成认证。
