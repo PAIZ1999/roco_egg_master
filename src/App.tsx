@@ -28,7 +28,8 @@ import {
   LIMIT_OPTIONS,
   THREE_V_OPTIONS,
   EggTrade,
-  TRADE_TYPE_OPTIONS
+  TRADE_TYPE_OPTIONS,
+  cleanNature
 } from "./types";
 import {
   DndContext,
@@ -52,15 +53,26 @@ import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath } from ".
 
 const migratePets = (rawList: any[]): EggPet[] => {
   return rawList.map((p, index) => {
-    const fatherNatures = p.fatherNatures || p.natures || [NATURE_OPTIONS[0]];
-    const motherNatures = p.motherNatures || [NATURE_OPTIONS[0]];
+    let fatherNatures = p.fatherNatures || p.natures || [NATURE_OPTIONS[0]];
+    let motherNatures = p.motherNatures || [NATURE_OPTIONS[0]];
     const fatherStats = p.fatherStats || ["生命", "物攻", "速度"];
     const motherStats = p.motherStats || ["生命", "物攻", "速度"];
+
+    if (!Array.isArray(fatherNatures)) {
+      fatherNatures = [fatherNatures];
+    }
+    if (!Array.isArray(motherNatures)) {
+      motherNatures = [motherNatures];
+    }
+
+    const cleanFatherNatures = fatherNatures.map((n: any) => cleanNature(typeof n === "string" ? n : String(n)));
+    const cleanMotherNatures = motherNatures.map((n: any) => cleanNature(typeof n === "string" ? n : String(n)));
+
     return {
       ...p,
       id: p.id || `pet-init-${index}-${Math.random().toString(36).substr(2, 5)}`,
-      fatherNatures: Array.isArray(fatherNatures) ? fatherNatures : [NATURE_OPTIONS[0]],
-      motherNatures: Array.isArray(motherNatures) ? motherNatures : [NATURE_OPTIONS[0]],
+      fatherNatures: cleanFatherNatures,
+      motherNatures: cleanMotherNatures,
       fatherStats: Array.isArray(fatherStats) ? fatherStats : ["生命", "物攻", "速度"],
       motherStats: Array.isArray(motherStats) ? motherStats : ["生命", "物攻", "速度"],
       sprite: p.sprite || "",
@@ -70,6 +82,22 @@ const migratePets = (rawList: any[]): EggPet[] => {
       isLimit: p.isLimit === "是" ? "极限" : (p.isLimit === "否" ? "非极限" : (p.isLimit || "非极限")),
       is3V: p.is3V === "是" ? "3V" : (p.is3V === "" || !p.is3V ? "否" : p.is3V),
       hideStats: !!p.hideStats
+    };
+  });
+};
+
+const migrateTrades = (rawList: any[]): EggTrade[] => {
+  return rawList.map((t, index) => {
+    return {
+      ...t,
+      id: t.id || `trade-${index}-${Math.random().toString(36).substr(2, 5)}`,
+      nature: cleanNature(t.nature || "实干 (平衡)"),
+      sprite: t.sprite || "",
+      brand: t.brand || "无牌",
+      is3V: !!t.is3V,
+      isLimit: !!t.isLimit,
+      tradeType: t.tradeType || "1换1",
+      notes: t.notes || ""
     };
   });
 };
@@ -96,7 +124,7 @@ export default function App() {
     const saved = localStorage.getItem("roco_egg_trades_v1");
     if (saved) {
       try {
-        return JSON.parse(saved) as EggTrade[];
+        return migrateTrades(JSON.parse(saved));
       } catch (e) {
         return [];
       }
@@ -198,10 +226,10 @@ export default function App() {
           if (result.data) {
             // A data file existed in that directory, we load it into state
             if (Array.isArray(result.data.pets)) {
-              setPets(result.data.pets);
+              setPets(migratePets(result.data.pets));
             }
             if (Array.isArray(result.data.trades)) {
-              setTrades(result.data.trades);
+              setTrades(migrateTrades(result.data.trades));
             }
             if (result.data.settings) {
               const s = result.data.settings;
@@ -241,10 +269,10 @@ export default function App() {
           const loadedData = await window.electronAPI.loadData();
           if (loadedData) {
             if (Array.isArray(loadedData.pets)) {
-              setPets(loadedData.pets);
+              setPets(migratePets(loadedData.pets));
             }
             if (Array.isArray(loadedData.trades)) {
-              setTrades(loadedData.trades);
+              setTrades(migrateTrades(loadedData.trades));
             }
             if (loadedData.settings) {
               const s = loadedData.settings;
