@@ -47,4 +47,15 @@ const PINYIN_BOUNDS = [
 const parts = item.family_chain.split(" → ");
 const maxStageName = parts[parts.length - 1].trim();
 ```
+
+## 精灵头像悬浮删除按钮设计
+- **布局定位**: 放弃宠物名左侧的 `-left-2` 位置，将其完全移入精灵头像的 `div` 容器（`Avatar Container`）中。
+- **触发机制**: 
+  - 头像容器添加 `relative group/avatar`。
+  - 删除按钮（`button`）设置为绝对定位 `absolute inset-0 z-20`，大小完全覆盖头像。
+  - 使用 `opacity-0 group-hover/avatar:opacity-100` 控制其显示。
+  - 背景使用半透明红色蒙版 `bg-rose-500/90 hover:bg-rose-600/95`，内置白色大垃圾桶图标。
+  - 头像内原有的图片在 hover 时使用 `group-hover/avatar:scale-75` 微缩，从而营造出按钮“放大且吞噬”头像的精美交互体验。
+
+
 输入低阶精灵名字并完成选定后，自动替换为最高阶名称，再填充对应的蛋组和系别。

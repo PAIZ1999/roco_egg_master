@@ -1,21 +1,21 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { 
-  Trash2, 
-  MinusCircle, 
-  PlusCircle, 
-  GripVertical 
+import {
+  Trash2,
+  MinusCircle,
+  PlusCircle,
+  GripVertical
 } from "lucide-react";
-import { 
-  EggPet, 
-  NATURE_OPTIONS, 
+import {
+  EggPet,
+  NATURE_OPTIONS,
   STATS_OPTIONS,
-  EGG_GROUPS, 
-  BRAND_OPTIONS, 
-  NEST_STATUS_OPTIONS, 
-  LIMIT_OPTIONS, 
-  THREE_V_OPTIONS 
+  EGG_GROUPS,
+  BRAND_OPTIONS,
+  NEST_STATUS_OPTIONS,
+  LIMIT_OPTIONS,
+  THREE_V_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
 import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath } from "../petHelper";
@@ -26,7 +26,7 @@ const typeColorMap: Record<string, string> = {
   "地": "bg-amber-100 text-amber-800 border-amber-300",
   "幻": "bg-pink-50 text-pink-600 border-pink-200",
   "幽": "bg-violet-50 text-violet-600 border-violet-200",
-  "恶": "bg-zinc-800 text-zinc-100 border-zinc-700",
+  "恶": "bg-red-50 text-red-200 border-red-200",
   "普通": "bg-slate-50 text-slate-600 border-slate-200",
   "机械": "bg-zinc-100 text-zinc-600 border-zinc-200",
   "武": "bg-orange-50 text-orange-700 border-orange-200",
@@ -120,15 +120,15 @@ export function SortableRow({
   const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
 
   return (
-    <tr 
+    <tr
       ref={setNodeRef}
       style={style}
       className={`hover:bg-slate-50/50 transition-colors group relative ${isDragging ? "shadow-md ring-2 ring-indigo-100" : ""}`}
     >
       {/* Drag handle column */}
       <td className="px-1 py-3 text-center align-middle drag-handle-column">
-        <div 
-          {...attributes} 
+        <div
+          {...attributes}
           {...listeners}
           className="inline-flex items-center justify-center p-1.5 text-slate-400 hover:text-slate-600 active:text-indigo-600 hover:bg-slate-100 rounded cursor-grab active:cursor-grabbing transition-colors drag-grip-handle"
           title="按住拖动排序"
@@ -140,33 +140,37 @@ export function SortableRow({
       {/* Name input + hovering delete */}
       <td className="p-3 relative align-middle">
         <div className="flex items-center gap-2 min-w-[170px] justify-start px-2 relative">
-          <button 
-            onClick={() => handleDeletePet(originalIndex)}
-            className="absolute -left-2 opacity-0 group-hover:opacity-100 text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1 rounded-md transition-all font-semibold action-buttons animate-fade z-20"
-            title="删除这一行"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-          
           {/* Avatar Container */}
-          <div className="w-10 h-10 rounded-full border border-slate-100 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
+          <div className="w-12 h-12 rounded-full border border-slate-100 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0 shadow-inner relative hover:[&_img]:scale-75 hover:[&_span]:scale-75 hover:[&_button]:opacity-100 hover:[&_button]:pointer-events-auto">
             {spriteUrl ? (
-              <img src={spriteUrl} alt={spriteName} className="w-8 h-8 object-contain" />
+              <img src={spriteUrl} alt={spriteName} className="w-10 h-10 object-contain transition-transform duration-200" />
             ) : (
-              <span className="text-xs text-slate-300 font-bold">?</span>
+              <span className="text-sm text-slate-300 font-bold transition-transform duration-200">?</span>
             )}
+
+            {/* Hover Delete Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeletePet(originalIndex);
+              }}
+              className="absolute inset-0 flex items-center justify-center bg-rose-500/90 text-white rounded-full opacity-0 pointer-events-none transition-all duration-200 z-20 cursor-pointer action-buttons hover:bg-rose-600/95"
+              title="删除这一行"
+            >
+              <Trash2 className="w-6 h-6 hover:scale-110 active:scale-95 transition-transform" />
+            </button>
           </div>
 
           <div className="flex flex-col flex-1 items-start gap-1">
-            <Autocomplete 
-              value={pet.sprite} 
+            <Autocomplete
+              value={pet.sprite}
               options={ALL_PET_NAMES}
               placeholder="精灵名称..."
               onChange={val => handleUpdateSprite(originalIndex, val)}
               className="w-28 text-left"
               inputClassName="bg-transparent font-bold text-sm text-slate-800 placeholder:text-slate-300 w-full border-b-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
             />
-            
+
             {/* Element Badges */}
             {petDetails && petDetails.types && petDetails.types.length > 0 && (
               <div className="flex gap-1 items-center flex-wrap">
@@ -207,7 +211,7 @@ export function SortableRow({
 
                     <div className="flex items-center gap-0.5 select-action-buttons w-10 shrink-0 action-buttons">
                       {(pet.fatherNatures || []).length > 1 && (
-                        <button 
+                        <button
                           onClick={() => handleRemoveNature(originalIndex, "father", nIdx)}
                           className="text-rose-600 hover:bg-rose-100 p-0.5 rounded-full transition-colors"
                           title="移除性格"
@@ -216,7 +220,7 @@ export function SortableRow({
                         </button>
                       )}
                       {isLast && (
-                        <button 
+                        <button
                           onClick={() => handleAddNature(originalIndex, "father")}
                           className="text-indigo-600 hover:bg-indigo-100 p-0.5 rounded-full transition-colors"
                           title="新增性格属性"
@@ -250,7 +254,7 @@ export function SortableRow({
 
                     <div className="flex items-center gap-0.5 select-action-buttons w-10 shrink-0 action-buttons">
                       {(pet.motherNatures || []).length > 1 && (
-                        <button 
+                        <button
                           onClick={() => handleRemoveNature(originalIndex, "mother", nIdx)}
                           className="text-rose-600 hover:bg-rose-100 p-0.5 rounded-full transition-colors"
                           title="移除性格"
@@ -259,7 +263,7 @@ export function SortableRow({
                         </button>
                       )}
                       {isLast && (
-                        <button 
+                        <button
                           onClick={() => handleAddNature(originalIndex, "mother")}
                           className="text-indigo-600 hover:bg-indigo-100 p-0.5 rounded-full transition-colors"
                           title="新增性格属性"
@@ -281,7 +285,7 @@ export function SortableRow({
         {pet.hideStats ? (
           <div className="flex flex-col items-center justify-center py-2 px-3 border border-dashed border-slate-200 rounded-xl bg-slate-50/50 w-[200px] mx-auto min-h-[64px] select-none">
             <span className="text-[11px] text-slate-400 font-medium">三围已隐藏</span>
-            <button 
+            <button
               onClick={() => handleUpdateHideStats(originalIndex, false)}
               className="mt-1.5 text-[10px] font-semibold text-indigo-600 hover:text-indigo-700 bg-white hover:bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full shadow-sm transition-colors action-buttons"
             >
@@ -297,7 +301,7 @@ export function SortableRow({
                 {(pet.fatherStats || ["生命", "物攻", "速度"]).map((stat, sIdx) => {
                   return (
                     <div key={sIdx} className="relative w-14">
-                      <select 
+                      <select
                         value={stat}
                         onChange={e => handleUpdateStat(originalIndex, "father", sIdx, e.target.value)}
                         className={`appearance-none font-semibold text-[10px] text-center border rounded-full py-1 px-2 w-full focus:outline-none transition-colors ${getStatBadgeStyle(stat)}`}
@@ -307,7 +311,7 @@ export function SortableRow({
                         ))}
                       </select>
                       <div className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 opacity-70 dropdown-arrow text-current">
-                        <svg className="fill-current h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                        <svg className="fill-current h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                       </div>
                     </div>
                   );
@@ -322,7 +326,7 @@ export function SortableRow({
                 {(pet.motherStats || ["生命", "物攻", "速度"]).map((stat, sIdx) => {
                   return (
                     <div key={sIdx} className="relative w-14">
-                      <select 
+                      <select
                         value={stat}
                         onChange={e => handleUpdateStat(originalIndex, "mother", sIdx, e.target.value)}
                         className={`appearance-none font-semibold text-[10px] text-center border rounded-full py-1 px-2 w-full focus:outline-none transition-colors ${getStatBadgeStyle(stat)}`}
@@ -332,7 +336,7 @@ export function SortableRow({
                         ))}
                       </select>
                       <div className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 opacity-70 dropdown-arrow text-current">
-                        <svg className="fill-current h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                        <svg className="fill-current h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                       </div>
                     </div>
                   );
@@ -362,7 +366,7 @@ export function SortableRow({
             return (
               <div key={gIdx} className="flex items-center gap-1 justify-center w-full">
                 <div className="relative w-32 shrink-0 font-sans">
-                  <select 
+                  <select
                     value={grp}
                     onChange={e => handleUpdateGroup(originalIndex, gIdx, e.target.value)}
                     className={`appearance-none text-xs font-semibold text-center border rounded-full py-1.5 px-4 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-300 transition-all ${getEggGroupStyle(grp)}`}
@@ -372,13 +376,13 @@ export function SortableRow({
                     ))}
                   </select>
                   <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 dropdown-arrow">
-                    <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                    <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1 select-action-buttons w-12 shrink-0 action-buttons">
                   {pet.groups.length > 1 && (
-                    <button 
+                    <button
                       onClick={() => handleRemoveGroup(originalIndex, gIdx)}
                       className="text-rose-600 hover:bg-rose-100 p-0.5 rounded-full transition-colors"
                       title="移除蛋组属性"
@@ -387,7 +391,7 @@ export function SortableRow({
                     </button>
                   )}
                   {canAdd && (
-                    <button 
+                    <button
                       onClick={() => handleAddGroup(originalIndex)}
                       className="text-indigo-600 hover:bg-indigo-100 p-0.5 rounded-full transition-colors"
                       title="添加至多3个蛋组"
@@ -405,7 +409,7 @@ export function SortableRow({
       {/* Brand selector */}
       <td className="p-3 align-middle text-center">
         <div className="relative inline-block w-20">
-          <select 
+          <select
             value={pet.brand}
             onChange={e => handleUpdateBrand(originalIndex, e.target.value)}
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-2.5 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-300 transition-colors ${getBrandStyle(pet.brand)}`}
@@ -415,7 +419,7 @@ export function SortableRow({
             ))}
           </select>
           <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 dropdown-arrow">
-            <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
           </div>
         </div>
       </td>
@@ -423,7 +427,7 @@ export function SortableRow({
       {/* Nest Status selector */}
       <td className="p-3 align-middle text-center">
         <div className="relative inline-block w-36">
-          <select 
+          <select
             value={pet.status}
             onChange={e => handleUpdateStatus(originalIndex, e.target.value)}
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-4 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400 transition-colors ${getStatusStyle(pet.status)}`}
@@ -433,7 +437,7 @@ export function SortableRow({
             ))}
           </select>
           <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-white dropdown-arrow">
-            <svg className="fill-current h-3 w-3 opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            <svg className="fill-current h-3 w-3 opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
           </div>
         </div>
       </td>
@@ -441,7 +445,7 @@ export function SortableRow({
       {/* Limit / Speed indicator */}
       <td className="p-3 align-middle text-center">
         <div className="relative inline-block w-20">
-          <select 
+          <select
             value={pet.isLimit}
             onChange={e => handleUpdateLimit(originalIndex, e.target.value)}
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-2 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-colors ${pet.isLimit === "极限" ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-slate-50 text-slate-500 border-slate-200"}`}
@@ -451,7 +455,7 @@ export function SortableRow({
             ))}
           </select>
           <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 dropdown-arrow">
-            <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+            <svg className="fill-current h-3 w-3 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
           </div>
         </div>
       </td>

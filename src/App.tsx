@@ -15,7 +15,11 @@ import {
   Download,
   Camera,
   Settings,
-  Trash2
+  Trash2,
+  Database,
+  LayoutGrid,
+  Zap,
+  Award
 } from "lucide-react";
 import { domToPng } from "modern-screenshot";
 import {
@@ -526,7 +530,7 @@ export default function App() {
       showToast("请输入精灵名称", "error");
       return;
     }
-    
+
     // 自动升级为进化链最高阶
     const details = getPetDetails(newTradeSprite.trim());
     const finalSprite = details ? (details.maxStageName || newTradeSprite.trim()) : newTradeSprite.trim();
@@ -816,6 +820,12 @@ export default function App() {
       clonedWatermarkPanel.remove();
     }
 
+    // Replace the title of custom breeding exchange center in long image export
+    const clonedTradeTitle = clone.querySelector("#trade-center-title");
+    if (clonedTradeTitle) {
+      clonedTradeTitle.textContent = "我想换的蛋";
+    }
+
     // Remove trade input form panel and delete buttons from long image export
     const clonedTradeForm = clone.querySelector("#trade-form-panel");
     if (clonedTradeForm) {
@@ -1041,28 +1051,95 @@ export default function App() {
           </div>
         </div>
         {/* Real-time stats section */}
-        <div className="grid grid-cols-2 md:grid-cols-5 bg-slate-50/50 border-b border-slate-100 divide-x divide-y md:divide-y-0 divide-slate-100">
-          <div className="p-4 text-center">
-            <span className="text-xs text-slate-500 block mb-0.5 font-medium">总收录精灵</span>
-            <span className="text-xl font-bold font-mono text-slate-800">{totalPets} 件</span>
-          </div>
-          <div className="p-4 text-center">
-            <span className="text-xs text-slate-500 block mb-0.5 font-medium">大婉/大粗/单牌/小婉/小粗</span>
-            <span className="text-sm font-semibold font-mono text-indigo-600 block mt-1">
-              {brandStats["大婉"] || 0} / {brandStats["大粗"] || 0} / {brandStats["单牌"] || 0} / {brandStats["小婉"] || 0} / {brandStats["小粗"] || 0}
-            </span>
-          </div>
-          <div className="p-4 text-center">
-            <span className="text-xs text-slate-500 block mb-0.5 font-medium">现有现蛋窝点</span>
-            <span className="text-xl font-bold font-mono text-emerald-600">{hasEggsCount} 窝</span>
-          </div>
-          <div className="p-4 text-center">
-            <span className="text-xs text-slate-500 block mb-0.5 font-medium">极限蛋</span>
-            <span className="text-xl font-bold font-mono text-amber-600">{limitsCount} 只</span>
-          </div>
-          <div className="p-4 text-center">
-            <span className="text-xs text-slate-500 block mb-0.5 font-medium">3V 蛋</span>
-            <span className="text-xl font-bold font-mono text-rose-600">{threeVsCount} 只</span>
+        <div className="p-5 bg-slate-50/30 border-b border-slate-100">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {/* Card 1: 总收录 */}
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs text-slate-500 font-bold">总收录精灵</span>
+                <div className="w-7 h-7 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                  <Database className="w-4 h-4 text-slate-450 shrink-0" />
+                </div>
+              </div>
+              <div className="mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-2xl font-black font-mono text-slate-800 tracking-tight">{totalPets}</span>
+                <span className="text-xs text-slate-400 font-semibold">只</span>
+              </div>
+            </div>
+
+            {/* Card 2: 牌子规格 */}
+            <div className="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-indigo-50/30 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs text-slate-500 font-bold">牌子规格统计</span>
+                <div className="w-7 h-7 bg-indigo-50/50 rounded-lg flex items-center justify-center border border-indigo-100/50">
+                  <LayoutGrid className="w-4 h-4 text-indigo-500 shrink-0" />
+                </div>
+              </div>
+              <div className="grid grid-cols-5 gap-1.5 mt-2.5 z-10">
+                {(["大婉", "大粗", "单牌", "小婉", "小粗"] as const).map((brand, idx) => {
+                  const colors = [
+                    "bg-rose-50/60 text-rose-700 border-rose-100/60",
+                    "bg-amber-50/60 text-amber-700 border-amber-100/60",
+                    "bg-emerald-50/60 text-emerald-700 border-emerald-100/60",
+                    "bg-blue-50/60 text-blue-700 border-blue-100/60",
+                    "bg-purple-50/60 text-purple-700 border-purple-100/60"
+                  ];
+                  return (
+                    <div key={brand} className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-lg border ${colors[idx]} text-center`}>
+                      <span className="text-[9px] font-extrabold scale-90 origin-center truncate w-full">{brand}</span>
+                      <span className="text-xs font-bold font-mono mt-0.5">{brandStats[brand] || 0}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Card 3: 现有窝点 */}
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-emerald-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs text-slate-500 font-bold">现有现蛋窝点</span>
+                <div className="w-7 h-7 bg-emerald-50 rounded-lg flex items-center justify-center border border-emerald-100">
+                  <Egg className="w-4 h-4 text-emerald-500 shrink-0" />
+                </div>
+              </div>
+              <div className="mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-2xl font-black font-mono text-emerald-600 tracking-tight">{hasEggsCount}</span>
+                <span className="text-xs text-emerald-500 font-semibold">窝</span>
+              </div>
+            </div>
+
+            {/* Card 4: 极限蛋 */}
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs text-slate-500 font-bold">极限精灵蛋</span>
+                <div className="w-7 h-7 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
+                  <Zap className="w-4 h-4 text-amber-500 shrink-0" />
+                </div>
+              </div>
+              <div className="mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-2xl font-black font-mono text-amber-500 tracking-tight">{limitsCount}</span>
+                <span className="text-xs text-amber-500 font-semibold">只</span>
+              </div>
+            </div>
+
+            {/* Card 5: 3V蛋 */}
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="flex items-center justify-between z-10">
+                <span className="text-xs text-slate-500 font-bold">3V 精灵蛋</span>
+                <div className="w-7 h-7 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
+                  <Award className="w-4 h-4 text-rose-500 shrink-0" />
+                </div>
+              </div>
+              <div className="mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-2xl font-black font-mono text-rose-600 tracking-tight">{threeVsCount}</span>
+                <span className="text-xs text-rose-500 font-semibold">只</span>
+              </div>
+            </div>
           </div>
         </div>        {/* Filters Header Row */}
         <div id="filter-header-bar" className="p-4 bg-slate-50/20 border-b border-slate-100 flex flex-wrap gap-4 items-center justify-between">
@@ -1391,7 +1468,7 @@ export default function App() {
                 <RefreshCw className="w-5 h-5 text-indigo-600" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-800">自建换蛋需求中心</h2>
+                <h2 id="trade-center-title" className="text-lg font-bold text-slate-800">自建换蛋需求中心</h2>
                 <p className="text-xs text-slate-500 mt-0.5 font-medium">发布并管理您需要的或者可以提供交换的宠物蛋信息</p>
               </div>
             </div>
@@ -1439,11 +1516,10 @@ export default function App() {
                       key={brand}
                       type="button"
                       onClick={() => setNewTradeBrand(brand)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                        newTradeBrand === brand
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${newTradeBrand === brand
                           ? 'bg-slate-800 border-slate-800 text-white shadow-sm'
                           : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-350'
-                      }`}
+                        }`}
                     >
                       {brand}
                     </button>
@@ -1491,11 +1567,10 @@ export default function App() {
                         key={type}
                         type="button"
                         onClick={() => setNewTradeType(type)}
-                        className={`px-4.5 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-                          newTradeType === type
+                        className={`px-4.5 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${newTradeType === type
                             ? 'bg-white text-slate-850 shadow-sm'
                             : 'text-slate-500 hover:text-slate-800'
-                        }`}
+                          }`}
                       >
                         {type}
                       </button>
@@ -1591,105 +1666,114 @@ export default function App() {
                 {trades.map(trade => {
                   const details = getPetDetails(trade.sprite);
                   const spriteFileName = details ? getSpriteFileName(trade.sprite) : null;
-                  
+
                   return (
                     <div
                       key={trade.id}
-                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-4 flex gap-4 relative overflow-hidden group/card"
+                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-4 flex items-center justify-between gap-4 relative overflow-hidden group/card"
                     >
-                      {/* 头像 */}
-                      <div className="relative w-16 h-16 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0">
-                        {spriteFileName ? (
-                          <img
-                            src={getImagePath(`images/sprites/${spriteFileName}`)}
-                            alt={trade.sprite}
-                            className="w-12 h-12 object-contain"
-                          />
-                        ) : (
-                          <Egg className="w-8 h-8 text-slate-300" />
-                        )}
-                        {details?.types && details.types.length > 0 && (
-                          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50">
+                      {/* 左侧：头像 + 详情 */}
+                      <div className="flex items-start gap-4 flex-1 min-w-0">
+                        {/* 头像 */}
+                        <div className="relative w-16 h-16 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 hover:[&_img]:scale-75 hover:[&_.avatar-fallback-icon]:scale-75 hover:[&_button]:opacity-100 hover:[&_button]:pointer-events-auto">
+                          {spriteFileName ? (
                             <img
-                              src={getImagePath(`images/attributes/${details.types[0]}.png`)}
-                              alt={details.types[0]}
-                              className="w-4 h-4 object-contain"
+                              src={getImagePath(`images/sprites/${spriteFileName}`)}
+                              alt={trade.sprite}
+                              className="w-12 h-12 object-contain transition-transform duration-200"
                             />
+                          ) : (
+                            <Egg className="w-8 h-8 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
+                          )}
+                          {details?.types && details.types.length > 0 && (
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
+                              <img
+                                src={getImagePath(`images/attributes/${details.types[0]}.png`)}
+                                alt={details.types[0]}
+                                className="w-4 h-4 object-contain"
+                              />
+                            </div>
+                          )}
+
+                          {/* Hover Delete Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteTrade(trade.id);
+                            }}
+                            className="delete-trade-btn absolute inset-0 flex items-center justify-center bg-rose-500/90 text-white rounded-2xl opacity-0 pointer-events-none transition-all duration-200 z-20 cursor-pointer action-buttons hover:bg-rose-600/95"
+                            title="删除该条换蛋需求"
+                          >
+                            <Trash2 className="w-6 h-6 hover:scale-110 active:scale-95 transition-transform" />
+                          </button>
+                        </div>
+
+                        {/* 需求详情 */}
+                        <div className="flex-1 flex flex-col min-w-0 justify-between">
+                          {/* 名字 */}
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="text-sm font-bold text-slate-800 truncate" title={trade.sprite}>
+                              {trade.sprite}
+                            </h4>
                           </div>
-                        )}
+
+                          {/* 属性：性格/牌子 */}
+                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 my-1 text-[11px] font-medium text-slate-500">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-slate-400">性格:</span>
+                              <span className="text-slate-700 font-semibold">{trade.nature || "不限"}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-slate-400">牌子:</span>
+                              <span className={`px-1.5 py-0.25 rounded text-[10px] border ${getBrandStyle(trade.brand)}`}>
+                                {trade.brand}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* 是否3V/是否极限 */}
+                          <div className="flex items-center gap-2">
+                            {trade.is3V && (
+                              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow-sm flex items-center gap-0.5">
+                                ✓ 3V
+                              </span>
+                            )}
+                            {trade.isLimit && (
+                              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm flex items-center gap-0.5">
+                                ★ 极限
+                              </span>
+                            )}
+                            {!trade.is3V && !trade.isLimit && (
+                              <span className="text-[9px] font-semibold text-slate-400">
+                                常规配置
+                              </span>
+                            )}
+                          </div>
+
+                          {/* 备注 */}
+                          {trade.notes ? (
+                            <p className="text-[10px] text-slate-400 italic mt-2 border-t border-slate-50 pt-1.5 line-clamp-2" title={trade.notes}>
+                              “{trade.notes}”
+                            </p>
+                          ) : (
+                            <div className="h-2"></div>
+                          )}
+                        </div>
                       </div>
 
-                      {/* 需求详情 */}
-                      <div className="flex-1 flex flex-col min-w-0 justify-between">
-                        {/* 名字与交易模式标签 */}
-                        <div className="flex items-start justify-between gap-1.5">
-                          <h4 className="text-sm font-bold text-slate-800 truncate" title={trade.sprite}>
-                            {trade.sprite}
-                          </h4>
-                          <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border ${
-                              trade.tradeType === "包公"
-                                ? "bg-blue-50 text-blue-600 border-blue-150"
-                                : trade.tradeType === "包母"
+                      {/* 右侧：更显眼、放大的换蛋类型 */}
+                      <div className="flex items-center justify-center shrink-0 pl-1 z-10">
+                        <span
+                          className={`text-xs font-extrabold px-3 py-1 rounded-full border shadow-sm shrink-0 tracking-wider transition-colors ${trade.tradeType === "包公"
+                              ? "bg-blue-50 text-blue-600 border-blue-150"
+                              : trade.tradeType === "包母"
                                 ? "bg-pink-50 text-pink-650 border-pink-150"
                                 : "bg-purple-50 text-purple-650 border-purple-150"
                             }`}
-                          >
-                            {trade.tradeType}
-                          </span>
-                        </div>
-
-                        {/* 属性：性格/牌子 */}
-                        <div className="flex flex-wrap gap-x-3 gap-y-1.5 my-1 text-[11px] font-medium text-slate-500">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-slate-400">性格:</span>
-                            <span className="text-slate-700 font-semibold">{trade.nature || "不限"}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-slate-400">牌子:</span>
-                            <span className={`px-1.5 py-0.25 rounded text-[10px] border ${getBrandStyle(trade.brand)}`}>
-                              {trade.brand}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* 是否3V/是否极限 */}
-                        <div className="flex items-center gap-2">
-                          {trade.is3V && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow-sm flex items-center gap-0.5">
-                              ✓ 3V
-                            </span>
-                          )}
-                          {trade.isLimit && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm flex items-center gap-0.5">
-                              ★ 极限
-                            </span>
-                          )}
-                          {!trade.is3V && !trade.isLimit && (
-                            <span className="text-[9px] font-semibold text-slate-400">
-                              常规配置
-                            </span>
-                          )}
-                        </div>
-
-                        {/* 备注 */}
-                        {trade.notes ? (
-                          <p className="text-[10px] text-slate-400 italic mt-2 border-t border-slate-50 pt-1.5 line-clamp-2" title={trade.notes}>
-                            “{trade.notes}”
-                          </p>
-                        ) : (
-                          <div className="h-2"></div>
-                        )}
+                        >
+                          {trade.tradeType}
+                        </span>
                       </div>
-
-                      {/* 删除按钮 */}
-                      <button
-                        onClick={() => handleDeleteTrade(trade.id)}
-                        className="delete-trade-btn absolute top-3 right-3 p-1 text-slate-350 hover:text-rose-600 rounded-lg hover:bg-rose-50/50 opacity-0 group-hover/card:opacity-100 transition-all cursor-pointer border border-transparent mr-0"
-                        title="删除该条换蛋需求"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
                     </div>
                   );
                 })}

@@ -1,33 +1,35 @@
-# Task Plan: 性格下拉框首字母检索 7 大性格优先级置顶
+# Task Plan: 提交本地修改与项目管理推送至 GitHub
 
 ## Goal
-在性格输入框首字母检索（以及默认展示）时，将洛克王国世界最常用的 7 大加成性格（固执、聪明、开朗、胆小、平和、沉默、踏实）排在下拉列表的最上方，方便玩家快速选择。
+将本地的 4 个 Commit 连同当前未提交的修改（经测试无误后）安全提交并推送至 GitHub 远程仓库。
 
 ## MCP Status
 - [x] memory 检索完成
 - [ ] context7/deepwiki 查询完成
 - [x] sequential-thinking 分析完成
-- [x] memory 知识存储完成
+- [ ] memory 知识存储完成
 
 ## Phases
-- [x] Phase 1: 规划与准备 (创建任务计划，分析代码)
-- [x] Phase 2: 修改 Autocomplete 组件逻辑 (过滤与排序模块)
-- [x] Phase 3: 编写并执行单元测试 (验证 7 大性格是否优先排在最上面)
-- [x] Phase 4: 运行应用并在浏览器验证
-- [x] Phase 5: 最终交付与 Git 提交
+- [x] Phase 1: 规划与准备 (创建 task_plan.md)
+- [x] Phase 2: 运行测试与构建校验 (确保代码编译和运行正常)
+- [/] Phase 3: 代码整理与提交 (处理未跟踪文件与改动，生成规范 Commit)
+- [ ] Phase 4: 远程推送 (git push 提交到 GitHub)
+- [ ] Phase 5: 最终交付与总结 (更新项目知识库)
 
 ## Key Questions
-1. 7 大优先性格是否也应该在无检索 query 的默认展开下拉框状态下置顶？
-   - **决策**: 是的，即使没有输入 query，也应该在下拉菜单的最上面显示这 7 大性格。因为这 7 个是《洛克王国：世界》里最核心常用的性格，这样可以极大提升用户不打字、直接点选的体验。
-2. 检索逻辑是否适用于其他 autocomplete？
-   - **决策**: 本次优化针对包含这 7 大性格名字的选项起效。这 7 个词极具独特性（固执、聪明、开朗、胆小、平和、沉默、踏实），且只出现在性格选项中，即使在宠物名中出现，也会同样被正确置顶，符合用户预期。
+1. 未跟踪的文件 `images/attributes/恶_orig.png` 和 `性格表.png` 是否需要提交？还是放入 `.gitignore`？
+   - 答：`images/attributes/恶_orig.png` 已通过 `.gitignore` 忽略；`性格表.png` 作为参考图将进行提交。
+2. 当前代码修改是否需要运行 `npm run build` 或 `npm run electron:build` 进行构建校验，以防止编译报错被推送到 GitHub？
+   - 答：已在本地执行 `npm run lint` 和 `npm run build`，编译校验完全通过，无报错。
 
 ## Decisions Made
-- [决策]: 无论 query 是否为空，都对 matching/options 数组中的这 7 大性格赋予最高排序优先级。
+- [决策]: 优先创建 `task_plan.md` 作为导航图，以确保符合核心工作流规则。
+- [决策]: 将 `_orig.png` 备份图片在 `.gitignore` 中过滤，避免污染仓库。
+- [决策]: 校验通过，直接将当前改动提交并推送。
 
 ## Errors Encountered
 - 无
 
 ## Status
-**Currently in Phase 5** - 交付完成
+**Currently in Phase 3** - 代码整理与提交，准备将当前改动进行 Git 暂存与 Commit。
 
