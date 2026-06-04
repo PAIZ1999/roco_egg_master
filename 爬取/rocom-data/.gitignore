@@ -1,0 +1,24 @@
+# Claude Code 本地配置
+.claude/
+
+# 备份和临时文件
+data/*.backup.json
+data/*.backup.csv
+data/failed_urls.txt
+data/scrape_log.txt
+data/images/
+data/*.html
+
+__pycache__/
+.DS_Store
+*.pyc
+
+# 运行时日志与调试截图
+logs/
+
+# Python packaging 构建产物
+*.egg-info/
+
+# 本地配置（含密码 / API key，请勿提交；模板见对应 .example 文件）
+.env
+data/llm_config.yaml

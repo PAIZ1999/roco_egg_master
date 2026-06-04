@@ -1,0 +1,6 @@
+{
+  "name": "洛克王国孵蛋表",
+  "description": "洛克王国宠物多功能在线孵蛋数据管理工具，支持精灵、性格、蛋组、牌子以及窝点状态的快速检索、添加与删除，支持长图一键导出，并具备简洁直观的数据本地持久化存储。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,27 @@
+{
+  "pets": [
+    {
+      "sprite": "喵喵",
+      "natures": [
+        "踏实 (+生命 -速度)"
+      ],
+      "groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "brand": "大婉",
+      "status": "有现蛋",
+      "isLimit": "极限",
+      "is3V": "3V",
+      "id": "pet-init-0-3o5w7"
+    }
+  ],
+  "settings": {
+    "showWatermarkPanel": false,
+    "enableWatermark": true,
+    "watermarkText": "uid:244888",
+    "watermarkOpacity": 0.28,
+    "watermarkDensity": "normal",
+    "watermarkSize": 18
+  }
+}
