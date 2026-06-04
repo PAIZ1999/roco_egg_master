@@ -13,8 +13,20 @@ interface AutocompleteProps {
   disabled?: boolean;
 }
 
-const filterOptions = (options: string[], query: string): string[] => {
-  if (!query) return options.slice(0, 10);
+export const filterOptions = (options: string[], query: string): string[] => {
+  const PRIORITY_NATURES = ["固执", "聪明", "开朗", "胆小", "平和", "沉默", "踏实"];
+
+  if (!query) {
+    // 即使没有 query，也先把这 7 大性格排在最上面，方便用户直接选择
+    const sortedOptions = [...options].sort((a, b) => {
+      const aPriority = PRIORITY_NATURES.some(name => a.startsWith(name));
+      const bPriority = PRIORITY_NATURES.some(name => b.startsWith(name));
+      if (aPriority && !bPriority) return -1;
+      if (!aPriority && bPriority) return 1;
+      return options.indexOf(a) - options.indexOf(b);
+    });
+    return sortedOptions.slice(0, 10);
+  }
   
   const lowerQuery = query.toLowerCase().trim();
   
@@ -40,7 +52,16 @@ const filterOptions = (options: string[], query: string): string[] => {
   
   return matches
      .filter(m => m.score !== -1)
-     .sort((a, b) => a.score - b.score)
+     .sort((a, b) => {
+       const aPriority = PRIORITY_NATURES.some(name => a.opt.startsWith(name));
+       const bPriority = PRIORITY_NATURES.some(name => b.opt.startsWith(name));
+       if (aPriority && !bPriority) return -1;
+       if (!aPriority && bPriority) return 1;
+       if (a.score !== b.score) {
+         return a.score - b.score;
+       }
+       return options.indexOf(a.opt) - options.indexOf(b.opt);
+     })
      .map(m => m.opt)
      .slice(0, 15);
 };
