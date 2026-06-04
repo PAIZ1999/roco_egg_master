@@ -65,3 +65,13 @@
 - **EXE 打包构建**:
   `npm run electron:build`
   - 打包生成的文件存放于：`dist-electron/洛克王国孵蛋数据管理系统 0.0.0.exe`
+
+---
+
+## 📦 代码托管与项目管理
+
+该项目已于本地初始化为 Git 仓库并进行了初始 Commit。
+- **本地分支**: `master` (建议推送到 GitHub 前更名为 `main`)
+- **忽略规则**: 已在 `.gitignore` 中配置过滤 `node_modules/`、`dist/`、`dist-electron/` 等生成目录。
+- **管理规范**: 详细的上传与 GitHub 看板管理教程已保存在本地根目录的 `github_management_guide.md` 中。
+- **Commit 规范**: 建议遵循 Angular 提交规范（如 `feat:`, `fix:`, `docs:`, `refactor:`），并利用 Smart Commits (如 `close #12`) 联动关闭 GitHub Issues。
