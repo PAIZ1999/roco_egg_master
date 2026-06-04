@@ -7,7 +7,7 @@
 - [x] memory 检索完成
 - [x] context7/deepwiki 查询完成
 - [x] sequential-thinking 分析完成
-- [ ] memory 知识存储完成
+- [x] memory 知识存储完成
 
 ## Phases
 - [x] Phase 1: 升级 Autocomplete 组件，支持 React Portal 以彻底消除遮挡
