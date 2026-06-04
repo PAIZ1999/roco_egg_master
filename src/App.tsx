@@ -1724,7 +1724,7 @@ export default function App() {
                           </div>
 
                           {/* 属性：性格/牌子 */}
-                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 my-1 text-[11px] font-medium text-slate-500">
+                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-1.5 text-[11px] font-medium text-slate-500">
                             <div className="flex items-center gap-1.5">
                               <span className="text-slate-400">性格:</span>
                               <span className="text-slate-700 font-semibold">{trade.nature || "不限"}</span>
@@ -1734,6 +1734,22 @@ export default function App() {
                               <span className={`px-1.5 py-0.25 rounded text-[10px] border ${getBrandStyle(trade.brand)}`}>
                                 {trade.brand}
                               </span>
+                            </div>
+                          </div>
+
+                          {/* 蛋组 */}
+                          <div className="flex items-center gap-1.5 my-1 text-[11px] font-medium text-slate-500">
+                            <span className="text-slate-400">蛋组:</span>
+                            <div className="flex gap-1 flex-wrap">
+                              {details?.groups && details.groups.length > 0 ? (
+                                details.groups.map(group => (
+                                  <span key={group} className={`px-1 py-0.25 rounded text-[9px] border font-bold ${getEggGroupStyle(group)}`}>
+                                    {group}
+                                  </span>
+                                ))
+                              ) : (
+                                <span className="text-[10px] text-slate-400">无</span>
+                              )}
                             </div>
                           </div>
 
