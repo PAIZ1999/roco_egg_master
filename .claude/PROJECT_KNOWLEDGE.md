@@ -29,6 +29,7 @@
        - 调大了“精灵名称”列的宽度占比（主表格 14%，导出克隆表 15%），避免长图导出时因为列宽不足导致宠物名字折行。
        - 在将 `input`/`select` 转换成静态 `div` 时，自适应提取其 `text-left`/`text-right` 等对齐属性，并映射到 `justifyContent` 与 `textAlign`，确保导出的长图文字完全对齐不跑偏。
      - **系别 Badge 纯图标化展示**: 删除了属性 Badge 里的系别中文文字，仅以圆形图标（外加 hover title 说明）呈现，确保界面在小屏幕与导出长图中更加紧凑美观。
+     - **精灵头像悬浮删除按钮**: 移除了原有的普通删除按钮，重构为完全嵌在精灵头像容器（`relative group/avatar`）内的绝对定位遮罩按钮。在 hover 时通过不透明度渐变（`group-hover/avatar:opacity-100`）呈现半透明红色蒙版及垃圾桶图标，并让头像图片微缩（`group-hover/avatar:scale-75`），提供高品质微交互效果。同时该按钮带有 `.action-buttons` 类，可在导出长图时自动过滤。
 
 2. **主进程 (Electron - CommonJS)**:
    - 文件入口设在 `electron/main.cjs`。由于根目录配置了 `"type": "module"`，Electron 的 CommonJS 代码必须显式命名为 `.cjs` 以确保兼容性。
