@@ -1,43 +1,31 @@
-# Task Plan: 洛克王国孵蛋表上传 GitHub 与项目管理指引
+# Task Plan: 修复长图导出问题与下拉框遮挡
 
 ## Goal
-完成本地 Git 仓库初始化，将项目代码上传至 GitHub 远程仓库，并配置 GitHub Issues、Projects 以及 Milestones 等工具进行高效的项目生命周期与任务进度管理。
+彻底解决洛克王国孵蛋表长图导出时的文字折行、对齐不一致、系别文字缺失问题，同时解决精灵名称和性格下拉框被表格行和滚动容器遮挡的问题。
 
 ## MCP Status
 - [x] memory 检索完成
+- [x] context7/deepwiki 查询完成
 - [x] sequential-thinking 分析完成
-- [x] memory 知识存储完成
+- [ ] memory 知识存储完成
 
 ## Phases
-- [x] Phase 1: 规划与准备
-  - [x] 评估 MCP 状态与本地环境
-  - [x] 检查本地 `.gitignore` 文件，发现需要补全 `dist-electron/` 过滤
-- [x] Phase 2: 本地 Git 初始化与提交
-  - [x] 更新本地 `.gitignore` 排除打包生成的大文件目录
-  - [x] 本地执行 `git init` 初始化仓库
-  - [x] 暂存文件 `git add .`
-  - [x] 本地提交 `git commit -m "chore: 初始化 Git 仓库并更新 .gitignore"`
-- [x] Phase 3: 创建并关联 GitHub 仓库
-  - [x] 编写详细上传与项目管理文档供用户阅读
-  - [x] 提供如何使用 GitHub CLI 或网页端新建 Repository 的指导
-  - [x] 建立远程分支关联并推送 `git push -u origin main`
-- [x] Phase 4: GitHub 项目管理实战指导
-  - [x] 提供 GitHub Issues、GitHub Projects (看板) 的配置方案与实战教程
-  - [x] 解释 Git Commit 自动关联 Issue 关闭的规范 (Smart Commits)
-- [x] Phase 5: 最终交付与归档
-  - [x] 本地保存 `github_management_guide.md`
-  - [x] 更新项目知识库 `.claude/PROJECT_KNOWLEDGE.md`
+- [x] Phase 1: 升级 Autocomplete 组件，支持 React Portal 以彻底消除遮挡
+- [x] Phase 2: 调整主表格与长图导出时的列宽比例，解决列挤压引起的换行
+- [x] Phase 3: 优化长图导出中的 Input 替换逻辑，支持自适应对齐方式
+- [x] Phase 4: 修改系别 Badge 为不显示文字，仅显示属性图标（含 Hover 提示）
+- [x] Phase 5: 测试验证与最终交付
 
 ## Key Questions
-1. 本地是否有大文件（如 exe 或是宣传视频.mp4）？
-   - 答：根目录下有 `宣传视频.mp4` (15MB) 以及 `dist/` 和 `dist-electron/` 目录。需要在 `.gitignore` 里将打包输出目录排除。由于视频较大，若无需上传可加到 `.gitignore`，或作为普通媒体资源提交。
+1. 属性 Badge 的文字颜色和在导出图上的渲染效果是否需要进行特定调整？
+   - 答：不需要，直接保持与 Live 页面一致的 Tailwind 色彩和 `whitespace-nowrap` 即可。
 
 ## Decisions Made
-- [更新 .gitignore]：需要把 `dist-electron/` 排除在 Git 追踪之外，避免提交数百MB的桌面打包安装包。
+- [决策]: 采用 React Portal + `absolute` 定位动态更新坐标的方式渲染 Autocomplete 下拉菜单。
+  - [理由]: `fixed` 或普通的 `absolute` 依然受限于外层的 `overflow-x-auto` 容器裁剪；只有将下拉菜单挂载在 `document.body` 根节点上并手动计算绝对定位，才能完美避免被遮挡。
 
 ## Errors Encountered
-- 本地配置了全局代理 `http.proxy = http://127.0.0.1:10808`，但由于代理软件未开启或不稳定，导致 `git push` 在连接 GitHub 时挂起超时。
-  - **解决方案**：在本地项目下执行 `git config --local http.proxy ""` 和 `git config --local https.proxy ""` 临时清空当前仓库的代理，以直连方式进行上传。
+- 无
 
 ## Status
-**Completed** - 项目已成功上传至 GitHub 仓库且建立了 `main` 追踪关系，文档与配置已就绪。
+**Currently in Phase 5** - 所有优化和测试工作均已顺利完成，超清长图导出排版、列宽、对齐及无遮挡下拉功能均已通过验证，准备交付。

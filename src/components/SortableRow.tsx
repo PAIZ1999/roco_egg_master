@@ -17,6 +17,29 @@ import {
   LIMIT_OPTIONS, 
   THREE_V_OPTIONS 
 } from "../types";
+import { Autocomplete } from "./Autocomplete";
+import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath } from "../petHelper";
+
+const typeColorMap: Record<string, string> = {
+  "光": "bg-amber-50 text-amber-600 border-amber-200",
+  "冰": "bg-cyan-50 text-cyan-600 border-cyan-200",
+  "地": "bg-amber-100 text-amber-800 border-amber-300",
+  "幻": "bg-pink-50 text-pink-600 border-pink-200",
+  "幽": "bg-violet-50 text-violet-600 border-violet-200",
+  "恶": "bg-zinc-800 text-zinc-100 border-zinc-700",
+  "普通": "bg-slate-50 text-slate-600 border-slate-200",
+  "机械": "bg-zinc-100 text-zinc-600 border-zinc-200",
+  "武": "bg-orange-50 text-orange-700 border-orange-200",
+  "毒": "bg-purple-50 text-purple-600 border-purple-200",
+  "水": "bg-blue-50 text-blue-600 border-blue-200",
+  "火": "bg-red-50 text-red-600 border-red-200",
+  "电": "bg-yellow-50 text-yellow-500 border-yellow-200",
+  "翼": "bg-indigo-50 text-indigo-600 border-indigo-200",
+  "草": "bg-green-50 text-green-600 border-green-200",
+  "萌": "bg-rose-50 text-rose-500 border-rose-200",
+  "虫": "bg-lime-50 text-lime-600 border-lime-200",
+  "龙": "bg-rose-50 text-rose-700 border-rose-200",
+};
 
 interface SortableRowProps {
   key?: string;
@@ -91,6 +114,11 @@ export function SortableRow({
     position: isDragging ? "relative" : undefined,
   };
 
+  const petDetails = getPetDetails(pet.sprite);
+  const spriteName = petDetails ? petDetails.name : pet.sprite;
+  const spriteFile = getSpriteFileName(spriteName);
+  const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+
   return (
     <tr 
       ref={setNodeRef}
@@ -110,23 +138,50 @@ export function SortableRow({
       </td>
 
       {/* Name input + hovering delete */}
-      <td className="p-3 relative align-middle text-center">
-        <div className="flex items-center justify-center gap-1 w-[120px] mx-auto">
+      <td className="p-3 relative align-middle">
+        <div className="flex items-center gap-2 min-w-[170px] justify-start px-2 relative">
           <button 
             onClick={() => handleDeletePet(originalIndex)}
-            className="absolute left-2 opacity-0 group-hover:opacity-100 text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1 rounded-md transition-all font-semibold action-buttons animate-fade"
+            className="absolute -left-2 opacity-0 group-hover:opacity-100 text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1 rounded-md transition-all font-semibold action-buttons animate-fade z-20"
             title="删除这一行"
           >
             <Trash2 className="w-4 h-4" />
           </button>
           
-          <input 
-            type="text" 
-            value={pet.sprite} 
-            placeholder="精灵名称..."
-            onChange={e => handleUpdateSprite(originalIndex, e.target.value)}
-            className="bg-transparent text-center font-bold text-base text-slate-800 placeholder:text-slate-300 w-24 border-b-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:outline-none py-1 transition-colors -translate-x-2"
-          />
+          {/* Avatar Container */}
+          <div className="w-10 h-10 rounded-full border border-slate-100 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0 shadow-inner">
+            {spriteUrl ? (
+              <img src={spriteUrl} alt={spriteName} className="w-8 h-8 object-contain" />
+            ) : (
+              <span className="text-xs text-slate-300 font-bold">?</span>
+            )}
+          </div>
+
+          <div className="flex flex-col flex-1 items-start gap-1">
+            <Autocomplete 
+              value={pet.sprite} 
+              options={ALL_PET_NAMES}
+              placeholder="精灵名称..."
+              onChange={val => handleUpdateSprite(originalIndex, val)}
+              className="w-28 text-left"
+              inputClassName="bg-transparent font-bold text-sm text-slate-800 placeholder:text-slate-300 w-full border-b-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
+            />
+            
+            {/* Element Badges */}
+            {petDetails && petDetails.types && petDetails.types.length > 0 && (
+              <div className="flex gap-1 items-center flex-wrap">
+                {petDetails.types.map(t => {
+                  const badgeStyle = typeColorMap[t] || "bg-slate-50 text-slate-600 border-slate-200";
+                  const iconUrl = getImagePath(`images/attributes/${t}.png`);
+                  return (
+                    <span key={t} className={`inline-flex items-center justify-center p-0.5 rounded-full border shrink-0 ${badgeStyle}`} title={t}>
+                      <img src={iconUrl} alt={t} className="w-3.5 h-3.5 object-contain shrink-0" />
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </td>
 
@@ -141,20 +196,14 @@ export function SortableRow({
                 const isLast = nIdx === (pet.fatherNatures || []).length - 1;
                 return (
                   <div key={nIdx} className="flex items-center gap-1 justify-center w-full">
-                    <div className="relative w-28 shrink-0">
-                      <select 
-                        value={nat}
-                        onChange={e => handleUpdateNature(originalIndex, "father", nIdx, e.target.value)}
-                        className="appearance-none font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-3 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all shadow-sm"
-                      >
-                        {NATURE_OPTIONS.map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                      <div className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 dropdown-arrow">
-                        <svg className="fill-current h-2.5 w-2.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                      </div>
-                    </div>
+                    <Autocomplete
+                      value={nat}
+                      options={NATURE_OPTIONS}
+                      placeholder="性格..."
+                      onChange={val => handleUpdateNature(originalIndex, "father", nIdx, val)}
+                      className="w-28 text-center"
+                      inputClassName="font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all shadow-sm"
+                    />
 
                     <div className="flex items-center gap-0.5 select-action-buttons w-10 shrink-0 action-buttons">
                       {(pet.fatherNatures || []).length > 1 && (
@@ -190,20 +239,14 @@ export function SortableRow({
                 const isLast = nIdx === (pet.motherNatures || []).length - 1;
                 return (
                   <div key={nIdx} className="flex items-center gap-1 justify-center w-full">
-                    <div className="relative w-28 shrink-0">
-                      <select 
-                        value={nat}
-                        onChange={e => handleUpdateNature(originalIndex, "mother", nIdx, e.target.value)}
-                        className="appearance-none font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-3 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all shadow-sm"
-                      >
-                        {NATURE_OPTIONS.map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                      <div className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 dropdown-arrow">
-                        <svg className="fill-current h-2.5 w-2.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                      </div>
-                    </div>
+                    <Autocomplete
+                      value={nat}
+                      options={NATURE_OPTIONS}
+                      placeholder="性格..."
+                      onChange={val => handleUpdateNature(originalIndex, "mother", nIdx, val)}
+                      className="w-28 text-center"
+                      inputClassName="font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all shadow-sm"
+                    />
 
                     <div className="flex items-center gap-0.5 select-action-buttons w-10 shrink-0 action-buttons">
                       {(pet.motherNatures || []).length > 1 && (

@@ -14,7 +14,8 @@ import {
   Clipboard,
   Download,
   Camera,
-  Settings
+  Settings,
+  Trash2
 } from "lucide-react";
 import { domToPng } from "modern-screenshot";
 import {
@@ -25,7 +26,9 @@ import {
   NEST_STATUS_OPTIONS,
   INITIAL_TABLE_DATA,
   LIMIT_OPTIONS,
-  THREE_V_OPTIONS
+  THREE_V_OPTIONS,
+  EggTrade,
+  TRADE_TYPE_OPTIONS
 } from "./types";
 import {
   DndContext,
@@ -43,6 +46,9 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableRow } from "./components/SortableRow";
+import { Autocomplete } from "./components/Autocomplete";
+import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath } from "./petHelper";
+
 
 const migratePets = (rawList: any[]): EggPet[] => {
   return rawList.map((p, index) => {
@@ -85,6 +91,27 @@ export default function App() {
     }
     return loaded;
   });
+
+  const [trades, setTrades] = useState<EggTrade[]>(() => {
+    const saved = localStorage.getItem("roco_egg_trades_v1");
+    if (saved) {
+      try {
+        return JSON.parse(saved) as EggTrade[];
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+
+  // Egg trade form states
+  const [newTradeSprite, setNewTradeSprite] = useState("");
+  const [newTradeNature, setNewTradeNature] = useState("");
+  const [newTradeBrand, setNewTradeBrand] = useState("无牌");
+  const [newTradeIs3V, setNewTradeIs3V] = useState(false);
+  const [newTradeIsLimit, setNewTradeIsLimit] = useState(false);
+  const [newTradeType, setNewTradeType] = useState("1换1");
+  const [newTradeNotes, setNewTradeNotes] = useState("");
 
   // Configure dnd-kit sensors with distance activation constraint
   const sensors = useSensors(
@@ -155,6 +182,7 @@ export default function App() {
       try {
         const currentData = {
           pets,
+          trades,
           settings: {
             showWatermarkPanel,
             enableWatermark,
@@ -171,6 +199,9 @@ export default function App() {
             // A data file existed in that directory, we load it into state
             if (Array.isArray(result.data.pets)) {
               setPets(result.data.pets);
+            }
+            if (Array.isArray(result.data.trades)) {
+              setTrades(result.data.trades);
             }
             if (result.data.settings) {
               const s = result.data.settings;
@@ -212,6 +243,9 @@ export default function App() {
             if (Array.isArray(loadedData.pets)) {
               setPets(loadedData.pets);
             }
+            if (Array.isArray(loadedData.trades)) {
+              setTrades(loadedData.trades);
+            }
             if (loadedData.settings) {
               const s = loadedData.settings;
               if (s.showWatermarkPanel !== undefined) setShowWatermarkPanel(s.showWatermarkPanel);
@@ -243,6 +277,7 @@ export default function App() {
 
     setIsSaving(true);
     localStorage.setItem("roco_egg_data_v2", JSON.stringify(pets));
+    localStorage.setItem("roco_egg_trades_v1", JSON.stringify(trades));
     localStorage.setItem("roco_watermark_panel_open", String(showWatermarkPanel));
     localStorage.setItem("roco_watermark_enabled", String(enableWatermark));
     localStorage.setItem("roco_watermark_text", watermarkText);
@@ -255,6 +290,7 @@ export default function App() {
         try {
           const res = await window.electronAPI.saveData({
             pets,
+            trades,
             settings: {
               showWatermarkPanel,
               enableWatermark,
@@ -282,7 +318,7 @@ export default function App() {
       setIsSaving(false);
     }, 600);
     return () => clearTimeout(timer);
-  }, [pets, showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, isLoaded]);
+  }, [pets, trades, showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, isLoaded]);
 
   // Statistics calculation
   const totalPets = pets.length;
@@ -308,7 +344,15 @@ export default function App() {
   // Event handlers
   const handleUpdateSprite = (index: number, name: string) => {
     const updated = [...pets];
-    updated[index].sprite = name;
+    const details = getPetDetails(name);
+    if (details) {
+      updated[index].sprite = details.maxStageName || name;
+      if (details.groups && details.groups.length > 0) {
+        updated[index].groups = [...details.groups];
+      }
+    } else {
+      updated[index].sprite = name;
+    }
     setPets(updated);
   };
 
@@ -449,6 +493,41 @@ export default function App() {
     setPets(updated);
   };
 
+  const handleAddTrade = () => {
+    if (!newTradeSprite || !newTradeSprite.trim()) {
+      showToast("请输入精灵名称", "error");
+      return;
+    }
+    
+    // 自动升级为进化链最高阶
+    const details = getPetDetails(newTradeSprite.trim());
+    const finalSprite = details ? (details.maxStageName || newTradeSprite.trim()) : newTradeSprite.trim();
+
+    const newTrade: EggTrade = {
+      id: `trade-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      sprite: finalSprite,
+      nature: newTradeNature,
+      brand: newTradeBrand,
+      is3V: newTradeIs3V,
+      isLimit: newTradeIsLimit,
+      tradeType: newTradeType,
+      notes: newTradeNotes
+    };
+
+    setTrades([...trades, newTrade]);
+    showToast(`成功添加换蛋需求：${finalSprite}`, "success");
+
+    // 重置部分表单字段，保留一些选项以备连续输入
+    setNewTradeSprite("");
+    setNewTradeNature("");
+    setNewTradeNotes("");
+  };
+
+  const handleDeleteTrade = (id: string) => {
+    setTrades(trades.filter(t => t.id !== id));
+    showToast("已删除换蛋需求", "success");
+  };
+
   const handleReset = () => {
     setActiveModal("reset");
   };
@@ -575,12 +654,24 @@ export default function App() {
       div.className = inputEl.className;
       div.style.display = "inline-flex";
       div.style.alignItems = "center";
-      div.style.justifyContent = "center";
       div.style.minHeight = "28px";
       div.style.whiteSpace = "nowrap";
       div.style.width = "100%";
       div.style.boxSizing = "border-box";
       div.textContent = displayVal || "—";
+
+      // Apply text alignment based on original input classes
+      if (inputEl.classList.contains("text-left")) {
+        div.style.justifyContent = "flex-start";
+        div.style.textAlign = "left";
+      } else if (inputEl.classList.contains("text-right")) {
+        div.style.justifyContent = "flex-end";
+        div.style.textAlign = "right";
+      } else {
+        // Default alignment based on input's natural alignment or center
+        div.style.justifyContent = "center";
+        div.style.textAlign = "center";
+      }
 
       if (!value) {
         div.classList.add("text-slate-400"); // placeholder styling color
@@ -589,8 +680,6 @@ export default function App() {
       // Add left padding preservation if it is the filter search bar input
       if (inputEl.placeholder === "搜索精灵名字...") {
         div.style.paddingLeft = "2.25rem";
-        div.style.textAlign = "left";
-        div.style.justifyContent = "flex-start";
       }
 
       inputEl.parentNode?.replaceChild(div, inputEl);
@@ -645,7 +734,7 @@ export default function App() {
       const cols = Array.from(clonedColGroup.querySelectorAll("col"));
       if (cols.length > 0) {
         cols[0].remove(); // Remove the sorting column col
-        const remainingWidths = ["12.5%", "16.5%", "18.5%", "16.5%", "11%", "12.5%", "12.5%"];
+        const remainingWidths = ["15%", "15.5%", "17.5%", "15.5%", "10.5%", "13%", "13%"];
         const remainingCols = Array.from(clonedColGroup.querySelectorAll("col"));
         remainingCols.forEach((col, idx) => {
           if (remainingWidths[idx]) {
@@ -698,6 +787,16 @@ export default function App() {
     if (clonedWatermarkPanel) {
       clonedWatermarkPanel.remove();
     }
+
+    // Remove trade input form panel and delete buttons from long image export
+    const clonedTradeForm = clone.querySelector("#trade-form-panel");
+    if (clonedTradeForm) {
+      clonedTradeForm.remove();
+    }
+    const clonedDeleteBtns = clone.querySelectorAll(".delete-trade-btn");
+    clonedDeleteBtns.forEach(btn => {
+      btn.remove();
+    });
 
     // Expand overflow containers inside target clone fully, allowing table to fill column percentages naturally
     const overflowDiv = clone.querySelector(".overflow-x-auto") as HTMLElement;
@@ -831,7 +930,7 @@ export default function App() {
       "小粗": "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 font-semibold",
       "小婉": "bg-sky-50 text-sky-700 border-sky-200 font-semibold",
       "单牌": "bg-rose-150 text-rose-700 border-rose-200 font-bold",
-      "普通": "bg-slate-100 text-slate-600 border-slate-200 font-medium"
+      "无牌": "bg-slate-100 text-slate-600 border-slate-200 font-medium"
     };
     return colors[brand] || "bg-gray-100 text-gray-600 border-gray-200";
   };
@@ -1144,12 +1243,12 @@ export default function App() {
             <table className="w-full text-center border-collapse table-fixed min-w-[1300px]">
               <colgroup>
                 <col style={{ width: "4%" }} />
-                <col style={{ width: "11.5%" }} />
-                <col style={{ width: "16%" }} />
-                <col style={{ width: "18%" }} />
-                <col style={{ width: "16%" }} />
-                <col style={{ width: "10.5%" }} />
-                <col style={{ width: "12%" }} />
+                <col style={{ width: "14%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "17%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "10%" }} />
+                <col style={{ width: "13%" }} />
                 <col style={{ width: "12%" }} />
               </colgroup>
               <thead>
@@ -1252,6 +1351,322 @@ export default function App() {
               <Camera className="w-4 h-4 text-white animate-pulse" />
               一键导出长图
             </button>
+          </div>
+        </div>
+
+        {/* 自建换蛋交易看板 */}
+        <div className="border-t border-slate-100 bg-white">
+          {/* 标题 */}
+          <div className="p-6 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
+                <RefreshCw className="w-5 h-5 text-indigo-600" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-800">自建换蛋需求中心</h2>
+                <p className="text-xs text-slate-500 mt-0.5 font-medium">发布并管理您需要的或者可以提供交换的宠物蛋信息</p>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/40">
+              共有 {trades.length} 条需求
+            </span>
+          </div>
+
+          {/* 表单输入区域 */}
+          <div id="trade-form-panel" className="p-6 bg-slate-50/10 border-b border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* 左侧表单内容 */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 精灵名称输入 */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-slate-700">精灵名称</label>
+                <Autocomplete
+                  value={newTradeSprite}
+                  onChange={setNewTradeSprite}
+                  options={ALL_PET_NAMES}
+                  placeholder="输入精灵名称或首字、拼音首字母..."
+                  className="w-full"
+                  inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-medium"
+                />
+              </div>
+
+              {/* 性格需求输入 */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-slate-700">性格需求</label>
+                <Autocomplete
+                  value={newTradeNature}
+                  onChange={setNewTradeNature}
+                  options={NATURE_OPTIONS}
+                  placeholder="输入性格或拼音首字母..."
+                  className="w-full"
+                  inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-medium"
+                />
+              </div>
+
+              {/* 牌子选择 */}
+              <div className="sm:col-span-2 flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-slate-700">牌子</label>
+                <div className="flex flex-wrap gap-2">
+                  {BRAND_OPTIONS.map(brand => (
+                    <button
+                      key={brand}
+                      type="button"
+                      onClick={() => setNewTradeBrand(brand)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                        newTradeBrand === brand
+                          ? 'bg-slate-800 border-slate-800 text-white shadow-sm'
+                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-350'
+                      }`}
+                    >
+                      {brand}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3V、极限选项 与 换蛋类型 */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:col-span-2 py-1">
+                {/* 3V与极限状态开闭开关 */}
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer group select-none">
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={newTradeIs3V}
+                        onChange={e => setNewTradeIs3V(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                    </div>
+                    <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-800 transition-colors">是否3V</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer group select-none">
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={newTradeIsLimit}
+                        onChange={e => setNewTradeIsLimit(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+                    </div>
+                    <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-800 transition-colors">是否极限</span>
+                  </label>
+                </div>
+
+                {/* 换蛋类型选项 */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">换蛋类型</span>
+                  <div className="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200/50 w-fit">
+                    {TRADE_TYPE_OPTIONS.map(type => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setNewTradeType(type)}
+                        className={`px-4.5 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                          newTradeType === type
+                            ? 'bg-white text-slate-850 shadow-sm'
+                            : 'text-slate-500 hover:text-slate-800'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 备注描述 */}
+              <div className="sm:col-span-2 flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-slate-700">备注说明</label>
+                <input
+                  type="text"
+                  value={newTradeNotes}
+                  onChange={e => setNewTradeNotes(e.target.value)}
+                  placeholder="可写具体要求，例如：公母不限、用大婉换、多换一等..."
+                  className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all text-slate-800 placeholder-slate-400 font-medium"
+                />
+              </div>
+            </div>
+
+            {/* 右侧：宠物即时预览区域 */}
+            <div className="lg:col-span-4 flex flex-col gap-4 items-center justify-center h-full min-h-[160px] border border-dashed border-slate-200 rounded-xl p-4 bg-slate-50/50 w-full">
+              {(() => {
+                const tempDetails = getPetDetails(newTradeSprite);
+                const maxPetName = tempDetails ? (tempDetails.maxStageName || newTradeSprite) : newTradeSprite;
+                const finalDetails = tempDetails ? getPetDetails(maxPetName) : null;
+                const spriteFileName = tempDetails ? getSpriteFileName(maxPetName) : null;
+
+                if (tempDetails && spriteFileName) {
+                  return (
+                    <div className="flex flex-col items-center gap-2.5 w-full">
+                      <div className="relative w-18 h-18 bg-white rounded-2xl flex items-center justify-center shadow-md border border-slate-100 overflow-hidden">
+                        <img
+                          src={getImagePath(`images/sprites/${spriteFileName}`)}
+                          alt={maxPetName}
+                          className="w-14 h-14 object-contain"
+                        />
+                        {finalDetails?.types && finalDetails.types.length > 0 && (
+                          <div className="absolute -bottom-1.5 -right-1.5 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50">
+                            <img
+                              src={getImagePath(`images/attributes/${finalDetails.types[0]}.png`)}
+                              alt={finalDetails.types[0]}
+                              className="w-5 h-5 object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-slate-800 flex items-center justify-center gap-1">
+                          {maxPetName}
+                          {newTradeSprite !== maxPetName && (
+                            <span className="text-[10px] font-normal text-slate-400 line-through">({newTradeSprite})</span>
+                          )}
+                        </div>
+                        <div className="text-[10px] text-slate-400 mt-0.5">
+                          进化链最高阶 • 属性: {finalDetails?.types && finalDetails.types.length > 0 ? finalDetails.types.join("/") : "未知"} • 蛋组: {finalDetails?.groups?.join("/") || "未知"}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="text-center py-4">
+                    <Egg className="w-8 h-8 text-slate-300 mx-auto animate-bounce" />
+                    <p className="text-[11px] text-slate-400 mt-2 font-semibold">输入有效精灵名称可实时预览</p>
+                  </div>
+                );
+              })()}
+
+              <button
+                type="button"
+                onClick={handleAddTrade}
+                className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2 shadow-md text-sm cursor-pointer mt-auto"
+              >
+                <Plus className="w-4 h-4 text-white" />
+                加入换蛋卡片墙
+              </button>
+            </div>
+          </div>
+
+          {/* 卡片墙面板 */}
+          <div className="p-6 bg-slate-50/30">
+            {trades.length === 0 ? (
+              <div className="border-2 border-dashed border-slate-200 rounded-2xl py-12 px-4 flex flex-col items-center justify-center text-slate-400 text-center gap-2">
+                <Egg className="w-10 h-10 text-slate-300 stroke-1" />
+                <span className="text-xs font-semibold text-slate-500">暂无换蛋需求看板</span>
+                <span className="text-[10px] text-slate-450">在上方填写需求表单并点击“加入换蛋卡片墙”即可生成</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {trades.map(trade => {
+                  const details = getPetDetails(trade.sprite);
+                  const spriteFileName = details ? getSpriteFileName(trade.sprite) : null;
+                  
+                  return (
+                    <div
+                      key={trade.id}
+                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-4 flex gap-4 relative overflow-hidden group/card"
+                    >
+                      {/* 头像 */}
+                      <div className="relative w-16 h-16 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0">
+                        {spriteFileName ? (
+                          <img
+                            src={getImagePath(`images/sprites/${spriteFileName}`)}
+                            alt={trade.sprite}
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <Egg className="w-8 h-8 text-slate-300" />
+                        )}
+                        {details?.types && details.types.length > 0 && (
+                          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50">
+                            <img
+                              src={getImagePath(`images/attributes/${details.types[0]}.png`)}
+                              alt={details.types[0]}
+                              className="w-4 h-4 object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* 需求详情 */}
+                      <div className="flex-1 flex flex-col min-w-0 justify-between">
+                        {/* 名字与交易模式标签 */}
+                        <div className="flex items-start justify-between gap-1.5">
+                          <h4 className="text-sm font-bold text-slate-800 truncate" title={trade.sprite}>
+                            {trade.sprite}
+                          </h4>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 border ${
+                              trade.tradeType === "包公"
+                                ? "bg-blue-50 text-blue-600 border-blue-150"
+                                : trade.tradeType === "包母"
+                                ? "bg-pink-50 text-pink-650 border-pink-150"
+                                : "bg-purple-50 text-purple-650 border-purple-150"
+                            }`}
+                          >
+                            {trade.tradeType}
+                          </span>
+                        </div>
+
+                        {/* 属性：性格/牌子 */}
+                        <div className="flex flex-wrap gap-x-3 gap-y-1.5 my-1 text-[11px] font-medium text-slate-500">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-slate-400">性格:</span>
+                            <span className="text-slate-700 font-semibold">{trade.nature || "不限"}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-slate-400">牌子:</span>
+                            <span className={`px-1.5 py-0.25 rounded text-[10px] border ${getBrandStyle(trade.brand)}`}>
+                              {trade.brand}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* 是否3V/是否极限 */}
+                        <div className="flex items-center gap-2">
+                          {trade.is3V && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white shadow-sm flex items-center gap-0.5">
+                              ✓ 3V
+                            </span>
+                          )}
+                          {trade.isLimit && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm flex items-center gap-0.5">
+                              ★ 极限
+                            </span>
+                          )}
+                          {!trade.is3V && !trade.isLimit && (
+                            <span className="text-[9px] font-semibold text-slate-400">
+                              常规配置
+                            </span>
+                          )}
+                        </div>
+
+                        {/* 备注 */}
+                        {trade.notes ? (
+                          <p className="text-[10px] text-slate-400 italic mt-2 border-t border-slate-50 pt-1.5 line-clamp-2" title={trade.notes}>
+                            “{trade.notes}”
+                          </p>
+                        ) : (
+                          <div className="h-2"></div>
+                        )}
+                      </div>
+
+                      {/* 删除按钮 */}
+                      <button
+                        onClick={() => handleDeleteTrade(trade.id)}
+                        className="delete-trade-btn absolute top-3 right-3 p-1 text-slate-350 hover:text-rose-600 rounded-lg hover:bg-rose-50/50 opacity-0 group-hover/card:opacity-100 transition-all cursor-pointer border border-transparent mr-0"
+                        title="删除该条换蛋需求"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

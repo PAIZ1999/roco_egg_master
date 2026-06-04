@@ -1,43 +1,50 @@
-# Notes: GitHub 上传与项目管理研究笔记
+# Research Notes
 
-## 1. Git 初始化与提交流程
-- 本地项目当前未建立 Git 仓库。
-- 需要在项目根目录下执行 `git init` 进行初始化。
-- 经过检查，原有的 `.gitignore` 缺少对 `dist-electron/` 目录的过滤，该目录下包含打包好的桌面免安装可执行程序（大文件）。现已手动修改 `.gitignore` 并追加了 `dist-electron/` 这一行。
-- 项目根目录下存在一个 `宣传视频.mp4`，文件大小为 15MB 左右，可以提交至 Git，但如果不希望上传，可引导用户加入 `.gitignore`。
+## 拼音首字母匹配算法
+我们在 `scratch/verify_pinyin_dataset.js` 中成功使用了如下的字符区间匹配算法来提取首字母。为了 100% 精确，使用了边界数组进行定位：
 
-## 2. GitHub 仓库推送步骤
-1. 新建仓库时，不要勾选 "Add a README.md" 或 ".gitignore" 以免产生初始提交冲突。
-2. 关联远程并推送到 `main` 分支的命令：
-   ```bash
-   git remote add origin git@github.com:username/repository.git
-   # 或者 HTTPS 地址:
-   # git remote add origin https://github.com/username/repository.git
-   git branch -M main
-   git push -u origin main
-   ```
+```typescript
+const PINYIN_BOUNDS = [
+  { char: '啊', pinyin: 'a' },
+  { char: '芭', pinyin: 'b' },
+  { char: '擦', pinyin: 'c' },
+  { char: '搭', pinyin: 'd' },
+  { char: '蛾', pinyin: 'e' },
+  { char: '发', pinyin: 'f' },
+  { char: '噶', pinyin: 'g' },
+  { char: '哈', pinyin: 'h' },
+  { char: '击', pinyin: 'j' },
+  { char: '喀', pinyin: 'k' },
+  { char: '垃', pinyin: 'l' },
+  { char: '妈', pinyin: 'm' },
+  { char: '拿', pinyin: 'n' },
+  { char: '哦', pinyin: 'o' },
+  { char: '啪', pinyin: 'p' },
+  { char: '期', pinyin: 'q' },
+  { char: '然', pinyin: 'r' },
+  { char: '撒', pinyin: 's' },
+  { char: '塌', pinyin: 't' },
+  { char: '挖', pinyin: 'w' },
+  { char: '昔', pinyin: 'x' },
+  { char: '压', pinyin: 'y' },
+  { char: '匝', pinyin: 'z' }
+];
+```
 
-## 3. GitHub 项目管理核心概念
-- **GitHub Issues**: 跟踪 Bug、功能请求、技术债。
-  - 标签管理 (Labels): `bug`, `enhancement`, `documentation`, `chore`。
-  - 分配人 (Assignees): 分配给具体的开发者。
-- **GitHub Projects (看板)**:
-  - 采用敏捷开发的看板模式，自定义列：`Backlog` (待办池), `Todo` (本周计划), `In Progress` (开发中), `In Review` (测试与审查), `Done` (已完成)。
-  - 可以设置自动化规则：当 Issue 被分配或标记时自动移动到对应列。
-- **Milestones (里程碑)**:
-  - 将多个 Issue 或 Pull Request 绑定至一个里程碑，用来管理具体的版本迭代周期（例如 `v1.0.0-Beta`）。
-  - 可以查看当前里程碑的完成百分比。
-- **Smart Commits (智能提交关联)**:
-  - 在 commit message 中使用特定关键词直接关联或关闭 Issue：
-    - 关联：`git commit -m "feat: 增加小婉与小粗统计信息 (#12)"` （其中 `#12` 为 Issue 编号）。
-    - 关闭：`git commit -m "fix: 修复长图导出裁剪问题 (close #15)"` 或 `closes #15`、`fixes #15`。推送后 GitHub 会自动将对应的 Issue 状态更新为 Closed。
+配合 `localeCompare` 判定，能完全覆盖 351 个精灵中文名字对应的拼音首字母。
 
-## 4. 解决网络与登录凭据与代理挂起问题
-- **身份认证挂起**：当使用 HTTPS 链接在后台推送时，可能因为缺乏 Git 凭证管理器弹窗而导致进程挂起。
-  - 解决方案：使用 GitHub Personal Access Token (PAT) 经典版，赋予 `repo` 权限。
-  - 将 Token 嵌入 URL 中进行无交互推送：
-    `git remote set-url origin https://<TOKEN>@github.com/PAIZ1999/roco_egg_master.git`
-    `git push -u origin main`
-  - 该方法可绕过系统弹窗直接完成认证。
-- **代理问题连接挂起**：本地全局 Git 配置了 `http.proxy` 可能会因为代理软件未运行而无法连接 GitHub。
-  - 解决方案：使用 `git config --local http.proxy ""` 和 `git config --local https.proxy ""` 临时清空当前项目的代理设置，使用直连网络进行推送。
+## 精灵图片匹配规则
+精灵图片放在 `images/sprites/` 目录下，文件名格式通常为 `[精灵名称]_[其他信息].png` 或 `[精灵名称].png`。
+我们需要遍历 `src/sprite_files.json` 的文件名，对输入的精灵名称进行模糊搜索：
+1. 精确匹配：文件名除去 `.png` 后等于 `精灵名`。
+2. 前缀匹配：文件名以 `精灵名_` 开头。
+3. 如果依然匹配不到，回退到 `images/sprites/[精灵名].png`，或者无图时的占位元素。
+
+## 进化链高阶提取
+`images/洛克王国_蛋组精灵表.json` 中的每项纪录都包含 `family_chain` 字段，类型为 string，格式如 `"喵喵 → 武斗酷猫 → 圣藤草王"` 或者直接是 `"某个精灵"`。
+通过对 `family_chain` 进行按 `" → "` 拆分，其最后一个元素即为该精灵对应进化链的最高阶精灵名称：
+```typescript
+const parts = item.family_chain.split(" → ");
+const maxStageName = parts[parts.length - 1].trim();
+```
+输入低阶精灵名字并完成选定后，自动替换为最高阶名称，再填充对应的蛋组和系别。
