@@ -56,16 +56,17 @@ const STATS_WITH_IMAGES = ["生命", "物攻", "速度", "魔攻", "物防", "�
 
 const getStatBadgeStyle = (stat: string): string => {
   const colors: Record<string, string> = {
-    "无": "bg-slate-50 text-slate-400 border-slate-200 hover:bg-slate-100",
-    "生命": "bg-white text-rose-500 border-rose-300 hover:bg-rose-50/50 shadow-2xs",
-    "物攻": "bg-white text-amber-500 border-amber-300 hover:bg-amber-50/50 shadow-2xs",
-    "速度": "bg-white text-emerald-500 border-emerald-300 hover:bg-emerald-50/50 shadow-2xs",
-    "魔攻": "bg-white text-purple-500 border-purple-300 hover:bg-purple-50/50 shadow-2xs",
-    "物防": "bg-white text-blue-500 border-blue-300 hover:bg-blue-50/50 shadow-2xs",
-    "魔防": "bg-white text-cyan-500 border-cyan-300 hover:bg-cyan-50/50 shadow-2xs",
+    "无": "bg-slate-200 text-slate-500 border-slate-350 hover:bg-slate-300",
+    "生命": "bg-rose-200 text-rose-800 border-rose-400 hover:bg-rose-300 shadow-2xs",
+    "物攻": "bg-amber-200 text-amber-900 border-amber-400 hover:bg-amber-300 shadow-2xs",
+    "速度": "bg-emerald-200 text-emerald-800 border-emerald-400 hover:bg-emerald-300 shadow-2xs",
+    "魔攻": "bg-purple-200 text-purple-800 border-purple-400 hover:bg-purple-300 shadow-2xs",
+    "物防": "bg-blue-200 text-blue-800 border-blue-400 hover:bg-blue-300 shadow-2xs",
+    "魔防": "bg-cyan-200 text-cyan-800 border-cyan-400 hover:bg-cyan-300 shadow-2xs",
   };
   return colors[stat] || "bg-slate-50 text-slate-700 border-slate-200";
 };
+
 
 interface SortableCardProps {
   key?: string;
@@ -185,14 +186,13 @@ export function SortableCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all grid grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${
-        isDragging ? "shadow-lg ring-2 ring-indigo-200 bg-slate-50/90" : ""
-      }`}
+      className={`bg-white rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all grid grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${isDragging ? "shadow-lg ring-2 ring-indigo-200 bg-slate-50/90" : ""
+        }`}
     >
       {/* Left Column: Avatar & Meta (occupies 4/12 cols, approx 33% width) */}
-      <div className="col-span-4 flex flex-col justify-between items-center gap-1 border-r border-slate-100 pr-2 relative">
+      <div className="col-span-4 flex flex-col items-center border-r border-slate-100 pr-2 relative min-h-0">
         {/* Drag handle & Delete row */}
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full pb-1.5">
           <div
             {...attributes}
             {...listeners}
@@ -211,80 +211,83 @@ export function SortableCard({
           </button>
         </div>
 
-        {/* Large Avatar Container */}
-        <div className="w-full aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
-          {spriteUrl ? (
-            <img
-              src={spriteUrl}
-              alt={spriteName}
-              className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover/avatar:scale-110"
-            />
-          ) : (
-            <Egg className="w-7 h-7 text-slate-300 animate-pulse" />
-          )}
-
-          {/* Type Badge absolute overlay */}
-          {petDetails && petDetails.types && petDetails.types.length > 0 && (
-            <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 z-10">
+        {/* Vertical Align Avatar, Name and Types with gap-1.5 */}
+        <div className="flex flex-col items-center gap-1.5 w-full flex-1 justify-center">
+          {/* Large Avatar Container */}
+          <div className="w-full aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
+            {spriteUrl ? (
               <img
-                src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
-                alt={petDetails.types[0]}
-                className="w-3.5 h-3.5 object-contain"
+                src={spriteUrl}
+                alt={spriteName}
+                className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover/avatar:scale-110"
               />
+            ) : (
+              <Egg className="w-7 h-7 text-slate-300 animate-pulse" />
+            )}
+
+            {/* Type Badge absolute overlay */}
+            {petDetails && petDetails.types && petDetails.types.length > 0 && (
+              <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 z-10">
+                <img
+                  src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
+                  alt={petDetails.types[0]}
+                  className="w-3.5 h-3.5 object-contain"
+                />
+              </div>
+            )}
+
+            {/* Top Overlays */}
+            {isPet3V() && (
+              <span className="absolute top-1 left-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-emerald-500 text-white shadow-xs shrink-0 scale-90 origin-top-left z-15">
+                3V
+              </span>
+            )}
+            {pet.isLimit === "极限" && (
+              <span className="absolute top-1 right-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-amber-500 text-white shadow-xs shrink-0 scale-90 origin-top-right z-15">
+                极限
+              </span>
+            )}
+          </div>
+
+          {/* Name input underneath avatar */}
+          <div className="w-full text-center shrink-0">
+            <Autocomplete
+              value={pet.sprite}
+              options={ALL_PET_NAMES}
+              placeholder="输入精灵..."
+              onChange={(val) => handleUpdateSprite(originalIndex, val)}
+              className="w-full text-center"
+              inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-center"
+            />
+          </div>
+
+          {/* Type badges: circular images */}
+          {petDetails && petDetails.types && petDetails.types.length > 0 && (
+            <div className="flex gap-1 justify-center items-center flex-wrap w-full shrink-0">
+              {petDetails.types.map((t) => {
+                const iconUrl = getImagePath(`images/attributes/${t}.png`);
+                const badgeStyle = typeColorMap[t] || "bg-slate-50 text-slate-600 border-slate-205";
+                return (
+                  <span
+                    key={t}
+                    className={`inline-flex items-center justify-center p-0.5 rounded-full border shrink-0 shadow-xs ${badgeStyle}`}
+                    title={t}
+                  >
+                    <img
+                      src={iconUrl}
+                      alt={t}
+                      className="w-3.5 h-3.5 object-contain shrink-0"
+                    />
+                  </span>
+                );
+              })}
             </div>
           )}
-
-          {/* Top Overlays */}
-          {isPet3V() && (
-            <span className="absolute top-1 left-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-emerald-500 text-white shadow-xs shrink-0 scale-90 origin-top-left z-15">
-              3V
-            </span>
-          )}
-          {pet.isLimit === "极限" && (
-            <span className="absolute top-1 right-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-amber-500 text-white shadow-xs shrink-0 scale-90 origin-top-right z-15">
-              极限
-            </span>
-          )}
         </div>
-
-        {/* Name input underneath avatar */}
-        <div className="w-full text-center shrink-0">
-          <Autocomplete
-            value={pet.sprite}
-            options={ALL_PET_NAMES}
-            placeholder="输入精灵..."
-            onChange={(val) => handleUpdateSprite(originalIndex, val)}
-            className="w-full text-center"
-            inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-center"
-          />
-        </div>
-
-        {/* Type badges: circular images */}
-        {petDetails && petDetails.types && petDetails.types.length > 0 && (
-          <div className="flex gap-1 justify-center items-center flex-wrap w-full shrink-0">
-            {petDetails.types.map((t) => {
-              const iconUrl = getImagePath(`images/attributes/${t}.png`);
-              const badgeStyle = typeColorMap[t] || "bg-slate-50 text-slate-600 border-slate-205";
-              return (
-                <span
-                  key={t}
-                  className={`inline-flex items-center justify-center p-0.5 rounded-full border shrink-0 shadow-xs ${badgeStyle}`}
-                  title={t}
-                >
-                  <img
-                    src={iconUrl}
-                    alt={t}
-                    className="w-3.5 h-3.5 object-contain shrink-0"
-                  />
-                </span>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {/* Right Column: Editing settings (occupies 8/12 cols, approx 67% width) */}
-      <div className="col-span-8 flex flex-col justify-between gap-1.5">
+      <div className="col-span-8 flex flex-col justify-start gap-1.5">
         {/* Father & Mother Configurations */}
         <div className="grid grid-cols-2 gap-2">
           {/* Father Column */}
@@ -457,26 +460,8 @@ export function SortableCard({
             </div>
           </div>
 
-          {/* Status, Brand, Limit Grid */}
-          <div className="grid grid-cols-3 gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
-            {/* Status Column */}
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[9px] font-bold text-slate-400 select-none">状态</span>
-              <select
-                value={pet.status}
-                onChange={(e) => handleUpdateStatus(originalIndex, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors ${getStatusStyle(
-                  pet.status
-                )}`}
-              >
-                {NEST_STATUS_OPTIONS.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-            </div>
-
+          {/* Brand, Limit Grid */}
+          <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
             {/* Brand Column */}
             <div className="flex flex-col gap-0.5">
               <span className="text-[9px] font-bold text-slate-400 select-none">牌子</span>
@@ -501,11 +486,10 @@ export function SortableCard({
               <select
                 value={pet.isLimit}
                 onChange={(e) => handleUpdateLimit(originalIndex, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${
-                  pet.isLimit === "极限"
-                    ? "bg-amber-100 border-amber-300 text-amber-800 font-bold"
-                    : "bg-slate-105 border-slate-205 text-slate-650 font-medium"
-                }`}
+                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "极限"
+                  ? "bg-amber-100 border-amber-300 text-amber-800 font-bold"
+                  : "bg-slate-105 border-slate-205 text-slate-650 font-medium"
+                  }`}
               >
                 {LIMIT_OPTIONS.map((opt) => (
                   <option key={opt} value={opt}>
@@ -516,8 +500,28 @@ export function SortableCard({
             </div>
           </div>
 
+          {/* Status Column (Standalone Row) */}
+          <div className="bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[9px] font-bold text-slate-400 select-none">状态</span>
+              <select
+                value={pet.status}
+                onChange={(e) => handleUpdateStatus(originalIndex, e.target.value)}
+                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors ${getStatusStyle(
+                  pet.status
+                )}`}
+              >
+                {NEST_STATUS_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           {/* Nest Egg Count Floating Overlay / Row */}
-          {pet.status === "有现蛋" && (
+          {pet.status === "有现蛋" ? (
             <div className="flex items-center justify-between gap-1.5 bg-amber-50/50 border border-amber-200/40 rounded-lg px-2 py-1 mt-0.5">
               <span className="text-[10px] font-bold text-amber-800 flex items-center gap-1">
                 <Egg className="w-3 h-3 text-amber-600 animate-bounce" />
@@ -531,6 +535,58 @@ export function SortableCard({
                 className="w-10 text-center text-xs font-bold text-amber-950 bg-white border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-400 py-0.5 px-0.5 shadow-3xs"
               />
             </div>
+          ) : (
+            (() => {
+              let containerClass = "bg-indigo-50/50 border-indigo-200/40";
+              let dotClass = "bg-indigo-500";
+              let textClass = "text-indigo-850";
+              let statusTextClass = "text-indigo-650 bg-indigo-100/60";
+              let statusLabel = "已就绪";
+              let desc = "当前蛋窝状态已就绪";
+              let isPing = false;
+
+              if (pet.status === "正在孵") {
+                containerClass = "bg-sky-50/50 border-sky-200/40";
+                dotClass = "bg-sky-500";
+                textClass = "text-sky-850";
+                statusTextClass = "text-sky-650 bg-sky-100/60";
+                statusLabel = "孵化中";
+                desc = "精灵蛋在窝里温暖孵化";
+                isPing = true;
+              } else if (pet.status === "已撤窝") {
+                containerClass = "bg-slate-100/30 border-slate-200/30";
+                dotClass = "bg-slate-400";
+                textClass = "text-slate-600";
+                statusTextClass = "text-slate-500 bg-slate-100/80";
+                statusLabel = "空闲中";
+                desc = "蛋窝空闲，可随时上架";
+              } else if (pet.status === "投资中") {
+                containerClass = "bg-purple-50/50 border-purple-200/40";
+                dotClass = "bg-purple-500";
+                textClass = "text-purple-850";
+                statusTextClass = "text-purple-650 bg-purple-100/60";
+                statusLabel = "投资中";
+                desc = "暂无精灵，投资培养中";
+                isPing = true;
+              }
+
+              return (
+                <div className={`flex items-center justify-between gap-1.5 border rounded-lg px-2 py-1 mt-0.5 min-h-[26px] ${containerClass}`}>
+                  <span className={`text-[10px] font-bold ${textClass} flex items-center gap-1.5`}>
+                    <span className="relative flex h-1.5 w-1.5 shrink-0">
+                      {isPing && (
+                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotClass}`}></span>
+                      )}
+                      <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${dotClass}`}></span>
+                    </span>
+                    {desc}
+                  </span>
+                  <span className={`text-[9px] font-bold px-1.5 py-0.25 rounded shrink-0 ${statusTextClass}`}>
+                    {statusLabel}
+                  </span>
+                </div>
+              );
+            })()
           )}
         </div>
       </div>

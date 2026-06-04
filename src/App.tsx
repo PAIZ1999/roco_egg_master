@@ -697,11 +697,27 @@ export default function App() {
       div.className = inputEl.className;
       div.style.display = "inline-flex";
       div.style.alignItems = "center";
-      div.style.minHeight = "28px";
       div.style.whiteSpace = "nowrap";
-      div.style.width = "100%";
       div.style.boxSizing = "border-box";
       div.textContent = displayVal || "—";
+
+      // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
+      if (originalEl) {
+        const computedStyle = window.getComputedStyle(originalEl);
+        div.style.fontSize = computedStyle.fontSize;
+        div.style.fontWeight = computedStyle.fontWeight;
+        div.style.lineHeight = computedStyle.lineHeight;
+        div.style.color = computedStyle.color;
+        div.style.padding = computedStyle.padding;
+        div.style.height = computedStyle.height;
+        div.style.minHeight = computedStyle.minHeight;
+        
+        // Custom width: keep auto-width for w-full elements to adapt to 1200px container,
+        // otherwise lock in the computed width to prevent collapse of fixed-width elements (like w-10)
+        if (!originalEl.classList.contains("w-full")) {
+          div.style.width = computedStyle.width;
+        }
+      }
 
       // Apply text alignment based on original input classes
       if (inputEl.classList.contains("text-left")) {
@@ -745,13 +761,33 @@ export default function App() {
       div.style.appearance = "none";
       div.style.whiteSpace = "nowrap";
       div.style.wordBreak = "keep-all";
-      div.style.minHeight = "24px";
-      div.style.width = "100%";
       div.style.boxSizing = "border-box";
-      // Clear extra right/left padding that was reserved for select arrows to prevent squeezing & wrapping
-      div.style.paddingLeft = "8px";
-      div.style.paddingRight = "8px";
       div.textContent = selectedText;
+
+      // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
+      if (originalEl) {
+        const computedStyle = window.getComputedStyle(originalEl);
+        div.style.fontSize = computedStyle.fontSize;
+        div.style.fontWeight = computedStyle.fontWeight;
+        div.style.lineHeight = computedStyle.lineHeight;
+        div.style.color = computedStyle.color;
+        
+        // If it's a full-width select (status, brand, limit), clear excess padding to avoid wrapping.
+        // For pill-badges (egg groups), keep computed padding.
+        if (originalEl.classList.contains("w-full")) {
+          div.style.paddingLeft = "4px";
+          div.style.paddingRight = "4px";
+        } else {
+          div.style.padding = computedStyle.padding;
+        }
+        div.style.height = computedStyle.height;
+        div.style.minHeight = computedStyle.minHeight;
+
+        // Custom width: keep auto-width for w-full elements, otherwise lock in computed width
+        if (!originalEl.classList.contains("w-full")) {
+          div.style.width = computedStyle.width;
+        }
+      }
 
       selectEl.parentNode?.replaceChild(div, selectEl);
     });
@@ -1358,17 +1394,17 @@ export default function App() {
         </AnimatePresence>
 
         {/* 我的蛋窝点看板标题 */}
-        <div className="py-3 px-5 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-6 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-indigo-50 rounded-xl border border-indigo-100/50">
-              <Egg className="w-4 h-4 text-indigo-600 animate-pulse" />
+            <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
+              <Egg className="w-5 h-5 text-indigo-600 animate-pulse" />
             </div>
             <div>
-              <h2 id="nest-center-title" className="text-sm font-bold text-slate-800">我的精灵蛋窝中心</h2>
-              <p className="text-[10px] text-slate-400 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
+              <h2 id="nest-center-title" className="text-lg font-bold text-slate-800">我的精灵蛋窝中心</h2>
+              <p className="text-xs text-slate-500 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
             </div>
           </div>
-          <span className="text-[10px] font-bold text-slate-500 bg-slate-100/80 px-2 py-0.5 rounded-full border border-slate-200/40">
+          <span className="text-xs font-semibold text-slate-500 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/40">
             当前有 {filteredPets.length} 个蛋窝
           </span>
         </div>
