@@ -1,50 +1,51 @@
-# Research Notes: 换蛋中心 UI 优化设计设计
+# Egg Nest Card Optimization Notes
 
-## 当前布局缺点分析
-1. **输入面板过高、太空**：
-   - 采用 `lg:col-span-8` 和 `lg:col-span-4` 的并排。
-   - `col-span-4` 只包含一个非常大的虚线预览框和一个 "加入换蛋卡片墙" 按钮。当精灵名为空时，这里几乎全白；输入时也显得很空。
-   - 左侧输入框每行 2 列，有很多多余的空白。
-   - 牌子选择是一整排大按钮，占用了一整行，不够精致。
-2. **操作路径长**：
-   - 输入完精灵名字和性格，需要把视线移到最右边点击“加入卡片墙”，整体表单不连贯。
+## 1. Avatar & Layout Restructuring
+- Move the `Autocomplete` name input from the right-hand column (`col-span-8`) to the left-hand column (`col-span-4`), positioning it directly under the sprite avatar.
+- Center-align the text and input border inside the sprite name Autocomplete.
+- Convert the type labels from text badges to circular image badges using the PNG images in `images/attributes/*.png`, and place them directly under the sprite name in the left column.
+- Left column layout:
+  - Row 1: Drag handle (left) and delete button (right).
+  - Row 2: Large avatar container (takes up the bulk of width).
+  - Row 3: Sprite name input (centered, bold).
+  - Row 4: Type icon images (centered, horizontal flow).
+- Right column layout:
+  - Takes up `col-span-8`.
+  - Removes the sprite name input from its header (so the parents config grid starts immediately, saving vertical space).
 
-## 优化设计方案
+## 2. Parent Configurations & Gender Badges
+- Add male and female icons/badges next to the "父方配置" and "母方配置" headers:
+  - Father: "父方配置 ♂" (Mars icon in blue)
+  - Mother: "母方配置 ♀" (Venus icon in pink)
 
-### 1. 紧凑的“添加需求”面板
-我们将 `#trade-form-panel` 重新设计为扁平化、流式卡片，将精灵头像预览嵌入到表单中，直接与精灵输入框进行视觉绑定。
-- **精灵名称 + 头像联动**：
-  - 使用一个 Flex 布局。左侧是一个高品质的 48x48 微型卡片（用于展示宠物头像，如果为空则显示默认 Egg 图标，并带上系别小角标）。
-  - 右侧是 `Autocomplete` 输入框。
-  - 下方显示精灵的简要信息（属性、蛋组），如 `精灵详情: [水蓝蓝] 属性: 水 | 蛋组: 动物组/魔力组`。
-- **紧凑的网格排版**：
-  - 将所有表单项分为更合理、更连贯的格栅，例如 4 列网格（在 md/lg 屏幕下）：
-    - **第一列**：精灵名称与预览（Avatar + Autocomplete）+ 蛋组属性提示。
-    - **第二列**：性格需求（Autocomplete）。
-    - **第三列**：牌子选择（采用更精致的下拉框 `<select>` 或更紧凑的迷你横向按钮组，为了极致紧凑与直观，可以用一个带有美观底色的 Badge 切换器或精美的小下拉框）。
-    - **第四列**：备注说明（Input）。
-  - 在它们下方或右侧并排排列：
-    - 3V 开关、极限开关、换蛋类型 Tab（包公/包母/1换1）以及 "加入墙" 按钮。
-- **表单的整体视觉对齐**：
-  - 我们可以将“添加需求”做成一个类似横向 Bar 或者卡片里的紧凑双栏：
-    - **第一栏 (主要信息)**：头像预览 + 精灵名称 (Autocomplete) | 性格需求 (Autocomplete) | 备注说明 (Input)。
-    - **第二栏 (规格与动作)**：换蛋类型 Tab (包公/包母/1换1) | 牌子 (Select/Mini Buttons) | 3V 与 极限 开关 | [加入换蛋卡片墙] 按钮。
+## 3. Stat Icons & PNG Images Integration
+Instead of custom React SVGs or Lucide icons, all six main stats (except "无") will be rendered using local PNG images located in `images/6围/`.
+- **生命**: `images/6围/生命.png`
+- **物攻**: `images/6围/物攻.png`
+- **魔攻**: `images/6围/魔攻.png`
+- **物防**: `images/6围/物防.png`
+- **魔防**: `images/6围/魔防.png`
+- **速度**: `images/6围/速度.png`
+- **无**: Renders Lucide `Minus` component (as a gray horizontal line representing no stat).
 
-让我们具体看一下这样排版后的 HTML 结构。
-如果我们把表单分成两行：
-- **第一行 (核心信息)**：
-  - 精灵名称 (带左侧头像预览)
-  - 性格需求
-  - 备注说明
-- **第二行 (属性/类型/提交)**：
-  - 牌子选择 (更精致小巧)
-  - 3V 开关 & 极限开关 (紧凑并排)
-  - 换蛋类型 Tab ("包公", "包母", "1换1")
-  - 提交按钮
+The path is resolved through `getImagePath('images/6围/[StatName].png')` to support both Electon file:// protocol and normal web dev environments.
 
-这样两行在 md 级以上并排，在 lg 以上会非常紧凑精致，没有任何无意义的空白！
+## 4. Parent Configuration Grid Enlargement
+To make the parents config area stand out and be easier to read/edit:
+- **Font size**: Increase text inside nature input and headers from `text-[10px]` to `text-xs` (or `text-[11px]`).
+- **Input Padding**: Increase size of inputs and autocompletes.
+- **Button Icons**: Keep `PlusCircle` and `MinusCircle` readable at `w-3.5 h-3.5`.
+- **Stat Badges Size**: Resize stat circle container from `w-7 h-7` to `w-8.5 h-8.5`. Make the inner `<img>` size `w-5.5 h-5.5` to show details clearly.
+- **Color styling**: Ensure gender icons `Mars` and `Venus` have vibrant, high-contrast colors matching their respective genders.
+- **Grid Layout**: Maintain the responsive structure but expand the inner padding and flex gaps of the parent configuration forms.
 
-### 2. 导出长图的兼容性
-- 导出长图时，`#trade-form-panel` 会被隐藏，所以我们重新排版该面板不会影响长图。
-- 我们需要检查 `clonedDeleteBtns` 和其他元素，确保它们在克隆树里能够正确移除。
-- 卡片墙面板的网格和卡片在长图中应该保持整洁美观。
+## 5. Further Card Styling & Usability Refinement
+- **Removed Nature Plus Button**: Removed the "+" button next to parents' natures (since adding multiple natures is rarely used and makes the card cluttered), leaving only the minus button if multiple natures exist.
+- **Enhanced Stat Icon Contrast**: Shifted the 6-stat badge backgrounds from solid semi-transparent colors (which made PNG icons muddy) to clean white (`bg-white`) with slightly deeper colored borders and subtle shadow (`shadow-2xs`), making the color-coded PNG images highly vibrant and readable.
+- **Font & Text Scaling**: Upgraded font-sizes across the card to ensure high legibility.
+  - Sprite name: Enlarged to `text-sm font-black text-slate-900`.
+  - Natures: Upgraded autocomplete input size to `text-sm font-bold text-slate-800` with wider padding (`py-2 px-2.5`) and larger dropdowns.
+  - Selects (status, brand, limit): Changed to `text-xs font-black` with increased padding.
+  - Egg Group and Nest count: Changed to `text-xs font-bold` with enlarged input sizes.
+- **Export Image Nested Title**: Introduced a "我的精灵蛋窝中心" header above the grid in real-time DOM. In `handleExportLongImage`, the title text in clone DOM is dynamically replaced with "我的窝点" (similar to "我想换的蛋"), matching the requirements.
+

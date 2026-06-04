@@ -11,6 +11,7 @@ export interface EggPet {
   isLimit: string;
   is3V: string;
   hideStats?: boolean;
+  eggCount?: string;
 }
 
 export interface EggTrade {
@@ -39,7 +40,7 @@ export const NATURE_OPTIONS = [
   // 物防+
   "坦率 (+物防 -生命)", "稳重 (+物防 -物攻)", "天真 (+物防 -魔攻)", "懒散 (+物防 -魔防)", "悠闲 (+物防 -速度)",
   // 魔防+
-  "焦虑 (+魔防 -生命)", "警惕 (+魔防 -物攻)", "害羞 (+魔防 -魔攻)", "温顺 (+魔防 -物防)", "慎重 (+魔防 -速度)",
+  "焦虑 (+魔防 -生命)", "警惕 (+魔防 -物攻)", "害羞 (+魔防 -魔攻)", "温顺 (+物防 -物防)", "慎重 (+魔防 -速度)",
   // 速度+
   "热情 (+速度 -生命)", "胆小 (+速度 -物攻)", "开朗 (+速度 -魔攻)", "急躁 (+速度 -物防)", "莽撞 (+速度 -魔防)",
   // 生命+
@@ -74,7 +75,8 @@ export const INITIAL_TABLE_DATA: EggPet[] = [
     brand: "大婉", 
     status: "有现蛋", 
     isLimit: "极限", 
-    is3V: "3V" 
+    is3V: "3V",
+    eggCount: "1"
   }
 ];
 

@@ -48,9 +48,9 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
 } from "@dnd-kit/sortable";
-import { SortableRow } from "./components/SortableRow";
+import { SortableCard } from "./components/SortableCard";
 import { Autocomplete } from "./components/Autocomplete";
 import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath } from "./petHelper";
 
@@ -85,7 +85,8 @@ const migratePets = (rawList: any[]): EggPet[] => {
       status: p.status || NEST_STATUS_OPTIONS[0],
       isLimit: p.isLimit === "是" ? "极限" : (p.isLimit === "否" ? "非极限" : (p.isLimit || "非极限")),
       is3V: p.is3V === "是" ? "3V" : (p.is3V === "" || !p.is3V ? "否" : p.is3V),
-      hideStats: !!p.hideStats
+      hideStats: !!p.hideStats,
+      eggCount: p.eggCount || "1"
     };
   });
 };
@@ -360,6 +361,9 @@ export default function App() {
   }, {} as Record<string, number>);
 
   const hasEggsCount = pets.filter(p => p.status === "有现蛋").length;
+  const totalEggsCount = pets
+    .filter(p => p.status === "有现蛋")
+    .reduce((sum, p) => sum + parseInt(p.eggCount || "1", 10), 0);
   const limitsCount = pets.filter(p => p.isLimit === "极限" && p.status === "有现蛋").length;
   const isPet3V = (p: EggPet) => {
     if (p.hideStats) return false;
@@ -415,6 +419,12 @@ export default function App() {
   const handleUpdateHideStats = (index: number, hide: boolean) => {
     const updated = [...pets];
     updated[index].hideStats = hide;
+    setPets(updated);
+  };
+
+  const handleUpdateEggCount = (index: number, count: string) => {
+    const updated = [...pets];
+    updated[index].eggCount = count;
     setPets(updated);
   };
 
@@ -515,7 +525,8 @@ export default function App() {
       status: NEST_STATUS_OPTIONS[0],
       isLimit: "非极限",
       is3V: "否",
-      hideStats: false
+      hideStats: false,
+      eggCount: "1"
     };
     setPets([...pets, newPet]);
   };
@@ -746,9 +757,11 @@ export default function App() {
     });
 
     // Physical cleanup of the cloned DOM structure to prevent misalignments & overlapping
-    // 1. Remove sorting (drag handle) columns completely
+    // 1. Remove sorting (drag handle) columns and icons completely
     const clonedDragHandles = clone.querySelectorAll(".drag-handle-column");
     clonedDragHandles.forEach(el => el.remove());
+    const clonedDragGrips = clone.querySelectorAll(".drag-grip-handle");
+    clonedDragGrips.forEach(el => el.remove());
 
     // 2. Remove all interactive action/modification buttons to ensure layout cleaner
     const clonedActionButtons = clone.querySelectorAll(".action-buttons");
@@ -818,6 +831,12 @@ export default function App() {
     const clonedWatermarkPanel = clone.querySelector("#watermark-control-panel");
     if (clonedWatermarkPanel) {
       clonedWatermarkPanel.remove();
+    }
+
+    // Replace the title of custom breeding nest center in long image export
+    const clonedNestTitle = clone.querySelector("#nest-center-title");
+    if (clonedNestTitle) {
+      clonedNestTitle.textContent = "我的窝点";
     }
 
     // Replace the title of custom breeding exchange center in long image export
@@ -1107,7 +1126,7 @@ export default function App() {
               </div>
               <div className="mt-2.5 z-10 flex items-baseline gap-1">
                 <span className="text-2xl font-black font-mono text-emerald-600 tracking-tight">{hasEggsCount}</span>
-                <span className="text-xs text-emerald-500 font-semibold">窝</span>
+                <span className="text-xs text-emerald-500 font-semibold">窝 (共 {totalEggsCount} 个蛋)</span>
               </div>
             </div>
 
@@ -1338,70 +1357,63 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Main Editable Table Container */}
-        <div className="w-full overflow-x-auto">
+        {/* 我的蛋窝点看板标题 */}
+        <div className="py-3 px-5 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-1.5 bg-indigo-50 rounded-xl border border-indigo-100/50">
+              <Egg className="w-4 h-4 text-indigo-600 animate-pulse" />
+            </div>
+            <div>
+              <h2 id="nest-center-title" className="text-sm font-bold text-slate-800">我的精灵蛋窝中心</h2>
+              <p className="text-[10px] text-slate-400 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-bold text-slate-500 bg-slate-100/80 px-2 py-0.5 rounded-full border border-slate-200/40">
+            当前有 {filteredPets.length} 个蛋窝
+          </span>
+        </div>
+
+        {/* Main Editable Card Grid Container */}
+        <div className="p-4 bg-slate-50/50">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
           >
-            <table className="w-full text-center border-collapse table-fixed min-w-[1300px]">
-              <colgroup>
-                <col style={{ width: "4%" }} />
-                <col style={{ width: "14%" }} />
-                <col style={{ width: "15%" }} />
-                <col style={{ width: "17%" }} />
-                <col style={{ width: "15%" }} />
-                <col style={{ width: "10%" }} />
-                <col style={{ width: "13%" }} />
-                <col style={{ width: "12%" }} />
-              </colgroup>
-              <thead>
-                <tr className="bg-slate-100 border-b border-slate-200">
-                  <th className="px-1 py-3 text-xs font-semibold text-slate-600 tracking-wider text-center drag-handle-column">排序</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">精灵名称</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">对应性格与方向</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">三围</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">宠物蛋组类别</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">牌子</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">窝点详情</th>
-                  <th className="px-4 py-3 font-semibold text-slate-600 tracking-wider text-center text-xs">是否极限</th>
-                </tr>
-              </thead>
-              <tbody id="table-editable-body" className="divide-y divide-slate-100">
-                <SortableContext
-                  items={filteredPets.map(p => p.id as string)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {filteredPets.map((pet) => {
-                    const originalIndex = pets.findIndex(p => p.id === pet.id);
-                    return (
-                      <SortableRow
-                        key={pet.id}
-                        pet={pet}
-                        originalIndex={originalIndex}
-                        handleDeletePet={handleDeletePet}
-                        handleUpdateSprite={handleUpdateSprite}
-                        handleUpdateNature={handleUpdateNature}
-                        handleRemoveNature={handleRemoveNature}
-                        handleAddNature={handleAddNature}
-                        handleUpdateStat={handleUpdateStat}
-                        handleUpdateGroup={handleUpdateGroup}
-                        handleRemoveGroup={handleRemoveGroup}
-                        handleAddGroup={handleAddGroup}
-                        handleUpdateBrand={handleUpdateBrand}
-                        handleUpdateStatus={handleUpdateStatus}
-                        handleUpdateLimit={handleUpdateLimit}
-                        handleUpdateHideStats={handleUpdateHideStats}
-                        getEggGroupStyle={getEggGroupStyle}
-                        getStatusStyle={getStatusStyle}
-                        getBrandStyle={getBrandStyle}
-                      />
-                    );
-                  })}
-                </SortableContext>
-              </tbody>
-            </table>
+            <SortableContext
+              items={filteredPets.map(p => p.id as string)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {filteredPets.map((pet) => {
+                  const originalIndex = pets.findIndex(p => p.id === pet.id);
+                  return (
+                    <SortableCard
+                      key={pet.id}
+                      pet={pet}
+                      originalIndex={originalIndex}
+                      handleDeletePet={handleDeletePet}
+                      handleUpdateSprite={handleUpdateSprite}
+                      handleUpdateNature={handleUpdateNature}
+                      handleRemoveNature={handleRemoveNature}
+                      handleAddNature={handleAddNature}
+                      handleUpdateStat={handleUpdateStat}
+                      handleUpdateGroup={handleUpdateGroup}
+                      handleRemoveGroup={handleRemoveGroup}
+                      handleAddGroup={handleAddGroup}
+                      handleUpdateBrand={handleUpdateBrand}
+                      handleUpdateStatus={handleUpdateStatus}
+                      handleUpdateLimit={handleUpdateLimit}
+                      handleUpdateHideStats={handleUpdateHideStats}
+                      handleUpdateEggCount={handleUpdateEggCount}
+                      getEggGroupStyle={getEggGroupStyle}
+                      getStatusStyle={getStatusStyle}
+                      getBrandStyle={getBrandStyle}
+                    />
+                  );
+                })}
+              </div>
+            </SortableContext>
           </DndContext>
         </div>
 
