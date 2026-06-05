@@ -21,7 +21,7 @@ import {
   Zap,
   Award
 } from "lucide-react";
-import { domToPng } from "modern-screenshot";
+import html2canvas from "html2canvas-pro";
 import {
   EggPet,
   NATURE_OPTIONS,
@@ -683,18 +683,6 @@ export default function App() {
   const handleExportLongImage = async () => {
     showToast("正在生成高品质长图，请稍候...", "info");
 
-    const dpr = window.devicePixelRatio || 1;
-    const adjustPx = (valStr: string): string => {
-      if (!valStr || dpr === 1) return valStr;
-      if (valStr.trim().includes(" ")) {
-        return valStr.trim().split(/\s+/).map(adjustPx).join(" ");
-      }
-      if (!valStr.endsWith("px")) return valStr;
-      const val = parseFloat(valStr);
-      if (isNaN(val)) return valStr;
-      return `${val / dpr}px`;
-    };
-
     // Find the target element in the real document
     const target = document.getElementById("export-container");
     if (!target) {
@@ -725,7 +713,7 @@ export default function App() {
     });
 
     // Replace <input> elements in clone with beautiful static styled <div> elements
-    // to bypass Chrome input-rendering bugs & avoid downward text-shifting inside foreignObject
+    // to bypass Chrome input-rendering bugs & avoid downward text-shifting
     clonedInputs.forEach((input, index) => {
       const inputEl = input as HTMLInputElement;
       const originalEl = originalInputs[index] as HTMLInputElement;
@@ -745,22 +733,16 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        // Note: Do NOT set inline fontSize and lineHeight via absolute pixels!
-        // When screen DPI zoom is enabled (DPR > 1), absolute pixels computed from DPI zoom
-        // can be smaller than the browser's minimum font size (e.g. 12px), causing text wrapping issues.
-        // Instead, let them adaptively inherit style rules defined in their CSS classes (e.g. text-[10px], text-xs).
-        // div.style.fontSize = adjustPx(computedStyle.fontSize);
-        // div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.fontWeight = computedStyle.fontWeight;
         div.style.color = computedStyle.color;
-        div.style.padding = adjustPx(computedStyle.padding);
-        div.style.height = adjustPx(computedStyle.height);
-        div.style.minHeight = adjustPx(computedStyle.minHeight);
+        div.style.padding = computedStyle.padding;
+        div.style.height = computedStyle.height;
+        div.style.minHeight = computedStyle.minHeight;
         
         // Custom width: keep auto-width for w-full elements to adapt to 1200px container,
         // otherwise lock in the computed width to prevent collapse of fixed-width elements (like w-10)
         if (!originalEl.classList.contains("w-full")) {
-          div.style.width = adjustPx(computedStyle.width);
+          div.style.width = computedStyle.width;
         }
       }
 
@@ -772,7 +754,6 @@ export default function App() {
         div.style.justifyContent = "flex-end";
         div.style.textAlign = "right";
       } else {
-        // Default alignment based on input's natural alignment or center
         div.style.justifyContent = "center";
         div.style.textAlign = "center";
       }
@@ -790,7 +771,7 @@ export default function App() {
     });
 
     // Replace <select> tags in clone with matching static <div> elements
-    // to rendering nicely inside the canvas/SVG vector, preventing baseline shifts
+    // to render nicely inside the canvas, preventing baseline shifts
     clonedSelects.forEach((select, index) => {
       const selectEl = select as HTMLSelectElement;
       const originalEl = originalSelects[index] as HTMLSelectElement;
@@ -812,12 +793,6 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        // Note: Do NOT set inline fontSize and lineHeight via absolute pixels!
-        // When screen DPI zoom is enabled (DPR > 1), absolute pixels computed from DPI zoom
-        // can be smaller than the browser's minimum font size (e.g. 12px), causing text wrapping issues.
-        // Instead, let them adaptively inherit style rules defined in their CSS classes (e.g. text-[10px], text-xs).
-        // div.style.fontSize = adjustPx(computedStyle.fontSize);
-        // div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.fontWeight = computedStyle.fontWeight;
         div.style.color = computedStyle.color;
         
@@ -827,14 +802,14 @@ export default function App() {
           div.style.paddingLeft = "4px";
           div.style.paddingRight = "4px";
         } else {
-          div.style.padding = adjustPx(computedStyle.padding);
+          div.style.padding = computedStyle.padding;
         }
-        div.style.height = adjustPx(computedStyle.height);
-        div.style.minHeight = adjustPx(computedStyle.minHeight);
+        div.style.height = computedStyle.height;
+        div.style.minHeight = computedStyle.minHeight;
 
         // Custom width: keep auto-width for w-full elements, otherwise lock in computed width
         if (!originalEl.classList.contains("w-full")) {
-          div.style.width = adjustPx(computedStyle.width);
+          div.style.width = computedStyle.width;
         }
       }
 
@@ -966,15 +941,24 @@ export default function App() {
         wHeight = 260;
       }
 
-      // Create inline SVG pattern tile
-      const svgText = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="${wWidth}" height="${wHeight}" opacity="${watermarkOpacity}">
-          <text x="${wWidth / 2}" y="${wHeight / 2}" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="${watermarkSize}" font-weight="600" transform="rotate(-23 ${wWidth / 2} ${wHeight / 2})" text-anchor="middle">
-            ${watermarkText}
-          </text>
-        </svg>
-      `;
-      const svgBase64 = "data:image/svg+xml;utf8," + encodeURIComponent(svgText);
+      // Create a temporary canvas for the watermark tile
+      const tileCanvas = document.createElement("canvas");
+      tileCanvas.width = wWidth;
+      tileCanvas.height = wHeight;
+      const ctx = tileCanvas.getContext("2d");
+      if (ctx) {
+        ctx.clearRect(0, 0, wWidth, wHeight);
+        ctx.font = `600 ${watermarkSize}px system-ui, -apple-system, sans-serif`;
+        ctx.fillStyle = "#94a3b8";
+        ctx.globalAlpha = parseFloat(watermarkOpacity);
+        // Translate and rotate around center
+        ctx.translate(wWidth / 2, wHeight / 2);
+        ctx.rotate((-23 * Math.PI) / 180);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(watermarkText, 0, 0);
+      }
+      const watermarkDataUrl = tileCanvas.toDataURL("image/png");
 
       // Create full-screen pattern overlay div on top of cloned spreadsheet
       const watermarkDiv = document.createElement("div");
@@ -984,7 +968,7 @@ export default function App() {
       watermarkDiv.style.width = "100%";
       watermarkDiv.style.height = "100%";
       watermarkDiv.style.pointerEvents = "none";
-      watermarkDiv.style.backgroundImage = `url("${svgBase64}")`;
+      watermarkDiv.style.backgroundImage = `url("${watermarkDataUrl}")`;
       watermarkDiv.style.backgroundRepeat = "repeat";
       watermarkDiv.style.zIndex = "80"; // Cover table content elegantly
 
@@ -997,12 +981,17 @@ export default function App() {
     document.body.classList.add("exporting");
 
     try {
-      // Use modern-screenshot for oklch-compatible, hyper-sharp, vector rendering from offscreen DOM
-      const dataUrl = await domToPng(clone, {
+      // Use html2canvas to render the offscreen clone with fixed scaling and size parameters
+      const canvas = await html2canvas(clone, {
         backgroundColor: "#f8fafc",
         scale: 2, // Double resolution for crystal-sharp text and borders
-        quality: 1
+        useCORS: true,
+        logging: false,
+        width: 1200,
+        windowWidth: 1200,
       });
+
+      const dataUrl = canvas.toDataURL("image/png");
 
       setExportedImageUrl(dataUrl);
       setActiveModal("image-preview");
