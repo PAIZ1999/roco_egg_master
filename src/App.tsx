@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Egg,
@@ -52,7 +52,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableCard } from "./components/SortableCard";
 import { Autocomplete } from "./components/Autocomplete";
-import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath } from "./petHelper";
+import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle } from "./petHelper";
 
 
 const migratePets = (rawList: any[]): EggPet[] => {
@@ -98,7 +98,7 @@ const migrateTrades = (rawList: any[]): EggTrade[] => {
       id: t.id || `trade-${index}-${Math.random().toString(36).substr(2, 5)}`,
       nature: cleanNature(t.nature || "实干 (平衡)"),
       sprite: t.sprite || "",
-      brand: t.brand || "无牌",
+      brand: t.brand || "单大块头",
       is3V: !!t.is3V,
       isLimit: !!t.isLimit,
       tradeType: t.tradeType || "1换1",
@@ -140,7 +140,7 @@ export default function App() {
   // Egg trade form states
   const [newTradeSprite, setNewTradeSprite] = useState("");
   const [newTradeNature, setNewTradeNature] = useState("");
-  const [newTradeBrand, setNewTradeBrand] = useState("无牌");
+  const [newTradeBrand, setNewTradeBrand] = useState("单大块头");
   const [newTradeIs3V, setNewTradeIs3V] = useState(false);
   const [newTradeIsLimit, setNewTradeIsLimit] = useState(false);
   const [newTradeType, setNewTradeType] = useState("1换1");
@@ -378,139 +378,154 @@ export default function App() {
   const threeVsCount = pets.filter(p => isPet3V(p) && p.status === "有现蛋").length;
 
   // Event handlers
-  const handleUpdateSprite = (index: number, name: string) => {
-    const updated = [...pets];
-    const details = getPetDetails(name);
-    if (details) {
-      updated[index].sprite = details.maxStageName || name;
-      if (details.groups && details.groups.length > 0) {
-        updated[index].groups = [...details.groups];
+  // Event handlers
+  const handleUpdateSprite = useCallback((id: string, name: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        const details = getPetDetails(name);
+        if (details) {
+          return {
+            ...p,
+            sprite: details.maxStageName || name,
+            groups: (details.groups && details.groups.length > 0) ? [...details.groups] : p.groups
+          };
+        }
+        return { ...p, sprite: name };
       }
-    } else {
-      updated[index].sprite = name;
-    }
-    setPets(updated);
-  };
+      return p;
+    }));
+  }, []);
 
-  const handleUpdateBrand = (index: number, brand: string) => {
-    const updated = [...pets];
-    updated[index].brand = brand;
-    setPets(updated);
-  };
+  const handleUpdateBrand = useCallback((id: string, brand: string) => {
+    setPets(prev => prev.map(p => p.id === id ? { ...p, brand } : p));
+  }, []);
 
-  const handleUpdateStatus = (index: number, status: string) => {
-    const updated = [...pets];
-    updated[index].status = status;
-    setPets(updated);
-  };
+  const handleUpdateStatus = useCallback((id: string, status: string) => {
+    setPets(prev => prev.map(p => p.id === id ? { ...p, status } : p));
+  }, []);
 
-  const handleUpdateLimit = (index: number, limit: string) => {
-    const updated = [...pets];
-    updated[index].isLimit = limit;
-    setPets(updated);
-  };
+  const handleUpdateLimit = useCallback((id: string, limit: string) => {
+    setPets(prev => prev.map(p => p.id === id ? { ...p, isLimit: limit } : p));
+  }, []);
 
-  const handleUpdate3V = (index: number, is3V: string) => {
-    const updated = [...pets];
-    updated[index].is3V = is3V;
-    setPets(updated);
-  };
+  const handleUpdateHideStats = useCallback((id: string, hide: boolean) => {
+    setPets(prev => prev.map(p => p.id === id ? { ...p, hideStats: hide } : p));
+  }, []);
 
-  const handleUpdateHideStats = (index: number, hide: boolean) => {
-    const updated = [...pets];
-    updated[index].hideStats = hide;
-    setPets(updated);
-  };
-
-  const handleUpdateEggCount = (index: number, count: string) => {
-    const updated = [...pets];
-    updated[index].eggCount = count;
-    setPets(updated);
-  };
+  const handleUpdateEggCount = useCallback((id: string, count: string) => {
+    setPets(prev => prev.map(p => p.id === id ? { ...p, eggCount: count } : p));
+  }, []);
 
   // Natures list update
-  const handleAddNature = (index: number, parent: "father" | "mother") => {
-    const updated = [...pets];
-    if (parent === "father") {
-      updated[index].fatherNatures = [...(updated[index].fatherNatures || [])];
-      updated[index].fatherNatures.push(NATURE_OPTIONS[0]);
-    } else {
-      updated[index].motherNatures = [...(updated[index].motherNatures || [])];
-      updated[index].motherNatures.push(NATURE_OPTIONS[0]);
-    }
-    setPets(updated);
-  };
-
-  const handleRemoveNature = (index: number, parent: "father" | "mother", natureIndex: number) => {
-    const updated = [...pets];
-    if (parent === "father") {
-      const list = [...(updated[index].fatherNatures || [])];
-      if (list.length > 1) {
-        list.splice(natureIndex, 1);
-        updated[index].fatherNatures = list;
-        setPets(updated);
+  const handleAddNature = useCallback((id: string, parent: "father" | "mother") => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        if (parent === "father") {
+          return {
+            ...p,
+            fatherNatures: [...(p.fatherNatures || []), NATURE_OPTIONS[0]]
+          };
+        } else {
+          return {
+            ...p,
+            motherNatures: [...(p.motherNatures || []), NATURE_OPTIONS[0]]
+          };
+        }
       }
-    } else {
-      const list = [...(updated[index].motherNatures || [])];
-      if (list.length > 1) {
-        list.splice(natureIndex, 1);
-        updated[index].motherNatures = list;
-        setPets(updated);
-      }
-    }
-  };
+      return p;
+    }));
+  }, []);
 
-  const handleUpdateNature = (index: number, parent: "father" | "mother", natureIndex: number, value: string) => {
-    const updated = [...pets];
-    if (parent === "father") {
-      const list = [...(updated[index].fatherNatures || [])];
-      list[natureIndex] = value;
-      updated[index].fatherNatures = list;
-    } else {
-      const list = [...(updated[index].motherNatures || [])];
-      list[natureIndex] = value;
-      updated[index].motherNatures = list;
-    }
-    setPets(updated);
-  };
+  const handleRemoveNature = useCallback((id: string, parent: "father" | "mother", natureIndex: number) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        if (parent === "father") {
+          const list = [...(p.fatherNatures || [])];
+          if (list.length > 1) {
+            list.splice(natureIndex, 1);
+            return { ...p, fatherNatures: list };
+          }
+        } else {
+          const list = [...(p.motherNatures || [])];
+          if (list.length > 1) {
+            list.splice(natureIndex, 1);
+            return { ...p, motherNatures: list };
+          }
+        }
+      }
+      return p;
+    }));
+  }, []);
+
+  const handleUpdateNature = useCallback((id: string, parent: "father" | "mother", natureIndex: number, value: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        if (parent === "father") {
+          const list = [...(p.fatherNatures || [])];
+          list[natureIndex] = value;
+          return { ...p, fatherNatures: list };
+        } else {
+          const list = [...(p.motherNatures || [])];
+          list[natureIndex] = value;
+          return { ...p, motherNatures: list };
+        }
+      }
+      return p;
+    }));
+  }, []);
 
   // Stats list update
-  const handleUpdateStat = (index: number, parent: "father" | "mother", statIndex: number, value: string) => {
-    const updated = [...pets];
-    if (parent === "father") {
-      const list = [...(updated[index].fatherStats || ["生命", "物攻", "速度"])];
-      list[statIndex] = value;
-      updated[index].fatherStats = list;
-    } else {
-      const list = [...(updated[index].motherStats || ["生命", "物攻", "速度"])];
-      list[statIndex] = value;
-      updated[index].motherStats = list;
-    }
-    setPets(updated);
-  };
+  const handleUpdateStat = useCallback((id: string, parent: "father" | "mother", statIndex: number, value: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        if (parent === "father") {
+          const list = [...(p.fatherStats || ["生命", "物攻", "速度"])];
+          list[statIndex] = value;
+          return { ...p, fatherStats: list };
+        } else {
+          const list = [...(p.motherStats || ["生命", "物攻", "速度"])];
+          list[statIndex] = value;
+          return { ...p, motherStats: list };
+        }
+      }
+      return p;
+    }));
+  }, []);
 
   // Egg Groups list update
-  const handleAddGroup = (index: number) => {
-    const updated = [...pets];
-    if (updated[index].groups.length < 3) {
-      updated[index].groups.push(EGG_GROUPS[0]);
-      setPets(updated);
-    }
-  };
+  const handleAddGroup = useCallback((id: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id && p.groups.length < 3) {
+        return {
+          ...p,
+          groups: [...p.groups, EGG_GROUPS[0]]
+        };
+      }
+      return p;
+    }));
+  }, []);
 
-  const handleRemoveGroup = (index: number, groupIndex: number) => {
-    const updated = [...pets];
-    if (updated[index].groups.length > 1) {
-      updated[index].groups.splice(groupIndex, 1);
-      setPets(updated);
-    }
-  };
+  const handleRemoveGroup = useCallback((id: string, groupIndex: number) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id && p.groups.length > 1) {
+        const list = [...p.groups];
+        list.splice(groupIndex, 1);
+        return { ...p, groups: list };
+      }
+      return p;
+    }));
+  }, []);
 
-  const handleUpdateGroup = (index: number, groupIndex: number, value: string) => {
-    const updated = [...pets];
-    updated[index].groups[groupIndex] = value;
-    setPets(updated);
-  };
+  const handleUpdateGroup = useCallback((id: string, groupIndex: number, value: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        const list = [...p.groups];
+        list[groupIndex] = value;
+        return { ...p, groups: list };
+      }
+      return p;
+    }));
+  }, []);
 
   const handleAddPet = () => {
     const newPet: EggPet = {
@@ -531,10 +546,9 @@ export default function App() {
     setPets([...pets, newPet]);
   };
 
-  const handleDeletePet = (index: number) => {
-    const updated = pets.filter((_, i) => i !== index);
-    setPets(updated);
-  };
+  const handleDeletePet = useCallback((id: string) => {
+    setPets(prev => prev.filter(p => p.id !== id));
+  }, []);
 
   const handleAddTrade = () => {
     if (!newTradeSprite || !newTradeSprite.trim()) {
@@ -986,47 +1000,7 @@ export default function App() {
     });
   };
 
-  // Get color classes for Egg Groups
-  const getEggGroupStyle = (group: string) => {
-    const colors: Record<string, string> = {
-      "海洋组": "bg-blue-50 text-blue-700 border-blue-200",
-      "天空组": "bg-orange-50 text-orange-700 border-orange-200",
-      "魔力组": "bg-cyan-50 text-cyan-700 border-cyan-200",
-      "妖精组": "bg-pink-50 text-pink-700 border-pink-200",
-      "软体组": "bg-teal-50 text-teal-700 border-teal-200",
-      "植物组": "bg-emerald-50 text-emerald-700 border-emerald-200",
-      "两栖组": "bg-yellow-50 text-yellow-800 border-yellow-200",
-      "巨灵组": "bg-amber-50 text-amber-800 border-amber-200",
-      "龙组": "bg-rose-50 text-rose-700 border-rose-200",
-      "昆虫组": "bg-indigo-50 text-indigo-700 border-indigo-200",
-      "拟人组": "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200",
-      "机械组": "bg-sky-50 text-sky-700 border-sky-200",
-      "大地组": "bg-stone-100 text-stone-700 border-stone-200"
-    };
-    return colors[group] || "bg-gray-50 text-gray-700 border-gray-200";
-  };
 
-  // Get color classes for Nest Statuses
-  const getStatusStyle = (status: string) => {
-    if (status.includes("有现蛋")) return "bg-emerald-500 text-white border-transparent";
-    if (status.includes("正在孵")) return "bg-sky-500 text-white border-transparent";
-    if (status.includes("已撤窝")) return "bg-slate-400 text-white border-transparent";
-    if (status.includes("投资")) return "bg-purple-500 text-white border-transparent";
-    return "bg-slate-100 text-slate-700 border-slate-200";
-  };
-
-  // Get brand color classes
-  const getBrandStyle = (brand: string) => {
-    const colors: Record<string, string> = {
-      "大粗": "bg-violet-150 text-violet-700 border-violet-200 font-bold",
-      "大婉": "bg-indigo-150 text-indigo-700 border-indigo-200 font-bold",
-      "小粗": "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200 font-semibold",
-      "小婉": "bg-sky-50 text-sky-700 border-sky-200 font-semibold",
-      "单牌": "bg-rose-150 text-rose-700 border-rose-200 font-bold",
-      "无牌": "bg-slate-100 text-slate-600 border-slate-200 font-medium"
-    };
-    return colors[brand] || "bg-gray-100 text-gray-600 border-gray-200";
-  };
 
   // Filter list
   const filteredPets = pets.filter(row => {
@@ -1132,14 +1106,15 @@ export default function App() {
                   <LayoutGrid className="w-4 h-4 text-indigo-500 shrink-0" />
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-1.5 mt-2.5 z-10">
-                {(["大婉", "大粗", "单牌", "小婉", "小粗"] as const).map((brand, idx) => {
+              <div className="grid grid-cols-6 gap-1 mt-2.5 z-10">
+                {(["大婉", "大粗", "单牌", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
                   const colors = [
                     "bg-rose-50/60 text-rose-700 border-rose-100/60",
                     "bg-amber-50/60 text-amber-700 border-amber-100/60",
                     "bg-emerald-50/60 text-emerald-700 border-emerald-100/60",
                     "bg-blue-50/60 text-blue-700 border-blue-100/60",
-                    "bg-purple-50/60 text-purple-700 border-purple-100/60"
+                    "bg-purple-50/60 text-purple-700 border-purple-100/60",
+                    "bg-slate-50/60 text-slate-700 border-slate-100/60"
                   ];
                   return (
                     <div key={brand} className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-lg border ${colors[idx]} text-center`}>
@@ -1239,7 +1214,9 @@ export default function App() {
             <select
               value={filterBrand}
               onChange={e => setFilterBrand(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
+              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-250 cursor-pointer font-bold transition-all ${
+                filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+              }`}
             >
               <option value="">全部牌子</option>
               {BRAND_OPTIONS.map(brand => (
@@ -1251,11 +1228,15 @@ export default function App() {
             <select
               value={filterStatus}
               onChange={e => setFilterStatus(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
+              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-350 cursor-pointer font-bold transition-all ${
+                filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+              }`}
             >
-              <option value="">全部状态/窝点</option>
+              <option value="" className="bg-white text-slate-800 font-semibold py-1">全部状态/窝点</option>
               {NEST_STATUS_OPTIONS.map(status => (
-                <option key={status} value={status}>{status}</option>
+                <option key={status} value={status} className="bg-white text-slate-850 font-semibold py-1">
+                  {status}
+                </option>
               ))}
             </select>
 
@@ -1421,33 +1402,26 @@ export default function App() {
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {filteredPets.map((pet) => {
-                  const originalIndex = pets.findIndex(p => p.id === pet.id);
-                  return (
-                    <SortableCard
-                      key={pet.id}
-                      pet={pet}
-                      originalIndex={originalIndex}
-                      handleDeletePet={handleDeletePet}
-                      handleUpdateSprite={handleUpdateSprite}
-                      handleUpdateNature={handleUpdateNature}
-                      handleRemoveNature={handleRemoveNature}
-                      handleAddNature={handleAddNature}
-                      handleUpdateStat={handleUpdateStat}
-                      handleUpdateGroup={handleUpdateGroup}
-                      handleRemoveGroup={handleRemoveGroup}
-                      handleAddGroup={handleAddGroup}
-                      handleUpdateBrand={handleUpdateBrand}
-                      handleUpdateStatus={handleUpdateStatus}
-                      handleUpdateLimit={handleUpdateLimit}
-                      handleUpdateHideStats={handleUpdateHideStats}
-                      handleUpdateEggCount={handleUpdateEggCount}
-                      getEggGroupStyle={getEggGroupStyle}
-                      getStatusStyle={getStatusStyle}
-                      getBrandStyle={getBrandStyle}
-                    />
-                  );
-                })}
+                {filteredPets.map((pet) => (
+                  <SortableCard
+                    key={pet.id}
+                    pet={pet}
+                    handleDeletePet={handleDeletePet}
+                    handleUpdateSprite={handleUpdateSprite}
+                    handleUpdateNature={handleUpdateNature}
+                    handleRemoveNature={handleRemoveNature}
+                    handleAddNature={handleAddNature}
+                    handleUpdateStat={handleUpdateStat}
+                    handleUpdateGroup={handleUpdateGroup}
+                    handleRemoveGroup={handleRemoveGroup}
+                    handleAddGroup={handleAddGroup}
+                    handleUpdateBrand={handleUpdateBrand}
+                    handleUpdateStatus={handleUpdateStatus}
+                    handleUpdateLimit={handleUpdateLimit}
+                    handleUpdateHideStats={handleUpdateHideStats}
+                    handleUpdateEggCount={handleUpdateEggCount}
+                  />
+                ))}
               </div>
             </SortableContext>
           </DndContext>
@@ -1630,9 +1604,9 @@ export default function App() {
                     key={brand}
                     type="button"
                     onClick={() => setNewTradeBrand(brand)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer h-[34px] flex items-center justify-center ${newTradeBrand === brand
-                        ? 'bg-slate-800 border-slate-800 text-white shadow-sm'
-                        : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-350'
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer h-[34px] flex items-center justify-center ${getBrandStyle(brand)} ${newTradeBrand === brand
+                        ? 'ring-2 ring-indigo-500 scale-105 border-transparent shadow-sm'
+                        : 'opacity-60 hover:opacity-100 hover:scale-102'
                       }`}
                   >
                     {brand}
@@ -1729,22 +1703,22 @@ export default function App() {
                       {/* 左侧：头像 + 详情 */}
                       <div className="flex items-start gap-4 flex-1 min-w-0">
                         {/* 头像 */}
-                        <div className="relative w-16 h-16 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 hover:[&_img]:scale-75 hover:[&_.avatar-fallback-icon]:scale-75 hover:[&_button]:opacity-100 hover:[&_button]:pointer-events-auto">
+                        <div className="relative w-20 h-20 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 hover:[&_img]:scale-75 hover:[&_.avatar-fallback-icon]:scale-75 hover:[&_button]:opacity-100 hover:[&_button]:pointer-events-auto">
                           {spriteFileName ? (
                             <img
                               src={getImagePath(`images/sprites/${spriteFileName}`)}
                               alt={trade.sprite}
-                              className="w-12 h-12 object-contain transition-transform duration-200"
+                              className="w-16 h-16 object-contain transition-transform duration-200"
                             />
                           ) : (
-                            <Egg className="w-8 h-8 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
+                            <Egg className="w-10 h-10 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
                           )}
                           {details?.types && details.types.length > 0 && (
-                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
+                            <div className="absolute -bottom-1 -right-1 w-6.5 h-6.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
                               <img
                                 src={getImagePath(`images/attributes/${details.types[0]}.png`)}
                                 alt={details.types[0]}
-                                className="w-4 h-4 object-contain"
+                                className="w-4.5 h-4.5 object-contain"
                               />
                             </div>
                           )}

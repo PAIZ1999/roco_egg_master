@@ -8,4 +8,6 @@ coverage/
 .env*
 !.env.example
 *_orig.png
+release/
+
 

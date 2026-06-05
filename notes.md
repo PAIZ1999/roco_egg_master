@@ -32,3 +32,34 @@
 ## 5. 精灵名紧贴头像，系别等距排版
 - **分析**：左列使用 `flex-col justify-between` 导致间距拉大，且各元素位置因卡片高矮而抖动。
 - **解决**：将头像、名字输入框、系别图标组合包进一个独立的 Flex-col 容器中，设定统一的 `gap-1.5`，并将名字输入框 padding 归零以实现三者之间的绝对等间距，紧凑不散架。
+
+## 6. 牌子底色显眼度与“单大块头”更名优化
+- **背景**：用户反馈原本牌子的显示太淡，看不清。同时，需要将原本的“无牌”选项改名为“单大块头”。
+- **优化方案**：
+  1. 将 types.ts 中的 `BRAND_OPTIONS` 从 `["大粗", "大婉", "小粗", "小婉", "单牌", "无牌"]` 改为 `["大粗", "大婉", "小粗", "小婉", "单牌", "单大块头"]`。
+  2. 针对六种牌子在 `src/petHelper.ts` 的 `getBrandStyle` 中配置极其醒目的底色和对比边框：
+     - 大婉：`bg-rose-100 border-rose-300 text-rose-800 font-bold shadow-xs`
+     - 大粗：`bg-amber-100 border-amber-300 text-amber-900 font-bold shadow-xs`
+     - 单牌：`bg-emerald-100 border-emerald-300 text-emerald-800 font-bold shadow-xs`
+     - 小婉：`bg-blue-100 border-blue-300 text-blue-800 font-bold shadow-xs`
+     - 小粗：`bg-purple-100 border-purple-300 text-purple-800 font-bold shadow-xs`
+     - 单大块头：`bg-slate-100 border-slate-300 text-slate-800 font-bold shadow-xs`
+  3. 修改 `App.tsx` 中的状态初始化和数据迁移（原本默认值由“无牌”升级为“单大块头”）。
+  4. 优化 `App.tsx` 中换蛋需求发布表单中的牌子选择按钮，直接应用 `getBrandStyle(brand)` 的颜色样式，并对被选中的按钮添加高亮缩放及 `ring-2 ring-indigo-500` 效果。
+  5. 优化顶部筛选下拉框 `select`，在选择特定牌子时，使用 `getBrandStyle(filterBrand)` 赋予其对应的强对比颜色，未选择时采用常规白色背景。
+  6. 优化统计图表，将原本的五列改为六列（`grid-cols-6`），加入“单大块头”选项，并设定对应的高级银灰色背景。
+
+## 7. 状态底色醒目度优化
+- **背景**：用户反馈“状态也要有不同的底色”。
+- **分析**：
+  1. 原本的 `getStatusStyle` 函数中的状态字符串为老版本状态字符串（如 `"正在孵"`, `"已撤窝"`, `"投资中"`），而系统目前实际使用的是 `"有现蛋"`, `"正在孵，可预约"`, `"已撤窝，要提前换产线"`, `"接投资"`。这导致除“有现蛋”外，其他状态全部回退到了灰色的 `default` 样式，显得极度暗淡。
+  2. 蛋窝卡片底部渲染的兜底状态信息条在判断状态时，也错误地匹配了老版字符串，导致除了“有现蛋”外所有状态都显示为默认的“已就绪/当前蛋窝状态已就绪”蓝色条带。
+- **方案**：
+  1. 在 `src/petHelper.ts` 的 `getStatusStyle` 中为四种真实状态分配鲜艳高对比度的底色：
+     - 有现蛋：`bg-amber-100 border-amber-300 text-amber-800 font-bold shadow-xs` (明亮金黄)
+     - 正在孵，可预约：`bg-sky-100 border-sky-300 text-sky-800 font-bold shadow-xs` (明亮天空蓝)
+     - 已撤窝，要提前换产线：`bg-orange-100 border-orange-300 text-orange-800 font-bold shadow-xs` (警告橙色)
+     - 接投资：`bg-purple-100 border-purple-300 text-purple-800 font-bold shadow-xs` (明亮紫)
+  2. 在 `src/App.tsx` 的顶部状态筛选下拉框中引入 `getStatusStyle(filterStatus)` 动态样式，使得选中某个状态时，筛选框呈现亮眼的对比背景。
+  3. 在 `src/components/SortableCard.tsx` 和 `src/components/SortableRow.tsx` 的下拉选项（`<option>`）上注入相应的状态背景色。
+  4. 修复 `src/components/SortableCard.tsx` 中底部兜底提示条的状态匹配条件，使其与真实的状态字符串一一对应，恢复“孵化中”、“已撤窝”、“投资中”等状态的呼吸灯提示和描述文字，且各状态文字的条带背景颜色与状态下拉框的亮眼底色保持高级的色阶协调。

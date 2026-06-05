@@ -29,7 +29,7 @@ import {
   LIMIT_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
-import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES } from "../petHelper";
+import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES, getEggGroupStyle, getStatusStyle, getBrandStyle } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
   "光": "bg-amber-50 text-amber-600 border-amber-200",
@@ -68,32 +68,28 @@ const getStatBadgeStyle = (stat: string): string => {
 };
 
 
+
+
 interface SortableCardProps {
-  key?: string;
   pet: EggPet;
-  originalIndex: number;
-  handleDeletePet: (index: number) => void;
-  handleUpdateSprite: (index: number, name: string) => void;
-  handleUpdateNature: (index: number, parent: "father" | "mother", natureIndex: number, value: string) => void;
-  handleRemoveNature: (index: number, parent: "father" | "mother", natureIndex: number) => void;
-  handleAddNature: (index: number, parent: "father" | "mother") => void;
-  handleUpdateStat: (index: number, parent: "father" | "mother", statIndex: number, value: string) => void;
-  handleUpdateGroup: (index: number, groupIndex: number, value: string) => void;
-  handleRemoveGroup: (index: number, groupIndex: number) => void;
-  handleAddGroup: (index: number) => void;
-  handleUpdateBrand: (index: number, brand: string) => void;
-  handleUpdateStatus: (index: number, status: string) => void;
-  handleUpdateLimit: (index: number, limit: string) => void;
-  handleUpdateHideStats: (index: number, hide: boolean) => void;
-  handleUpdateEggCount: (index: number, count: string) => void;
-  getEggGroupStyle: (group: string) => string;
-  getStatusStyle: (status: string) => string;
-  getBrandStyle: (brand: string) => string;
+  handleDeletePet: (id: string) => void;
+  handleUpdateSprite: (id: string, name: string) => void;
+  handleUpdateNature: (id: string, parent: "father" | "mother", natureIndex: number, value: string) => void;
+  handleRemoveNature: (id: string, parent: "father" | "mother", natureIndex: number) => void;
+  handleAddNature: (id: string, parent: "father" | "mother") => void;
+  handleUpdateStat: (id: string, parent: "father" | "mother", statIndex: number, value: string) => void;
+  handleUpdateGroup: (id: string, groupIndex: number, value: string) => void;
+  handleRemoveGroup: (id: string, groupIndex: number) => void;
+  handleAddGroup: (id: string) => void;
+  handleUpdateBrand: (id: string, brand: string) => void;
+  handleUpdateStatus: (id: string, status: string) => void;
+  handleUpdateLimit: (id: string, limit: string) => void;
+  handleUpdateHideStats: (id: string, hide: boolean) => void;
+  handleUpdateEggCount: (id: string, count: string) => void;
 }
 
-export function SortableCard({
+export const SortableCard = React.memo(function SortableCard({
   pet,
-  originalIndex,
   handleDeletePet,
   handleUpdateSprite,
   handleUpdateNature,
@@ -107,10 +103,7 @@ export function SortableCard({
   handleUpdateStatus,
   handleUpdateLimit,
   handleUpdateHideStats,
-  handleUpdateEggCount,
-  getEggGroupStyle,
-  getStatusStyle,
-  getBrandStyle
+  handleUpdateEggCount
 }: SortableCardProps) {
   const {
     attributes,
@@ -169,7 +162,7 @@ export function SortableCard({
         )}
         <select
           value={currentValue}
-          onChange={(e) => handleUpdateStat(originalIndex, parent, sIdx, e.target.value)}
+          onChange={(e) => handleUpdateStat(pet.id as string, parent, sIdx, e.target.value)}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         >
           {STATS_OPTIONS.map((opt) => (
@@ -203,7 +196,7 @@ export function SortableCard({
           </div>
 
           <button
-            onClick={() => handleDeletePet(originalIndex)}
+            onClick={() => handleDeletePet(pet.id as string)}
             className="text-slate-350 hover:text-rose-600 hover:bg-rose-50 p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 action-buttons"
             title="删除该蛋窝"
           >
@@ -255,7 +248,7 @@ export function SortableCard({
               value={pet.sprite}
               options={ALL_PET_NAMES}
               placeholder="输入精灵..."
-              onChange={(val) => handleUpdateSprite(originalIndex, val)}
+              onChange={(val) => handleUpdateSprite(pet.id as string, val)}
               className="w-full text-center"
               inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-center"
             />
@@ -305,14 +298,14 @@ export function SortableCard({
                       value={nat}
                       options={NATURE_OPTIONS}
                       placeholder="性格..."
-                      onChange={(val) => handleUpdateNature(originalIndex, "father", nIdx, val)}
+                      onChange={(val) => handleUpdateNature(pet.id as string, "father", nIdx, val)}
                       className="flex-1 min-w-0"
                       inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
                     />
                     <div className="flex items-center gap-0.5 shrink-0 action-buttons select-action-buttons">
                       {(pet.fatherNatures || []).length > 1 && (
                         <button
-                          onClick={() => handleRemoveNature(originalIndex, "father", nIdx)}
+                          onClick={() => handleRemoveNature(pet.id as string, "father", nIdx)}
                           className="text-rose-500 hover:bg-rose-50 p-0.5 rounded-full transition-colors cursor-pointer"
                           title="移除性格"
                         >
@@ -350,14 +343,14 @@ export function SortableCard({
                       value={nat}
                       options={NATURE_OPTIONS}
                       placeholder="性格..."
-                      onChange={(val) => handleUpdateNature(originalIndex, "mother", nIdx, val)}
+                      onChange={(val) => handleUpdateNature(pet.id as string, "mother", nIdx, val)}
                       className="flex-1 min-w-0"
                       inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
                     />
                     <div className="flex items-center gap-0.5 shrink-0 action-buttons select-action-buttons">
                       {(pet.motherNatures || []).length > 1 && (
                         <button
-                          onClick={() => handleRemoveNature(originalIndex, "mother", nIdx)}
+                          onClick={() => handleRemoveNature(pet.id as string, "mother", nIdx)}
                           className="text-rose-500 hover:bg-rose-50 p-0.5 rounded-full transition-colors cursor-pointer"
                           title="移除性格"
                         >
@@ -389,7 +382,7 @@ export function SortableCard({
                 <EyeOff className="w-3 h-3" /> 三围信息已隐藏
               </span>
               <button
-                onClick={() => handleUpdateHideStats(originalIndex, false)}
+                onClick={() => handleUpdateHideStats(pet.id as string, false)}
                 className="mt-1 text-[10px] font-bold text-indigo-600 hover:text-indigo-750 bg-white hover:bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-full shadow-3xs transition-colors action-buttons cursor-pointer"
               >
                 显示并编辑三围
@@ -397,7 +390,7 @@ export function SortableCard({
             </div>
           ) : (
             <button
-              onClick={() => handleUpdateHideStats(originalIndex, true)}
+              onClick={() => handleUpdateHideStats(pet.id as string, true)}
               className="text-[10px] font-bold text-slate-500 hover:text-indigo-650 transition-colors action-buttons border border-transparent hover:border-indigo-150 bg-slate-50/20 hover:bg-indigo-50/30 px-2 py-0.5 rounded-full select-none cursor-pointer flex items-center gap-1"
             >
               <Eye className="w-2.5 h-2.5" /> 隐藏三围属性
@@ -421,7 +414,7 @@ export function SortableCard({
                     <div className="relative shrink-0">
                       <select
                         value={grp}
-                        onChange={(e) => handleUpdateGroup(originalIndex, gIdx, e.target.value)}
+                        onChange={(e) => handleUpdateGroup(pet.id as string, gIdx, e.target.value)}
                         className={`appearance-none text-[10px] font-bold text-center border rounded-full py-0.5 px-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300 transition-all ${getEggGroupStyle(
                           grp
                         )}`}
@@ -437,7 +430,7 @@ export function SortableCard({
                     <div className="flex items-center gap-0.5 shrink-0 action-buttons select-action-buttons">
                       {pet.groups.length > 1 && (
                         <button
-                          onClick={() => handleRemoveGroup(originalIndex, gIdx)}
+                          onClick={() => handleRemoveGroup(pet.id as string, gIdx)}
                           className="text-rose-500 hover:bg-rose-50 p-0.5 rounded-full transition-colors cursor-pointer"
                           title="移除蛋组"
                         >
@@ -446,7 +439,7 @@ export function SortableCard({
                       )}
                       {canAdd && (
                         <button
-                          onClick={() => handleAddGroup(originalIndex)}
+                          onClick={() => handleAddGroup(pet.id as string)}
                           className="text-indigo-500 hover:bg-indigo-50 p-0.5 rounded-full transition-colors cursor-pointer"
                           title="添加蛋组"
                         >
@@ -467,7 +460,7 @@ export function SortableCard({
               <span className="text-[9px] font-bold text-slate-400 select-none">牌子</span>
               <select
                 value={pet.brand}
-                onChange={(e) => handleUpdateBrand(originalIndex, e.target.value)}
+                onChange={(e) => handleUpdateBrand(pet.id as string, e.target.value)}
                 className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-250 transition-colors ${getBrandStyle(
                   pet.brand
                 )}`}
@@ -485,7 +478,7 @@ export function SortableCard({
               <span className="text-[9px] font-bold text-slate-400 select-none">极限量级</span>
               <select
                 value={pet.isLimit}
-                onChange={(e) => handleUpdateLimit(originalIndex, e.target.value)}
+                onChange={(e) => handleUpdateLimit(pet.id as string, e.target.value)}
                 className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "极限"
                   ? "bg-amber-100 border-amber-300 text-amber-800 font-bold"
                   : "bg-slate-105 border-slate-205 text-slate-650 font-medium"
@@ -506,13 +499,13 @@ export function SortableCard({
               <span className="text-[9px] font-bold text-slate-400 select-none">状态</span>
               <select
                 value={pet.status}
-                onChange={(e) => handleUpdateStatus(originalIndex, e.target.value)}
+                onChange={(e) => handleUpdateStatus(pet.id as string, e.target.value)}
                 className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors ${getStatusStyle(
                   pet.status
                 )}`}
               >
                 {NEST_STATUS_OPTIONS.map((opt) => (
-                  <option key={opt} value={opt}>
+                  <option key={opt} value={opt} className="bg-white text-slate-800 font-semibold py-1">
                     {opt}
                   </option>
                 ))}
@@ -531,7 +524,7 @@ export function SortableCard({
                 type="number"
                 min="0"
                 value={pet.eggCount || "1"}
-                onChange={(e) => handleUpdateEggCount(originalIndex, e.target.value)}
+                onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
                 className="w-10 text-center text-xs font-bold text-amber-950 bg-white border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-400 py-0.5 px-0.5 shadow-3xs"
               />
             </div>
@@ -545,28 +538,28 @@ export function SortableCard({
               let desc = "当前蛋窝状态已就绪";
               let isPing = false;
 
-              if (pet.status === "正在孵") {
-                containerClass = "bg-sky-50/50 border-sky-200/40";
+              if (pet.status === "正在孵，可预约") {
+                containerClass = "bg-sky-50/70 border-sky-300/60";
                 dotClass = "bg-sky-500";
                 textClass = "text-sky-850";
-                statusTextClass = "text-sky-650 bg-sky-100/60";
+                statusTextClass = "text-sky-700 bg-sky-100/80 border border-sky-200";
                 statusLabel = "孵化中";
                 desc = "精灵蛋在窝里温暖孵化";
                 isPing = true;
-              } else if (pet.status === "已撤窝") {
-                containerClass = "bg-slate-100/30 border-slate-200/30";
-                dotClass = "bg-slate-400";
-                textClass = "text-slate-600";
-                statusTextClass = "text-slate-500 bg-slate-100/80";
-                statusLabel = "空闲中";
-                desc = "蛋窝空闲，可随时上架";
-              } else if (pet.status === "投资中") {
-                containerClass = "bg-purple-50/50 border-purple-200/40";
+              } else if (pet.status === "已撤窝，要提前换产线") {
+                containerClass = "bg-orange-50/70 border-orange-300/60";
+                dotClass = "bg-orange-500";
+                textClass = "text-orange-950";
+                statusTextClass = "text-orange-700 bg-orange-100/80 border border-orange-200";
+                statusLabel = "要提前换线";
+                desc = "已撤窝，换下条产线前置";
+              } else if (pet.status === "接投资") {
+                containerClass = "bg-purple-50/70 border-purple-300/60";
                 dotClass = "bg-purple-500";
-                textClass = "text-purple-850";
-                statusTextClass = "text-purple-650 bg-purple-100/60";
-                statusLabel = "投资中";
-                desc = "暂无精灵，投资培养中";
+                textClass = "text-purple-900";
+                statusTextClass = "text-purple-700 bg-purple-100/80 border border-purple-200";
+                statusLabel = "接投资";
+                desc = "空位引资，等待老板投资";
                 isPing = true;
               }
 
@@ -592,4 +585,4 @@ export function SortableCard({
       </div>
     </div>
   );
-}
+});

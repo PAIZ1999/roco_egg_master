@@ -433,10 +433,12 @@ export function SortableRow({
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-4 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400 transition-colors ${getStatusStyle(pet.status)}`}
           >
             {NEST_STATUS_OPTIONS.map(opt => (
-              <option key={opt} value={opt}>{opt}</option>
+              <option key={opt} value={opt} className="bg-white text-slate-800 font-semibold py-1">
+                {opt}
+              </option>
             ))}
           </select>
-          <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-white dropdown-arrow">
+          <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-current dropdown-arrow">
             <svg className="fill-current h-3 w-3 opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
           </div>
         </div>
