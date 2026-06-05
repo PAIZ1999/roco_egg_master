@@ -20,6 +20,41 @@ export interface PetDetails {
 
 const petDataMap: Record<string, PetDetails> = {};
 
+// 预处理进化链分组，以便推导分支进化和最大 stage 宠物
+const familyGroups: Record<string, any[]> = {};
+eggPetList.forEach((item: any) => {
+  const chain = item.family_chain || "";
+  if (!chain) return;
+  if (!familyGroups[chain]) {
+    familyGroups[chain] = [];
+  }
+  familyGroups[chain].push(item);
+});
+
+const chainMaxStageMap: Record<string, string[]> = {};
+const chainMaxStageValueMap: Record<string, number> = {};
+
+Object.entries(familyGroups).forEach(([chain, pets]) => {
+  let maxStage = 0;
+  pets.forEach(p => {
+    if (p.stage > maxStage) {
+      maxStage = p.stage;
+    }
+  });
+  
+  const maxStageNames: string[] = [];
+  pets.forEach(p => {
+    if (p.stage === maxStage && p.display_name) {
+      if (!maxStageNames.includes(p.display_name)) {
+        maxStageNames.push(p.display_name);
+      }
+    }
+  });
+  
+  chainMaxStageMap[chain] = maxStageNames;
+  chainMaxStageValueMap[chain] = maxStage;
+});
+
 eggPetList.forEach((item: any) => {
   const name = item.display_name;
   if (!name) return;
@@ -31,8 +66,20 @@ eggPetList.forEach((item: any) => {
     ? item.type_name.split(",").map((t: string) => t.replace("元素精灵", "").trim()).filter(Boolean) 
     : [];
   const chain = item.family_chain || "";
-  const chainParts = chain.split(" → ");
-  const maxStageName = chainParts[chainParts.length - 1]?.trim() || name;
+  
+  const maxStagePets = chainMaxStageMap[chain] || [];
+  const maxStageVal = chainMaxStageValueMap[chain] || 0;
+  
+  let maxStageName = name;
+  if (item.stage < maxStageVal) {
+    // 低阶宠物：默认升级为进化链中排在最后的那个最高阶宠物
+    const chainParts = chain.split(" → ").map(p => p.trim());
+    const availableMaxPetsInChain = chainParts.filter(p => maxStagePets.includes(p));
+    maxStageName = availableMaxPetsInChain[availableMaxPetsInChain.length - 1] || maxStagePets[0] || name;
+  } else {
+    // 已是最高阶形态本身，不需要升级
+    maxStageName = name;
+  }
 
   if (!petDataMap[name]) {
     petDataMap[name] = {
@@ -83,23 +130,49 @@ export const getPetDetails = (name: string): PetDetails | null => {
 export const getAvailableSprites = (petName: string): string[] => {
   if (!petName) return [];
   const baseName = getBasePetName(petName);
-  const exactFile = baseName + ".png";
-  const results: string[] = [];
   
-  if (spriteFiles.includes(exactFile)) {
-    results.push(baseName);
+  const getSinglePetSprites = (singleName: string): string[] => {
+    const exactFile = singleName + ".png";
+    const results: string[] = [];
+    if (spriteFiles.includes(exactFile)) {
+      results.push(singleName);
+    }
+    spriteFiles.forEach(file => {
+      if (file.startsWith(singleName + "_") && file.endsWith(".png")) {
+        const formName = file.slice(0, -4);
+        if (!results.includes(formName)) {
+          results.push(formName);
+        }
+      }
+    });
+    return results;
+  };
+
+  const selfSprites = getSinglePetSprites(baseName);
+  
+  const details = getPetDetails(baseName);
+  if (details && details.familyChain) {
+    const chain = details.familyChain;
+    const maxStagePets = chainMaxStageMap[chain] || [];
+    
+    // 如果当前宠物本身就是进化链上的最高阶之一，且该进化链有多个平行最高阶
+    if (maxStagePets.includes(baseName) && maxStagePets.length > 1) {
+      const combinedResults = [...selfSprites];
+      maxStagePets.forEach(otherPet => {
+        if (otherPet !== baseName) {
+          const otherSprites = getSinglePetSprites(otherPet);
+          otherSprites.forEach(sprite => {
+            if (!combinedResults.includes(sprite)) {
+              combinedResults.push(sprite);
+            }
+          });
+        }
+      });
+      return combinedResults;
+    }
   }
   
-  spriteFiles.forEach(file => {
-    if (file.startsWith(baseName + "_") && file.endsWith(".png")) {
-      const formName = file.slice(0, -4);
-      if (!results.includes(formName)) {
-        results.push(formName);
-      }
-    }
-  });
-  
-  return results;
+  return selfSprites;
 };
 
 /**
@@ -208,4 +281,23 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-slate-50 border-slate-200 text-slate-500 font-medium";
   }
 };
+
+/**
+ * Gets a user-friendly display name for a sprite form option.
+ * If the pet has parallel branch evolutions, return clean branch names (e.g. "翠顶", "黑羽", "秩序", "混乱").
+ * Otherwise, return the suffix after "_" or "默认".
+ */
+export const getSpriteFormDisplayName = (spriteOption: string): string => {
+  if (!spriteOption) return "默认";
+  
+  // 针对特定分支进化的特殊处理
+  if (spriteOption.startsWith("翠顶夫人")) return "翠顶" + (spriteOption.includes("_") ? "_" + spriteOption.split("_")[1] : "");
+  if (spriteOption.startsWith("黑羽夫人")) return "黑羽" + (spriteOption.includes("_") ? "_" + spriteOption.split("_")[1] : "");
+  if (spriteOption.startsWith("秩序鱿墨")) return "秩序" + (spriteOption.includes("_") ? "_" + spriteOption.split("_")[1] : "");
+  if (spriteOption.startsWith("混乱鱿彩")) return "混乱" + (spriteOption.includes("_") ? "_" + spriteOption.split("_")[1] : "");
+  
+  // 原有的后缀显示逻辑
+  return spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+};
+
 

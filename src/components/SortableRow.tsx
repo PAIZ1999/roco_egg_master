@@ -18,7 +18,7 @@ import {
   THREE_V_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
-import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath, getAvailableSprites } from "../petHelper";
+import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath, getAvailableSprites, getSpriteFormDisplayName } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
   "光": "bg-amber-50 text-amber-600 border-amber-200",
@@ -182,7 +182,7 @@ export function SortableRow({
                     className="text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 leading-none appearance-none"
                   >
                     {availableSprites.map((spriteOption) => {
-                      const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                      const displayName = getSpriteFormDisplayName(spriteOption);
                       return (
                         <option key={spriteOption} value={spriteOption}>
                           {displayName}

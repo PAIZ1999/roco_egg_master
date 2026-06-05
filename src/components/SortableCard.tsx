@@ -29,7 +29,7 @@ import {
   LIMIT_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
-import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES, getEggGroupStyle, getStatusStyle, getBrandStyle, getAvailableSprites } from "../petHelper";
+import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES, getEggGroupStyle, getStatusStyle, getBrandStyle, getAvailableSprites, getSpriteFormDisplayName } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
   "光": "bg-amber-50 text-amber-600 border-amber-200",
@@ -228,7 +228,7 @@ export const SortableCard = React.memo(function SortableCard({
                   className="text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
                 >
                   {availableSprites.map((spriteOption) => {
-                    const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                    const displayName = getSpriteFormDisplayName(spriteOption);
                     return (
                       <option key={spriteOption} value={spriteOption}>
                         {displayName}

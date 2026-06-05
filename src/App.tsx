@@ -52,7 +52,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableCard } from "./components/SortableCard";
 import { Autocomplete } from "./components/Autocomplete";
-import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle, getAvailableSprites, getBasePetName } from "./petHelper";
+import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle, getAvailableSprites, getBasePetName, getSpriteFormDisplayName } from "./petHelper";
 
 
 const migratePets = (rawList: any[]): EggPet[] => {
@@ -1583,7 +1583,7 @@ export default function App() {
                       className="px-2 py-1 text-xs border border-slate-200 rounded-lg text-slate-700 bg-white h-[38px] font-bold focus:outline-none focus:border-indigo-500 cursor-pointer shrink-0 max-w-[120px] transition-colors"
                     >
                       {availableSprites.map(spriteName => {
-                        const displayName = spriteName.includes("_") ? spriteName.split("_")[1] : "默认形态";
+                        const displayName = getSpriteFormDisplayName(spriteName);
                         return (
                           <option key={spriteName} value={spriteName}>
                             {displayName}
@@ -1798,7 +1798,7 @@ export default function App() {
                                 className="text-[8px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
                               >
                                 {availableSprites.map((spriteOption) => {
-                                  const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                                  const displayName = getSpriteFormDisplayName(spriteOption);
                                   return (
                                     <option key={spriteOption} value={spriteOption}>
                                       {displayName}
