@@ -1,33 +1,36 @@
-# Task Plan: 解决浏览器/系统缩放（Ctrl + 滚轮）导出长图文字错乱问题
+# Task Plan: 解决长图导出排版微调与格式切换问题
 
 ## Goal
-彻底解决当浏览器存在缩放（如按住 Ctrl + 滚轮放大或缩小，或者系统高 DPI 缩放）时，导出的长图文字错乱、换行、对不齐等兼容性问题，确保在任何缩放比例下均能稳定导出清晰、完美的表格长图。
+微调和优化长图导出时的排版细节：
+1. 解决换蛋卡片中右侧「换蛋类型」文字上移的问题，确保垂直完美居中；
+2. 解决当前窝点现蛋数量图标上移问题，去掉其跳动（bounce）动画；
+3. 将导出的长图图片格式从 PNG 变更为 JPEG (.jpg)，并更新下载文件名。
 
 ## MCP Status
-- [x] memory 检索完成
-- [x] context7/deepwiki 查询完成
-- [x] sequential-thinking 分析完成
-- [x] memory 知识存储完成
+- [ ] memory 检索完成
+- [ ] context7/deepwiki 查询完成
+- [ ] sequential-thinking 分析完成
+- [ ] memory 知识存储完成
 
 ## Phases
-- [x] Phase 1: 问题复现与机制分析（利用 Playwright 模拟浏览器不同缩放比例复现 bug）
-- [x] Phase 2: 技术方案设计与论证（使用 html2canvas 替换 modern-screenshot 方案设计）
-- [x] Phase 3: 方案代码实现与调整
-- [x] Phase 4: 多尺度缩放测试与 UI 效果验证
-- [x] Phase 5: 最终交付与项目知识库更新
+- [ ] Phase 1: 规划与准备 (更新 task_plan.md 与 notes.md)
+- [ ] Phase 2: 代码修改 (修改 SortableCard.tsx 去掉动画并对齐，修改 App.tsx 优化 Badge 并切换导出格式)
+- [ ] Phase 3: 运行并测试验证 (启动本地开发环境，通过网页与导出验证效果)
+- [ ] Phase 4: 最终交付与项目知识库/Git 提交更新
 
 ## Key Questions
-1. 浏览器缩放（Ctrl + 滚轮）对 `modern-screenshot` 渲染有何影响？
-   - **解答**：浏览器缩放改变了 `window.devicePixelRatio` 并且缩放了文字渲染 of 物理像素。在 Chromium 下，SVG `<foreignObject>` 的文字渲染字号会受到缩放因子的物理放大，但容器的 nominal CSS 像素大小（1200px）保持不变，导致字体相对容器变大、折行并破坏排版。
+1. 为什么 html2canvas 渲染文字/图标会上移？
+   - **解答**：主要是因为在 html2canvas 渲染过程中，CSS keyframe 动画（如 `animate-bounce`）会改变元素的真实 transform 位移导致截图瞬间位置偏差；同时对于没有固定高度和显式 `leading-none` / flex 居中的内联/块级元素，html2canvas 对 padding 与 line-height 的计算可能会有几像素的基线偏移。
+2. PNG 切换为 JPG 有什么需要注意的？
+   - **解答**：JPEG 不支持透明度，但由于我们导出的 offscreen 容器已经设置了实色背景 `#f8fafc`，因此切换为 JPEG 不会产生黑色底色。转换方法是 `canvas.toDataURL("image/jpeg", 0.9)`，下载文件名后缀应同步改为 `.jpg`。
 
 ## Decisions Made
-- [决策]: 必须确保在真实的浏览器缩放场景下（通过 Playwright / 浏览器 subagent 进行不同 zoomFactor 的测试）能复现并成功验证修复方案。
-- [决策]: 弃用 SVG-based 的 `modern-screenshot`，改用 2D Canvas 渲染的 `html2canvas-pro` 彻底解决 Chrome 在页面缩放下的 SVG text-rendering 缩放 bug。
-- [决策]: 使用 `html2canvas-pro` 替代原生 `html2canvas`，解决 Tailwind v4 的 `oklch()` 颜色解析崩溃问题。
+- [决策]: 对「换蛋类型」文字，使用 `flex items-center justify-center h-7 px-3 leading-none` 进行布局，强行锁定高度并配合 `leading-none` 实现完全的垂直居中。
+- [决策]: 移除蛋窝卡片中「当前窝点现蛋数量」图标的 `animate-bounce` 动画类，并使用 `shrink-0` 保证其尺寸固定，防止其在导出时上移。
+- [决策]: 修改 `App.tsx` 中的长图导出 quality 和 format 为 `image/jpeg`，保留 90% 质量，将文件名也改为 `.jpg` 后缀。
 
 ## Errors Encountered
-- [错误]: 原生 `html2canvas` 遇到 Tailwind v4 的 `oklch()` 颜色值时抛出 `Attempting to parse an unsupported color function` 异常崩溃。
-  - **解决方案**：引入社区维护的 `html2canvas-pro` 作为替代，其原生支持现代色彩空间解析。
+- 无
 
 ## Status
-**Currently in Phase 5** - 修复方案通过全部缩放层级（100%、150%）的测试验证，完成全部工作并交付。
+**Currently in Phase 1** - 完成计划制定，准备进入 Phase 2 代码修改。

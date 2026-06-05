@@ -539,7 +539,7 @@ export const SortableCard = React.memo(function SortableCard({
           {pet.status === "有现蛋" ? (
             <div className="flex items-center justify-between gap-1.5 bg-amber-50/50 border border-amber-200/40 rounded-lg px-2 py-1 mt-0.5">
               <span className="text-[10px] font-bold text-amber-800 flex items-center gap-1">
-                <Egg className="w-3 h-3 text-amber-600 animate-bounce" />
+                <Egg className="w-3 h-3 text-amber-600 shrink-0" />
                 当前窝点现蛋数量
               </span>
               <input

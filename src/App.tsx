@@ -32,7 +32,6 @@ import {
   LIMIT_OPTIONS,
   THREE_V_OPTIONS,
   EggTrade,
-  TRADE_TYPE_OPTIONS,
   cleanNature
 } from "./types";
 import {
@@ -143,7 +142,7 @@ export default function App() {
   const [newTradeBrand, setNewTradeBrand] = useState("单大块头");
   const [newTradeIs3V, setNewTradeIs3V] = useState(false);
   const [newTradeIsLimit, setNewTradeIsLimit] = useState(false);
-  const [newTradeType, setNewTradeType] = useState("1换1");
+
   const [newTradeNotes, setNewTradeNotes] = useState("");
 
   // Configure dnd-kit sensors with distance activation constraint
@@ -578,7 +577,6 @@ export default function App() {
       brand: newTradeBrand,
       is3V: newTradeIs3V,
       isLimit: newTradeIsLimit,
-      tradeType: newTradeType,
       notes: newTradeNotes
     };
 
@@ -991,7 +989,7 @@ export default function App() {
         windowWidth: 1200,
       });
 
-      const dataUrl = canvas.toDataURL("image/png");
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
 
       setExportedImageUrl(dataUrl);
       setActiveModal("image-preview");
@@ -1631,7 +1629,7 @@ export default function App() {
             </div>
 
             {/* 性格需求 */}
-            <div className="md:col-span-3 flex flex-col gap-1.5">
+            <div className="md:col-span-2 flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">性格需求</label>
               <Autocomplete
                 value={newTradeNature}
@@ -1644,7 +1642,7 @@ export default function App() {
             </div>
 
             {/* 备注说明 */}
-            <div className="md:col-span-4 flex flex-col gap-1.5">
+            <div className="md:col-span-5 flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">备注说明</label>
               <input
                 type="text"
@@ -1657,7 +1655,7 @@ export default function App() {
 
             {/* 第二行：规格与动作 */}
             {/* 牌子选择 */}
-            <div className="md:col-span-5 flex flex-col gap-1.5">
+            <div className="md:col-span-7 flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">牌子</label>
               <div className="flex flex-wrap gap-1.5">
                 {BRAND_OPTIONS.map(brand => (
@@ -1708,28 +1706,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* 换蛋类型 */}
-            <div className="md:col-span-3 flex flex-col gap-1.5">
-              <span className="text-xs font-bold text-slate-700">换蛋类型</span>
-              <div className="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200/50 w-full h-[34px] items-center">
-                {TRADE_TYPE_OPTIONS.map(type => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setNewTradeType(type)}
-                    className={`flex-1 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer text-center h-full flex items-center justify-center ${newTradeType === type
-                        ? 'bg-white text-slate-850 shadow-xs border border-slate-200/20'
-                        : 'text-slate-500 hover:text-slate-850'
-                      }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* 发布动作按钮 */}
-            <div className="md:col-span-2 flex flex-col gap-1.5">
+            <div className="md:col-span-3 flex flex-col gap-1.5">
               <label className="text-xs font-bold text-transparent select-none">操作</label>
               <button
                 type="button"
@@ -1889,19 +1868,7 @@ export default function App() {
                         </div>
                       </div>
 
-                      {/* 右侧：更显眼、放大的换蛋类型 */}
-                      <div className="flex items-center justify-center shrink-0 pl-1 z-10">
-                        <span
-                          className={`text-xs font-extrabold px-3 py-1 rounded-full border shadow-sm shrink-0 tracking-wider transition-colors ${trade.tradeType === "包公"
-                              ? "bg-blue-50 text-blue-600 border-blue-150"
-                              : trade.tradeType === "包母"
-                                ? "bg-pink-50 text-pink-650 border-pink-150"
-                                : "bg-purple-50 text-purple-650 border-purple-150"
-                            }`}
-                        >
-                          {trade.tradeType}
-                        </span>
-                      </div>
+
                     </div>
                   );
                 })}
@@ -2166,7 +2133,7 @@ export default function App() {
                       const link = document.createElement("a");
                       const dateStr = new Date().toLocaleDateString("zh-CN").replace(/\//g, "-");
                       link.href = exportedImageUrl;
-                      link.download = `洛克王国孵蛋表格长图_${dateStr}.png`;
+                      link.download = `洛克王国孵蛋表格长图_${dateStr}.jpg`;
                       link.click();
                       showToast("长图已开始下载！", "success");
                     }}

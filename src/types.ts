@@ -21,11 +21,8 @@ export interface EggTrade {
   brand: string;
   is3V: boolean;
   isLimit: boolean;
-  tradeType: string; // '包公' | '包母' | '1换1'
   notes: string;
 }
-
-export const TRADE_TYPE_OPTIONS = ["包公", "包母", "1换1"];
 
 
 export const LIMIT_OPTIONS = ["无极限蛋", "有极限蛋"];
