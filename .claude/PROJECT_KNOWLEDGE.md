@@ -98,7 +98,8 @@
 该项目已成功托管至 GitHub 并关联远程仓库进行管理。
 - **远程仓库**: `https://github.com/PAIZ1999/roco_egg_master.git`
 - **本地/远程分支**: `main` (已成功重命名并与 `origin/main` 建立追踪关系)
-- **忽略规则**: 已在 `.gitignore` 中配置过滤 `node_modules/`、`dist/`、`dist-electron/` 等大文件与打包生成目录。
+- **忽略规则**: 已在 `.gitignore` 中配置过滤 `node_modules/`、`dist/`、`dist-electron/` 以及 `release/`（包含超大编译可执行文件，防止超出 GitHub 100MB 单文件限制）等目录。
 - **管理规范**: 详细的上传与 GitHub 看板管理教程已保存在本地根目录的 `github_management_guide.md` 中。
 - **Commit 规范**: 建议遵循 Angular 提交规范（如 `feat:`, `fix:`, `docs:`, `refactor:`），并利用 Smart Commits (如 `close #12`) 联动关闭 GitHub Issues。
-- **开发与部署经验**: 当本地 Git 全局代理引起 `git push` 连接挂起时，可在本项目本地配置中执行 `git config --local http.proxy ""` 绕过代理。
+- **开发与部署经验**: 本地代理运行在 10808 端口上，可在本地 Git 配置中执行 `git config --local http.proxy http://127.0.0.1:10808` 确保顺畅推送与拉取。
+
