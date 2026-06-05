@@ -61,11 +61,45 @@ eggPetList.forEach((item: any) => {
 export const ALL_PET_NAMES = Object.keys(petDataMap).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 
 /**
- * Returns pet details by name, or null if not found.
+ * Extracts the base pet name by stripping any trailing variation suffixes starting with "_".
+ */
+export const getBasePetName = (name: string): string => {
+  if (!name) return "";
+  return name.split("_")[0];
+};
+
+/**
+ * Returns pet details by name, or null if not found. Supports multi-form suffixes.
  */
 export const getPetDetails = (name: string): PetDetails | null => {
   if (!name) return null;
-  return petDataMap[name] || null;
+  const baseName = getBasePetName(name);
+  return petDataMap[baseName] || null;
+};
+
+/**
+ * Gets all available sprites (forms) for a pet name.
+ */
+export const getAvailableSprites = (petName: string): string[] => {
+  if (!petName) return [];
+  const baseName = getBasePetName(petName);
+  const exactFile = baseName + ".png";
+  const results: string[] = [];
+  
+  if (spriteFiles.includes(exactFile)) {
+    results.push(baseName);
+  }
+  
+  spriteFiles.forEach(file => {
+    if (file.startsWith(baseName + "_") && file.endsWith(".png")) {
+      const formName = file.slice(0, -4);
+      if (!results.includes(formName)) {
+        results.push(formName);
+      }
+    }
+  });
+  
+  return results;
 };
 
 /**
@@ -74,19 +108,32 @@ export const getPetDetails = (name: string): PetDetails | null => {
 export const getSpriteFileName = (petName: string): string | null => {
   if (!petName) return null;
   
-  // Try exact match first
+  // 1. Try exact match first (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
   const exactMatch = petName + ".png";
   if (spriteFiles.includes(exactMatch)) {
     return exactMatch;
   }
   
-  // Try prefix match (e.g. "喵喵" -> "喵喵_极夜的样子.png" or "喵喵_1.png")
+  // 2. Try prefix match
   const prefixMatch = spriteFiles.find(file => file.startsWith(petName + "_") && file.endsWith(".png"));
   if (prefixMatch) {
     return prefixMatch;
   }
   
-  // Try substring match
+  // 3. Try base name exact match
+  const baseName = getBasePetName(petName);
+  const baseExactMatch = baseName + ".png";
+  if (spriteFiles.includes(baseExactMatch)) {
+    return baseExactMatch;
+  }
+  
+  // 4. Try base name prefix match
+  const basePrefixMatch = spriteFiles.find(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
+  if (basePrefixMatch) {
+    return basePrefixMatch;
+  }
+  
+  // 5. Try substring match
   const containsMatch = spriteFiles.find(file => file.includes(petName) && file.endsWith(".png"));
   if (containsMatch) {
     return containsMatch;

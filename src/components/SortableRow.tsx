@@ -18,7 +18,7 @@ import {
   THREE_V_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
-import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath } from "../petHelper";
+import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath, getAvailableSprites } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
   "光": "bg-amber-50 text-amber-600 border-amber-200",
@@ -116,8 +116,9 @@ export function SortableRow({
 
   const petDetails = getPetDetails(pet.sprite);
   const spriteName = petDetails ? petDetails.name : pet.sprite;
-  const spriteFile = getSpriteFileName(spriteName);
+  const spriteFile = getSpriteFileName(pet.sprite);
   const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+  const availableSprites = getAvailableSprites(pet.sprite);
 
   return (
     <tr
@@ -162,14 +163,37 @@ export function SortableRow({
           </div>
 
           <div className="flex flex-col flex-1 items-start gap-1">
-            <Autocomplete
-              value={pet.sprite}
-              options={ALL_PET_NAMES}
-              placeholder="精灵名称..."
-              onChange={val => handleUpdateSprite(originalIndex, val)}
-              className="w-28 text-left"
-              inputClassName="bg-transparent font-bold text-sm text-slate-800 placeholder:text-slate-300 w-full border-b-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
-            />
+            <div className="flex items-center gap-1">
+              <Autocomplete
+                value={pet.sprite}
+                options={ALL_PET_NAMES}
+                placeholder="精灵名称..."
+                onChange={val => handleUpdateSprite(originalIndex, val)}
+                className="w-28 text-left"
+                inputClassName="bg-transparent font-bold text-sm text-slate-800 placeholder:text-slate-300 w-full border-b-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
+              />
+
+              {/* Form selector dropdown for multi-form sprites in row */}
+              {availableSprites.length > 1 && (
+                <div className="bg-slate-100 hover:bg-slate-200 px-1 py-0.25 rounded shadow-3xs border border-slate-200 flex items-center transition-colors duration-150 action-buttons shrink-0 -ml-1">
+                  <select
+                    value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
+                    onChange={(e) => handleUpdateSprite(originalIndex, e.target.value)}
+                    className="text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 leading-none appearance-none"
+                  >
+                    {availableSprites.map((spriteOption) => {
+                      const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                      return (
+                        <option key={spriteOption} value={spriteOption}>
+                          {displayName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span className="text-[7px] text-slate-400 pointer-events-none select-none -mt-0.5">▼</span>
+                </div>
+              )}
+            </div>
 
             {/* Element Badges */}
             {petDetails && petDetails.types && petDetails.types.length > 0 && (

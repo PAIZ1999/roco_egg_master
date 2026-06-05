@@ -52,7 +52,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableCard } from "./components/SortableCard";
 import { Autocomplete } from "./components/Autocomplete";
-import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle } from "./petHelper";
+import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle, getAvailableSprites, getBasePetName } from "./petHelper";
 
 
 const migratePets = (rawList: any[]): EggPet[] => {
@@ -382,6 +382,14 @@ export default function App() {
   const handleUpdateSprite = useCallback((id: string, name: string) => {
     setPets(prev => prev.map(p => {
       if (p.id === id) {
+        if (name.includes("_")) {
+          const details = getPetDetails(name);
+          return {
+            ...p,
+            sprite: name,
+            groups: (details && details.groups && details.groups.length > 0) ? [...details.groups] : p.groups
+          };
+        }
         const details = getPetDetails(name);
         if (details) {
           return {
@@ -556,9 +564,12 @@ export default function App() {
       return;
     }
 
-    // 自动升级为进化链最高阶
-    const details = getPetDetails(newTradeSprite.trim());
-    const finalSprite = details ? (details.maxStageName || newTradeSprite.trim()) : newTradeSprite.trim();
+    // 自动升级为进化链最高阶，且保留形态后缀
+    const trimmed = newTradeSprite.trim();
+    const [base, suffix] = trimmed.split("_");
+    const details = getPetDetails(base);
+    const finalBase = details ? (details.maxStageName || base) : base;
+    const finalSprite = suffix ? `${finalBase}_${suffix}` : finalBase;
 
     const newTrade: EggTrade = {
       id: `trade-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -584,6 +595,10 @@ export default function App() {
     setTrades(trades.filter(t => t.id !== id));
     showToast("已删除换蛋需求", "success");
   };
+
+  const handleUpdateTradeSprite = useCallback((id: string, newSprite: string) => {
+    setTrades(prev => prev.map(t => t.id === id ? { ...t, sprite: newSprite } : t));
+  }, []);
 
   const handleReset = () => {
     setActiveModal("reset");
@@ -1507,17 +1522,20 @@ export default function App() {
               <label className="text-xs font-bold text-slate-700">精灵名称</label>
               <div className="flex items-center gap-3 w-full">
                 {(() => {
-                  const tempDetails = getPetDetails(newTradeSprite);
-                  const maxPetName = tempDetails ? (tempDetails.maxStageName || newTradeSprite) : newTradeSprite;
-                  const finalDetails = tempDetails ? getPetDetails(maxPetName) : null;
-                  const spriteFileName = tempDetails ? getSpriteFileName(maxPetName) : null;
+                  const trimmed = newTradeSprite.trim();
+                  const [base, suffix] = trimmed.split("_");
+                  const tempDetails = getPetDetails(base);
+                  const finalBase = tempDetails ? (tempDetails.maxStageName || base) : base;
+                  const resolvedSprite = suffix ? `${finalBase}_${suffix}` : finalBase;
+                  const finalDetails = getPetDetails(resolvedSprite);
+                  const spriteFileName = getSpriteFileName(resolvedSprite);
 
                   return (
                     <div className="w-[38px] h-[38px] bg-white rounded-lg border border-slate-200 flex items-center justify-center shrink-0 shadow-sm relative group/avatar overflow-hidden">
                       {spriteFileName ? (
                         <img
                           src={getImagePath(`images/sprites/${spriteFileName}`)}
-                          alt={maxPetName}
+                          alt={resolvedSprite}
                           className="w-8 h-8 object-contain transition-transform group-hover/avatar:scale-110"
                         />
                       ) : (
@@ -1536,19 +1554,53 @@ export default function App() {
                   );
                 })()}
                 <Autocomplete
-                  value={newTradeSprite}
-                  onChange={setNewTradeSprite}
+                  value={newTradeSprite.includes("_") ? newTradeSprite.split("_")[0] : newTradeSprite}
+                  onChange={(val) => {
+                    // When base name changes, reset selected form/variation
+                    setNewTradeSprite(val);
+                  }}
                   options={ALL_PET_NAMES}
                   placeholder="输入精灵名称或首字、拼音首字母..."
                   className="flex-1"
                   inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-medium h-[38px]"
                 />
+                {(() => {
+                  const trimmed = newTradeSprite.trim();
+                  const [base, suffix] = trimmed.split("_");
+                  const tempDetails = getPetDetails(base);
+                  const finalBase = tempDetails ? (tempDetails.maxStageName || base) : base;
+                  const availableSprites = getAvailableSprites(finalBase);
+                  if (availableSprites.length <= 1) return null;
+                  
+                  const currentVal = availableSprites.includes(trimmed) 
+                    ? trimmed 
+                    : (suffix ? `${finalBase}_${suffix}` : finalBase);
+
+                  return (
+                    <select
+                      value={availableSprites.includes(currentVal) ? currentVal : finalBase}
+                      onChange={(e) => setNewTradeSprite(e.target.value)}
+                      className="px-2 py-1 text-xs border border-slate-200 rounded-lg text-slate-700 bg-white h-[38px] font-bold focus:outline-none focus:border-indigo-500 cursor-pointer shrink-0 max-w-[120px] transition-colors"
+                    >
+                      {availableSprites.map(spriteName => {
+                        const displayName = spriteName.includes("_") ? spriteName.split("_")[1] : "默认形态";
+                        return (
+                          <option key={spriteName} value={spriteName}>
+                            {displayName}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  );
+                })()}
               </div>
               {/* 精灵辅助信息提示 */}
               {(() => {
-                const tempDetails = getPetDetails(newTradeSprite);
-                const maxPetName = tempDetails ? (tempDetails.maxStageName || newTradeSprite) : newTradeSprite;
-                const finalDetails = tempDetails ? getPetDetails(maxPetName) : null;
+                const trimmed = newTradeSprite.trim();
+                const [base, suffix] = trimmed.split("_");
+                const tempDetails = getPetDetails(base);
+                const finalBase = tempDetails ? (tempDetails.maxStageName || base) : base;
+                const finalDetails = getPetDetails(finalBase);
 
                 if (!finalDetails) return null;
                 return (
@@ -1558,10 +1610,10 @@ export default function App() {
                     <span className="text-slate-200">|</span>
                     <span className="font-semibold text-slate-500">蛋组:</span>
                     <span className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">{finalDetails.groups?.join("/")}</span>
-                    {newTradeSprite !== maxPetName && (
+                    {base !== finalBase && (
                       <>
                         <span className="text-slate-200">|</span>
-                        <span className="text-slate-400 italic">进化链最高阶: {maxPetName}</span>
+                        <span className="text-slate-400 italic">进化链最高阶: {finalBase}</span>
                       </>
                     )}
                   </div>
@@ -1694,46 +1746,69 @@ export default function App() {
                 {trades.map(trade => {
                   const details = getPetDetails(trade.sprite);
                   const spriteFileName = details ? getSpriteFileName(trade.sprite) : null;
+                  const baseName = getBasePetName(trade.sprite);
+                  const availableSprites = getAvailableSprites(baseName);
 
                   return (
                     <div
                       key={trade.id}
                       className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-4 flex items-center justify-between gap-4 relative overflow-hidden group/card"
                     >
+                      {/* Delete Button at top-right */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteTrade(trade.id);
+                        }}
+                        className="absolute top-2 right-2 p-1 rounded-lg text-slate-350 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all opacity-0 group-hover/card:opacity-100 cursor-pointer action-buttons z-20"
+                        title="删除该条换蛋需求"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+
                       {/* 左侧：头像 + 详情 */}
                       <div className="flex items-start gap-4 flex-1 min-w-0">
                         {/* 头像 */}
-                        <div className="relative w-20 h-20 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 hover:[&_img]:scale-75 hover:[&_.avatar-fallback-icon]:scale-75 hover:[&_button]:opacity-100 hover:[&_button]:pointer-events-auto">
+                        <div className="relative w-20 h-20 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 group/avatar overflow-hidden">
                           {spriteFileName ? (
                             <img
                               src={getImagePath(`images/sprites/${spriteFileName}`)}
                               alt={trade.sprite}
-                              className="w-16 h-16 object-contain transition-transform duration-200"
+                              className="w-16 h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-105"
                             />
                           ) : (
                             <Egg className="w-10 h-10 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
                           )}
                           {details?.types && details.types.length > 0 && (
-                            <div className="absolute -bottom-1 -right-1 w-6.5 h-6.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
+                            <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
                               <img
                                 src={getImagePath(`images/attributes/${details.types[0]}.png`)}
                                 alt={details.types[0]}
-                                className="w-4.5 h-4.5 object-contain"
+                                className="w-3.5 h-3.5 object-contain"
                               />
                             </div>
                           )}
 
-                          {/* Hover Delete Button */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteTrade(trade.id);
-                            }}
-                            className="delete-trade-btn absolute inset-0 flex items-center justify-center bg-rose-500/90 text-white rounded-2xl opacity-0 pointer-events-none transition-all duration-200 z-20 cursor-pointer action-buttons hover:bg-rose-600/95"
-                            title="删除该条换蛋需求"
-                          >
-                            <Trash2 className="w-6 h-6 hover:scale-110 active:scale-95 transition-transform" />
-                          </button>
+                          {/* Form dropdown overlay for multi-form sprites */}
+                          {availableSprites.length > 1 && (
+                            <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-xs px-1 py-0.5 rounded shadow-2xs z-10 border border-slate-200/80 flex items-center hover:bg-white transition-colors duration-150 action-buttons">
+                              <select
+                                value={availableSprites.includes(trade.sprite) ? trade.sprite : (spriteFileName ? spriteFileName.slice(0, -4) : trade.sprite)}
+                                onChange={(e) => handleUpdateTradeSprite(trade.id, e.target.value)}
+                                className="text-[8px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+                              >
+                                {availableSprites.map((spriteOption) => {
+                                  const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                                  return (
+                                    <option key={spriteOption} value={spriteOption}>
+                                      {displayName}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                              <span className="text-[6px] text-slate-450 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+                            </div>
+                          )}
                         </div>
 
                         {/* 需求详情 */}

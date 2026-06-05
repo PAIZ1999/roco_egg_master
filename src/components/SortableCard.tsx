@@ -29,7 +29,7 @@ import {
   LIMIT_OPTIONS
 } from "../types";
 import { Autocomplete } from "./Autocomplete";
-import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES, getEggGroupStyle, getStatusStyle, getBrandStyle } from "../petHelper";
+import { getPetDetails, getSpriteFileName, getImagePath, ALL_PET_NAMES, getEggGroupStyle, getStatusStyle, getBrandStyle, getAvailableSprites } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
   "光": "bg-amber-50 text-amber-600 border-amber-200",
@@ -123,8 +123,9 @@ export const SortableCard = React.memo(function SortableCard({
 
   const petDetails = getPetDetails(pet.sprite);
   const spriteName = petDetails ? petDetails.name : pet.sprite;
-  const spriteFile = getSpriteFileName(spriteName);
+  const spriteFile = getSpriteFileName(pet.sprite);
   const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+  const availableSprites = getAvailableSprites(pet.sprite);
 
   // 判断是否 3V
   const isPet3V = () => {
@@ -216,6 +217,27 @@ export const SortableCard = React.memo(function SortableCard({
               />
             ) : (
               <Egg className="w-7 h-7 text-slate-300 animate-pulse" />
+            )}
+
+            {/* Form dropdown overlay for multi-form sprites */}
+            {availableSprites.length > 1 && (
+              <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded-md shadow-2xs z-10 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150 action-buttons">
+                <select
+                  value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
+                  onChange={(e) => handleUpdateSprite(pet.id as string, e.target.value)}
+                  className="text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+                >
+                  {availableSprites.map((spriteOption) => {
+                    const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
+                    return (
+                      <option key={spriteOption} value={spriteOption}>
+                        {displayName}
+                      </option>
+                    );
+                  })}
+                </select>
+                <span className="text-[7px] text-slate-400 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+              </div>
             )}
 
             {/* Type Badge absolute overlay */}

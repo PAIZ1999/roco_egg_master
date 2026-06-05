@@ -1,65 +1,136 @@
-# Research Notes: 三围底色优化与长图导出字体大小一致性
+# Research Notes: 精灵多形态支持设计与实现
 
-## 1. 三围底色优化
-- **现状**：之前的修改为了区别于白底卡片，改成了 `bg-rose-100` 等浅饱和对比度背景。但用户反馈依然不够显眼，要求使用“深色阶”。
-- **方案**：将原本的 100 阶背景和 300 阶边框升级为 200 阶背景和 400 阶边框。
-  - 生命：`bg-rose-200 text-rose-800 border-rose-400 hover:bg-rose-300 shadow-2xs`
-  - 物攻：`bg-amber-200 text-amber-900 border-amber-400 hover:bg-amber-300 shadow-2xs`
-  - 速度：`bg-emerald-200 text-emerald-800 border-emerald-400 hover:bg-emerald-300 shadow-2xs`
-  - 魔攻：`bg-purple-200 text-purple-800 border-purple-400 hover:bg-purple-300 shadow-2xs`
-  - 物防：`bg-blue-200 text-blue-800 border-blue-400 hover:bg-blue-300 shadow-2xs`
-  - 魔防：`bg-cyan-200 text-cyan-800 border-cyan-400 hover:bg-cyan-300 shadow-2xs`
-  - 无：`bg-slate-200 text-slate-500 border-slate-350 hover:bg-slate-300`
-- **对比度效果**：在白色卡片背景上形成了非常强烈的色彩色阶对比，使得玩家一眼就能分辨六围对应的属性。
+## 1. 需求与实现方案分析
+用户期望支持多形态精灵的头像切换展示，多形态图片位于 `images/sprites/`，包含下划线如 `冬羽雀_春天的样子.png`。
+我们需要实现：
+- 精灵数据属性读取（蛋组、系别）对多形态精灵名的自适应（去除下划线后缀查找）。
+- 精灵图片的智能定位（支持包含下划线的全名，如 `冬羽雀_春天的样子` 对应 `冬羽雀_春天的样子.png`）。
+- 蛋窝卡片（`SortableCard`）及表格行（`SortableRow`）的头像框内，当检测到有多个可用形态时，在左下角渲染一个精美的毛玻璃下拉切换框（`<select>`），用于切换外观形态。
+- 发布表单处及换蛋看板卡片上支持多形态渲染。
 
-## 2. 长图导出字号放大问题
-- **现状分析**：
-  1. 在 `App.tsx` 中的 `handleExportLongImage` 函数中，对 `<input>` 和 `<select>` 在克隆节点中替换为静态 `<div>`，但直接使用了硬编码的最小高度（`minHeight` 为 28px 或 24px），以及硬编码的 padding。
-  2. 原本的 React 表单控件可能从 User Agent Stylesheet 或全局 CSS 继承了较小的字号（如 `text-[10px]` 或 `text-xs`），但替换成 `<div>` 后，如果没有显式指定，就回退到了父容器或全局的较大字号（如 `text-sm` 或 `text-base`），导致文字被放大。
-  3. 强行设定 `width: 100%` 会拉伸一些本应为固定宽度的输入框（如现蛋数量输入框 `w-10`）。
-- **方案**：
-  1. 利用 `window.getComputedStyle(originalEl)` 精确读取原页面表单元素的实际计算样式。
-  2. 将 `fontSize`、`fontWeight`、`lineHeight`、`color`、`padding`、`height`、`minHeight`、`width` 等布局和文字样式动态赋予静态 `<div>`，实现像素级还原，确保长图文字字号、高矮与界面看到的一模一样，完全没有放大或拉伸现象。
+---
 
-## 3. 我的精灵蛋窝中心与自建换蛋需求中心标题一致性
-- **分析**：目前蛋窝中心标题使用 `text-sm`，换蛋需求中心使用 `text-lg`。
-- **解决**：两者一律提升为 `text-lg font-bold text-slate-800`，说明文字统一为 `text-xs text-slate-500`，图标容器大小、右侧 Badge 大小等样式元素一律拉齐。
+## 2. 辅助函数实现设计 (`src/petHelper.ts`)
+- **`getBasePetName`**:
+  ```typescript
+  export const getBasePetName = (name: string): string => {
+    if (!name) return "";
+    return name.split("_")[0];
+  };
+  ```
+- **`getPetDetails`**:
+  ```typescript
+  export const getPetDetails = (name: string): PetDetails | null => {
+    if (!name) return null;
+    const baseName = getBasePetName(name);
+    return petDataMap[baseName] || null;
+  };
+  ```
+- **`getAvailableSprites`**:
+  获取该精灵可用的所有形态名（无 `.png` 后缀，如 `["冬羽雀_夏天的样子", "冬羽雀_春天的样子", ...]`）。
+  ```typescript
+  export const getAvailableSprites = (petName: string): string[] => {
+    if (!petName) return [];
+    const baseName = getBasePetName(petName);
+    const exactFile = baseName + ".png";
+    const results: string[] = [];
+    
+    if (spriteFiles.includes(exactFile)) {
+      results.push(baseName);
+    }
+    
+    spriteFiles.forEach(file => {
+      if (file.startsWith(baseName + "_") && file.endsWith(".png")) {
+        const formName = file.slice(0, -4);
+        if (!results.includes(formName)) {
+          results.push(formName);
+        }
+      }
+    });
+    
+    return results;
+  };
+  ```
+- **`getSpriteFileName`**:
+  能够完美支持输入具体形态名或基础名。
+  ```typescript
+  export const getSpriteFileName = (petName: string): string | null => {
+    if (!petName) return null;
+    
+    // 1. 尝试全名精确匹配 (例如 "冬羽雀_夏天的样子.png")
+    const exactMatch = petName + ".png";
+    if (spriteFiles.includes(exactMatch)) {
+      return exactMatch;
+    }
+    
+    // 2. 尝试全名前缀匹配
+    const prefixMatch = spriteFiles.find(file => file.startsWith(petName + "_") && file.endsWith(".png"));
+    if (prefixMatch) {
+      return prefixMatch;
+    }
+    
+    // 3. 尝试基础名精确匹配
+    const baseName = getBasePetName(petName);
+    const baseExactMatch = baseName + ".png";
+    if (spriteFiles.includes(baseExactMatch)) {
+      return baseExactMatch;
+    }
+    
+    // 4. 尝试基础名前缀匹配
+    const basePrefixMatch = spriteFiles.find(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
+    if (basePrefixMatch) {
+      return basePrefixMatch;
+    }
+    
+    // 5. 模糊包含匹配
+    const containsMatch = spriteFiles.find(file => file.includes(petName) && file.endsWith(".png"));
+    if (containsMatch) {
+      return containsMatch;
+    }
+    
+    return null;
+  };
+  ```
 
-## 4. 蛋窝卡片不选“有现蛋”时太空问题
-- **分析**：没有现蛋数量输入框后，卡片高度减少且底盘变空。
-- **解决**：在非“有现蛋”时渲染一个优雅的状态兜底信息条（带有匹配主题底色和呼吸点/提示圆点），文字具有洛克王国孵蛋趣味性，使卡片保持丰满。
+---
 
-## 5. 精灵名紧贴头像，系别等距排版
-- **分析**：左列使用 `flex-col justify-between` 导致间距拉大，且各元素位置因卡片高矮而抖动。
-- **解决**：将头像、名字输入框、系别图标组合包进一个独立的 Flex-col 容器中，设定统一的 `gap-1.5`，并将名字输入框 padding 归零以实现三者之间的绝对等间距，紧凑不散架。
+## 3. 界面交互与布局设计
+### 3.1 蛋窝卡片 (`SortableCard.tsx`)
+- **布局位置**：大头像容器的左下角 (`absolute bottom-1 left-1`)。由于右下角是系别图标 (`bottom-1 right-1`)，左上角是 3V 标，右上角是极限标，所以左下角是完美对称的空位。
+- **渲染条件**：`availableSprites.length > 1`。
+- **外观样式**：
+  ```tsx
+  <div className="absolute bottom-1 left-1 bg-white/85 backdrop-blur-xs px-1.5 py-0.5 rounded shadow-3xs z-15 border border-slate-150 flex items-center max-w-[70%] hover:bg-white transition-colors duration-150 action-buttons">
+    <select
+      value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
+      onChange={(e) => handleUpdateSprite(pet.id as string, e.target.value)}
+      className="text-[9px] font-bold text-slate-750 bg-transparent border-none focus:outline-none cursor-pointer w-full"
+    >
+      {availableSprites.map((spriteOption) => {
+        const displayName = spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认样子";
+        return (
+          <option key={spriteOption} value={spriteOption}>
+            {displayName}
+          </option>
+        );
+      })}
+    </select>
+  </div>
+  ```
+- **长图导出**：该下拉框添加 `.action-buttons` 类，长图导出时由 CSS 规则自动隐藏，无感完美保留选中的头像图片。
 
-## 6. 牌子底色显眼度与“单大块头”更名优化
-- **背景**：用户反馈原本牌子的显示太淡，看不清。同时，需要将原本的“无牌”选项改名为“单大块头”。
-- **优化方案**：
-  1. 将 types.ts 中的 `BRAND_OPTIONS` 从 `["大粗", "大婉", "小粗", "小婉", "单牌", "无牌"]` 改为 `["大粗", "大婉", "小粗", "小婉", "单牌", "单大块头"]`。
-  2. 针对六种牌子在 `src/petHelper.ts` 的 `getBrandStyle` 中配置极其醒目的底色和对比边框：
-     - 大婉：`bg-rose-100 border-rose-300 text-rose-800 font-bold shadow-xs`
-     - 大粗：`bg-amber-100 border-amber-300 text-amber-900 font-bold shadow-xs`
-     - 单牌：`bg-emerald-100 border-emerald-300 text-emerald-800 font-bold shadow-xs`
-     - 小婉：`bg-blue-100 border-blue-300 text-blue-800 font-bold shadow-xs`
-     - 小粗：`bg-purple-100 border-purple-300 text-purple-800 font-bold shadow-xs`
-     - 单大块头：`bg-slate-100 border-slate-300 text-slate-800 font-bold shadow-xs`
-  3. 修改 `App.tsx` 中的状态初始化和数据迁移（原本默认值由“无牌”升级为“单大块头”）。
-  4. 优化 `App.tsx` 中换蛋需求发布表单中的牌子选择按钮，直接应用 `getBrandStyle(brand)` 的颜色样式，并对被选中的按钮添加高亮缩放及 `ring-2 ring-indigo-500` 效果。
-  5. 优化顶部筛选下拉框 `select`，在选择特定牌子时，使用 `getBrandStyle(filterBrand)` 赋予其对应的强对比颜色，未选择时采用常规白色背景。
-  6. 优化统计图表，将原本的五列改为六列（`grid-cols-6`），加入“单大块头”选项，并设定对应的高级银灰色背景。
+### 3.2 表格行 (`SortableRow.tsx`)
+- 类似地，在表格行的头像容器内添加形态选择下拉框，保证功能一致性。
 
-## 7. 状态底色醒目度优化
-- **背景**：用户反馈“状态也要有不同的底色”。
-- **分析**：
-  1. 原本的 `getStatusStyle` 函数中的状态字符串为老版本状态字符串（如 `"正在孵"`, `"已撤窝"`, `"投资中"`），而系统目前实际使用的是 `"有现蛋"`, `"正在孵，可预约"`, `"已撤窝，要提前换产线"`, `"接投资"`。这导致除“有现蛋”外，其他状态全部回退到了灰色的 `default` 样式，显得极度暗淡。
-  2. 蛋窝卡片底部渲染的兜底状态信息条在判断状态时，也错误地匹配了老版字符串，导致除了“有现蛋”外所有状态都显示为默认的“已就绪/当前蛋窝状态已就绪”蓝色条带。
-- **方案**：
-  1. 在 `src/petHelper.ts` 的 `getStatusStyle` 中为四种真实状态分配鲜艳高对比度的底色：
-     - 有现蛋：`bg-amber-100 border-amber-300 text-amber-800 font-bold shadow-xs` (明亮金黄)
-     - 正在孵，可预约：`bg-sky-100 border-sky-300 text-sky-800 font-bold shadow-xs` (明亮天空蓝)
-     - 已撤窝，要提前换产线：`bg-orange-100 border-orange-300 text-orange-800 font-bold shadow-xs` (警告橙色)
-     - 接投资：`bg-purple-100 border-purple-300 text-purple-800 font-bold shadow-xs` (明亮紫)
-  2. 在 `src/App.tsx` 的顶部状态筛选下拉框中引入 `getStatusStyle(filterStatus)` 动态样式，使得选中某个状态时，筛选框呈现亮眼的对比背景。
-  3. 在 `src/components/SortableCard.tsx` 和 `src/components/SortableRow.tsx` 的下拉选项（`<option>`）上注入相应的状态背景色。
-  4. 修复 `src/components/SortableCard.tsx` 中底部兜底提示条的状态匹配条件，使其与真实的状态字符串一一对应，恢复“孵化中”、“已撤窝”、“投资中”等状态的呼吸灯提示和描述文字，且各状态文字的条带背景颜色与状态下拉框的亮眼底色保持高级的色阶协调。
+### 3.3 换蛋中心表单及卡片 (`App.tsx`)
+- **发布表单**：在输入框右侧增加了形态选择下拉框，并实现头像预览联动切换。当基础精灵名称更新时，会自动重置形态；
+- **换蛋看板卡片**：由于原本 hover 覆盖头像的删除按钮会阻碍形态选择下拉框的点击，因此我们做出了一个更优雅的**设计改进**——将删除按钮移至整个卡片的右上角（仅在 hover 卡片时淡入显示），与蛋窝卡片设计保持一致。这样头像区域便可无遮挡地容纳形态选择下拉框，从而让用户在看板上也可以极简地一键切换精灵形态。
+
+---
+
+## 4. 验证计划
+1. 在网页端选择“冬羽雀”或“丢丢”，验证头像左下角是否浮现形态切换下拉框。
+2. 切换形态为“秋天的样子”或“沙地附近的样子”，验证头像是否即时刷新，且卡片的系别、蛋组是否依然能够正确读取展示。
+3. 点击“导出长图”，验证导出的长图是否包含了正确的形态头像，且隐藏了下拉选择框本身。
+4. 验证数据保存与读取，关闭网页后重新打开，形态选择是否被完整持久化。
+5. 换蛋中心发布与看板切换：选择“冬羽雀”，并在右侧选择“春天的样子”发布，验证看板卡片正确显示“春天的样子”。在卡片上切换为“秋天的样子”，验证卡片头像更新。
