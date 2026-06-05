@@ -474,7 +474,7 @@ export function SortableRow({
           <select
             value={pet.isLimit}
             onChange={e => handleUpdateLimit(originalIndex, e.target.value)}
-            className={`appearance-none text-xs font-semibold text-center border rounded-full px-2 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-colors ${pet.isLimit === "极限" ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-slate-50 text-slate-500 border-slate-200"}`}
+            className={`appearance-none text-xs font-semibold text-center border rounded-full px-2 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-colors ${pet.isLimit === "有极限蛋" ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-slate-50 text-slate-500 border-slate-200"}`}
           >
             {LIMIT_OPTIONS.map(opt => (
               <option key={opt} value={opt}>{opt}</option>

@@ -83,7 +83,7 @@ const migratePets = (rawList: any[]): EggPet[] => {
       groups: p.groups || [EGG_GROUPS[0]],
       brand: p.brand || BRAND_OPTIONS[0],
       status: p.status || NEST_STATUS_OPTIONS[0],
-      isLimit: p.isLimit === "是" ? "极限" : (p.isLimit === "否" ? "非极限" : (p.isLimit || "非极限")),
+      isLimit: p.isLimit === "是" || p.isLimit === "极限" || p.isLimit === "有极限蛋" ? "有极限蛋" : "无极限蛋",
       is3V: p.is3V === "是" ? "3V" : (p.is3V === "" || !p.is3V ? "否" : p.is3V),
       hideStats: !!p.hideStats,
       eggCount: p.eggCount || "1"
@@ -364,7 +364,7 @@ export default function App() {
   const totalEggsCount = pets
     .filter(p => p.status === "有现蛋")
     .reduce((sum, p) => sum + parseInt(p.eggCount || "1", 10), 0);
-  const limitsCount = pets.filter(p => p.isLimit === "极限" && p.status === "有现蛋").length;
+  const limitsCount = pets.filter(p => p.isLimit === "有极限蛋" && p.status === "有现蛋").length;
   const isPet3V = (p: EggPet) => {
     if (p.hideStats) return false;
     const f = p.fatherStats || ["生命", "物攻", "速度"];
@@ -546,7 +546,7 @@ export default function App() {
       groups: [EGG_GROUPS[0]],
       brand: BRAND_OPTIONS[0],
       status: NEST_STATUS_OPTIONS[0],
-      isLimit: "非极限",
+      isLimit: "无极限蛋",
       is3V: "否",
       hideStats: false,
       eggCount: "1"
@@ -1273,7 +1273,7 @@ export default function App() {
               onChange={e => setFilterLimit(e.target.value)}
               className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
             >
-              <option value="">全部(极限与非极限)</option>
+              <option value="">全部(有无极限蛋)</option>
               {LIMIT_OPTIONS.map(opt => (
                 <option key={opt} value={opt}>{opt}</option>
               ))}

@@ -257,9 +257,9 @@ export const SortableCard = React.memo(function SortableCard({
                 3V
               </span>
             )}
-            {pet.isLimit === "极限" && (
+            {pet.isLimit === "有极限蛋" && (
               <span className="absolute top-1 right-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-amber-500 text-white shadow-xs shrink-0 scale-90 origin-top-right z-15">
-                极限
+                有极限蛋
               </span>
             )}
           </div>
@@ -497,11 +497,11 @@ export const SortableCard = React.memo(function SortableCard({
 
             {/* Limit Column */}
             <div className="flex flex-col gap-0.5">
-              <span className="text-[9px] font-bold text-slate-400 select-none">极限量级</span>
+              <span className="text-[9px] font-bold text-slate-400 select-none">有无极限蛋</span>
               <select
                 value={pet.isLimit}
                 onChange={(e) => handleUpdateLimit(pet.id as string, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "极限"
+                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "有极限蛋"
                   ? "bg-amber-100 border-amber-300 text-amber-800 font-bold"
                   : "bg-slate-105 border-slate-205 text-slate-650 font-medium"
                   }`}

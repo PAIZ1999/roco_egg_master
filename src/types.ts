@@ -28,7 +28,7 @@ export interface EggTrade {
 export const TRADE_TYPE_OPTIONS = ["包公", "包母", "1换1"];
 
 
-export const LIMIT_OPTIONS = ["非极限", "极限"];
+export const LIMIT_OPTIONS = ["无极限蛋", "有极限蛋"];
 
 export const THREE_V_OPTIONS = ["否", "3V", "3+2", "3+1", "2+2", "2+1", "1+1"];
 
@@ -74,7 +74,7 @@ export const INITIAL_TABLE_DATA: EggPet[] = [
     groups: ["动物组", "拟人组"], 
     brand: "大婉", 
     status: "有现蛋", 
-    isLimit: "极限", 
+    isLimit: "有极限蛋", 
     is3V: "3V",
     eggCount: "1"
   }
