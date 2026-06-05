@@ -9,5 +9,8 @@ coverage/
 !.env.example
 *_orig.png
 release/
-
-
+# AI and test temporary files
+artifacts/
+scratch/
+视频/
+images/test_chain.js

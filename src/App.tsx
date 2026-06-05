@@ -745,9 +745,13 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        div.style.fontSize = adjustPx(computedStyle.fontSize);
+        // Note: Do NOT set inline fontSize and lineHeight via absolute pixels!
+        // When screen DPI zoom is enabled (DPR > 1), absolute pixels computed from DPI zoom
+        // can be smaller than the browser's minimum font size (e.g. 12px), causing text wrapping issues.
+        // Instead, let them adaptively inherit style rules defined in their CSS classes (e.g. text-[10px], text-xs).
+        // div.style.fontSize = adjustPx(computedStyle.fontSize);
+        // div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.fontWeight = computedStyle.fontWeight;
-        div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.color = computedStyle.color;
         div.style.padding = adjustPx(computedStyle.padding);
         div.style.height = adjustPx(computedStyle.height);
@@ -808,9 +812,13 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        div.style.fontSize = adjustPx(computedStyle.fontSize);
+        // Note: Do NOT set inline fontSize and lineHeight via absolute pixels!
+        // When screen DPI zoom is enabled (DPR > 1), absolute pixels computed from DPI zoom
+        // can be smaller than the browser's minimum font size (e.g. 12px), causing text wrapping issues.
+        // Instead, let them adaptively inherit style rules defined in their CSS classes (e.g. text-[10px], text-xs).
+        // div.style.fontSize = adjustPx(computedStyle.fontSize);
+        // div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.fontWeight = computedStyle.fontWeight;
-        div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.color = computedStyle.color;
         
         // If it's a full-width select (status, brand, limit), clear excess padding to avoid wrapping.
