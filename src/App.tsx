@@ -1122,7 +1122,7 @@ export default function App() {
                 </div>
               </div>
               <div className="grid grid-cols-6 gap-1 mt-2.5 z-10">
-                {(["大婉", "大粗", "单牌", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
+                {(["大婉", "大粗", "普通", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
                   const colors = [
                     "bg-rose-50/60 text-rose-700 border-rose-100/60",
                     "bg-amber-50/60 text-amber-700 border-amber-100/60",

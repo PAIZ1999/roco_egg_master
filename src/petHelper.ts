@@ -196,7 +196,7 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-rose-100 border-rose-300 text-rose-800 font-bold";
     case "大粗":
       return "bg-amber-100 border-amber-300 text-amber-800 font-bold";
-    case "单牌":
+    case "普通":
       return "bg-emerald-100 border-emerald-300 text-emerald-800 font-bold";
     case "小婉":
       return "bg-sky-100 border-sky-300 text-sky-800 font-bold";
