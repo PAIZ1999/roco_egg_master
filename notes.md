@@ -177,3 +177,42 @@ export const getAvailableSprites = (petName: string): string[] => {
 - **Electron 打包**：通过 `npm run electron:build` 可以顺利进行 Electron 免安装单文件 exe 客户端的打包发布，静态资源引入路径均配置为了相对路径，完美避免了打包后图片裂开和数据丢失问题。
 - **Git 提交**：修改已提交并推送到远程 GitHub 仓库的 `main` 分支。
 
+---
+
+## 5. DPI/Zoom 缩放对长图导出的影响分析与修复
+
+### 5.1 问题表现与原因剖析
+- **现象**：在具有系统 DPI 缩放（如 125%、150%）或浏览器手动 Zoom 缩放的电脑上导出长图时，图片中的文字（特别是输入框和下拉框在克隆时替换成的静态 `div`）字号被放大，输入框高度/宽度/内边距被同比例放大，撑破卡片并发生文字折行重叠。
+- **原因**：
+  1. `handleExportLongImage` 函数在克隆 DOM 树时，为了兼容 SVG 和图片渲染，将 `<input>` 和 `<select>` 替换为静态的 `<div>`。
+  2. 代码在替换时，为了确保视觉样式的一致，通过 `window.getComputedStyle(originalEl)` 动态获取原始输入框的内联绝对像素值（如 `fontSize`、`lineHeight`、`padding`、`height`、`minHeight`、`width`），并赋值到克隆元素的内联 style 上。
+  3. **核心 Bug 所在**：在 DPI 或 Zoom 缩放不为 100% 的环境下，`window.getComputedStyle` 返回的绝对像素值（例如 `fontSize`）是已经被缩放因子相乘放大后的物理像素值（例如原为 12px，在 150% 缩放下返回 `18px`）。
+  4. 而克隆生成的 DOM 容器是被放置在一个宽度固定为 `1200px` 且不随屏幕缩放的临时包裹容器中（`wrapper` 和 `clone` 均设为 `1200px`），以 CSS 标准像素渲染。这导致写死物理像素的文字与输入框在图片中显得极大，进而导致重叠与对不齐。
+
+### 5.2 解决方案设计
+在 `handleExportLongImage` 中动态读取当前环境下的设备像素比 `dpr = window.devicePixelRatio`，并编写高容错的像素缩放校正函数 `adjustPx`。
+对于从 `computedStyle` 获取的含有 `"px"` 后缀的值，除以 `dpr` 还原为标准的 CSS 像素，确保在任何缩放环境下渲染出来的长图排版和文字字体大小都与 100% 缩放下完全一致。
+
+`adjustPx` 实现细节：
+```typescript
+const dpr = window.devicePixelRatio || 1;
+const adjustPx = (valStr: string): string => {
+  if (!valStr || dpr === 1) return valStr;
+  if (valStr.trim().includes(" ")) {
+    // 递归处理 composite 属性（例如 padding: "9px 12px 9px 12px"）
+    return valStr.trim().split(/\s+/).map(adjustPx).join(" ");
+  }
+  if (!valStr.endsWith("px")) return valStr;
+  const val = parseFloat(valStr);
+  if (isNaN(val)) return valStr;
+  return `${val / dpr}px`;
+};
+```
+
+此函数能够完美处理以下情况：
+- 单一像素值（如 `"18px"` -> `"12px"`）
+- 复合像素值（如 `"9px 12px"` -> `"6px 8px"`）
+- 非像素值（如 `"normal"`、`"1.5"`、`"none"` -> 不变）
+- DPI 无缩放时（`dpr === 1` -> 直接返回原值，保证极致性能与精度）
+
+

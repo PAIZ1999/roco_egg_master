@@ -683,6 +683,18 @@ export default function App() {
   const handleExportLongImage = async () => {
     showToast("正在生成高品质长图，请稍候...", "info");
 
+    const dpr = window.devicePixelRatio || 1;
+    const adjustPx = (valStr: string): string => {
+      if (!valStr || dpr === 1) return valStr;
+      if (valStr.trim().includes(" ")) {
+        return valStr.trim().split(/\s+/).map(adjustPx).join(" ");
+      }
+      if (!valStr.endsWith("px")) return valStr;
+      const val = parseFloat(valStr);
+      if (isNaN(val)) return valStr;
+      return `${val / dpr}px`;
+    };
+
     // Find the target element in the real document
     const target = document.getElementById("export-container");
     if (!target) {
@@ -733,18 +745,18 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        div.style.fontSize = computedStyle.fontSize;
+        div.style.fontSize = adjustPx(computedStyle.fontSize);
         div.style.fontWeight = computedStyle.fontWeight;
-        div.style.lineHeight = computedStyle.lineHeight;
+        div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.color = computedStyle.color;
-        div.style.padding = computedStyle.padding;
-        div.style.height = computedStyle.height;
-        div.style.minHeight = computedStyle.minHeight;
+        div.style.padding = adjustPx(computedStyle.padding);
+        div.style.height = adjustPx(computedStyle.height);
+        div.style.minHeight = adjustPx(computedStyle.minHeight);
         
         // Custom width: keep auto-width for w-full elements to adapt to 1200px container,
         // otherwise lock in the computed width to prevent collapse of fixed-width elements (like w-10)
         if (!originalEl.classList.contains("w-full")) {
-          div.style.width = computedStyle.width;
+          div.style.width = adjustPx(computedStyle.width);
         }
       }
 
@@ -796,9 +808,9 @@ export default function App() {
       // Inherit computed style to guarantee absolute pixel-level alignment & font sizes
       if (originalEl) {
         const computedStyle = window.getComputedStyle(originalEl);
-        div.style.fontSize = computedStyle.fontSize;
+        div.style.fontSize = adjustPx(computedStyle.fontSize);
         div.style.fontWeight = computedStyle.fontWeight;
-        div.style.lineHeight = computedStyle.lineHeight;
+        div.style.lineHeight = adjustPx(computedStyle.lineHeight);
         div.style.color = computedStyle.color;
         
         // If it's a full-width select (status, brand, limit), clear excess padding to avoid wrapping.
@@ -807,14 +819,14 @@ export default function App() {
           div.style.paddingLeft = "4px";
           div.style.paddingRight = "4px";
         } else {
-          div.style.padding = computedStyle.padding;
+          div.style.padding = adjustPx(computedStyle.padding);
         }
-        div.style.height = computedStyle.height;
-        div.style.minHeight = computedStyle.minHeight;
+        div.style.height = adjustPx(computedStyle.height);
+        div.style.minHeight = adjustPx(computedStyle.minHeight);
 
         // Custom width: keep auto-width for w-full elements, otherwise lock in computed width
         if (!originalEl.classList.contains("w-full")) {
-          div.style.width = computedStyle.width;
+          div.style.width = adjustPx(computedStyle.width);
         }
       }
 
