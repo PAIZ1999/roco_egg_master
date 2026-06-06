@@ -180,105 +180,105 @@ export const SortableCard = React.memo(function SortableCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all grid grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${isDragging ? "shadow-lg ring-2 ring-indigo-200 bg-slate-50/90" : ""
+      className={`bg-white rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${isDragging ? "shadow-lg ring-2 ring-indigo-200 bg-slate-50/90" : ""
         }`}
     >
-      {/* Left Column: Avatar & Meta (occupies 4/12 cols, approx 33% width) */}
-      <div className="col-span-4 flex flex-col items-center border-r border-slate-100 pr-2 relative min-h-0">
-        {/* Drag handle & Delete row */}
-        <div className="flex items-center justify-between w-full pb-1.5">
+      {/* Left Column: Avatar & Meta */}
+      <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
+        {/* Drag handle & Delete row - absolute positioned on mobile, normal flow on desktop */}
+        <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-between w-auto sm:w-full gap-1 sm:pb-1.5 shrink-0 z-20">
           <div
             {...attributes}
             {...listeners}
-            className="flex items-center justify-center p-0.5 text-slate-400 hover:text-slate-650 active:text-indigo-650 hover:bg-slate-100 rounded cursor-grab active:cursor-grabbing transition-colors shrink-0 drag-grip-handle"
+            className="flex items-center justify-center p-1 sm:p-0.5 text-slate-400 hover:text-slate-650 active:text-indigo-650 hover:bg-slate-100 rounded cursor-grab active:cursor-grabbing transition-colors shrink-0 drag-grip-handle"
             title="按住拖动排序"
           >
-            <GripVertical className="w-3 h-3" />
+            <GripVertical className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
           </div>
 
           <button
             onClick={() => handleDeletePet(pet.id as string)}
-            className="text-slate-350 hover:text-rose-600 hover:bg-rose-50 p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 action-buttons"
+            className="text-slate-350 hover:text-rose-600 hover:bg-rose-50 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 action-buttons"
             title="删除该蛋窝"
           >
-            <Trash2 className="w-3 h-3" />
+            <Trash2 className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
           </button>
         </div>
 
-        {/* Vertical Align Avatar, Name and Types with gap-1.5 */}
-        <div className="flex flex-col items-center gap-1.5 w-full flex-1 justify-center">
-          {/* Large Avatar Container */}
-          <div className="w-full aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
-            {spriteUrl ? (
+        {/* Large Avatar Container */}
+        <div className="w-20 h-20 sm:w-full sm:h-auto sm:aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
+          {spriteUrl ? (
+            <img
+              src={spriteUrl}
+              alt={spriteName}
+              className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover/avatar:scale-110"
+            />
+          ) : (
+            <Egg className="w-7 h-7 text-slate-300 animate-pulse" />
+          )}
+
+          {/* Form dropdown overlay for multi-form sprites */}
+          {availableSprites.length > 1 && (
+            <div className="absolute bottom-0.5 left-0.5 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded shadow-2xs z-10 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150 action-buttons">
+              <select
+                value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
+                onChange={(e) => handleUpdateSprite(pet.id as string, e.target.value)}
+                className="text-[8px] sm:text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+              >
+                {availableSprites.map((spriteOption) => {
+                  const displayName = getSpriteFormDisplayName(spriteOption);
+                  return (
+                    <option key={spriteOption} value={spriteOption}>
+                      {displayName}
+                    </option>
+                  );
+                })}
+              </select>
+              <span className="text-[6px] sm:text-[7px] text-slate-400 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+            </div>
+          )}
+
+          {/* Type Badge absolute overlay */}
+          {petDetails && petDetails.types && petDetails.types.length > 0 && (
+            <div className="absolute bottom-0.5 right-0.5 w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 z-10">
               <img
-                src={spriteUrl}
-                alt={spriteName}
-                className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover/avatar:scale-110"
+                src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
+                alt={petDetails.types[0]}
+                className="w-3 h-3 sm:w-3.5 sm:h-3.5 object-contain"
               />
-            ) : (
-              <Egg className="w-7 h-7 text-slate-300 animate-pulse" />
-            )}
+            </div>
+          )}
 
-            {/* Form dropdown overlay for multi-form sprites */}
-            {availableSprites.length > 1 && (
-              <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded-md shadow-2xs z-10 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150 action-buttons">
-                <select
-                  value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
-                  onChange={(e) => handleUpdateSprite(pet.id as string, e.target.value)}
-                  className="text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
-                >
-                  {availableSprites.map((spriteOption) => {
-                    const displayName = getSpriteFormDisplayName(spriteOption);
-                    return (
-                      <option key={spriteOption} value={spriteOption}>
-                        {displayName}
-                      </option>
-                    );
-                  })}
-                </select>
-                <span className="text-[7px] text-slate-400 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
-              </div>
-            )}
+          {/* Top Overlays */}
+          {isPet3V() && (
+            <span className="absolute top-0.5 left-0.5 text-[7px] sm:text-[8px] font-extrabold px-1 sm:px-1.5 py-0.25 rounded bg-emerald-500 text-white shadow-xs shrink-0 scale-90 origin-top-left z-15">
+              3V
+            </span>
+          )}
+          {pet.isLimit === "有极限蛋" && (
+            <span className="absolute top-0.5 right-0.5 text-[7px] sm:text-[8px] font-extrabold px-1 sm:px-1.5 py-0.25 rounded bg-amber-500 text-white shadow-xs shrink-0 scale-90 origin-top-right z-15">
+              极限
+            </span>
+          )}
+        </div>
 
-            {/* Type Badge absolute overlay */}
-            {petDetails && petDetails.types && petDetails.types.length > 0 && (
-              <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 z-10">
-                <img
-                  src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
-                  alt={petDetails.types[0]}
-                  className="w-3.5 h-3.5 object-contain"
-                />
-              </div>
-            )}
-
-            {/* Top Overlays */}
-            {isPet3V() && (
-              <span className="absolute top-1 left-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-emerald-500 text-white shadow-xs shrink-0 scale-90 origin-top-left z-15">
-                3V
-              </span>
-            )}
-            {pet.isLimit === "有极限蛋" && (
-              <span className="absolute top-1 right-1 text-[8px] font-extrabold px-1.5 py-0.25 rounded bg-amber-500 text-white shadow-xs shrink-0 scale-90 origin-top-right z-15">
-                有极限蛋
-              </span>
-            )}
-          </div>
-
+        {/* Vertical Align Name and Types on desktop, flex-1 container on mobile */}
+        <div className="flex flex-col items-start sm:items-center gap-1 sm:gap-1.5 flex-1 min-w-0 pr-10 sm:pr-0">
           {/* Name input underneath avatar */}
-          <div className="w-full text-center shrink-0">
+          <div className="w-full text-left sm:text-center shrink-0">
             <Autocomplete
               value={pet.sprite}
               options={ALL_PET_NAMES}
               placeholder="输入精灵..."
               onChange={(val) => handleUpdateSprite(pet.id as string, val)}
-              className="w-full text-center"
-              inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-center"
+              className="w-full text-left sm:text-center"
+              inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-left sm:text-center"
             />
           </div>
 
           {/* Type badges: circular images */}
           {petDetails && petDetails.types && petDetails.types.length > 0 && (
-            <div className="flex gap-1 justify-center items-center flex-wrap w-full shrink-0">
+            <div className="flex gap-1 justify-start sm:justify-center items-center flex-wrap w-full shrink-0">
               {petDetails.types.map((t) => {
                 const iconUrl = getImagePath(`images/attributes/${t}.png`);
                 const badgeStyle = typeColorMap[t] || "bg-slate-50 text-slate-600 border-slate-205";
@@ -302,7 +302,7 @@ export const SortableCard = React.memo(function SortableCard({
       </div>
 
       {/* Right Column: Editing settings (occupies 8/12 cols, approx 67% width) */}
-      <div className="col-span-8 flex flex-col justify-start gap-1.5">
+      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1.5 border-t sm:border-t-0 border-slate-100 pt-2.5 sm:pt-0">
         {/* Father & Mother Configurations */}
         <div className="grid grid-cols-2 gap-2">
           {/* Father Column */}

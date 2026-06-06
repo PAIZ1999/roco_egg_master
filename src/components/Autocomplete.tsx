@@ -66,6 +66,13 @@ export const filterOptions = (options: string[], query: string): string[] => {
      .slice(0, 15);
 };
 
+// 下拉框估算高度（max-h-56 = 224px）
+const DROPDOWN_MAX_HEIGHT = 224;
+// 向上弹出时输入框和下拉框之间的间距
+const DROPDOWN_GAP = 4;
+// 触发向上弹出的最小下方剩余空间阈值
+const MIN_SPACE_BELOW = 200;
+
 export const Autocomplete: React.FC<AutocompleteProps> = ({
   value,
   onChange,
@@ -83,7 +90,9 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const [coords, setCoords] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 0 });
+  const [coords, setCoords] = useState<{ top: number; left: number; width: number; openUpward: boolean }>({
+    top: 0, left: 0, width: 0, openUpward: false
+  });
 
   // 同步外部value与内部query
   useEffect(() => {
@@ -92,31 +101,72 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
 
   const filtered = filterOptions(options, query);
 
-  // 计算并更新下拉菜单的显示坐标
+  // 计算并更新下拉菜单的显示坐标（支持向上/向下智能弹出）
   const updateCoords = () => {
-    if (inputRef.current) {
-      const rect = inputRef.current.getBoundingClientRect();
+    if (!inputRef.current) return;
+    const rect = inputRef.current.getBoundingClientRect();
+
+    // 优先使用 visualViewport（移动端键盘弹出后的实际可见视口）
+    const vvHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const vvOffsetTop = window.visualViewport ? window.visualViewport.offsetTop : 0;
+
+    // 输入框下方到视口底部的可用空间
+    const spaceBelow = vvHeight - (rect.bottom - vvOffsetTop);
+    // 输入框上方到视口顶部的可用空间
+    const spaceAbove = rect.top - vvOffsetTop;
+
+    const openUpward = spaceBelow < MIN_SPACE_BELOW && spaceAbove > DROPDOWN_MAX_HEIGHT;
+
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+
+    if (openUpward) {
+      // 向上弹出：下拉框的底部贴紧输入框的顶部
       setCoords({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-        width: rect.width
+        top: rect.top + scrollY - DROPDOWN_MAX_HEIGHT - DROPDOWN_GAP,
+        left: rect.left + scrollX,
+        width: rect.width,
+        openUpward: true
+      });
+    } else {
+      // 向下弹出（默认）
+      setCoords({
+        top: rect.bottom + scrollY + DROPDOWN_GAP,
+        left: rect.left + scrollX,
+        width: rect.width,
+        openUpward: false
       });
     }
   };
 
-  // 在打开时监听滚动和大小变化以更新下拉框位置
+  // 在打开时监听滚动、大小变化和 visualViewport resize 以更新下拉框位置
   useEffect(() => {
     if (!isOpen) return;
 
     updateCoords();
 
-    window.addEventListener('resize', updateCoords);
+    const handleUpdate = () => {
+      // 使用 setTimeout 确保在浏览器布局完成后再重新计算坐标
+      setTimeout(updateCoords, 0);
+    };
+
+    window.addEventListener('resize', handleUpdate);
     // 使用 capture=true 确保检测到页面上所有嵌套容器的滚动
-    window.addEventListener('scroll', updateCoords, true);
+    window.addEventListener('scroll', handleUpdate, true);
+
+    // 监听 visualViewport（移动端键盘弹出时触发）
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleUpdate);
+      window.visualViewport.addEventListener('scroll', handleUpdate);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateCoords);
-      window.removeEventListener('scroll', updateCoords, true);
+      window.removeEventListener('resize', handleUpdate);
+      window.removeEventListener('scroll', handleUpdate, true);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleUpdate);
+        window.visualViewport.removeEventListener('scroll', handleUpdate);
+      }
     };
   }, [isOpen]);
 
@@ -195,12 +245,16 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         disabled={disabled}
+        autoComplete="off"
+        autoCapitalize="off"
+        autoCorrect="off"
+        spellCheck={false}
         className={inputClassName || "w-full px-2 py-1 text-xs bg-white border border-slate-200 rounded text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"}
       />
       {isOpen && filtered.length > 0 && createPortal(
         <div 
           ref={dropdownRef}
-          className="max-h-56 overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-xl z-[99999] scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent text-left mt-1"
+          className={`max-h-56 overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-xl z-[99999] scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent text-left ${coords.openUpward ? 'mb-1' : 'mt-1'}`}
           style={{
             position: 'absolute',
             top: `${coords.top}px`,

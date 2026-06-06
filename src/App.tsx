@@ -15,6 +15,7 @@ import {
   Download,
   Camera,
   Settings,
+  Filter,
   Trash2,
   Database,
   LayoutGrid,
@@ -39,6 +40,7 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   DragEndEvent,
@@ -152,6 +154,12 @@ export default function App() {
         distance: 8, // Avoids block-clicks; click works normally unless dragged 8px
       },
     }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,    // 长按 250ms 以上才触发拖拽
+        tolerance: 5,  // 允许移动的偏差在 5px 以内，超出则判定为普通滚动
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -165,6 +173,7 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterLimit, setFilterLimit] = useState("");
   const [filter3V, setFilter3V] = useState("");
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Custom visual enhancement states
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
@@ -1045,41 +1054,41 @@ export default function App() {
         className="max-w-[1400px] mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
       >
         {/* Banner Section */}
-        <div className="bg-slate-900 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div className="bg-slate-900 text-white p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 relative overflow-hidden">
           {/* Decorative background radial glow */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full filter blur-3xl pointer-events-none" />
 
-          <div className="flex items-center gap-6 z-10 w-full md:w-auto">
+          <div className="flex items-center gap-3 sm:gap-6 z-10 w-full md:w-auto">
             {/* Logo box */}
-            <div className="relative w-16 h-16 shrink-0 flex items-center justify-center bg-slate-800 rounded-2xl shadow-inner border border-slate-700/50">
-              <Egg className="w-10 h-10 text-emerald-400 animate-pulse" />
-              <Sparkles className="absolute -top-1 -right-1 w-5 h-5 text-indigo-400" />
+            <div className="relative w-12 h-12 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center bg-slate-800 rounded-xl sm:rounded-2xl shadow-inner border border-slate-700/50">
+              <Egg className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-400 animate-pulse" />
+              <Sparkles className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
             </div>
 
             <div>
-              <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">
+              <h1 className="font-display text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">
                 洛克王国孵蛋数据管理系统
               </h1>
-              <p className="text-sm text-slate-400 mt-1 max-w-xl font-normal leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-400 mt-0.5 sm:mt-1 max-w-xl font-normal leading-relaxed">
                 全属性宠物、蛋组和性格匹配中心。<br />支持本地持久化存储并附带实时蛋组信息与性格加减状态。
               </p>
             </div>
           </div>
 
           {/* Credits section */}
-          <div className="flex flex-col text-right items-end gap-2 z-10 shrink-0 w-full md:w-auto border-t md:border-t-0 border-slate-800/80 pt-4 md:pt-0">
+          <div className="flex flex-col text-center md:text-right items-center md:items-end gap-1.5 z-10 shrink-0 w-full md:w-auto border-t md:border-t-0 border-slate-800/80 pt-3 md:pt-0">
             {/* Auto-save Status Badge */}
-            <div className="flex items-center gap-2 bg-slate-800/85 border border-slate-700/50 rounded-full px-3 py-1 shadow-inner select-none transition-all whitespace-nowrap">
+            <div className="flex items-center gap-1.5 bg-slate-800/85 border border-slate-700/50 rounded-full px-2.5 py-0.5 sm:px-3 sm:py-1 shadow-inner select-none transition-all whitespace-nowrap">
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isSaving ? "bg-amber-400" : "bg-emerald-400"}`}></span>
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isSaving ? "bg-amber-500" : "bg-emerald-500"}`}></span>
               </span>
-              <span className="text-[11px] font-semibold text-slate-300 font-sans tracking-wide whitespace-nowrap">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-300 font-sans tracking-wide whitespace-nowrap">
                 {isSaving ? "正在实时保存..." : `数据已自动保存于：${lastSaved}`}
               </span>
             </div>
             {localSavePath && (
-              <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono bg-slate-900/60 border border-slate-800/80 px-2 py-0.5 rounded max-w-[260px]">
+              <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] text-slate-400 font-mono bg-slate-900/60 border border-slate-800/80 px-2 py-0.5 rounded max-w-[260px] w-full sm:w-auto">
                 <span className="truncate flex-1 text-left" title={localSavePath}>
                   存储路径: {localSavePath}
                 </span>
@@ -1093,42 +1102,42 @@ export default function App() {
               </div>
             )}
 
-            <span className="text-xs text-slate-400">
-              Presented by <strong className="text-indigo-400 font-semibold font-display text-sm">派 (QQ: 1095524934)</strong>
+            <span className="text-[11px] sm:text-xs text-slate-400">
+              Presented by <strong className="text-indigo-400 font-semibold font-display text-xs sm:text-sm">派 (QQ: 1095524934)</strong>
             </span>
-            <span className="text-[10px] text-slate-500 tracking-wider font-mono">
+            <span className="text-[9px] sm:text-[10px] text-slate-500 tracking-wider font-mono">
               © 2026 Roco Incubator Table
             </span>
           </div>
         </div>
         {/* Real-time stats section */}
         <div className="p-5 bg-slate-50/30 border-b border-slate-100">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
             {/* Card 1: 总收录 */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-xs text-slate-500 font-bold">总收录精灵</span>
-                <div className="w-7 h-7 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
-                  <Database className="w-4 h-4 text-slate-450 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">总收录精灵</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                  <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-450 shrink-0" />
                 </div>
               </div>
-              <div className="mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-2xl font-black font-mono text-slate-800 tracking-tight">{totalPets}</span>
+              <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 tracking-tight">{totalPets}</span>
                 <span className="text-xs text-slate-400 font-semibold">只</span>
               </div>
             </div>
 
             {/* Card 2: 牌子规格 */}
-            <div className="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+            <div className="col-span-2 md:col-span-1 lg:col-span-1 order-last bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-indigo-50/30 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-xs text-slate-500 font-bold">牌子规格统计</span>
-                <div className="w-7 h-7 bg-indigo-50/50 rounded-lg flex items-center justify-center border border-indigo-100/50">
-                  <LayoutGrid className="w-4 h-4 text-indigo-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">牌子规格统计</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-50/50 rounded-lg flex items-center justify-center border border-indigo-100/50">
+                  <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-500 shrink-0" />
                 </div>
               </div>
-              <div className="grid grid-cols-6 gap-1 mt-2.5 z-10">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 mt-2 sm:mt-2.5 z-10">
                 {(["大婉", "大粗", "普通", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
                   const colors = [
                     "bg-rose-50/60 text-rose-700 border-rose-100/60",
@@ -1149,46 +1158,46 @@ export default function App() {
             </div>
 
             {/* Card 3: 现有窝点 */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-emerald-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-xs text-slate-500 font-bold">现有现蛋窝点</span>
-                <div className="w-7 h-7 bg-emerald-50 rounded-lg flex items-center justify-center border border-emerald-100">
-                  <Egg className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">现有现蛋窝点</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-50 rounded-lg flex items-center justify-center border border-emerald-100">
+                  <Egg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 shrink-0" />
                 </div>
               </div>
-              <div className="mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-2xl font-black font-mono text-emerald-600 tracking-tight">{hasEggsCount}</span>
-                <span className="text-xs text-emerald-500 font-semibold">窝 (共 {totalEggsCount} 个蛋)</span>
+              <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1 flex-wrap">
+                <span className="text-xl sm:text-2xl font-black font-mono text-emerald-600 tracking-tight">{hasEggsCount}</span>
+                <span className="text-[10px] sm:text-xs text-emerald-500 font-semibold">窝({totalEggsCount}蛋)</span>
               </div>
             </div>
 
             {/* Card 4: 极限蛋 */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-xs text-slate-500 font-bold">极限精灵蛋</span>
-                <div className="w-7 h-7 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
-                  <Zap className="w-4 h-4 text-amber-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">极限精灵蛋</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
                 </div>
               </div>
-              <div className="mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-2xl font-black font-mono text-amber-500 tracking-tight">{limitsCount}</span>
+              <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-xl sm:text-2xl font-black font-mono text-amber-500 tracking-tight">{limitsCount}</span>
                 <span className="text-xs text-amber-500 font-semibold">只</span>
               </div>
             </div>
 
             {/* Card 5: 3V蛋 */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4 flex flex-col justify-between min-h-[96px] relative overflow-hidden group">
+            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-xs text-slate-500 font-bold">3V 精灵蛋</span>
-                <div className="w-7 h-7 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
-                  <Award className="w-4 h-4 text-rose-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">3V 精灵蛋</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
+                  <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500 shrink-0" />
                 </div>
               </div>
-              <div className="mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-2xl font-black font-mono text-rose-600 tracking-tight">{threeVsCount}</span>
+              <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+                <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 tracking-tight">{threeVsCount}</span>
                 <span className="text-xs text-rose-500 font-semibold">只</span>
               </div>
             </div>
@@ -1196,97 +1205,109 @@ export default function App() {
         </div>        {/* Filters Header Row */}
         <div id="filter-header-bar" className="p-4 bg-slate-50/20 border-b border-slate-100 flex flex-wrap gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-3 items-center w-full">
-            {/* Search filter input */}
-            <div className="relative w-full sm:w-48">
-              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="搜索精灵名字..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400"
-              />
+            {/* Search filter input and mobile toggle */}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="relative flex-1 sm:w-48 sm:flex-none">
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="搜索精灵名字..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400"
+                />
+              </div>
+              <button
+                onClick={() => setShowMobileFilters(!showMobileFilters)}
+                className="sm:hidden px-3 py-1.5 text-xs font-semibold bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-100 flex items-center gap-1 active:bg-indigo-100 transition-all shrink-0"
+              >
+                <Filter className="w-3.5 h-3.5" />
+                <span>{showMobileFilters ? "收起" : "筛选"}</span>
+              </button>
             </div>
 
-            {/* Filter by nature */}
-            <select
-              value={filterNature}
-              onChange={e => setFilterNature(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
-            >
-              <option value="">全部性格</option>
-              {NATURE_OPTIONS.map(nature => (
-                <option key={nature} value={nature}>{nature}</option>
-              ))}
-            </select>
+            {/* Other filters - collapsible on mobile */}
+            <div className={`${showMobileFilters ? "flex flex-col gap-2 w-full mt-2" : "hidden"} sm:mt-0 sm:flex sm:flex-row sm:items-center sm:flex-wrap sm:gap-3 sm:w-auto sm:flex-1`}>
+              {/* Filter by nature */}
+              <select
+                value={filterNature}
+                onChange={e => setFilterNature(e.target.value)}
+                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              >
+                <option value="">全部性格</option>
+                {NATURE_OPTIONS.map(nature => (
+                  <option key={nature} value={nature}>{nature}</option>
+                ))}
+              </select>
 
-            {/* Filter by egg group */}
-            <select
-              value={filterGroup}
-              onChange={e => setFilterGroup(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
-            >
-              <option value="">全部蛋组</option>
-              {EGG_GROUPS.map(group => (
-                <option key={group} value={group}>{group}</option>
-              ))}
-            </select>
+              {/* Filter by egg group */}
+              <select
+                value={filterGroup}
+                onChange={e => setFilterGroup(e.target.value)}
+                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              >
+                <option value="">全部蛋组</option>
+                {EGG_GROUPS.map(group => (
+                  <option key={group} value={group}>{group}</option>
+                ))}
+              </select>
 
-            {/* Filter by brand */}
-            <select
-              value={filterBrand}
-              onChange={e => setFilterBrand(e.target.value)}
-              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-250 cursor-pointer font-bold transition-all ${
-                filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
-              }`}
-            >
-              <option value="">全部牌子</option>
-              {BRAND_OPTIONS.map(brand => (
-                <option key={brand} value={brand}>{brand}</option>
-              ))}
-            </select>
-
-            {/* Filter by status */}
-            <select
-              value={filterStatus}
-              onChange={e => setFilterStatus(e.target.value)}
-              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-350 cursor-pointer font-bold transition-all ${
-                filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
-              }`}
-            >
-              <option value="" className="bg-white text-slate-800 font-semibold py-1">全部状态/窝点</option>
-              {NEST_STATUS_OPTIONS.map(status => (
-                <option key={status} value={status} className="bg-white text-slate-850 font-semibold py-1">
-                  {status}
-                </option>
-              ))}
-            </select>
-
-            {/* Filter by limit */}
-            <select
-              value={filterLimit}
-              onChange={e => setFilterLimit(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors"
-            >
-              <option value="">全部(有无极限蛋)</option>
-              {LIMIT_OPTIONS.map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-
-            {/* Watermark custom configuration toggle */}
-            <button
-              id="header-watermark-btn"
-              onClick={() => setShowWatermarkPanel(!showWatermarkPanel)}
-              className={`sm:ml-auto text-xs font-semibold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center gap-1.5 ${showWatermarkPanel
-                ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-inner"
-                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm"
+              {/* Filter by brand */}
+              <select
+                value={filterBrand}
+                onChange={e => setFilterBrand(e.target.value)}
+                className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-250 cursor-pointer font-bold transition-all w-full sm:w-auto ${
+                  filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
                 }`}
-              title="配置长图导出时的防盗水印样式"
-            >
-              <Settings className={`w-3.5 h-3.5 ${showWatermarkPanel ? "rotate-45" : ""} transition-transform duration-300`} />
-              水印配置
-            </button>
+              >
+                <option value="">全部牌子</option>
+                {BRAND_OPTIONS.map(brand => (
+                  <option key={brand} value={brand}>{brand}</option>
+                ))}
+              </select>
+
+              {/* Filter by status */}
+              <select
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-350 cursor-pointer font-bold transition-all w-full sm:w-auto ${
+                  filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <option value="" className="bg-white text-slate-800 font-semibold py-1">全部状态/窝点</option>
+                {NEST_STATUS_OPTIONS.map(status => (
+                  <option key={status} value={status} className="bg-white text-slate-850 font-semibold py-1">
+                    {status}
+                  </option>
+                ))}
+              </select>
+
+              {/* Filter by limit */}
+              <select
+                value={filterLimit}
+                onChange={e => setFilterLimit(e.target.value)}
+                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              >
+                <option value="">全部(有无极限蛋)</option>
+                {LIMIT_OPTIONS.map(opt => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+
+              {/* Watermark custom configuration toggle */}
+              <button
+                id="header-watermark-btn"
+                onClick={() => setShowWatermarkPanel(!showWatermarkPanel)}
+                className={`sm:ml-auto text-xs font-semibold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-1.5 w-full sm:w-auto ${showWatermarkPanel
+                  ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-inner"
+                  : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm"
+                  }`}
+                title="配置长图导出时的防盗水印样式"
+              >
+                <Settings className={`w-3.5 h-3.5 ${showWatermarkPanel ? "rotate-45" : ""} transition-transform duration-300`} />
+                <span>水印配置</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1423,7 +1444,7 @@ export default function App() {
               items={filteredPets.map(p => p.id as string)}
               strategy={rectSortingStrategy}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
                 {filteredPets.map((pet) => (
                   <SortableCard
                     key={pet.id}
@@ -1450,8 +1471,8 @@ export default function App() {
         </div>
 
         {/* Bottom utility controls */}
-        <div id="footer-actions" className="p-5 bg-slate-50/50 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-4 justify-between">
-          <div className="flex flex-wrap gap-2.5 items-center w-full sm:w-auto">
+        <div id="footer-actions" className="p-4 sm:p-5 bg-slate-50/50 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-between">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 items-center w-full sm:w-auto">
             {/* Adding row button */}
             <button
               onClick={handleAddPet}
@@ -1494,7 +1515,7 @@ export default function App() {
             {/* Export Long Image button */}
             <button
               onClick={handleExportLongImage}
-              className="py-2 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2 shadow-md text-sm cursor-pointer flex items-center gap-1.5"
+              className="col-span-2 sm:col-span-1 py-2 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2 shadow-md text-sm cursor-pointer"
               title="一键将完整的表格渲染成精美长图，并保留所有行与设计细节"
             >
               <Camera className="w-4 h-4 text-white animate-pulse" />
@@ -1657,13 +1678,13 @@ export default function App() {
             {/* 牌子选择 */}
             <div className="md:col-span-7 flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">牌子</label>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5">
                 {BRAND_OPTIONS.map(brand => (
                   <button
                     key={brand}
                     type="button"
                     onClick={() => setNewTradeBrand(brand)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer h-[34px] flex items-center justify-center ${getBrandStyle(brand)} ${newTradeBrand === brand
+                    className={`px-2 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer h-[34px] flex items-center justify-center truncate ${getBrandStyle(brand)} ${newTradeBrand === brand
                         ? 'ring-2 ring-indigo-500 scale-105 border-transparent shadow-sm'
                         : 'opacity-60 hover:opacity-100 hover:scale-102'
                       }`}
@@ -1722,7 +1743,7 @@ export default function App() {
           </div>
 
           {/* 卡片墙面板 */}
-          <div className="p-6 bg-slate-50/30">
+          <div className="p-3 sm:p-6 bg-slate-50/30">
             {trades.length === 0 ? (
               <div className="border-2 border-dashed border-slate-200 rounded-2xl py-12 px-4 flex flex-col items-center justify-center text-slate-400 text-center gap-2">
                 <Egg className="w-10 h-10 text-slate-300 stroke-1" />
@@ -1740,7 +1761,7 @@ export default function App() {
                   return (
                     <div
                       key={trade.id}
-                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-4 flex items-center justify-between gap-4 relative overflow-hidden group/card"
+                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 relative overflow-hidden group/card"
                     >
                       {/* Delete Button at top-right */}
                       <button
@@ -1748,24 +1769,24 @@ export default function App() {
                           e.stopPropagation();
                           handleDeleteTrade(trade.id);
                         }}
-                        className="absolute top-2 right-2 p-1 rounded-lg text-slate-350 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all opacity-0 group-hover/card:opacity-100 cursor-pointer action-buttons z-20"
+                        className="absolute top-2 right-2 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all opacity-100 sm:opacity-0 group-hover/card:opacity-100 cursor-pointer action-buttons z-20"
                         title="删除该条换蛋需求"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
 
                       {/* 左侧：头像 + 详情 */}
-                      <div className="flex items-start gap-4 flex-1 min-w-0">
+                      <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
                         {/* 头像 */}
-                        <div className="relative w-20 h-20 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center shrink-0 group/avatar overflow-hidden">
+                        <div className="relative w-14 h-14 sm:w-20 sm:h-20 bg-slate-50 border border-slate-100/80 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 group/avatar overflow-hidden">
                           {spriteFileName ? (
                             <img
                               src={getImagePath(`images/sprites/${spriteFileName}`)}
                               alt={trade.sprite}
-                              className="w-16 h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-105"
+                              className="w-11 h-11 sm:w-16 sm:h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-105"
                             />
                           ) : (
-                            <Egg className="w-10 h-10 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
+                            <Egg className="w-7 h-7 sm:w-10 sm:h-10 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
                           )}
                           {details?.types && details.types.length > 0 && (
                             <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
