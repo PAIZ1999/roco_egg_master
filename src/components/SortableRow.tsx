@@ -227,7 +227,7 @@ export function SortableRow({
                     <Autocomplete
                       value={nat}
                       options={NATURE_OPTIONS}
-                      placeholder="性格..."
+                      placeholder="选择性格"
                       onChange={val => handleUpdateNature(originalIndex, "father", nIdx, val)}
                       className="w-28 text-center"
                       inputClassName="font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all shadow-sm"
@@ -270,7 +270,7 @@ export function SortableRow({
                     <Autocomplete
                       value={nat}
                       options={NATURE_OPTIONS}
-                      placeholder="性格..."
+                      placeholder="选择性格"
                       onChange={val => handleUpdateNature(originalIndex, "mother", nIdx, val)}
                       className="w-28 text-center"
                       inputClassName="font-medium text-[11px] text-center text-slate-700 bg-white border border-slate-200 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all shadow-sm"

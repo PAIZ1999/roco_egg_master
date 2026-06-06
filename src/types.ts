@@ -78,6 +78,7 @@ export const INITIAL_TABLE_DATA: EggPet[] = [
 ];
 
 export const cleanNature = (natureStr: string): string => {
+  if (natureStr === "" || natureStr === "选择性格") return "";
   if (!natureStr) return "错性格";
   
   if (NATURE_OPTIONS.includes(natureStr)) {

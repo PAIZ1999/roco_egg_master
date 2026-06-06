@@ -319,7 +319,7 @@ export const SortableCard = React.memo(function SortableCard({
                     <Autocomplete
                       value={nat}
                       options={NATURE_OPTIONS}
-                      placeholder="性格..."
+                      placeholder="选择性格"
                       onChange={(val) => handleUpdateNature(pet.id as string, "father", nIdx, val)}
                       className="flex-1 min-w-0"
                       inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
@@ -364,7 +364,7 @@ export const SortableCard = React.memo(function SortableCard({
                     <Autocomplete
                       value={nat}
                       options={NATURE_OPTIONS}
-                      placeholder="性格..."
+                      placeholder="选择性格"
                       onChange={(val) => handleUpdateNature(pet.id as string, "mother", nIdx, val)}
                       className="flex-1 min-w-0"
                       inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"

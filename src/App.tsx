@@ -56,8 +56,8 @@ import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrand
 
 const migratePets = (rawList: any[]): EggPet[] => {
   return rawList.map((p, index) => {
-    let fatherNatures = p.fatherNatures || p.natures || [NATURE_OPTIONS[0]];
-    let motherNatures = p.motherNatures || [NATURE_OPTIONS[0]];
+    let fatherNatures = p.fatherNatures || p.natures || [""];
+    let motherNatures = p.motherNatures || [""];
     const fatherStats = p.fatherStats || ["生命", "物攻", "速度"];
     const motherStats = p.motherStats || ["生命", "物攻", "速度"];
 
@@ -430,12 +430,12 @@ export default function App() {
         if (parent === "father") {
           return {
             ...p,
-            fatherNatures: [...(p.fatherNatures || []), NATURE_OPTIONS[0]]
+            fatherNatures: [...(p.fatherNatures || []), ""]
           };
         } else {
           return {
             ...p,
-            motherNatures: [...(p.motherNatures || []), NATURE_OPTIONS[0]]
+            motherNatures: [...(p.motherNatures || []), ""]
           };
         }
       }
@@ -538,8 +538,8 @@ export default function App() {
     const newPet: EggPet = {
       id: `pet-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
       sprite: "",
-      fatherNatures: [NATURE_OPTIONS[0]],
-      motherNatures: [NATURE_OPTIONS[0]],
+      fatherNatures: [""],
+      motherNatures: [""],
       fatherStats: ["生命", "物攻", "速度"],
       motherStats: ["生命", "物攻", "速度"],
       groups: [EGG_GROUPS[0]],
