@@ -1,4 +1,4 @@
-<img width="1280" height="1707" alt="50e91d36753cc9476aee5cbe4c67debb" src="https://github.com/user-attachments/assets/0b81c4f4-7b2d-4adb-9a64-77fbc89c239d" /><img width="1280" height="1707" alt="50e91d36753cc9476aee5cbe4c67debb" src="https://github.com/user-attachments/assets/97534f4c-529f-4b69-be01-4697ed38a961" /># 🥚 洛克王国孵蛋数据管理系统 (Roco Incubator Table)
+# 🥚 洛克王国孵蛋数据管理系统 (Roco Incubator Table)
 
 > **全属性宠物、蛋组和性格匹配中心，专为洛克王国孵蛋高端玩家打造的桌面数据管理系统。**  
 > 支持本地持久化自动保存、可拖拽排序对齐、一键导出防盗长图以及智能 3V 蛋自动统计。
