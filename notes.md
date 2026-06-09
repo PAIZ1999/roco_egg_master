@@ -53,3 +53,12 @@ export const BRAND_OPTIONS = [
 在 `src/App.tsx` 中：
 - 重构 `getPairings()` 中的牌子交集检测规则。
 - 渲染子代繁育卡片下方的临界值。
+
+## 3. 极限大与极限小的优化设计
+
+根据最新的规则要求，为大粗、大婉、小粗、小婉以及大块头（单大块头）体型牌新增极限大/极限小状态。
+当且仅当数据达到边界最值时才触发极限状态显示：
+1. **大体型极限大**：`isGiantBrand === true` 且 `hVal >= thresholds.maxHeight` 且 `wVal >= thresholds.maxWeight`。徽章显示为“极限大”，背景色采用淡粉红/玫瑰色系列高亮（`bg-rose-50 text-rose-700 border-rose-200/60`）。
+2. **小体型极限小**：`isTinyBrand === true` 且 `hVal <= thresholds.minHeight` 且 `wVal <= thresholds.minWeight`。徽章显示为“极限小”，背景色采用靛蓝/深蓝系列高亮（`bg-indigo-50 text-indigo-700 border-indigo-200/60`）。
+3. 如果未达到上述最值但达到及格线，则仍只显示“大块头 (达标)”或“小不点 (达标)”，确保极限判定具有最高特异度。
+

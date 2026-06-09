@@ -697,7 +697,7 @@ export default function App() {
       const hVal = parseFloat(pet.height);
       const wVal = parseFloat(pet.weight);
       if (isNaN(hVal) || isNaN(wVal)) return false;
-      return hVal >= t.maxHeight && wVal < t.giantWeightLine && wVal >= t.giantWeightLine * 0.80;
+      return hVal >= t.maxHeight && wVal < t.giantWeightLine && wVal >= t.giantWeightLine * 0.90;
     };
 
     for (const father of checkedFathers) {

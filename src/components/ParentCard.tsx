@@ -101,9 +101,33 @@ export const ParentCard = React.memo(function ParentCard({
     if (isNaN(hVal) || isNaN(wVal)) return null;
 
     const isGiantBrand = ["大粗", "大婉", "单大块头"].includes(parent.brand);
-    const isTinyBrand = ["小粗", "小婉"].includes(parent.brand);
-    const isNotSizeBrand = !isGiantBrand && !isTinyBrand;
+    const isTinyBrand = ["小粗", "小婉", "单小不点"].includes(parent.brand);
 
+    if (isGiantBrand) {
+      if (hVal >= thresholds.maxHeight && wVal >= thresholds.maxWeight) {
+        return (
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 text-rose-700 border border-rose-200/60 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            极限大
+          </span>
+        );
+      }
+      return null;
+    }
+
+    if (isTinyBrand) {
+      if (hVal <= thresholds.minHeight && wVal <= thresholds.minWeight) {
+        return (
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+            极限小
+          </span>
+        );
+      }
+      return null;
+    }
+
+    // 到了这里，肯定是非体型牌（如普通、单粗嗓门、单婉转声等）
     // 1. 如果达标了，显示达标徽章
     if (hVal >= thresholds.maxHeight && wVal >= thresholds.giantWeightLine) {
       return (
@@ -123,68 +147,37 @@ export const ParentCard = React.memo(function ParentCard({
       );
     }
 
-    // 2. 如果是体型牌，没达标但在 20% 以内，显示接近临界值
-    if (isGiantBrand && hVal >= thresholds.maxHeight) {
-      if (wVal < thresholds.giantWeightLine && wVal >= thresholds.giantWeightLine * 0.80) {
+    // 2. 如果并非体型牌，计算与临界值的差值并显示在 10% 以内的临界情况
+    const x = Math.abs(thresholds.giantWeightLine - wVal);
+    const y = Math.abs(thresholds.tinyWeightLine - wVal);
+
+    if (x <= y) {
+      // 距离大块头更近
+      const maxDiff = thresholds.giantWeightLine * 0.10;
+      if (wVal < thresholds.giantWeightLine && x <= maxDiff) {
         return (
           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 text-amber-755 border border-amber-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
             <span className="relative flex w-1.5 h-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
             </span>
-            接近大块头临界值
+            差大块头临界值 {x.toFixed(3)}kg
           </span>
         );
       }
-    }
-
-    if (isTinyBrand && hVal <= thresholds.minHeight) {
-      if (wVal > thresholds.tinyWeightLine && wVal <= thresholds.tinyWeightLine * 1.20) {
+    } else {
+      // 距离小不点（小块头）更近
+      const maxDiff = thresholds.tinyWeightLine * 0.10;
+      if (wVal > thresholds.tinyWeightLine && y <= maxDiff) {
         return (
           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 text-purple-700 border border-purple-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
             <span className="relative flex w-1.5 h-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
             </span>
-            接近小不点临界值
+            差小块头临界值 {y.toFixed(3)}kg
           </span>
         );
-      }
-    }
-
-    // 3. 如果并非体型牌，计算与临界值的差值并显示在 20% 以内的临界情况
-    if (isNotSizeBrand) {
-      const x = Math.abs(thresholds.giantWeightLine - wVal);
-      const y = Math.abs(thresholds.tinyWeightLine - wVal);
-
-      if (x <= y) {
-        // 距离大块头更近
-        const maxDiff = thresholds.giantWeightLine * 0.20;
-        if (wVal < thresholds.giantWeightLine && x <= maxDiff) {
-          return (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 text-amber-755 border border-amber-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
-              <span className="relative flex w-1.5 h-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
-              </span>
-              差大块头临界值 {x.toFixed(3)}kg
-            </span>
-          );
-        }
-      } else {
-        // 距离小不点（小块头）更近
-        const maxDiff = thresholds.tinyWeightLine * 0.20;
-        if (wVal > thresholds.tinyWeightLine && y <= maxDiff) {
-          return (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 text-purple-700 border border-purple-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
-              <span className="relative flex w-1.5 h-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
-              </span>
-              差小块头临界值 {y.toFixed(3)}kg
-            </span>
-          );
-        }
       }
     }
 

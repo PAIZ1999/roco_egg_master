@@ -20,17 +20,15 @@
   - [x] 更新 `src/types.ts` 扩充 `BRAND_OPTIONS`，加入“单粗嗓门”、“单婉转声”
   - [x] 更新 `src/petHelper.ts` 的 `getBrandStyle` 方法，加入新牌子的高对比度底色
   - [x] 在 `src/petHelper.ts` 中新增 `getPetSizeThresholds`，解析精灵身高体重范围并计算大块头/小不点及格线
-  - [x] 更新 `src/components/ParentCard.tsx`，在身高体重输入框左侧展示临界值数据，并在用户输入时自动判定是否为大块头（达标/临界）或小不点（达标/临界）
-  - [x] 重构 `src/App.tsx` 中的 `getPairings` 自动配组算法，允许临界（如单粗嗓门 + 单粗嗓门 / 大粗 + 单粗嗓门）配对结合产生子代（大粗），并处理大婉和单婉转声
-  - [x] 更新 `src/App.tsx` 中配对卡片的展示，在父本和母本的头像及名字下方显示其真实的身高和体重，同时精简下方子代规格参考表格的行数据。
-- [x] Phase 4: 测试与验证
-  - [x] 启动 Vite 本地开发环境进行交互测试
-  - [x] 验证输入身高体重时，卡片是否高亮或显示临界提示
-  - [x] 验证智能繁育配对中，临界牌子是否能成功匹配并导出对应的子代大块头蛋
-  - [x] 编译构建 (npm run build) 验证通过，无任何类型和打包报错
-- [x] Phase 5: 最终交付与归档
-  - [x] 整理项目知识库（`.claude/PROJECT_KNOWLEDGE.md`）
-  - [x] 执行 Git 规范提交与推送
+- [x] Phase 6: 体型牌极限值状态 Badge 优化
+  - [x] 在 `src/components/ParentCard.tsx` 的 `getStatusBadge()` 中，为大体型牌（大粗、大婉、单大块头）和小体型牌（小粗、小婉）新增只有达到绝对极限值时才显示“极限大”/“极限小”的逻辑
+  - [x] 运行 Vite 验证当达到绝对极限值时显示“极限大”/“极限小”，而只达标但未到极限时显示“大块头 (达标)”/“小不点 (达标)”
+  - [x] 编译构建打包测试，规范提交代码
+- [x] Phase 7: 新增“单小不点”体型牌
+  - [x] 更新 `src/types.ts` 中的 `BRAND_OPTIONS`，加入“单小不点”牌子
+  - [x] 更新 `src/petHelper.ts` 的 `getBrandStyle` 样式，为“单小不点”配置青色或浅蓝色等视觉效果好的样式底色
+  - [x] 更新 `src/components/ParentCard.tsx` 中的 `isTinyBrand` 逻辑，将“单小不点”牌子纳入小不点极限徽章判断中
+  - [x] 编译构建打包，启动开发服务，确保前端交互、渲染及备份导入均正常
 
 ## Key Questions
 1. 及格线公式的取值范围如何保障高精度？
@@ -40,7 +38,12 @@
 3. 临界值数据的展示位置在哪里？
    → 决定：
     - 父母本卡片：直接显示在左侧标准身高体重范围（guideSize）的下方，用一条细线划开，并在其上渲染出达标或临界状态的高亮 Badge。
-    - 子代配对卡片：父母身高体重直接展示在左右两侧各自头像和名字下方；子代参考范围及大小及格线保留在下方卡片规格区块中。
+    - 子代配对卡片：父母身高体重直接展示在左右两侧各自头像 and 名字下方；子代参考范围及大小及格线保留在下方卡片规格区块中。
+4. 体型牌如何判断极限值？
+   → 决定：
+    - 大体型牌（大粗/大婉/单大块头）在 `hVal >= thresholds.maxHeight && wVal >= thresholds.maxWeight` 时显示 `极限大`。
+    - 小体型牌（小粗/小婉）在 `hVal <= thresholds.minHeight && wVal <= thresholds.minWeight` 时显示 `极限小`。
+    - 仅达标（大于等于及格线但没到极限值）时，依然显示 `大块头 (达标)` 或 `小不点 (达标)`。
 
 ## Decisions Made
 - **及格线公式**：
@@ -51,10 +54,13 @@
   - 身高达标（`>= max`）且体重未达标且相差在 20% 以内（`< giantWeightLine` 且 `>= giantWeightLine * 0.8`）→ 大块头 (临界)
   - 身高最小（`<= min`）且体重达到小不点（`<= tinyWeightLine`）→ 小不点 (达标)
   - 身高最小（`<= min`）且体重未达到小不点且相差在 20% 以内（`> tinyWeightLine` 且 `<= tinyWeightLine * 1.2`）→ 小不点 (临界)
+- **极限大/极限小判定**：
+  - 只有选择大粗、大婉、单大块头，且身高体重都达到最大极限时，才显示 `极限大`。
+  - 只有选择小粗、小婉，且身高体重都达到最小极限时，才显示 `极限小`。
 
 ## Errors Encountered
 - **编译类型错误**：Vite 编译期间在子代规格参考中使用了不存在的 `heightRange` 和 `weightRange` 属性。
   - **解决方案**：将其修改为 `getPetGuideSize` 定义 of `{ height: string; weight: string }` 中的 `height` 和 `weight`。
 
 ## Status
-**Currently in Phase 5** - 已完成所有功能开发、界面布局调整和本地编译验证。正在准备 Git 规范提交并推送远程仓库。
+**Currently in Phase 7** - 本阶段新增“单小不点”体型牌以及极限大/小优化重构已经全部处理完毕，已顺利通过 Vite 项目编译与构建。
