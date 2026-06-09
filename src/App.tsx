@@ -28,7 +28,8 @@ import {
   ExternalLink,
   Ruler,
   Weight,
-  ChevronDown
+  ChevronDown,
+  Calendar
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -41,11 +42,16 @@ import {
   INITIAL_TABLE_DATA,
   LIMIT_OPTIONS,
   THREE_V_OPTIONS,
+  STATS_OPTIONS,
   EggTrade,
   cleanNature,
   Account,
   AccountData
 } from "./types";
+import petEggConf from "../images/蛋数据/PET_EGG_CONF.json";
+import { EggCard } from "./components/EggCard";
+import { EggData } from "./types";
+import { getEggConfig, getEggSizeThresholds, formatHatchTime, getEggStatusType, isEgg3V } from "./petHelper";
 import {
   DndContext,
   closestCenter,
@@ -222,7 +228,36 @@ export default function App() {
     return [];
   });
 
-  const [activeTab, setActiveTab] = useState<"nest" | "parents">("nest");
+  const [activeTab, setActiveTab] = useState<"nest" | "parents" | "eggs">("nest");
+  const [eggs, setEggs] = useState<EggData[]>(() => {
+    const saved = localStorage.getItem("roco_egg_eggs_v1");
+    if (saved) {
+      try {
+        return JSON.parse(saved) as EggData[];
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+  const [eggSearchTerm, setEggSearchTerm] = useState("");
+  const [eggFilterGroup, setEggFilterGroup] = useState("");
+  const [eggFilterBrand, setEggFilterBrand] = useState("");
+  const [eggFilterLimit, setEggFilterLimit] = useState("");
+  const [eggFilter3V, setEggFilter3V] = useState("");
+
+  // Egg Modal Form states
+  const [showEggModal, setShowEggModal] = useState(false);
+  const [editingEggId, setEditingEggId] = useState<string | null>(null);
+  const [eggFormSprite, setEggFormSprite] = useState("");
+  const [eggFormFatherNature, setEggFormFatherNature] = useState("");
+  const [eggFormMotherNature, setEggFormMotherNature] = useState("");
+  const [eggFormFatherStats, setEggFormFatherStats] = useState<string[]>(["无", "无", "无"]);
+  const [eggFormMotherStats, setEggFormMotherStats] = useState<string[]>(["无", "无", "无"]);
+  const [eggFormBrand, setEggFormBrand] = useState("普通");
+  const [eggFormSize, setEggFormSize] = useState("");
+  const [eggFormWeight, setEggFormWeight] = useState("");
+  const [eggFormProduceTime, setEggFormProduceTime] = useState("");
   const [excludedPairKeys, setExcludedPairKeys] = useState<Set<string>>(new Set());
 
   // Egg trade form states
@@ -312,6 +347,7 @@ export default function App() {
           pets,
           trades,
           parents,
+          eggs,
           settings: {
             showWatermarkPanel,
             enableWatermark,
@@ -334,6 +370,9 @@ export default function App() {
             }
             if (Array.isArray(result.data.parents)) {
               setParents(result.data.parents);
+            }
+            if (Array.isArray(result.data.eggs)) {
+              setEggs(result.data.eggs);
             }
             if (result.data.settings) {
               const s = result.data.settings;
@@ -379,17 +418,19 @@ export default function App() {
               setAccountDataMap(loadedData.accountDataMap || {});
               
               // 装载激活账号的数据
-              const activeData = (loadedData.accountDataMap && loadedData.accountDataMap[activeId]) || { pets: [], trades: [], parents: [] };
+              const activeData = (loadedData.accountDataMap && loadedData.accountDataMap[activeId]) || { pets: [], trades: [], parents: [], eggs: [] };
               setPets(migratePets(activeData.pets || []));
               setTrades(migrateTrades(activeData.trades || []));
               setParents(activeData.parents || []);
+              setEggs(activeData.eggs || []);
             } else if (Array.isArray(loadedData.pets)) {
               // 兼容老旧单账号数据
               const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
               const defaultData: AccountData = {
                 pets: migratePets(loadedData.pets),
                 trades: migrateTrades(loadedData.trades || []),
-                parents: loadedData.parents || []
+                parents: loadedData.parents || [],
+                eggs: loadedData.eggs || []
               };
               setAccounts([defaultAccount]);
               setActiveAccountId("default");
@@ -397,13 +438,15 @@ export default function App() {
               setPets(defaultData.pets);
               setTrades(defaultData.trades);
               setParents(defaultData.parents);
+              setEggs(defaultData.eggs);
             } else {
               // 空数据初始化
               const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
               const defaultData: AccountData = {
                 pets: migratePets(INITIAL_TABLE_DATA),
                 trades: [],
-                parents: []
+                parents: [],
+                eggs: []
               };
               setAccounts([defaultAccount]);
               setActiveAccountId("default");
@@ -411,6 +454,7 @@ export default function App() {
               setPets(defaultData.pets);
               setTrades(defaultData.trades);
               setParents(defaultData.parents);
+              setEggs(defaultData.eggs);
             }
 
             if (loadedData.settings) {
@@ -453,10 +497,11 @@ export default function App() {
           setActiveAccountId(parsedActiveId);
           setAccountDataMap(parsedDataMap);
           
-          const activeData = parsedDataMap[parsedActiveId] || { pets: [], trades: [], parents: [] };
+          const activeData = parsedDataMap[parsedActiveId] || { pets: [], trades: [], parents: [], eggs: [] };
           setPets(migratePets(activeData.pets));
           setTrades(migrateTrades(activeData.trades));
           setParents(activeData.parents || []);
+          setEggs(activeData.eggs || []);
           return;
         } catch (e) {
           console.error("解析浏览器多账号失败:", e);
@@ -467,11 +512,13 @@ export default function App() {
       const savedPets = localStorage.getItem("roco_egg_data_v2");
       const savedTrades = localStorage.getItem("roco_egg_trades_v1");
       const savedParents = localStorage.getItem("roco_egg_parents_v1");
+      const savedEggs = localStorage.getItem("roco_egg_eggs_v1");
       
       const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
       let initialPets = migratePets(INITIAL_TABLE_DATA);
       let initialTrades: EggTrade[] = [];
       let initialParents: ParentPet[] = [];
+      let initialEggs: EggData[] = [];
       
       if (savedPets) {
         try { initialPets = migratePets(JSON.parse(savedPets)); } catch(e){}
@@ -482,14 +529,18 @@ export default function App() {
       if (savedParents) {
         try { initialParents = JSON.parse(savedParents); } catch(e){}
       }
+      if (savedEggs) {
+        try { initialEggs = JSON.parse(savedEggs); } catch(e){}
+      }
       
-      const defaultData: AccountData = { pets: initialPets, trades: initialTrades, parents: initialParents };
+      const defaultData: AccountData = { pets: initialPets, trades: initialTrades, parents: initialParents, eggs: initialEggs };
       setAccounts([defaultAccount]);
       setActiveAccountId("default");
       setAccountDataMap({ "default": defaultData });
       setPets(defaultData.pets);
       setTrades(defaultData.trades);
       setParents(defaultData.parents);
+      setEggs(defaultData.eggs);
     };
 
     loadLocalData();
@@ -515,7 +566,7 @@ export default function App() {
     
     const mergedDataMap = {
       ...accountDataMap,
-      [activeAccountId]: { pets, trades, parents }
+      [activeAccountId]: { pets, trades, parents, eggs }
     };
 
     localStorage.setItem("roco_accounts_v1", JSON.stringify(accounts));
@@ -526,6 +577,7 @@ export default function App() {
     localStorage.setItem("roco_egg_data_v2", JSON.stringify(pets));
     localStorage.setItem("roco_egg_trades_v1", JSON.stringify(trades));
     localStorage.setItem("roco_egg_parents_v1", JSON.stringify(parents));
+    localStorage.setItem("roco_egg_eggs_v1", JSON.stringify(eggs));
 
     localStorage.setItem("roco_watermark_panel_open", String(showWatermarkPanel));
     localStorage.setItem("roco_watermark_enabled", String(enableWatermark));
@@ -569,7 +621,7 @@ export default function App() {
     }, 600);
     return () => clearTimeout(timer);
   }, [
-    pets, trades, parents, 
+    pets, trades, parents, eggs, 
     accounts, activeAccountId, accountDataMap,
     showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, 
     isLoaded
@@ -779,6 +831,108 @@ export default function App() {
   const handleDeletePet = useCallback((id: string) => {
     setPets(prev => prev.filter(p => p.id !== id));
   }, []);
+
+  const handleDeleteEgg = (id: string) => {
+    showConfirm(
+      "确认删除",
+      "您确定要删除这只精灵蛋的信息吗？此操作不可撤销。",
+      () => {
+        setEggs(prev => prev.filter(e => e.id !== id));
+        showToast("精灵蛋删除成功！", "success");
+      }
+    );
+  };
+
+  const handleAddEggClick = () => {
+    setEditingEggId(null);
+    setEggFormSprite("");
+    setEggFormFatherNature("");
+    setEggFormMotherNature("");
+    setEggFormFatherStats(["无", "无", "无"]);
+    setEggFormMotherStats(["无", "无", "无"]);
+    setEggFormBrand("普通");
+    setEggFormSize("");
+    setEggFormWeight("");
+    
+    // Set default produce time to current local YYYY-MM-DD format
+    const now = new Date();
+    const offset = now.getTimezoneOffset() * 60000;
+    const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
+    setEggFormProduceTime(localISODate);
+    
+    setShowEggModal(true);
+  };
+
+  const handleEditEgg = (egg: EggData) => {
+    setEditingEggId(egg.id);
+    setEggFormSprite(egg.sprite);
+    setEggFormFatherNature(egg.fatherNature || "");
+    setEggFormMotherNature(egg.motherNature || "");
+    setEggFormFatherStats(egg.fatherStats || ["无", "无", "无"]);
+    setEggFormMotherStats(egg.motherStats || ["无", "无", "无"]);
+    setEggFormBrand(egg.brand || "普通");
+    setEggFormSize(egg.eggSize || "");
+    setEggFormWeight(egg.eggWeight || "");
+    
+    if (egg.produceTime) {
+      setEggFormProduceTime(egg.produceTime.slice(0, 10));
+    } else {
+      setEggFormProduceTime("");
+    }
+    
+    setShowEggModal(true);
+  };
+
+  const handleSaveEgg = () => {
+    if (!eggFormSprite.trim()) {
+      showToast("请输入精灵名字！", "error");
+      return;
+    }
+    
+    const sizeVal = parseFloat(eggFormSize);
+    const weightVal = parseFloat(eggFormWeight);
+    if (isNaN(sizeVal) || sizeVal <= 0) {
+      showToast("请输入合法的蛋尺寸！", "error");
+      return;
+    }
+    if (isNaN(weightVal) || weightVal <= 0) {
+      showToast("请输入合法的蛋重量！", "error");
+      return;
+    }
+
+    const getLocalTodayString = () => {
+      const d = new Date();
+      const offset = d.getTimezoneOffset() * 60000;
+      return (new Date(d.getTime() - offset)).toISOString().slice(0, 10);
+    };
+
+    const savedProduceTime = eggFormProduceTime 
+      ? eggFormProduceTime.slice(0, 10) 
+      : getLocalTodayString();
+
+    const eggObj: EggData = {
+      id: editingEggId || `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      sprite: eggFormSprite.trim(),
+      fatherNature: eggFormFatherNature,
+      motherNature: eggFormMotherNature,
+      fatherStats: eggFormFatherStats,
+      motherStats: eggFormMotherStats,
+      brand: eggFormBrand,
+      eggSize: eggFormSize,
+      eggWeight: eggFormWeight,
+      produceTime: savedProduceTime
+    };
+
+    if (editingEggId) {
+      setEggs(prev => prev.map(e => e.id === editingEggId ? eggObj : e));
+      showToast("修改精灵蛋信息成功！", "success");
+    } else {
+      setEggs(prev => [eggObj, ...prev]);
+      showToast("登记精灵蛋成功！", "success");
+    }
+
+    setShowEggModal(false);
+  };
 
   const handleAddParent = (gender: "♂" | "♀") => {
     const newParent: ParentPet = {
@@ -1018,6 +1172,7 @@ export default function App() {
     const resetList = migratePets(INITIAL_TABLE_DATA);
     setPets(resetList);
     setParents([]);
+    setEggs([]);
     setActiveModal("none");
     showToast("成功还原到当前账号的初始默认精灵列表！", "success");
   };
@@ -1053,20 +1208,25 @@ export default function App() {
       if (parsed && parsed.version === "roco_egg_single_account_v1") {
         singleNickname = parsed.nickname || "导入账号";
         singleUid = parsed.uid || "default";
-        singleData = parsed.data || { pets: [], trades: [], parents: [] };
+        singleData = parsed.data || { pets: [], trades: [], parents: [], eggs: [] };
+        if (!singleData.eggs) {
+          singleData.eggs = [];
+        }
       } else if (Array.isArray(parsed)) {
         // 老版本纯数组格式
         singleData = {
           pets: migratePets(parsed),
           trades: [],
-          parents: []
+          parents: [],
+          eggs: []
         };
-      } else if (parsed && (Array.isArray(parsed.pets) || Array.isArray(parsed.trades) || Array.isArray(parsed.parents))) {
+      } else if (parsed && (Array.isArray(parsed.pets) || Array.isArray(parsed.trades) || Array.isArray(parsed.parents) || Array.isArray(parsed.eggs))) {
         // 老版本包含 pets, trades, parents 的对象格式
         singleData = {
           pets: migratePets(parsed.pets || []),
           trades: migrateTrades(parsed.trades || []),
-          parents: parsed.parents || []
+          parents: parsed.parents || [],
+          eggs: parsed.eggs || []
         };
       }
 
@@ -1093,10 +1253,11 @@ export default function App() {
     setActiveAccountId(importedActiveId);
     setAccountDataMap(importedDataMap);
 
-    const activeData = importedDataMap[importedActiveId] || { pets: [], trades: [], parents: [] };
+    const activeData = importedDataMap[importedActiveId] || { pets: [], trades: [], parents: [], eggs: [] };
     setPets(migratePets(activeData.pets || []));
     setTrades(migrateTrades(activeData.trades || []));
     setParents(activeData.parents || []);
+    setEggs(activeData.eggs || []);
 
     setPendingImportData(null);
     setImportConfirmType("none");
@@ -1123,11 +1284,12 @@ export default function App() {
       // 保存当前账号的数据
       const updatedMap = {
         ...accountDataMap,
-        [activeAccountId]: { pets, trades, parents },
+        [activeAccountId]: { pets, trades, parents, eggs },
         [newId]: {
           pets: migratePets(pendingImportData.pets || []),
           trades: migrateTrades(pendingImportData.trades || []),
-          parents: pendingImportData.parents || []
+          parents: pendingImportData.parents || [],
+          eggs: pendingImportData.eggs || []
         }
       };
 
@@ -1138,6 +1300,7 @@ export default function App() {
       setPets(migratePets(pendingImportData.pets || []));
       setTrades(migrateTrades(pendingImportData.trades || []));
       setParents(pendingImportData.parents || []);
+      setEggs(pendingImportData.eggs || []);
 
       showToast(`成功导入并创建新账号：${importAsNewNickname}`, "success");
     } else {
@@ -1145,6 +1308,7 @@ export default function App() {
       setPets(migratePets(pendingImportData.pets || []));
       setTrades(migrateTrades(pendingImportData.trades || []));
       setParents(pendingImportData.parents || []);
+      setEggs(pendingImportData.eggs || []);
       
       // 更新缓存 map
       setAccountDataMap(prev => ({
@@ -1152,7 +1316,8 @@ export default function App() {
         [activeAccountId]: {
           pets: migratePets(pendingImportData.pets || []),
           trades: migrateTrades(pendingImportData.trades || []),
-          parents: pendingImportData.parents || []
+          parents: pendingImportData.parents || [],
+          eggs: pendingImportData.eggs || []
         }
       }));
 
@@ -1190,8 +1355,8 @@ export default function App() {
     
     // 如果是当前激活账号，先合并当前内存数据
     const targetData = accountId === activeAccountId 
-      ? { pets, trades, parents }
-      : accountDataMap[accountId] || { pets: [], trades: [], parents: [] };
+      ? { pets, trades, parents, eggs }
+      : accountDataMap[accountId] || { pets: [], trades: [], parents: [], eggs: [] };
 
     const backupData = JSON.stringify({
       version: "roco_egg_single_account_v1",
@@ -1210,7 +1375,7 @@ export default function App() {
     // 包含当前激活账号的最新数据
     const mergedDataMap = {
       ...accountDataMap,
-      [activeAccountId]: { pets, trades, parents }
+      [activeAccountId]: { pets, trades, parents, eggs }
     };
 
     const backupData = JSON.stringify({
@@ -1254,15 +1419,16 @@ export default function App() {
     
     const updatedMap = {
       ...accountDataMap,
-      [activeAccountId]: { pets, trades, parents }
+      [activeAccountId]: { pets, trades, parents, eggs }
     };
     setAccountDataMap(updatedMap);
     setActiveAccountId(accountId);
     
-    const targetData = updatedMap[accountId] || { pets: [], trades: [], parents: [] };
+    const targetData = updatedMap[accountId] || { pets: [], trades: [], parents: [], eggs: [] };
     setPets(migratePets(targetData.pets || []));
     setTrades(migrateTrades(targetData.trades || []));
     setParents(targetData.parents || []);
+    setEggs(targetData.eggs || []);
     
     showToast(`已切换至账号：${accounts.find(a => a.id === accountId)?.nickname || '未知账号'}`, "success");
   };
@@ -1278,12 +1444,13 @@ export default function App() {
     const newData: AccountData = {
       pets: migratePets(INITIAL_TABLE_DATA),
       trades: [],
-      parents: []
+      parents: [],
+      eggs: []
     };
     
     const updatedMap = {
       ...accountDataMap,
-      [activeAccountId]: { pets, trades, parents }
+      [activeAccountId]: { pets, trades, parents, eggs }
     };
 
     setAccounts(prev => [...prev, newAccount]);
@@ -1296,6 +1463,7 @@ export default function App() {
     setPets(newData.pets);
     setTrades(newData.trades);
     setParents(newData.parents);
+    setEggs(newData.eggs);
     
     setNewAccNickname("");
     setNewAccUid("");
@@ -1329,10 +1497,11 @@ export default function App() {
     if (accountId === activeAccountId) {
       const nextActiveId = remainingAccounts[0].id;
       setActiveAccountId(nextActiveId);
-      const nextData = updatedMap[nextActiveId] || { pets: [], trades: [], parents: [] };
+      const nextData = updatedMap[nextActiveId] || { pets: [], trades: [], parents: [], eggs: [] };
       setPets(migratePets(nextData.pets || []));
       setTrades(migrateTrades(nextData.trades || []));
       setParents(nextData.parents || []);
+      setEggs(nextData.eggs || []);
     }
     
     showToast("账号已成功删除！", "success");
@@ -1697,6 +1866,36 @@ export default function App() {
     return matchSprite && matchNature && matchGroup && matchBrand && matchStatus && matchLimit && match3V;
   });
 
+
+  const filteredEggs = eggs.filter((egg) => {
+    const matchSprite = egg.sprite.toLowerCase().includes(eggSearchTerm.toLowerCase());
+    
+    const petDetails = getPetDetails(egg.sprite);
+    const groups = petDetails ? petDetails.groups : [];
+    const matchGroup = !eggFilterGroup || groups.includes(eggFilterGroup);
+    
+    const matchBrand = !eggFilterBrand || egg.brand === eggFilterBrand;
+    
+    const statusType = getEggStatusType(egg);
+    let matchLimit = true;
+    if (eggFilterLimit === "极限") {
+      matchLimit = statusType === "极限大" || statusType === "极限小";
+    } else if (eggFilterLimit === "达标") {
+      matchLimit = statusType === "大块头达标" || statusType === "小不点达标";
+    } else if (eggFilterLimit === "临界") {
+      matchLimit = statusType === "大块头临界" || statusType === "小不点临界";
+    } else if (eggFilterLimit === "普通") {
+      matchLimit = statusType === "普通";
+    }
+
+    const is3V = isEgg3V(egg);
+    const match3V = eggFilter3V === "" || 
+      (eggFilter3V === "是" && is3V) || 
+      (eggFilter3V === "否" && !is3V);
+
+    return matchSprite && matchGroup && matchBrand && matchLimit && match3V;
+  });
+
   return (
     <div className="bg-slate-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 selection:bg-indigo-500 selection:text-white">
       <div
@@ -1795,6 +1994,17 @@ export default function App() {
             >
               <Users className="w-4 h-4" />
               父母本管理中心
+            </button>
+            <button
+              onClick={() => setActiveTab("eggs")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                activeTab === "eggs"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+              }`}
+            >
+              <Database className="w-4 h-4" />
+              蛋管理中心
             </button>
           </div>
 
@@ -2585,6 +2795,198 @@ export default function App() {
       </>
     )}
 
+    {/* 蛋管理中心 */}
+    {activeTab === "eggs" && (
+      <div className="bg-slate-50/50 p-4 sm:p-6 flex flex-col gap-6">
+        {/* Statistics section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 rounded-full pointer-events-none" />
+            <div className="flex items-center justify-between z-10">
+              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">总录入精灵蛋</span>
+              <div className="w-6 h-6 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                <Database className="w-3.5 h-3.5 text-slate-400" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 tracking-tight">{eggs.length}</span>
+              <span className="text-xs text-slate-400 font-semibold">个</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50/30 rounded-full pointer-events-none" />
+            <div className="flex items-center justify-between z-10">
+              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">极限精灵蛋</span>
+              <div className="w-6 h-6 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
+                <Award className="w-3.5 h-3.5 text-rose-500 animate-pulse" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+              <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 tracking-tight">
+                {eggs.filter(e => {
+                  const type = getEggStatusType(e);
+                  return type === "极限大" || type === "极限小";
+                }).length}
+              </span>
+              <span className="text-xs text-rose-500 font-semibold">个</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50/30 rounded-full pointer-events-none" />
+            <div className="flex items-center justify-between z-10">
+              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">临界/达标蛋</span>
+              <div className="w-6 h-6 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
+                <Zap className="w-3.5 h-3.5 text-amber-500" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+              <span className="text-xl sm:text-2xl font-black font-mono text-amber-600 tracking-tight">
+                {eggs.filter(e => {
+                  const type = getEggStatusType(e);
+                  return type !== "普通" && type !== "极限大" && type !== "极限小";
+                }).length}
+              </span>
+              <span className="text-xs text-amber-500 font-semibold">个</span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-50/30 rounded-full pointer-events-none" />
+            <div className="flex items-center justify-between z-10">
+              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">3V性格合格蛋</span>
+              <div className="w-6 h-6 bg-teal-50 rounded-lg flex items-center justify-center border border-teal-100">
+                <Dna className="w-3.5 h-3.5 text-teal-600" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
+              <span className="text-xl sm:text-2xl font-black font-mono text-teal-600 tracking-tight">
+                {eggs.filter(e => {
+                  const fStats = e.fatherStats || [];
+                  const mStats = e.motherStats || [];
+                  const fN = e.fatherNature || "";
+                  const mN = e.motherNature || "";
+                  if (fStats.includes("无") || mStats.includes("无") || !fN || !mN) return false;
+                  const fSorted = [...fStats].sort();
+                  const mSorted = [...mStats].sort();
+                  return fSorted.every((v, idx) => v === mSorted[idx]);
+                }).length}
+              </span>
+              <span className="text-xs text-teal-500 font-semibold">个</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters and Header inside center */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col gap-4 p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
+                <Egg className="w-5 h-5 text-indigo-600 animate-pulse" />
+              </div>
+              <div className="text-left">
+                <h2 className="text-lg font-bold text-slate-800">精灵蛋管理中心</h2>
+                <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                  记录与管理极品精灵蛋的三围性格、牌子，自动判定大块头/小不点达标与极限
+                </p>
+              </div>
+            </div>
+            
+            <button
+              onClick={handleAddEggClick}
+              className="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-md shadow-indigo-600/20 w-fit shrink-0 ml-auto font-sans"
+            >
+              <Plus className="w-4 h-4" />
+              登记精灵蛋
+            </button>
+          </div>
+
+          <div className="h-px bg-slate-100" />
+
+          {/* Filters row */}
+          <div className="flex flex-wrap gap-3 items-center">
+            <div className="relative flex-1 sm:w-60 sm:flex-none">
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="模糊搜索精灵名称..."
+                value={eggSearchTerm}
+                onChange={e => setEggSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400"
+              />
+            </div>
+
+            <select
+              value={eggFilterGroup}
+              onChange={e => setEggFilterGroup(e.target.value)}
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+            >
+              <option value="">全部蛋组</option>
+              {EGG_GROUPS.map(group => (
+                <option key={group} value={group}>{group}</option>
+              ))}
+            </select>
+
+            <select
+              value={eggFilterBrand}
+              onChange={e => setEggFilterBrand(e.target.value)}
+              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer font-bold transition-all w-full sm:w-auto ${
+                eggFilterBrand ? getBrandStyle(eggFilterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              <option value="">全部牌子</option>
+              {BRAND_OPTIONS.map(brand => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+
+            <select
+              value={eggFilterLimit}
+              onChange={e => setEggFilterLimit(e.target.value)}
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+            >
+              <option value="">全部(极限/临界/达标)</option>
+              <option value="极限">仅看极限 (大/小)</option>
+              <option value="达标">仅看达标 (大块头/小不点)</option>
+              <option value="临界">仅看临界值 (10%以内)</option>
+              <option value="普通">仅看普通/未合格</option>
+            </select>
+
+            <select
+              value={eggFilter3V}
+              onChange={e => setEggFilter3V(e.target.value)}
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+            >
+              <option value="">全部(是否3V)</option>
+              <option value="是">是 3V</option>
+              <option value="否">否 3V</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Eggs list grid */}
+        {filteredEggs.length === 0 ? (
+          <div className="py-16 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm select-none">
+            <Egg className="w-12 h-12 text-slate-350 stroke-1 mb-2 animate-bounce" />
+            <span className="text-sm font-bold text-slate-400">🥚 暂无符合条件的精灵蛋记录</span>
+            <span className="text-xs text-slate-350 mt-1">点击右上角“登记精灵蛋”录入首只蛋</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+            {filteredEggs.map((egg) => (
+              <EggCard
+                key={egg.id}
+                egg={egg}
+                handleDeleteEgg={handleDeleteEgg}
+                handleEditEgg={handleEditEgg}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    )}
+
     {/* 父母本管理中心 */}
     {activeTab === "parents" && (
       <div className="bg-slate-50/50 p-4 sm:p-6 flex flex-col gap-6">
@@ -3018,6 +3420,275 @@ export default function App() {
 
       {/* Custom Dialog Modals */}
       <AnimatePresence>
+        {showEggModal && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-3xl border border-slate-100/80 shadow-2xl w-full max-w-lg overflow-hidden flex flex-col scale-in select-none max-h-[90vh]"
+            >
+              {/* Header */}
+              <div className="px-6 py-4.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-1.5 bg-indigo-50 rounded-lg border border-indigo-100/50">
+                    <Egg className="w-4.5 h-4.5 text-indigo-600" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-805">
+                    {editingEggId ? "修改精灵蛋信息" : "登记新精灵蛋"}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setShowEggModal(false)}
+                  className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                >
+                  <X className="w-4.5 h-4.5" />
+                </button>
+              </div>
+
+              {/* Scrollable Fields container */}
+              <div className="overflow-y-auto p-6 flex flex-col gap-4.5">
+                {/* Sprite Autocomplete */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">精灵名称</label>
+                  <div className="flex gap-2.5 items-center">
+                    {(() => {
+                      const finalDetails = getPetDetails(eggFormSprite);
+                      const spriteFile = getSpriteFileName(eggFormSprite);
+                      const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+                      return (
+                        <div className="w-10 h-10 rounded-lg border border-slate-205 bg-slate-50 flex items-center justify-center relative overflow-hidden shrink-0">
+                          {spriteUrl ? (
+                            <img src={spriteUrl} alt="" className="w-8.5 h-8.5 object-contain" />
+                          ) : (
+                            <span className="text-sm">🥚</span>
+                          )}
+                        </div>
+                      );
+                    })()}
+                    <Autocomplete
+                      value={eggFormSprite}
+                      onChange={(val) => {
+                        setEggFormSprite(val);
+                      }}
+                      options={ALL_PET_NAMES}
+                      placeholder="输入精灵名称..."
+                      className="flex-1"
+                      inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-semibold h-10"
+                    />
+                  </div>
+                </div>
+
+                {/* Auto Match Info Card */}
+                {(() => {
+                  const config = getEggConfig(eggFormSprite);
+                  const thresholds = getEggSizeThresholds(eggFormSprite);
+                  if (!config || !thresholds) return null;
+                  return (
+                    <div className="p-3.5 bg-indigo-50/50 rounded-2xl border border-indigo-100/60 flex flex-col gap-2 select-none">
+                      <span className="text-[10px] font-bold text-indigo-500 flex items-center gap-1">
+                        <Info className="w-3.5 h-3.5 text-indigo-500" />
+                        系统已匹配该精灵的蛋数据标准范围：
+                      </span>
+                      <div className="grid grid-cols-3 gap-2 text-[10px]">
+                        <div className="flex flex-col bg-white/70 p-2 rounded-xl border border-indigo-100/20">
+                          <span className="text-slate-400 font-bold">标准尺寸</span>
+                          <span className="text-slate-700 font-mono font-bold mt-0.5">
+                            {(config.height_low / 100).toFixed(2)}m - {(config.height_high / 100).toFixed(2)}m
+                          </span>
+                        </div>
+                        <div className="flex flex-col bg-white/70 p-2 rounded-xl border border-indigo-100/20">
+                          <span className="text-slate-400 font-bold">标准重量</span>
+                          <span className="text-slate-700 font-mono font-bold mt-0.5">
+                            {(config.weight_low / 1000).toFixed(3)}kg - {(config.weight_high / 1000).toFixed(3)}kg
+                          </span>
+                        </div>
+                        <div className="flex flex-col bg-white/70 p-2 rounded-xl border border-indigo-100/20">
+                          <span className="text-slate-400 font-bold">基础孵化时间</span>
+                          <span className="text-slate-700 font-bold mt-0.5">
+                            {formatHatchTime(config.hatch_data)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-500 font-medium">
+                        <div>大块头及格线: <span className="font-mono text-rose-500 font-bold">{(thresholds.giantWeightLine).toFixed(3)}kg</span></div>
+                        <div>小不点及格线: <span className="font-mono text-indigo-500 font-bold">{(thresholds.tinyWeightLine).toFixed(3)}kg</span></div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Parents details block */}
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-4">
+                  <span className="text-[11px] font-extrabold text-slate-400 select-none block tracking-wider uppercase">父母亲信息配置</span>
+                  
+                  {/* Father row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-555 mb-1.5 flex items-center gap-1 text-sky-600">
+                        ♂️ 父亲性格
+                      </label>
+                      <select
+                        value={eggFormFatherNature}
+                        onChange={(e) => setEggFormFatherNature(e.target.value)}
+                        className="w-full px-3 py-2 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-semibold cursor-pointer"
+                      >
+                        <option value="">选择父亲性格 (可选)</option>
+                        {NATURE_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-555 mb-1.5 flex items-center gap-1 text-pink-650">
+                        ♀️ 母亲性格
+                      </label>
+                      <select
+                        value={eggFormMotherNature}
+                        onChange={(e) => setEggFormMotherNature(e.target.value)}
+                        className="w-full px-3 py-2 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-semibold cursor-pointer"
+                      >
+                        <option value="">选择母亲性格 (可选)</option>
+                        {NATURE_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Father Stats Selection */}
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[11px] font-bold text-slate-555 flex items-center gap-1 text-sky-600">
+                      ♂️ 父亲 3围 (请对应选择)
+                    </span>
+                    <div className="flex gap-2">
+                      {[0, 1, 2].map((idx) => (
+                        <select
+                          key={idx}
+                          value={eggFormFatherStats[idx] || "无"}
+                          onChange={(e) => {
+                            const newStats = [...eggFormFatherStats];
+                            newStats[idx] = e.target.value;
+                            setEggFormFatherStats(newStats);
+                          }}
+                          className="flex-1 px-2 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-semibold transition-all cursor-pointer"
+                        >
+                          {STATS_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mother Stats Selection */}
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[11px] font-bold text-slate-555 flex items-center gap-1 text-pink-650">
+                      ♀️ 母亲 3围 (请对应选择)
+                    </span>
+                    <div className="flex gap-2">
+                      {[0, 1, 2].map((idx) => (
+                        <select
+                          key={idx}
+                          value={eggFormMotherStats[idx] || "无"}
+                          onChange={(e) => {
+                            const newStats = [...eggFormMotherStats];
+                            newStats[idx] = e.target.value;
+                            setEggFormMotherStats(newStats);
+                          }}
+                          className="flex-1 px-2 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-semibold transition-all cursor-pointer"
+                        >
+                          {STATS_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Egg physical properties */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">
+                      蛋尺寸 (单位: m)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      placeholder="例如: 0.23"
+                      value={eggFormSize}
+                      onChange={(e) => setEggFormSize(e.target.value)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-semibold h-10"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">
+                      蛋重量 (单位: kg)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.001"
+                      min="0"
+                      placeholder="例如: 0.046"
+                      value={eggFormWeight}
+                      onChange={(e) => setEggFormWeight(e.target.value)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-semibold h-10"
+                    />
+                  </div>
+                </div>
+
+                {/* Brand Selection */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">
+                      蛋牌子
+                    </label>
+                    <select
+                      value={eggFormBrand}
+                      onChange={(e) => setEggFormBrand(e.target.value)}
+                      className={`w-full px-3 py-2 text-xs border rounded-lg focus:outline-none font-bold transition-all h-10 cursor-pointer ${getBrandStyle(eggFormBrand)}`}
+                    >
+                      {BRAND_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">
+                      产出时间
+                    </label>
+                    <input
+                      type="date"
+                      value={eggFormProduceTime}
+                      onChange={(e) => setEggFormProduceTime(e.target.value)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-semibold h-10"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons footer */}
+              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3 shrink-0">
+                <button
+                  onClick={() => setShowEggModal(false)}
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all cursor-pointer"
+                >
+                  取消
+                </button>
+                <button
+                  onClick={handleSaveEgg}
+                  className="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md shadow-indigo-600/10 transition-all cursor-pointer"
+                >
+                  确认保存
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
         {activeModal === "reset" && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div

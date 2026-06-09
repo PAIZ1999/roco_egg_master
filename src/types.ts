@@ -37,6 +37,19 @@ export interface ParentPet {
   checked?: boolean;
 }
 
+export interface EggData {
+  id: string;
+  sprite: string;
+  fatherNature: string;
+  motherNature: string;
+  fatherStats: string[];
+  motherStats: string[];
+  brand: string;
+  eggSize: string;
+  eggWeight: string;
+  produceTime: string;
+}
+
 export interface Account {
   id: string;
   uid: string;
@@ -47,6 +60,7 @@ export interface AccountData {
   pets: EggPet[];
   trades: EggTrade[];
   parents: ParentPet[];
+  eggs: EggData[];
 }
 
 

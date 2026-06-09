@@ -1,6 +1,9 @@
 import eggPetList from "../images/洛克王国_蛋组精灵表.json";
 import spriteFiles from "./sprite_files.json";
 import allGuideData from "../images/全图鉴.json";
+import petEggConf from "../images/蛋数据/PET_EGG_CONF.json";
+import { EggData } from "./types";
+
 
 export interface PetData {
   display_name: string;
@@ -402,5 +405,133 @@ export const getSpriteFormDisplayName = (spriteOption: string): string => {
   // 原有的后缀显示逻辑
   return spriteOption.includes("_") ? spriteOption.split("_")[1] : "默认";
 };
+
+export interface EggConfig {
+  pet_id: number;
+  name: string;
+  weight_low: number;
+  weight_high: number;
+  height_low: number;
+  height_high: number;
+  hatch_data: number;
+}
+
+/**
+ * 获取精灵蛋的标准配置
+ */
+export const getEggConfig = (petName: string): EggConfig | null => {
+  if (!petName) return null;
+  const baseName = getBasePetName(petName);
+  
+  // Find in PET_EGG_CONF
+  const eggConf = (petEggConf as any[]).find(item => item.name === baseName);
+  if (eggConf) {
+    return eggConf as EggConfig;
+  }
+  return null;
+};
+
+export interface EggSizeThresholds {
+  minHeight: number; // in meters (height_low / 100)
+  maxHeight: number; // in meters (height_high / 100)
+  minWeight: number; // in kg (weight_low / 1000)
+  maxWeight: number; // in kg (weight_high / 1000)
+  giantWeightLine: number; // maxWeight - (maxWeight - minWeight) * 0.02
+  tinyWeightLine: number; // minWeight + (maxWeight - minWeight) * 0.05
+}
+
+/**
+ * 计算精灵蛋身高体重的临界值和大块头/小不点及格线
+ * 高度单位为 mm -> 除以 100 转换为 m；重量单位为 g -> 除以 1000 转换为 kg。
+ */
+export const getEggSizeThresholds = (petName: string): EggSizeThresholds | null => {
+  const eggConf = getEggConfig(petName);
+  if (!eggConf) return null;
+
+  try {
+    const minHeight = eggConf.height_low / 100;
+    const maxHeight = eggConf.height_high / 100;
+    const minWeight = eggConf.weight_low / 1000;
+    const maxWeight = eggConf.weight_high / 1000;
+
+    const giantWeightLine = maxWeight - (maxWeight - minWeight) * 0.02;
+    const tinyWeightLine = minWeight + (maxWeight - minWeight) * 0.05;
+
+    return {
+      minHeight,
+      maxHeight,
+      minWeight,
+      maxWeight,
+      giantWeightLine: Math.round(giantWeightLine * 10000) / 10000,
+      tinyWeightLine: Math.round(tinyWeightLine * 10000) / 10000
+    };
+  } catch (e) {
+    console.error("Error calculating egg thresholds for", petName, e);
+    return null;
+  }
+};
+
+export const formatHatchTime = (seconds: number): string => {
+  if (!seconds) return "未知时间";
+  const hours = seconds / 3600;
+  if (hours >= 24) {
+    const days = Math.floor(hours / 24);
+    const remainingHours = hours % 24;
+    return remainingHours > 0 ? `${days}天${remainingHours}小时` : `${days}天`;
+  }
+  return `${hours}小时`;
+};
+
+export const isEgg3V = (egg: EggData): boolean => {
+  const f = egg.fatherStats || ["无", "无", "无"];
+  const m = egg.motherStats || ["无", "无", "无"];
+  if (f.includes("无") || m.includes("无")) return false;
+  const fSorted = [...f].sort();
+  const mSorted = [...m].sort();
+  return fSorted.every((v, idx) => v === mSorted[idx]);
+};
+
+export const getEggStatusType = (egg: EggData) => {
+  const thresholds = getEggSizeThresholds(egg.sprite);
+  if (!thresholds || !egg.eggSize || !egg.eggWeight) return "普通";
+  const sizeVal = parseFloat(egg.eggSize);
+  const weightVal = parseFloat(egg.eggWeight);
+  if (isNaN(sizeVal) || isNaN(weightVal)) return "普通";
+
+  const isGiantBrand = ["大粗", "大婉", "单大块头"].includes(egg.brand);
+  const isTinyBrand = ["小粗", "小婉", "单小不点"].includes(egg.brand);
+
+  if (isGiantBrand) {
+    if (sizeVal >= thresholds.maxHeight && weightVal >= thresholds.maxWeight) {
+      return "极限大";
+    }
+  } else if (isTinyBrand) {
+    if (sizeVal <= thresholds.minHeight && weightVal <= thresholds.minWeight) {
+      return "极限小";
+    }
+  } else {
+    if (sizeVal >= thresholds.maxHeight && weightVal >= thresholds.giantWeightLine) {
+      return "大块头达标";
+    }
+    if (sizeVal <= thresholds.minHeight && weightVal <= thresholds.tinyWeightLine) {
+      return "小不点达标";
+    }
+    const x = Math.abs(thresholds.giantWeightLine - weightVal);
+    const y = Math.abs(thresholds.tinyWeightLine - weightVal);
+    if (x <= y) {
+      const maxDiff = thresholds.giantWeightLine * 0.10;
+      if (weightVal < thresholds.giantWeightLine && x <= maxDiff) {
+        return "大块头临界";
+      }
+    } else {
+      const maxDiff = thresholds.tinyWeightLine * 0.10;
+      if (weightVal > thresholds.tinyWeightLine && y <= maxDiff) {
+        return "小不点临界";
+      }
+    }
+  }
+  return "普通";
+};
+
 
 
