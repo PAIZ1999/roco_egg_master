@@ -23,7 +23,8 @@ import {
   getBrandStyle,
   getAvailableSprites,
   getSpriteFormDisplayName,
-  getPetGuideSize
+  getPetGuideSize,
+  getPetSizeThresholds
 } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
@@ -91,6 +92,104 @@ export const ParentCard = React.memo(function ParentCard({
   const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
   const availableSprites = getAvailableSprites(parent.sprite);
   const guideSize = getPetGuideSize(parent.sprite);
+  const thresholds = getPetSizeThresholds(parent.sprite);
+
+  const getStatusBadge = () => {
+    if (!thresholds || !parent.height || !parent.weight) return null;
+    const hVal = parseFloat(parent.height);
+    const wVal = parseFloat(parent.weight);
+    if (isNaN(hVal) || isNaN(wVal)) return null;
+
+    const isGiantBrand = ["大粗", "大婉", "单大块头"].includes(parent.brand);
+    const isTinyBrand = ["小粗", "小婉"].includes(parent.brand);
+    const isNotSizeBrand = !isGiantBrand && !isTinyBrand;
+
+    // 1. 如果达标了，显示达标徽章
+    if (hVal >= thresholds.maxHeight && wVal >= thresholds.giantWeightLine) {
+      return (
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          大块头 (达标)
+        </span>
+      );
+    }
+
+    if (hVal <= thresholds.minHeight && wVal <= thresholds.tinyWeightLine) {
+      return (
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200/60 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+          小不点 (达标)
+        </span>
+      );
+    }
+
+    // 2. 如果是体型牌，没达标但在 20% 以内，显示接近临界值
+    if (isGiantBrand && hVal >= thresholds.maxHeight) {
+      if (wVal < thresholds.giantWeightLine && wVal >= thresholds.giantWeightLine * 0.80) {
+        return (
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 text-amber-755 border border-amber-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+            <span className="relative flex w-1.5 h-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+            </span>
+            接近大块头临界值
+          </span>
+        );
+      }
+    }
+
+    if (isTinyBrand && hVal <= thresholds.minHeight) {
+      if (wVal > thresholds.tinyWeightLine && wVal <= thresholds.tinyWeightLine * 1.20) {
+        return (
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 text-purple-700 border border-purple-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+            <span className="relative flex w-1.5 h-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
+            </span>
+            接近小不点临界值
+          </span>
+        );
+      }
+    }
+
+    // 3. 如果并非体型牌，计算与临界值的差值并显示在 20% 以内的临界情况
+    if (isNotSizeBrand) {
+      const x = Math.abs(thresholds.giantWeightLine - wVal);
+      const y = Math.abs(thresholds.tinyWeightLine - wVal);
+
+      if (x <= y) {
+        // 距离大块头更近
+        const maxDiff = thresholds.giantWeightLine * 0.20;
+        if (wVal < thresholds.giantWeightLine && x <= maxDiff) {
+          return (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 text-amber-755 border border-amber-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+              </span>
+              差大块头临界值 {x.toFixed(3)}kg
+            </span>
+          );
+        }
+      } else {
+        // 距离小不点（小块头）更近
+        const maxDiff = thresholds.tinyWeightLine * 0.20;
+        if (wVal > thresholds.tinyWeightLine && y <= maxDiff) {
+          return (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 text-purple-700 border border-purple-200/60 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
+              </span>
+              差小块头临界值 {y.toFixed(3)}kg
+            </span>
+          );
+        }
+      }
+    }
+
+    return null;
+  };
 
   const renderStatSelect = (sIdx: number, currentValue: string) => {
     const badgeColors = getStatBadgeStyle(currentValue);
@@ -246,17 +345,31 @@ export const ParentCard = React.memo(function ParentCard({
               })}
             </div>
           )}
-
           {guideSize && (
-            <div className="flex flex-col gap-1 bg-slate-50/90 border border-slate-100/60 p-1.5 rounded-md text-[10px] text-slate-500 mt-1.5 select-none w-full sm:w-fit sm:min-w-[76px] shrink-0 shadow-3xs items-start sm:items-center">
-              <div className="flex items-center gap-1" title="标准身高范围">
+            <div className="flex flex-col gap-1 bg-slate-50/90 border border-slate-100/60 p-1.5 rounded-md text-[10px] text-slate-500 mt-1.5 select-none w-full sm:w-fit min-w-[92px] shrink-0 shadow-3xs items-start sm:items-center">
+              <div className="flex items-center gap-1 whitespace-nowrap" title="标准身高范围">
                 <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                 <span className="font-semibold text-slate-600 whitespace-nowrap">{guideSize.height} m</span>
               </div>
-              <div className="flex items-center gap-1" title="标准体重范围">
+              <div className="flex items-center gap-1 whitespace-nowrap" title="标准体重范围">
                 <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                 <span className="font-semibold text-slate-600 whitespace-nowrap">{guideSize.weight} kg</span>
               </div>
+              {thresholds && (
+                <>
+                  <div className="w-full border-t border-dashed border-slate-200 my-1 shrink-0" />
+                  <div className="flex flex-col gap-0.5 w-full text-[9px] text-slate-400">
+                    <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="大块头及格重量">
+                      <span className="shrink-0 whitespace-nowrap">大及格:</span>
+                      <span className="font-bold text-slate-500 shrink-0 whitespace-nowrap">≥{thresholds.giantWeightLine}kg</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="小不点及格重量">
+                      <span className="shrink-0 whitespace-nowrap">小及格:</span>
+                      <span className="font-bold text-slate-500 shrink-0 whitespace-nowrap">≤{thresholds.tinyWeightLine}kg</span>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -321,6 +434,12 @@ export const ParentCard = React.memo(function ParentCard({
             </div>
           </div>
         </div>
+
+        {getStatusBadge() && (
+          <div className="flex justify-start pl-0.5 my-0.5 shrink-0">
+            {getStatusBadge()}
+          </div>
+        )}
 
         {/* Nature Selection Container */}
         <div className="flex flex-col gap-1 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">

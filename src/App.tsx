@@ -25,7 +25,9 @@ import {
   Dna,
   Info,
   Heart,
-  ExternalLink
+  ExternalLink,
+  Ruler,
+  Weight
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -60,7 +62,20 @@ import {
 import { SortableCard } from "./components/SortableCard";
 import { ParentCard } from "./components/ParentCard";
 import { Autocomplete } from "./components/Autocomplete";
-import { getPetDetails, ALL_PET_NAMES, getSpriteFileName, getImagePath, getBrandStyle, getEggGroupStyle, getStatusStyle, getAvailableSprites, getBasePetName, getSpriteFormDisplayName } from "./petHelper";
+import {
+  getPetDetails,
+  ALL_PET_NAMES,
+  getSpriteFileName,
+  getImagePath,
+  getBrandStyle,
+  getEggGroupStyle,
+  getStatusStyle,
+  getAvailableSprites,
+  getBasePetName,
+  getSpriteFormDisplayName,
+  getPetGuideSize,
+  getPetSizeThresholds
+} from "./petHelper";
 
 
 const migratePets = (rawList: any[]): EggPet[] => {
@@ -675,16 +690,69 @@ export default function App() {
       matchingGroups: string[];
     }> = [];
 
+    // Helper: Determine if a pet is close to the giant weight threshold (body length is OK, but weight is slightly deficient within 20%)
+    const isNearGiantLimit = (pet: ParentPet) => {
+      const t = getPetSizeThresholds(pet.sprite);
+      if (!t || !pet.height || !pet.weight) return false;
+      const hVal = parseFloat(pet.height);
+      const wVal = parseFloat(pet.weight);
+      if (isNaN(hVal) || isNaN(wVal)) return false;
+      return hVal >= t.maxHeight && wVal < t.giantWeightLine && wVal >= t.giantWeightLine * 0.80;
+    };
+
     for (const father of checkedFathers) {
       for (const mother of checkedMothers) {
         const matchingGroups = father.groups.filter(g => mother.groups.includes(g));
         if (matchingGroups.length === 0) continue;
-        if (father.brand !== mother.brand) continue;
+
+        let brand = "";
+        const isFatherCoarse = father.brand === "大粗" || father.brand === "单粗嗓门";
+        const isMotherCoarse = mother.brand === "大粗" || mother.brand === "单粗嗓门";
+        const isFatherSoft = father.brand === "大婉" || father.brand === "单婉转声";
+        const isMotherSoft = mother.brand === "大婉" || mother.brand === "单婉转声";
+
+        if (isFatherCoarse && isMotherCoarse) {
+          // 粗嗓门组：大粗/单粗嗓门
+          // 如果双方都是大粗且未判定为接近临界值，子代是大粗
+          if (father.brand === "大粗" && mother.brand === "大粗" && !isNearGiantLimit(father) && !isNearGiantLimit(mother)) {
+            brand = "大粗";
+          } else {
+            // 一方为单粗嗓门，或者有任意一方接近临界值。有接近临界值则生出概率大粗，否则是单粗嗓门
+            if (isNearGiantLimit(father) || isNearGiantLimit(mother)) {
+              brand = "概率大粗";
+            } else {
+              brand = "单粗嗓门";
+            }
+          }
+        } else if (isFatherSoft && isMotherSoft) {
+          // 婉转声组：大婉/单婉转声
+          // 如果双方都是大婉且未判定为接近临界值，子代是大婉
+          if (father.brand === "大婉" && mother.brand === "大婉" && !isNearGiantLimit(father) && !isNearGiantLimit(mother)) {
+            brand = "大婉";
+          } else {
+            // 一方为单婉转声，或者有任意一方接近临界值。有接近临界值则生出概率大婉，否则是单婉转声
+            if (isNearGiantLimit(father) || isNearGiantLimit(mother)) {
+              brand = "概率大婉";
+            } else {
+              brand = "单婉转声";
+            }
+          }
+        } else if (
+          (father.brand === "普通" && (mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
+          (mother.brand === "普通" && (father.brand === "单粗嗓门" || father.brand === "单婉转声"))
+        ) {
+          // 普通 + 单声音 = 普通
+          brand = "普通";
+        } else if (father.brand === mother.brand) {
+          brand = father.brand;
+        } else {
+          continue;
+        }
 
         results.push({
           father,
           mother,
-          brand: father.brand,
+          brand,
           eggSprite: mother.sprite,
           matchingGroups
         });
@@ -2308,6 +2376,9 @@ export default function App() {
                     const pairKey = `${pair.father.id}-${pair.mother.id}`;
                     const isSelected = !excludedPairKeys.has(pairKey);
 
+                    const thresholds = getPetSizeThresholds(pair.eggSprite);
+                    const guideSize = getPetGuideSize(pair.eggSprite);
+
                     return (
                       <div
                         key={idx}
@@ -2353,6 +2424,7 @@ export default function App() {
                                   src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
                                   alt={pair.father.sprite}
                                   className="w-7 h-7 object-contain"
+                                  loading="lazy"
                                 />
                               ) : (
                                 <div className="text-slate-300 text-xs">♂</div>
@@ -2365,6 +2437,9 @@ export default function App() {
                               </div>
                               <div className="text-[9px] text-slate-400 truncate">
                                 {pair.father.nature || "无性格"}
+                              </div>
+                              <div className="text-[9px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
+                                {pair.father.height ? `${pair.father.height}m` : "未填"} / {pair.father.weight ? `${pair.father.weight}kg` : "未填"}
                               </div>
                             </div>
                           </div>
@@ -2388,6 +2463,9 @@ export default function App() {
                               <div className="text-[9px] text-slate-400 truncate">
                                 {pair.mother.nature || "无性格"}
                               </div>
+                              <div className="text-[9px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
+                                {pair.mother.height ? `${pair.mother.height}m` : "未填"} / {pair.mother.weight ? `${pair.mother.weight}kg` : "未填"}
+                              </div>
                             </div>
                             <div className="w-9 h-9 bg-slate-50 rounded-lg border border-slate-150 flex items-center justify-center shrink-0 relative overflow-hidden">
                               {motherSpriteFile ? (
@@ -2395,6 +2473,7 @@ export default function App() {
                                   src={getImagePath(`images/sprites/${motherSpriteFile}`)}
                                   alt={pair.mother.sprite}
                                   className="w-7 h-7 object-contain"
+                                  loading="lazy"
                                 />
                               ) : (
                                 <div className="text-slate-300 text-xs">♀</div>
@@ -2403,6 +2482,52 @@ export default function App() {
                             </div>
                           </div>
                         </div>
+
+                        {/* 子代规格及临界值指标 */}
+                        {guideSize && (
+                          <div className="bg-slate-50/70 border border-slate-100 rounded-lg p-2.5 text-[10px] space-y-1.5 font-medium select-none">
+                            <div className="flex items-center gap-1 text-slate-500 font-bold border-b border-slate-200/50 pb-1 mb-1">
+                              <span className="text-slate-700">【{pair.eggSprite}】子代规格参考</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                              <div className="flex items-center gap-1 text-slate-600">
+                                <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                <span>身高:</span>
+                                <span className="font-bold text-slate-700">{guideSize.height}</span>
+                              </div>
+                              <div className="flex items-center gap-1 text-slate-600">
+                                <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                <span>体重:</span>
+                                <span className="font-bold text-slate-700">{guideSize.weight}</span>
+                              </div>
+                            </div>
+                            
+                            {thresholds && (
+                              <div className="grid grid-cols-2 gap-x-4 pt-1 border-t border-slate-200/40 text-[9px] text-slate-450 select-none">
+                                <div className="space-y-0.5 whitespace-nowrap">
+                                  <div className="whitespace-nowrap flex items-center justify-between">
+                                    <span>大及格身高:</span>
+                                    <span className="font-bold text-emerald-650 ml-1">≥{thresholds.maxHeight.toFixed(2)}m</span>
+                                  </div>
+                                  <div className="whitespace-nowrap flex items-center justify-between">
+                                    <span>大及格体重:</span>
+                                    <span className="font-bold text-emerald-650 ml-1">≥{thresholds.giantWeightLine.toFixed(4)}kg</span>
+                                  </div>
+                                </div>
+                                <div className="space-y-0.5 border-l border-slate-200/50 pl-2 whitespace-nowrap">
+                                  <div className="whitespace-nowrap flex items-center justify-between">
+                                    <span>小及格身高:</span>
+                                    <span className="font-bold text-amber-650 ml-1">≤{thresholds.minHeight.toFixed(2)}m</span>
+                                  </div>
+                                  <div className="whitespace-nowrap flex items-center justify-between">
+                                    <span>小及格体重:</span>
+                                    <span className="font-bold text-amber-650 ml-1">≤{thresholds.tinyWeightLine.toFixed(4)}kg</span>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Result Child Info */}
                         <div className="bg-slate-50/50 rounded-lg border border-slate-100 p-2 flex items-center justify-between text-[10px]">

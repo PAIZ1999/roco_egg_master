@@ -162,6 +162,62 @@ export const getPetGuideSize = (spriteName: string): { height: string; weight: s
   return null;
 };
 
+export interface SizeThresholds {
+  minHeight: number;
+  maxHeight: number;
+  minWeight: number;
+  maxWeight: number;
+  giantWeightLine: number;
+  tinyWeightLine: number;
+}
+
+/**
+ * 计算精灵身高体重的临界值和大块头/小不点及格线
+ */
+export const getPetSizeThresholds = (spriteName: string): SizeThresholds | null => {
+  const guideSize = getPetGuideSize(spriteName);
+  if (!guideSize || !guideSize.height || !guideSize.weight) return null;
+
+  try {
+    const parseRange = (rangeStr: string): { min: number; max: number } => {
+      const parts = rangeStr.split("~").map(p => parseFloat(p.trim()));
+      if (parts.length === 2) {
+        return { min: parts[0], max: parts[1] };
+      } else if (parts.length === 1 && !isNaN(parts[0])) {
+        return { min: parts[0], max: parts[0] };
+      }
+      return { min: 0, max: 0 };
+    };
+
+    const hRange = parseRange(guideSize.height);
+    const wRange = parseRange(guideSize.weight);
+
+    if (hRange.min === 0 && hRange.max === 0) return null;
+    if (wRange.min === 0 && wRange.max === 0) return null;
+
+    // 大块头及格线: 最高重量 + (最低重量 - 最高重量) * 0.02
+    // 相当于: maxWeight - (maxWeight - minWeight) * 0.02
+    const giantWeightLine = wRange.max - (wRange.max - wRange.min) * 0.02;
+    
+    // 小不点及格线: 最轻重量 - (最轻重量 - 最重重量) * 0.05
+    // 相当于: minWeight + (maxWeight - minWeight) * 0.05
+    const tinyWeightLine = wRange.min + (wRange.max - wRange.min) * 0.05;
+
+    return {
+      minHeight: hRange.min,
+      maxHeight: hRange.max,
+      minWeight: wRange.min,
+      maxWeight: wRange.max,
+      giantWeightLine: Math.round(giantWeightLine * 10000) / 10000,
+      tinyWeightLine: Math.round(tinyWeightLine * 10000) / 10000
+    };
+  } catch (e) {
+    console.error("Error calculating thresholds for", spriteName, e);
+    return null;
+  }
+};
+
+
 /**
  * Gets all available sprites (forms) for a pet name.
  */
@@ -315,6 +371,14 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-purple-100 border-purple-300 text-purple-800 font-bold";
     case "单大块头":
       return "bg-slate-100 border-slate-300 text-slate-700 font-bold";
+    case "单粗嗓门":
+      return "bg-orange-50 border-orange-200 text-orange-700 font-bold";
+    case "单婉转声":
+      return "bg-pink-50 border-pink-200 text-pink-700 font-bold";
+    case "概率大粗":
+      return "bg-amber-50 border-amber-350 text-amber-800 font-extrabold border-dashed";
+    case "概率大婉":
+      return "bg-rose-50 border-rose-350 text-rose-800 font-extrabold border-dashed";
     default:
       return "bg-slate-50 border-slate-200 text-slate-500 font-medium";
   }
