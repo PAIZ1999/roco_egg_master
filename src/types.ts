@@ -24,6 +24,20 @@ export interface EggTrade {
   notes: string;
 }
 
+export interface ParentPet {
+  id: string;
+  gender: "♂" | "♀";
+  sprite: string;
+  brand: string;
+  height: string;
+  weight: string;
+  nature: string;
+  stats: string[];
+  groups: string[];
+  checked?: boolean;
+}
+
+
 
 export const LIMIT_OPTIONS = ["无极限蛋", "有极限蛋"];
 
