@@ -22,7 +22,10 @@ import {
   Zap,
   Award,
   Users,
-  Dna
+  Dna,
+  Info,
+  Heart,
+  ExternalLink
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -1289,6 +1292,14 @@ export default function App() {
             <span className="text-[9px] sm:text-[10px] text-slate-500 tracking-wider font-mono">
               © 2026 Roco Incubator Table
             </span>
+            <button
+              onClick={() => setActiveModal("about")}
+              className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-indigo-400 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-indigo-500/50 px-2 py-1 rounded-lg transition-all cursor-pointer mt-0.5"
+              title="关于本工具 / 数据来源与致谢"
+            >
+              <Info className="w-3 h-3" />
+              <span>关于 &amp; 致谢</span>
+            </button>
           </div>
         </div>
 
@@ -2727,6 +2738,115 @@ export default function App() {
                     直接下载图片
                   </button>
                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {/* ========== About Modal ========== */}
+        {activeModal === "about" && (
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setActiveModal("none")}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bg-slate-900 px-6 py-5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/10 rounded-full filter blur-3xl pointer-events-none" />
+                <div className="flex items-center gap-3 z-10 relative">
+                  <div className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center border border-slate-700/50 shadow-inner">
+                    <Egg className="w-6 h-6 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-white font-bold text-base tracking-tight">洛克王国孵蛋数据管理系统</h2>
+                    <p className="text-slate-400 text-[11px] mt-0.5">v4.0.0 · 关于 &amp; 数据致谢</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveModal("none")}
+                  className="absolute top-3 right-3 text-slate-500 hover:text-white hover:bg-slate-700/60 p-1.5 rounded-lg transition-all cursor-pointer z-10"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="px-6 py-5 flex flex-col gap-4">
+
+                {/* Data Sources */}
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">📦 数据来源</p>
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href="https://wiki.biligame.com/rocom/精灵图鉴/原始形态"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 px-3 py-2 rounded-lg transition-all group"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">wiki.biligame.com — 洛克王国:手游WIKI（精灵图鉴/原始形态）</span>
+                    </a>
+                    <a
+                      href="https://roco.gptvip.chat/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 px-3 py-2 rounded-lg transition-all group"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                      <span>roco.gptvip.chat — 精灵数据平台</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Acknowledgements */}
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">🏅 特别鸣谢</p>
+                  <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 flex flex-col gap-1.5">
+                    <div className="flex items-start gap-2">
+                      <Heart className="w-3.5 h-3.5 text-rose-400 mt-0.5 shrink-0" />
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        精灵身高体重与精灵蛋数据由
+                        <strong className="text-amber-700"> 孟德尔实验室群（群号：1101858898）</strong>
+                        的 <strong className="text-amber-700">cinene</strong> 精心整理，特别感谢！
+                      </p>
+                    </div>
+                    <p className="text-[11px] text-slate-500 pl-5">感谢孟德尔实验室为洛克王国社区提供的优质数据资源。</p>
+                  </div>
+                </div>
+
+                {/* Author & Contact */}
+                <div className="bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">👤 作者 &amp; 联系方式</p>
+                  <div className="flex flex-col gap-1.5 text-xs text-slate-700">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-indigo-600">Presented by 派</span>
+                      <span className="text-slate-400">·</span>
+                      <span className="font-mono text-slate-500">QQ: 1095524934</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-500">交流群：</span>
+                      <span className="font-mono font-bold text-indigo-600">474567570</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Footer */}
+              <div className="px-6 pb-5">
+                <button
+                  onClick={() => setActiveModal("none")}
+                  className="w-full py-2.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors cursor-pointer shadow-sm"
+                >
+                  知道了
+                </button>
               </div>
             </motion.div>
           </div>
