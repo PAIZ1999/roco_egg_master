@@ -100,7 +100,9 @@
    - 使用 `electron-builder` 打包。
    - 打包指令：`npm run electron:build`
    - 生成目标：单文件便携绿色版 (`portable`)，生成于 `dist-electron/` 文件夹下。
-   - **打包资源包含**: 在 `build.files` 中明确包含了 `"images/**/*"`，将根目录的 `images` 文件夹一同打包进 `app.asar` 根目录，与 `dist` 同级，确保渲染进程使用 `getImagePath` 计算的相对路径 `../images/...` 能够正常加载图片，解决打包后图片裂开的问题。
+   - **打包资源包含与体积瘦身**: 
+     - **排除冗余文件**：在 `build.files` 中排除了 `dist/images/sprites_backup/**`，并且修正了直接引入外部 `images/**/*` 的双重打包逻辑。所有外部依赖模块被正确归类至 `devDependencies`（因为运行时渲染进程和 Electron 主进程不需要它们），成功避免了 `node_modules` 被打包进 EXE。这两项优化使 EXE 体积从 **498MB** 大幅缩减至约 **288MB**。
+     - **解包外置与路径解析修正**：将 `dist/images/**/*` 通过 `build.asarUnpack` 配置排除在 ASAR 主包外，释放至 `app.asar.unpacked` 中。配合此结构，渲染层 `src/petHelper.ts` 中的 `getImagePath` 从原本针对本地 file 协议特判的 `../images/...` 逻辑统一重构为相对当前路径 `./images/...`，确保网页端部署、本地开发与打包后的 EXE 单文件在读取图片资源时的相对路径完全一致，彻底解决了图片裂开的问题。
 
 ---
 
