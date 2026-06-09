@@ -1,0 +1,4793 @@
+{
+  "source": "https://wiki.biligame.com/rocom/精灵图鉴/原始形态",
+  "game": "洛克王国:手游",
+  "form": "原始形态",
+  "total_count": 380,
+  "total_chains": 163,
+  "spirits": [
+    {
+      "id": "001",
+      "name": "迪莫",
+      "height": "0.54~0.78",
+      "weight": "5.5~7",
+      "chain_id": 137,
+      "chain_order": 1,
+      "chain_name": "迪莫",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "002",
+      "name": "喵喵",
+      "height": "0.53~0.75",
+      "weight": "3.62~4.6",
+      "chain_id": 1,
+      "chain_order": 1,
+      "chain_name": "喵喵→喵呜→魔力猫",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "003",
+      "name": "喵呜",
+      "height": "0.65~0.92",
+      "weight": "14.2~15.6",
+      "chain_id": 1,
+      "chain_order": 2,
+      "chain_name": "喵喵→喵呜→魔力猫",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "004",
+      "name": "魔力猫",
+      "height": "1.5~2.15",
+      "weight": "105~125",
+      "chain_id": 1,
+      "chain_order": 3,
+      "chain_name": "喵喵→喵呜→魔力猫",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "005",
+      "name": "火花",
+      "height": "0.53~0.71",
+      "weight": "7.6~8.5",
+      "chain_id": 2,
+      "chain_order": 1,
+      "chain_name": "火花→焰火→火神",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "006",
+      "name": "焰火",
+      "height": "0.82~1.1",
+      "weight": "21~30.7",
+      "chain_id": 2,
+      "chain_order": 2,
+      "chain_name": "火花→焰火→火神",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "007",
+      "name": "火神",
+      "height": "1.52~2.18",
+      "weight": "90.5~110",
+      "chain_id": 2,
+      "chain_order": 3,
+      "chain_name": "火花→焰火→火神",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "008",
+      "name": "水蓝蓝",
+      "height": "0.45~0.65",
+      "weight": "2.85~4.205",
+      "chain_id": 3,
+      "chain_order": 1,
+      "chain_name": "水蓝蓝→波波拉→水灵",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "009",
+      "name": "波波拉",
+      "height": "0.72~1.03",
+      "weight": "29.5~34",
+      "chain_id": 3,
+      "chain_order": 2,
+      "chain_name": "水蓝蓝→波波拉→水灵",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "010",
+      "name": "水灵",
+      "height": "1.08~1.54",
+      "weight": "77~85.5",
+      "chain_id": 3,
+      "chain_order": 3,
+      "chain_name": "水蓝蓝→波波拉→水灵",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.65~0.94",
+      "weight": "14.6~17.6",
+      "chain_id": 138,
+      "chain_order": 1,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "蓬松的样子"
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.65~0.94",
+      "weight": "5.6~8.2",
+      "chain_id": 138,
+      "chain_order": 2,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "紧实的样子"
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.65~0.94",
+      "weight": "5.6~8.2",
+      "chain_id": 138,
+      "chain_order": 3,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "急急急鸭"
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.65~0.94",
+      "weight": "15.8~19.2",
+      "chain_id": 138,
+      "chain_order": 4,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "等一等鸭"
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.65~0.94",
+      "weight": "15.8~19.2",
+      "chain_id": 138,
+      "chain_order": 5,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "起来鸭"
+    },
+    {
+      "id": "011",
+      "name": "鸭吉吉",
+      "height": "0.69~0.98",
+      "weight": "14.3~18.2",
+      "chain_id": 138,
+      "chain_order": 6,
+      "chain_name": "鸭吉吉（6形态）",
+      "egg_groups": [
+        "天空组"
+      ],
+      "region_form": "燃了鸭"
+    },
+    {
+      "id": "012",
+      "name": "板板壳",
+      "height": "0.53~0.76",
+      "weight": "7.5~10.5",
+      "chain_id": 4,
+      "chain_order": 1,
+      "chain_name": "板板壳→咔咔壳→水泡壳",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "013",
+      "name": "咔咔壳",
+      "height": "0.65~0.92",
+      "weight": "19.5~24.5",
+      "chain_id": 4,
+      "chain_order": 2,
+      "chain_name": "板板壳→咔咔壳→水泡壳",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "014",
+      "name": "水泡壳",
+      "height": "1.23~1.75",
+      "weight": "83.5~94.5",
+      "chain_id": 4,
+      "chain_order": 3,
+      "chain_name": "板板壳→咔咔壳→水泡壳",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "015",
+      "name": "锥尾羊",
+      "height": "0.57~0.81",
+      "weight": "13.3~16.5",
+      "chain_id": 5,
+      "chain_order": 1,
+      "chain_name": "锥尾羊→铃兰羊→花影羚羊",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "016",
+      "name": "铃兰羊",
+      "height": "0.7~1.01",
+      "weight": "29~36",
+      "chain_id": 5,
+      "chain_order": 2,
+      "chain_name": "锥尾羊→铃兰羊→花影羚羊",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "017",
+      "name": "花影羚羊",
+      "height": "1.42~1.92",
+      "weight": "76.9~98",
+      "chain_id": 5,
+      "chain_order": 3,
+      "chain_name": "锥尾羊→铃兰羊→花影羚羊",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "018",
+      "name": "雪绒鸟",
+      "height": "0.38~0.51",
+      "weight": "2.77~4.5",
+      "chain_id": 6,
+      "chain_order": 1,
+      "chain_name": "雪绒鸟→冬羽雀→岚鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "019",
+      "name": "冬羽雀",
+      "height": "0.62~0.71",
+      "weight": "8.92~12.7",
+      "chain_id": 6,
+      "chain_order": 2,
+      "chain_name": "雪绒鸟→冬羽雀→岚鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "020",
+      "name": "岚鸟",
+      "height": "1.43~2.04",
+      "weight": "27.08~32.7",
+      "chain_id": 6,
+      "chain_order": 3,
+      "chain_name": "雪绒鸟→冬羽雀→岚鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "021",
+      "name": "小灵菇",
+      "height": "0.43~0.61",
+      "weight": "5.4~7.1",
+      "chain_id": 7,
+      "chain_order": 1,
+      "chain_name": "小灵菇→幻灵菇→幻影灵菇",
+      "egg_groups": [
+        "植物组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "022",
+      "name": "幻灵菇",
+      "height": "0.64~0.92",
+      "weight": "13.2~16.5",
+      "chain_id": 7,
+      "chain_order": 2,
+      "chain_name": "小灵菇→幻灵菇→幻影灵菇",
+      "egg_groups": [
+        "植物组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "023",
+      "name": "幻影灵菇",
+      "height": "0.92~1.32",
+      "weight": "39.4~48.4",
+      "chain_id": 7,
+      "chain_order": 3,
+      "chain_name": "小灵菇→幻灵菇→幻影灵菇",
+      "egg_groups": [
+        "植物组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "024",
+      "name": "石肤蜥",
+      "height": "0.49~0.7",
+      "weight": "21~34",
+      "chain_id": 8,
+      "chain_order": 1,
+      "chain_name": "石肤蜥→石刺蜥→石冠王蜥",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "025",
+      "name": "石刺蜥",
+      "height": "0.67~0.96",
+      "weight": "59.5~70.5",
+      "chain_id": 8,
+      "chain_order": 2,
+      "chain_name": "石肤蜥→石刺蜥→石冠王蜥",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "026",
+      "name": "石冠王蜥",
+      "height": "0.94~1.18",
+      "weight": "78.5~98.5",
+      "chain_id": 8,
+      "chain_order": 3,
+      "chain_name": "石肤蜥→石刺蜥→石冠王蜥",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "027",
+      "name": "布是石",
+      "height": "0.42~0.6",
+      "weight": "18.5~32.5",
+      "chain_id": 9,
+      "chain_order": 1,
+      "chain_name": "布是石→布是岩→布克棱岩",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "028",
+      "name": "布是岩",
+      "height": "0.93~1.34",
+      "weight": "97.5~115",
+      "chain_id": 9,
+      "chain_order": 2,
+      "chain_name": "布是石→布是岩→布克棱岩",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "029",
+      "name": "布克棱岩",
+      "height": "1.75~2.5",
+      "weight": "287~315",
+      "chain_id": 9,
+      "chain_order": 3,
+      "chain_name": "布是石→布是岩→布克棱岩",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "030",
+      "name": "恶魔叮",
+      "height": "0.39~0.56",
+      "weight": "3.6~5.2",
+      "chain_id": 77,
+      "chain_order": 1,
+      "chain_name": "恶魔叮→叮叮恶魔",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "031",
+      "name": "叮叮恶魔",
+      "height": "0.78~1.12",
+      "weight": "25~34",
+      "chain_id": 77,
+      "chain_order": 2,
+      "chain_name": "恶魔叮→叮叮恶魔",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "032",
+      "name": "毛毛",
+      "height": "0.31~0.45",
+      "weight": "3~4.5",
+      "chain_id": 10,
+      "chain_order": 1,
+      "chain_name": "毛毛→爬爬→化蝶",
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "033",
+      "name": "爬爬",
+      "height": "0.35~0.51",
+      "weight": "5.5~8.4",
+      "chain_id": 10,
+      "chain_order": 2,
+      "chain_name": "毛毛→爬爬→化蝶",
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "034",
+      "name": "化蝶",
+      "height": "0.76~1.08",
+      "weight": "15.6~17.8",
+      "chain_id": 10,
+      "chain_order": 3,
+      "chain_name": "毛毛→爬爬→化蝶",
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "035",
+      "name": "幽影树",
+      "height": "0.64~0.92",
+      "weight": "29.5~37.5",
+      "chain_id": 139,
+      "chain_order": 1,
+      "chain_name": "幽影树",
+      "egg_groups": [
+        "妖精组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "036",
+      "name": "小鼠獭",
+      "height": "0.37~0.53",
+      "weight": "6.7~7.5",
+      "chain_id": 11,
+      "chain_order": 1,
+      "chain_name": "小鼠獭→燕尾獭→卷胡巨獭",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "037",
+      "name": "燕尾獭",
+      "height": "0.61~0.88",
+      "weight": "28.6~31.5",
+      "chain_id": 11,
+      "chain_order": 2,
+      "chain_name": "小鼠獭→燕尾獭→卷胡巨獭",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "038",
+      "name": "卷胡巨獭",
+      "height": "0.76~1.08",
+      "weight": "76.5~90",
+      "chain_id": 11,
+      "chain_order": 3,
+      "chain_name": "小鼠獭→燕尾獭→卷胡巨獭",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "039",
+      "name": "矿晶虫",
+      "height": "0.54~0.77",
+      "weight": "5.8~10.53",
+      "chain_id": 78,
+      "chain_order": 1,
+      "chain_name": "矿晶虫→晶石蜗",
+      "egg_groups": [
+        "大地组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "040",
+      "name": "晶石蜗",
+      "height": "1.03~1.35",
+      "weight": "59.1~71.05",
+      "chain_id": 78,
+      "chain_order": 2,
+      "chain_name": "矿晶虫→晶石蜗",
+      "egg_groups": [
+        "大地组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "041",
+      "name": "奇丽草",
+      "height": "0.38~0.55",
+      "weight": "4.1~5.7",
+      "chain_id": 12,
+      "chain_order": 1,
+      "chain_name": "奇丽草→奇丽叶→奇丽花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "042",
+      "name": "奇丽叶",
+      "height": "0.62~0.89",
+      "weight": "24~31",
+      "chain_id": 12,
+      "chain_order": 2,
+      "chain_name": "奇丽草→奇丽叶→奇丽花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "043",
+      "name": "奇丽花",
+      "height": "1.11~1.58",
+      "weight": "42~58",
+      "chain_id": 12,
+      "chain_order": 3,
+      "chain_name": "奇丽草→奇丽叶→奇丽花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "044",
+      "name": "丢丢",
+      "height": "0.35~0.51",
+      "weight": "4.3~6.1",
+      "chain_id": 13,
+      "chain_order": 1,
+      "chain_name": "丢丢→卡卡虫→卡瓦重",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "045",
+      "name": "卡卡虫",
+      "height": "0.53~0.76",
+      "weight": "18.5~21.6",
+      "chain_id": 13,
+      "chain_order": 2,
+      "chain_name": "丢丢→卡卡虫→卡瓦重",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "046",
+      "name": "卡瓦重",
+      "height": "0.76~1.09",
+      "weight": "29~35.85",
+      "chain_id": 13,
+      "chain_order": 3,
+      "chain_name": "丢丢→卡卡虫→卡瓦重",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "047",
+      "name": "护主犬",
+      "height": "0.64~0.92",
+      "weight": "13.6~17.5",
+      "chain_id": 79,
+      "chain_order": 1,
+      "chain_name": "护主犬→音速犬",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "048",
+      "name": "音速犬",
+      "height": "1.13~1.62",
+      "weight": "39.5~51.5",
+      "chain_id": 79,
+      "chain_order": 2,
+      "chain_name": "护主犬→音速犬",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "049",
+      "name": "绿耳松鼠",
+      "height": "0.47~0.68",
+      "weight": "3.5~6",
+      "chain_id": 14,
+      "chain_order": 1,
+      "chain_name": "绿耳松鼠→抱枕松鼠→蹦床松鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "050",
+      "name": "抱枕松鼠",
+      "height": "0.6~0.84",
+      "weight": "21.05~27.08",
+      "chain_id": 14,
+      "chain_order": 2,
+      "chain_name": "绿耳松鼠→抱枕松鼠→蹦床松鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "051",
+      "name": "蹦床松鼠",
+      "height": "0.78~1.12",
+      "weight": "47.5~68.4",
+      "chain_id": 14,
+      "chain_order": 3,
+      "chain_name": "绿耳松鼠→抱枕松鼠→蹦床松鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "052",
+      "name": "嘟嘟煲",
+      "height": "0.65~0.8",
+      "weight": "48.5~56",
+      "chain_id": 80,
+      "chain_order": 1,
+      "chain_name": "嘟嘟煲→嘟嘟锅",
+      "egg_groups": [
+        "大地组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "053",
+      "name": "嘟嘟锅",
+      "height": "0.64~0.91",
+      "weight": "67.9~89.2",
+      "chain_id": 80,
+      "chain_order": 2,
+      "chain_name": "嘟嘟煲→嘟嘟锅",
+      "egg_groups": [
+        "大地组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "054",
+      "name": "小灵面",
+      "height": "0.38~0.55",
+      "weight": "0.1~0.55",
+      "chain_id": 15,
+      "chain_order": 1,
+      "chain_name": "小灵面→暗影灵面→幽冥眼",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "055",
+      "name": "暗影灵面",
+      "height": "0.75~0.86",
+      "weight": "0.12~1.16",
+      "chain_id": 15,
+      "chain_order": 2,
+      "chain_name": "小灵面→暗影灵面→幽冥眼",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "056",
+      "name": "幽冥眼",
+      "height": "1.55~1.65",
+      "weight": "1.5~2.86",
+      "chain_id": 15,
+      "chain_order": 3,
+      "chain_name": "小灵面→暗影灵面→幽冥眼",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "057",
+      "name": "梦游",
+      "height": "0.5~0.6",
+      "weight": "0.6~1.87",
+      "chain_id": 81,
+      "chain_order": 1,
+      "chain_name": "梦游→梦悠悠",
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "058",
+      "name": "梦悠悠",
+      "height": "1~1.2",
+      "weight": "1.25~3.1",
+      "chain_id": 81,
+      "chain_order": 2,
+      "chain_name": "梦游→梦悠悠",
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "059",
+      "name": "兽花蕾",
+      "height": "0.38~0.45",
+      "weight": "4.25~6.5",
+      "chain_id": 140,
+      "chain_order": 1,
+      "chain_name": "兽花蕾",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "060",
+      "name": "伏地兽",
+      "height": "0.52~0.74",
+      "weight": "12.4~15.8",
+      "chain_id": 16,
+      "chain_order": 1,
+      "chain_name": "伏地兽→贪食鼹→巨噬针鼹",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "061",
+      "name": "贪食鼹",
+      "height": "0.84~1.21",
+      "weight": "21.6~35.84",
+      "chain_id": 16,
+      "chain_order": 2,
+      "chain_name": "伏地兽→贪食鼹→巨噬针鼹",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "062",
+      "name": "巨噬针鼹",
+      "height": "1.52~1.79",
+      "weight": "87.3~105",
+      "chain_id": 16,
+      "chain_order": 3,
+      "chain_name": "伏地兽→贪食鼹→巨噬针鼹",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "063",
+      "name": "蹦蹦种子",
+      "height": "0.46~0.67",
+      "weight": "4.3~5.6",
+      "chain_id": 17,
+      "chain_order": 1,
+      "chain_name": "蹦蹦种子→蹦蹦草→蹦蹦花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "064",
+      "name": "蹦蹦草",
+      "height": "0.59~0.85",
+      "weight": "34.3~42.9",
+      "chain_id": 17,
+      "chain_order": 2,
+      "chain_name": "蹦蹦种子→蹦蹦草→蹦蹦花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "065",
+      "name": "蹦蹦花",
+      "height": "1.33~1.9",
+      "weight": "75~86",
+      "chain_id": 17,
+      "chain_order": 3,
+      "chain_name": "蹦蹦种子→蹦蹦草→蹦蹦花",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "066",
+      "name": "电咩咩",
+      "height": "0.58~0.83",
+      "weight": "7.17~9.1",
+      "chain_id": 18,
+      "chain_order": 1,
+      "chain_name": "电咩咩→粉咩咩→电球咩咩",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "067",
+      "name": "粉咩咩",
+      "height": "0.8~1.14",
+      "weight": "15.3~18.6",
+      "chain_id": 18,
+      "chain_order": 2,
+      "chain_name": "电咩咩→粉咩咩→电球咩咩",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "068",
+      "name": "电球咩咩",
+      "height": "1.13~1.62",
+      "weight": "48.6~58",
+      "chain_id": 18,
+      "chain_order": 3,
+      "chain_name": "电咩咩→粉咩咩→电球咩咩",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "069",
+      "name": "蒲公英",
+      "height": "0.3~0.5",
+      "weight": "0.1~0.6",
+      "chain_id": 82,
+      "chain_order": 1,
+      "chain_name": "蒲公英→蒲公英娃娃",
+      "egg_groups": [
+        "天空组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "070",
+      "name": "蒲公英娃娃",
+      "height": "0.7~1",
+      "weight": "0.3~1.35",
+      "chain_id": 82,
+      "chain_order": 2,
+      "chain_name": "蒲公英→蒲公英娃娃",
+      "egg_groups": [
+        "天空组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "071",
+      "name": "伊贝儿",
+      "height": "0.44~0.62",
+      "weight": "3.3~4.2",
+      "chain_id": 83,
+      "chain_order": 1,
+      "chain_name": "伊贝儿→伊贝粉粉",
+      "egg_groups": [
+        "植物组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "072",
+      "name": "伊贝粉粉",
+      "height": "1.03~1.47",
+      "weight": "9.3~12.5",
+      "chain_id": 83,
+      "chain_order": 2,
+      "chain_name": "伊贝儿→伊贝粉粉",
+      "egg_groups": [
+        "植物组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "073",
+      "name": "白发懒人",
+      "height": "0.72~1.03",
+      "weight": "19.5~23.5",
+      "chain_id": 19,
+      "chain_order": 1,
+      "chain_name": "白发懒人→动力猿→瞌睡王",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "074",
+      "name": "动力猿",
+      "height": "1.2~1.71",
+      "weight": "46.5~63.5",
+      "chain_id": 19,
+      "chain_order": 2,
+      "chain_name": "白发懒人→动力猿→瞌睡王",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "075",
+      "name": "瞌睡王",
+      "height": "1.61~2.31",
+      "weight": "124.5~136.5",
+      "chain_id": 19,
+      "chain_order": 3,
+      "chain_name": "白发懒人→动力猿→瞌睡王",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "076",
+      "name": "海盔虫",
+      "height": "0.55~0.7",
+      "weight": "7.4~8.6",
+      "chain_id": 20,
+      "chain_order": 1,
+      "chain_name": "海盔虫→刺盔虫→千棘盔",
+      "egg_groups": [
+        "巨灵组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "077",
+      "name": "刺盔虫",
+      "height": "0.83~1.19",
+      "weight": "22.5~29.8",
+      "chain_id": 20,
+      "chain_order": 2,
+      "chain_name": "海盔虫→刺盔虫→千棘盔",
+      "egg_groups": [
+        "巨灵组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "078",
+      "name": "千棘盔",
+      "height": "1.11~1.33",
+      "weight": "98.6~115",
+      "chain_id": 20,
+      "chain_order": 3,
+      "chain_name": "海盔虫→刺盔虫→千棘盔",
+      "egg_groups": [
+        "巨灵组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "079",
+      "name": "菊花梨",
+      "height": "0.63~0.9",
+      "weight": "4.2~5.8",
+      "chain_id": 141,
+      "chain_order": 1,
+      "chain_name": "菊花梨",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "080",
+      "name": "小星光",
+      "height": "0.78~1.12",
+      "weight": "27.5~36.2",
+      "chain_id": 84,
+      "chain_order": 1,
+      "chain_name": "小星光→星光狮",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "081",
+      "name": "星光狮",
+      "height": "1.08~1.54",
+      "weight": "49.5~58.1",
+      "chain_id": 84,
+      "chain_order": 2,
+      "chain_name": "小星光→星光狮",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "082",
+      "name": "一窝蜂",
+      "height": "0.37~0.52",
+      "weight": "4~5.5",
+      "chain_id": 21,
+      "chain_order": 1,
+      "chain_name": "一窝蜂→黄蜂后→花魁蜂后",
+      "egg_groups": [
+        "天空组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "083",
+      "name": "黄蜂后",
+      "height": "0.81~1.16",
+      "weight": "31.7~39.21",
+      "chain_id": 21,
+      "chain_order": 2,
+      "chain_name": "一窝蜂→黄蜂后→花魁蜂后",
+      "egg_groups": [
+        "天空组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "084",
+      "name": "花魁蜂后",
+      "height": "0.83~1.19",
+      "weight": "61.5~78.4",
+      "chain_id": 21,
+      "chain_order": 3,
+      "chain_name": "一窝蜂→黄蜂后→花魁蜂后",
+      "egg_groups": [
+        "天空组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "085",
+      "name": "小夜",
+      "height": "0.51~0.73",
+      "weight": "4.5~7.6",
+      "chain_id": 22,
+      "chain_order": 1,
+      "chain_name": "小夜→紫夜→朔夜伊芙",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "086",
+      "name": "紫夜",
+      "height": "0.72~1.03",
+      "weight": "17.6~22.5",
+      "chain_id": 22,
+      "chain_order": 2,
+      "chain_name": "小夜→紫夜→朔夜伊芙",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "087",
+      "name": "朔夜伊芙",
+      "height": "1.06~1.51",
+      "weight": "46.2~57.5",
+      "chain_id": 22,
+      "chain_order": 3,
+      "chain_name": "小夜→紫夜→朔夜伊芙",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "088",
+      "name": "乖乖鹄",
+      "height": "0.46~0.67",
+      "weight": "4.2~5.5",
+      "chain_id": 23,
+      "chain_order": 1,
+      "chain_name": "乖乖鹄→蓝珠天鹅→翠顶夫人",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "089",
+      "name": "蓝珠天鹅",
+      "height": "0.88~1.03",
+      "weight": "14.08~18.1",
+      "chain_id": 23,
+      "chain_order": 2,
+      "chain_name": "乖乖鹄→蓝珠天鹅→翠顶夫人",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "090",
+      "name": "翠顶夫人",
+      "height": "1.2~1.34",
+      "weight": "19.05~25.04",
+      "chain_id": 23,
+      "chain_order": 3,
+      "chain_name": "乖乖鹄→蓝珠天鹅→翠顶夫人",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "091",
+      "name": "黑羽夫人",
+      "height": "1.25~1.4",
+      "weight": "20.5~28.06",
+      "chain_id": 142,
+      "chain_order": 3,
+      "chain_name": "乖乖鹄→蓝珠天鹅→黑羽夫人",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "092",
+      "name": "锤头鹳",
+      "height": "1.09~1.56",
+      "weight": "51.3~65.8",
+      "chain_id": 143,
+      "chain_order": 1,
+      "chain_name": "锤头鹳",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "093",
+      "name": "绿草精灵",
+      "height": "0.71~1.01",
+      "weight": "9.3~10.3",
+      "chain_id": 85,
+      "chain_order": 1,
+      "chain_name": "绿草精灵→魔草巫灵",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "094",
+      "name": "魔草巫灵",
+      "height": "0.74~1.05",
+      "weight": "29~34",
+      "chain_id": 85,
+      "chain_order": 2,
+      "chain_name": "绿草精灵→魔草巫灵",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "095",
+      "name": "记忆石",
+      "height": "0.97~1.39",
+      "weight": "90.2~112",
+      "chain_id": 144,
+      "chain_order": 1,
+      "chain_name": "记忆石",
+      "egg_groups": [
+        "大地组"
+      ]
+    },
+    {
+      "id": "096",
+      "name": "咔咔羽毛",
+      "height": "0.62~0.89",
+      "weight": "2.62~3.9",
+      "chain_id": 24,
+      "chain_order": 1,
+      "chain_name": "咔咔羽毛→咔咔雀→咔咔鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "097",
+      "name": "咔咔雀",
+      "height": "0.66~0.95",
+      "weight": "13.8~18.5",
+      "chain_id": 24,
+      "chain_order": 2,
+      "chain_name": "咔咔羽毛→咔咔雀→咔咔鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "098",
+      "name": "咔咔鸟",
+      "height": "0.7~1",
+      "weight": "27.5~33.72",
+      "chain_id": 24,
+      "chain_order": 3,
+      "chain_name": "咔咔羽毛→咔咔雀→咔咔鸟",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "099",
+      "name": "小草虫",
+      "height": "0.47~0.67",
+      "weight": "2.1~3.4",
+      "chain_id": 25,
+      "chain_order": 1,
+      "chain_name": "小草虫→草衣虫→花衣蝶",
+      "egg_groups": [
+        "拟人组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "100",
+      "name": "草衣虫",
+      "height": "0.6~0.87",
+      "weight": "7.2~8.6",
+      "chain_id": 25,
+      "chain_order": 2,
+      "chain_name": "小草虫→草衣虫→花衣蝶",
+      "egg_groups": [
+        "拟人组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "101",
+      "name": "花衣蝶",
+      "height": "0.92~1.32",
+      "weight": "19.6~23.4",
+      "chain_id": 25,
+      "chain_order": 3,
+      "chain_name": "小草虫→草衣虫→花衣蝶",
+      "egg_groups": [
+        "拟人组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "102",
+      "name": "绿翼鸟",
+      "height": "0.49~0.61",
+      "weight": "3.6~4.8",
+      "chain_id": 26,
+      "chain_order": 1,
+      "chain_name": "绿翼鸟→魔翼鸟→魔眷鸟",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "103",
+      "name": "魔翼鸟",
+      "height": "0.78~1.12",
+      "weight": "8.85~13.8",
+      "chain_id": 26,
+      "chain_order": 2,
+      "chain_name": "绿翼鸟→魔翼鸟→魔眷鸟",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "104",
+      "name": "魔眷鸟",
+      "height": "0.91~1.31",
+      "weight": "19.8~24.5",
+      "chain_id": 26,
+      "chain_order": 3,
+      "chain_name": "绿翼鸟→魔翼鸟→魔眷鸟",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "105",
+      "name": "阿米亚特",
+      "height": "0.57~0.79",
+      "weight": "38.5~49.2",
+      "chain_id": 27,
+      "chain_order": 1,
+      "chain_name": "阿米亚特→阿米樱→罗隐",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "106",
+      "name": "阿米樱",
+      "height": "0.78~1.12",
+      "weight": "94.2~143",
+      "chain_id": 27,
+      "chain_order": 2,
+      "chain_name": "阿米亚特→阿米樱→罗隐",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "107",
+      "name": "罗隐",
+      "height": "1.48~2.12",
+      "weight": "290~305",
+      "chain_id": 27,
+      "chain_order": 3,
+      "chain_name": "阿米亚特→阿米樱→罗隐",
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "108",
+      "name": "风铃鲨",
+      "height": "0.41~0.59",
+      "weight": "13.07~16.8",
+      "chain_id": 28,
+      "chain_order": 1,
+      "chain_name": "风铃鲨→蓝蝶鲨→彩蝶鲨",
+      "egg_groups": [
+        "天空组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "109",
+      "name": "蓝蝶鲨",
+      "height": "0.81~1.16",
+      "weight": "34.82~48.6",
+      "chain_id": 28,
+      "chain_order": 2,
+      "chain_name": "风铃鲨→蓝蝶鲨→彩蝶鲨",
+      "egg_groups": [
+        "天空组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "110",
+      "name": "彩蝶鲨",
+      "height": "1.18~1.68",
+      "weight": "80.5~96.5",
+      "chain_id": 28,
+      "chain_order": 3,
+      "chain_name": "风铃鲨→蓝蝶鲨→彩蝶鲨",
+      "egg_groups": [
+        "天空组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "111",
+      "name": "石石",
+      "height": "0.35~0.5",
+      "weight": "61~75",
+      "chain_id": 86,
+      "chain_order": 1,
+      "chain_name": "石石→巨灵石",
+      "egg_groups": [
+        "大地组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "112",
+      "name": "巨灵石",
+      "height": "1.95~2.3",
+      "weight": "205~240",
+      "chain_id": 86,
+      "chain_order": 2,
+      "chain_name": "石石→巨灵石",
+      "egg_groups": [
+        "大地组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "113",
+      "name": "仪使者",
+      "height": "0.45~0.58",
+      "weight": "19.05~35.05",
+      "chain_id": 29,
+      "chain_order": 1,
+      "chain_name": "仪使者→仪式之星→仪式巨像",
+      "egg_groups": [
+        "大地组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "114",
+      "name": "仪式之星",
+      "height": "0.84~1.21",
+      "weight": "72~87.5",
+      "chain_id": 29,
+      "chain_order": 2,
+      "chain_name": "仪使者→仪式之星→仪式巨像",
+      "egg_groups": [
+        "大地组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "115",
+      "name": "仪式巨像",
+      "height": "1.44~1.79",
+      "weight": "198.05~253.07",
+      "chain_id": 29,
+      "chain_order": 3,
+      "chain_name": "仪使者→仪式之星→仪式巨像",
+      "egg_groups": [
+        "大地组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "116",
+      "name": "小独角兽",
+      "height": "0.98~1.41",
+      "weight": "41.5~55.6",
+      "chain_id": 87,
+      "chain_order": 1,
+      "chain_name": "小独角兽→白金独角兽",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "117",
+      "name": "白金独角兽",
+      "height": "1.35~1.93",
+      "weight": "94.5~105",
+      "chain_id": 87,
+      "chain_order": 2,
+      "chain_name": "小独角兽→白金独角兽",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "118",
+      "name": "旋叶虫",
+      "height": "0.1~0.15",
+      "weight": "0.1~0.85",
+      "chain_id": 30,
+      "chain_order": 1,
+      "chain_name": "旋叶虫→蓬叶虫→风滚暮虫",
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "119",
+      "name": "蓬叶虫",
+      "height": "0.53~0.76",
+      "weight": "0.65~1.68",
+      "chain_id": 30,
+      "chain_order": 2,
+      "chain_name": "旋叶虫→蓬叶虫→风滚暮虫",
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "120",
+      "name": "风滚暮虫",
+      "height": "0.6~0.7",
+      "weight": "1.45~3.43",
+      "chain_id": 30,
+      "chain_order": 3,
+      "chain_name": "旋叶虫→蓬叶虫→风滚暮虫",
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "121",
+      "name": "小黑猫",
+      "height": "0.55~0.65",
+      "weight": "3.1~4.5",
+      "chain_id": 88,
+      "chain_order": 1,
+      "chain_name": "小黑猫→黑猫巫师",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "122",
+      "name": "黑猫巫师",
+      "height": "0.85~0.97",
+      "weight": "8.1~9.5",
+      "chain_id": 88,
+      "chain_order": 2,
+      "chain_name": "小黑猫→黑猫巫师",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "123",
+      "name": "忽幽狸",
+      "height": "0.76~1.09",
+      "weight": "8.3~9.8",
+      "chain_id": 89,
+      "chain_order": 1,
+      "chain_name": "忽幽狸→影狸",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "124",
+      "name": "影狸",
+      "height": "1.11~1.59",
+      "weight": "23.5~37.5",
+      "chain_id": 89,
+      "chain_order": 2,
+      "chain_name": "忽幽狸→影狸",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "125",
+      "name": "多多",
+      "height": "0.45~0.65",
+      "weight": "14.6~18.6",
+      "chain_id": 31,
+      "chain_order": 1,
+      "chain_name": "多多→多啦多→古啦多",
+      "egg_groups": [
+        "拟人组"
+      ]
+    },
+    {
+      "id": "126",
+      "name": "多啦多",
+      "height": "0.58~0.83",
+      "weight": "28.5~34.6",
+      "chain_id": 31,
+      "chain_order": 2,
+      "chain_name": "多多→多啦多→古啦多",
+      "egg_groups": [
+        "拟人组"
+      ]
+    },
+    {
+      "id": "127",
+      "name": "古啦多",
+      "height": "0.69~0.99",
+      "weight": "43.5~58.6",
+      "chain_id": 31,
+      "chain_order": 3,
+      "chain_name": "多多→多啦多→古啦多",
+      "egg_groups": [
+        "拟人组"
+      ]
+    },
+    {
+      "id": "128",
+      "name": "哭哭菇",
+      "height": "0.33~0.47",
+      "weight": "1.8~3.2",
+      "chain_id": 32,
+      "chain_order": 1,
+      "chain_name": "哭哭菇→怖须菇→怖哭菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "129",
+      "name": "怖须菇",
+      "height": "0.69~0.99",
+      "weight": "8.72~15.6",
+      "chain_id": 32,
+      "chain_order": 2,
+      "chain_name": "哭哭菇→怖须菇→怖哭菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "130",
+      "name": "怖哭菇",
+      "height": "1.23~1.76",
+      "weight": "22.5~28.6",
+      "chain_id": 32,
+      "chain_order": 3,
+      "chain_name": "哭哭菇→怖须菇→怖哭菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "131",
+      "name": "恶魔狼",
+      "height": "1.23~1.76",
+      "weight": "74~92",
+      "chain_id": 145,
+      "chain_order": 1,
+      "chain_name": "恶魔狼",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "132",
+      "name": "小电企鹅",
+      "height": "0.44~0.56",
+      "weight": "3.82~5.39",
+      "chain_id": 90,
+      "chain_order": 1,
+      "chain_name": "小电企鹅→电企鹅",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "133",
+      "name": "电企鹅",
+      "height": "0.9~1.14",
+      "weight": "14.6~26.9",
+      "chain_id": 90,
+      "chain_order": 2,
+      "chain_name": "小电企鹅→电企鹅",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "134",
+      "name": "雪豆丁",
+      "height": "0.86~1.23",
+      "weight": "9.5~12.5",
+      "chain_id": 33,
+      "chain_order": 1,
+      "chain_name": "雪豆丁→雪蛮人→雪巨人",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "135",
+      "name": "雪蛮人",
+      "height": "1.11~1.59",
+      "weight": "59~76",
+      "chain_id": 33,
+      "chain_order": 2,
+      "chain_name": "雪豆丁→雪蛮人→雪巨人",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "136",
+      "name": "雪巨人",
+      "height": "1.61~2.31",
+      "weight": "156~187",
+      "chain_id": 33,
+      "chain_order": 3,
+      "chain_name": "雪豆丁→雪蛮人→雪巨人",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "137",
+      "name": "呼呼猪",
+      "height": "0.52~0.75",
+      "weight": "6.8~8.9",
+      "chain_id": 91,
+      "chain_order": 1,
+      "chain_name": "呼呼猪→獠牙猪",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "138",
+      "name": "獠牙猪",
+      "height": "0.77~1.1",
+      "weight": "52.8~67.4",
+      "chain_id": 91,
+      "chain_order": 2,
+      "chain_name": "呼呼猪→獠牙猪",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "139",
+      "name": "雪娃娃",
+      "height": "0.29~0.42",
+      "weight": "6.8~8.16",
+      "chain_id": 34,
+      "chain_order": 1,
+      "chain_name": "雪娃娃→冰封怨灵→雪灵",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "140",
+      "name": "冰封怨灵",
+      "height": "0.96~1.37",
+      "weight": "24.5~31.6",
+      "chain_id": 34,
+      "chain_order": 2,
+      "chain_name": "雪娃娃→冰封怨灵→雪灵",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "141",
+      "name": "雪灵",
+      "height": "1.09~1.56",
+      "weight": "56.4~68.4",
+      "chain_id": 34,
+      "chain_order": 3,
+      "chain_name": "雪娃娃→冰封怨灵→雪灵",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "142",
+      "name": "大耳帽兜",
+      "height": "0.39~0.42",
+      "weight": "8.39~10.7",
+      "chain_id": 35,
+      "chain_order": 1,
+      "chain_name": "大耳帽兜→帽兜娃娃→雪影娃娃",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "143",
+      "name": "帽兜娃娃",
+      "height": "0.4~0.57",
+      "weight": "19.05~26.8",
+      "chain_id": 35,
+      "chain_order": 2,
+      "chain_name": "大耳帽兜→帽兜娃娃→雪影娃娃",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "144",
+      "name": "雪影娃娃",
+      "height": "0.64~0.92",
+      "weight": "31.8~36.6",
+      "chain_id": 35,
+      "chain_order": 3,
+      "chain_name": "大耳帽兜→帽兜娃娃→雪影娃娃",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "145",
+      "name": "权杖-Ⅱ",
+      "height": "0.45~0.55",
+      "weight": "28.5~35.7",
+      "chain_id": 92,
+      "chain_order": 1,
+      "chain_name": "权杖-Ⅱ→权杖-Ⅴ",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "146",
+      "name": "权杖-Ⅴ",
+      "height": "0.95~1.05",
+      "weight": "98~108",
+      "chain_id": 92,
+      "chain_order": 2,
+      "chain_name": "权杖-Ⅱ→权杖-Ⅴ",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "147",
+      "name": "灵狐",
+      "height": "0.56~0.8",
+      "weight": "7.4~8.9",
+      "chain_id": 36,
+      "chain_order": 1,
+      "chain_name": "灵狐→九尾狐→尖嘴狐仙",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "148",
+      "name": "九尾狐",
+      "height": "0.77~1.11",
+      "weight": "13.08~21.05",
+      "chain_id": 36,
+      "chain_order": 2,
+      "chain_name": "灵狐→九尾狐→尖嘴狐仙",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "149",
+      "name": "尖嘴狐仙",
+      "height": "1.34~1.92",
+      "weight": "69.5~78.5",
+      "chain_id": 36,
+      "chain_order": 3,
+      "chain_name": "灵狐→九尾狐→尖嘴狐仙",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "150",
+      "name": "里奥",
+      "height": "0.35~0.45",
+      "weight": "4.8~5.9",
+      "chain_id": 37,
+      "chain_order": 1,
+      "chain_name": "里奥→灵羽勇士→圣羽翼王",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "151",
+      "name": "灵羽勇士",
+      "height": "0.55~0.65",
+      "weight": "11.5~14.2",
+      "chain_id": 37,
+      "chain_order": 2,
+      "chain_name": "里奥→灵羽勇士→圣羽翼王",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "152",
+      "name": "圣羽翼王",
+      "height": "2.1~2.55",
+      "weight": "195~296",
+      "chain_id": 37,
+      "chain_order": 3,
+      "chain_name": "里奥→灵羽勇士→圣羽翼王",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "153",
+      "name": "松仔",
+      "height": "0.52~0.68",
+      "weight": "6.25~7.85",
+      "chain_id": 38,
+      "chain_order": 1,
+      "chain_name": "松仔→松叶羊→针叶巡林",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "154",
+      "name": "松叶羊",
+      "height": "1.08~1.33",
+      "weight": "19.09~28.06",
+      "chain_id": 38,
+      "chain_order": 2,
+      "chain_name": "松仔→松叶羊→针叶巡林",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "155",
+      "name": "针叶巡林",
+      "height": "1.86~2.14",
+      "weight": "56.8~69.02",
+      "chain_id": 38,
+      "chain_order": 3,
+      "chain_name": "松仔→松叶羊→针叶巡林",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "156",
+      "name": "小勇狮",
+      "height": "0.67~0.81",
+      "weight": "8.5~12.05",
+      "chain_id": 39,
+      "chain_order": 1,
+      "chain_name": "小勇狮→炽焰狮→炽心勇狮",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "157",
+      "name": "炽焰狮",
+      "height": "1.12~1.45",
+      "weight": "46.02~67.05",
+      "chain_id": 39,
+      "chain_order": 2,
+      "chain_name": "小勇狮→炽焰狮→炽心勇狮",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "158",
+      "name": "炽心勇狮",
+      "height": "1.78~1.97",
+      "weight": "94.7~118.05",
+      "chain_id": 39,
+      "chain_order": 3,
+      "chain_name": "小勇狮→炽焰狮→炽心勇狮",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "159",
+      "name": "水滴蛇",
+      "height": "0.53~0.69",
+      "weight": "2.25~4.1",
+      "chain_id": 40,
+      "chain_order": 1,
+      "chain_name": "水滴蛇→水蛇锁→游蛇魔使",
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "160",
+      "name": "水蛇锁",
+      "height": "0.94~1.2",
+      "weight": "18.07~27.05",
+      "chain_id": 40,
+      "chain_order": 2,
+      "chain_name": "水滴蛇→水蛇锁→游蛇魔使",
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "161",
+      "name": "游蛇魔使",
+      "height": "2.15~3",
+      "weight": "71.05~86.05",
+      "chain_id": 40,
+      "chain_order": 3,
+      "chain_name": "水滴蛇→水蛇锁→游蛇魔使",
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "162",
+      "name": "公平鸽",
+      "height": "0.45~0.6",
+      "weight": "2.5~3.94",
+      "chain_id": 146,
+      "chain_order": 1,
+      "chain_name": "公平鸽",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "163",
+      "name": "小怂猫",
+      "height": "0.59~0.84",
+      "weight": "19.6~22.5",
+      "chain_id": 93,
+      "chain_order": 1,
+      "chain_name": "小怂猫→怒目怂猫",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "164",
+      "name": "怒目怂猫",
+      "height": "1.3~1.65",
+      "weight": "64.5~78.5",
+      "chain_id": 93,
+      "chain_order": 2,
+      "chain_name": "小怂猫→怒目怂猫",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "165",
+      "name": "小狮鹫",
+      "height": "0.71~1.02",
+      "weight": "11.5~17.5",
+      "chain_id": 41,
+      "chain_order": 1,
+      "chain_name": "小狮鹫→神圣狮鹫→皇家狮鹫",
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "166",
+      "name": "神圣狮鹫",
+      "height": "1.01~1.44",
+      "weight": "49.5~56.8",
+      "chain_id": 41,
+      "chain_order": 2,
+      "chain_name": "小狮鹫→神圣狮鹫→皇家狮鹫",
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "167",
+      "name": "皇家狮鹫",
+      "height": "1.72~2.45",
+      "weight": "125~170.5",
+      "chain_id": 41,
+      "chain_order": 3,
+      "chain_name": "小狮鹫→神圣狮鹫→皇家狮鹫",
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "168",
+      "name": "圆眼蜘蛛",
+      "height": "0.48~0.68",
+      "weight": "3.5~5",
+      "chain_id": 42,
+      "chain_order": 1,
+      "chain_name": "圆眼蜘蛛→尖角蜘蛛→芋香巨角蛛",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "169",
+      "name": "尖角蜘蛛",
+      "height": "0.68~0.98",
+      "weight": "7.75~9.6",
+      "chain_id": 42,
+      "chain_order": 2,
+      "chain_name": "圆眼蜘蛛→尖角蜘蛛→芋香巨角蛛",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "170",
+      "name": "芋香巨角蛛",
+      "height": "0.9~1.29",
+      "weight": "31.75~43.6",
+      "chain_id": 42,
+      "chain_order": 3,
+      "chain_name": "圆眼蜘蛛→尖角蜘蛛→芋香巨角蛛",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "171",
+      "name": "波波螺",
+      "height": "0.32~0.42",
+      "weight": "4.85~5.65",
+      "chain_id": 43,
+      "chain_order": 1,
+      "chain_name": "波波螺→消波螺→嗜波螺",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "172",
+      "name": "消波螺",
+      "height": "0.68~0.82",
+      "weight": "46.5~69.9",
+      "chain_id": 43,
+      "chain_order": 2,
+      "chain_name": "波波螺→消波螺→嗜波螺",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "173",
+      "name": "嗜波螺",
+      "height": "1.2~1.6",
+      "weight": "86.8~113",
+      "chain_id": 43,
+      "chain_order": 3,
+      "chain_name": "波波螺→消波螺→嗜波螺",
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "174",
+      "name": "菇菇丁",
+      "height": "0.25~0.35",
+      "weight": "1.1~2.76",
+      "chain_id": 44,
+      "chain_order": 1,
+      "chain_name": "菇菇丁→多菇丁→九幽菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "175",
+      "name": "多菇丁",
+      "height": "0.6~0.7",
+      "weight": "5.4~6.8",
+      "chain_id": 44,
+      "chain_order": 2,
+      "chain_name": "菇菇丁→多菇丁→九幽菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "176",
+      "name": "九幽菇",
+      "height": "1.55~1.65",
+      "weight": "42~58",
+      "chain_id": 44,
+      "chain_order": 3,
+      "chain_name": "菇菇丁→多菇丁→九幽菇",
+      "egg_groups": [
+        "植物组"
+      ]
+    },
+    {
+      "id": "177",
+      "name": "斑斑",
+      "height": "0.47~0.6",
+      "weight": "4.79~6.17",
+      "chain_id": 94,
+      "chain_order": 1,
+      "chain_name": "斑斑→斑枭",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "178",
+      "name": "斑枭",
+      "height": "0.68~0.81",
+      "weight": "15.9~23.8",
+      "chain_id": 94,
+      "chain_order": 2,
+      "chain_name": "斑斑→斑枭",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "179",
+      "name": "草头鸭",
+      "height": "0.5~0.72",
+      "weight": "4.9~6.57",
+      "chain_id": 95,
+      "chain_order": 1,
+      "chain_name": "草头鸭→卷毛鸭",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "180",
+      "name": "卷毛鸭",
+      "height": "0.9~1.29",
+      "weight": "35.8~48.06",
+      "chain_id": 95,
+      "chain_order": 2,
+      "chain_name": "草头鸭→卷毛鸭",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "181",
+      "name": "海豹战士",
+      "height": "0.64~0.92",
+      "weight": "69.5~87.6",
+      "chain_id": 96,
+      "chain_order": 1,
+      "chain_name": "海豹战士→海豹船长",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "182",
+      "name": "海豹船长",
+      "height": "1.26~1.8",
+      "weight": "145~165",
+      "chain_id": 96,
+      "chain_order": 2,
+      "chain_name": "海豹战士→海豹船长",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "183",
+      "name": "号儿鱼",
+      "height": "0.31~0.42",
+      "weight": "3.9~5.25",
+      "chain_id": 97,
+      "chain_order": 1,
+      "chain_name": "号儿鱼→圆号鱼",
+      "egg_groups": [
+        "妖精组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "184",
+      "name": "圆号鱼",
+      "height": "0.79~0.98",
+      "weight": "10.9~15.8",
+      "chain_id": 97,
+      "chain_order": 2,
+      "chain_name": "号儿鱼→圆号鱼",
+      "egg_groups": [
+        "妖精组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "185",
+      "name": "甜田螺",
+      "height": "0.41~0.58",
+      "weight": "7.5~9.4",
+      "chain_id": 45,
+      "chain_order": 1,
+      "chain_name": "甜田螺→壳乙螺→卡洛儿",
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "186",
+      "name": "壳乙螺",
+      "height": "0.68~0.97",
+      "weight": "11.05~19.04",
+      "chain_id": 45,
+      "chain_order": 2,
+      "chain_name": "甜田螺→壳乙螺→卡洛儿",
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "187",
+      "name": "卡洛儿",
+      "height": "0.7~1",
+      "weight": "21.4~25.6",
+      "chain_id": 45,
+      "chain_order": 3,
+      "chain_name": "甜田螺→壳乙螺→卡洛儿",
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "188",
+      "name": "棋棋",
+      "height": "0.35~0.47",
+      "weight": "10.7~14.5",
+      "chain_id": 98,
+      "chain_order": 1,
+      "chain_name": "棋棋→棋骑士",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "189",
+      "name": "棋骑士",
+      "height": "0.98~1.35",
+      "weight": "43.06~60.09",
+      "chain_id": 98,
+      "chain_order": 2,
+      "chain_name": "棋棋→棋骑士",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "190",
+      "name": "棋齐垒",
+      "height": "1.45~1.71",
+      "weight": "58.01~70.05",
+      "chain_id": 147,
+      "chain_order": 2,
+      "chain_name": "棋棋→棋齐垒",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "191",
+      "name": "棋祈督",
+      "height": "0.98~1.35",
+      "weight": "38.07~47.05",
+      "chain_id": 148,
+      "chain_order": 2,
+      "chain_name": "棋棋→棋祈督",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "192",
+      "name": "棋绮后",
+      "height": "1.66~1.81",
+      "weight": "30.01~41.02",
+      "chain_id": 149,
+      "chain_order": 2,
+      "chain_name": "棋棋→棋绮后",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "193",
+      "name": "奔波鼠",
+      "height": "0.46~0.6",
+      "weight": "3.71~6.4",
+      "chain_id": 99,
+      "chain_order": 1,
+      "chain_name": "奔波鼠→流浪鼠",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "194",
+      "name": "流浪鼠",
+      "height": "0.88~1.23",
+      "weight": "59.6~74.3",
+      "chain_id": 99,
+      "chain_order": 2,
+      "chain_name": "奔波鼠→流浪鼠",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "195",
+      "name": "呆小路",
+      "height": "0.58~0.83",
+      "weight": "4.5~5.8",
+      "chain_id": 46,
+      "chain_order": 1,
+      "chain_name": "呆小路→舞动路路→白发路路",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "196",
+      "name": "舞动路路",
+      "height": "0.69~0.99",
+      "weight": "7.4~9.1",
+      "chain_id": 46,
+      "chain_order": 2,
+      "chain_name": "呆小路→舞动路路→白发路路",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "197",
+      "name": "白发路路",
+      "height": "0.89~1.27",
+      "weight": "15.5~21.6",
+      "chain_id": 46,
+      "chain_order": 3,
+      "chain_name": "呆小路→舞动路路→白发路路",
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "198",
+      "name": "逗逗",
+      "height": "0.3~0.4",
+      "weight": "0.45~1.53",
+      "chain_id": 47,
+      "chain_order": 1,
+      "chain_name": "逗逗→气球猫→梦想三三",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "199",
+      "name": "气球猫",
+      "height": "0.41~0.59",
+      "weight": "0.95~2.15",
+      "chain_id": 47,
+      "chain_order": 2,
+      "chain_name": "逗逗→气球猫→梦想三三",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "200",
+      "name": "梦想三三",
+      "height": "1.18~1.45",
+      "weight": "12.04~19.04",
+      "chain_id": 47,
+      "chain_order": 3,
+      "chain_name": "逗逗→气球猫→梦想三三",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "201",
+      "name": "花怨鳗",
+      "height": "0.58~0.68",
+      "weight": "2.9~4",
+      "chain_id": 100,
+      "chain_order": 1,
+      "chain_name": "花怨鳗→鳗尾兽",
+      "egg_groups": [
+        "两栖组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "202",
+      "name": "鳗尾兽",
+      "height": "0.79~0.92",
+      "weight": "19.8~36.5",
+      "chain_id": 100,
+      "chain_order": 2,
+      "chain_name": "花怨鳗→鳗尾兽",
+      "egg_groups": [
+        "两栖组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "203",
+      "name": "伊雷龙",
+      "height": "0.72~0.94",
+      "weight": "27.2~34",
+      "chain_id": 101,
+      "chain_order": 1,
+      "chain_name": "伊雷龙→伊兰亚龙",
+      "egg_groups": [
+        "龙组"
+      ]
+    },
+    {
+      "id": "204",
+      "name": "伊兰亚龙",
+      "height": "3.65~4",
+      "weight": "168~195",
+      "chain_id": 101,
+      "chain_order": 2,
+      "chain_name": "伊雷龙→伊兰亚龙",
+      "egg_groups": [
+        "龙组"
+      ]
+    },
+    {
+      "id": "205",
+      "name": "拉特",
+      "height": "0.49~0.61",
+      "weight": "7.7~8.6",
+      "chain_id": 102,
+      "chain_order": 1,
+      "chain_name": "拉特→酷拉",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "206",
+      "name": "酷拉",
+      "height": "0.99~1.24",
+      "weight": "19.5~23.5",
+      "chain_id": 102,
+      "chain_order": 2,
+      "chain_name": "拉特→酷拉",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "207",
+      "name": "闪电环",
+      "height": "0.37~0.46",
+      "weight": "2.4~3.1",
+      "chain_id": 48,
+      "chain_order": 1,
+      "chain_name": "闪电环→刺电环→荆棘电环",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "208",
+      "name": "刺电环",
+      "height": "0.58~0.73",
+      "weight": "10.16~16.74",
+      "chain_id": 48,
+      "chain_order": 2,
+      "chain_name": "闪电环→刺电环→荆棘电环",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "209",
+      "name": "荆棘电环",
+      "height": "0.78~0.98",
+      "weight": "29.5~34.3",
+      "chain_id": 48,
+      "chain_order": 3,
+      "chain_name": "闪电环→刺电环→荆棘电环",
+      "egg_groups": [
+        "魔力组"
+      ]
+    },
+    {
+      "id": "210",
+      "name": "小箱怪",
+      "height": "0.34~0.46",
+      "weight": "4.45~6.81",
+      "chain_id": 103,
+      "chain_order": 1,
+      "chain_name": "小箱怪→迷迷箱怪",
+      "egg_groups": [
+        "妖精组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "211",
+      "name": "迷迷箱怪",
+      "height": "0.64~0.72",
+      "weight": "18.02~24.4",
+      "chain_id": 103,
+      "chain_order": 2,
+      "chain_name": "小箱怪→迷迷箱怪",
+      "egg_groups": [
+        "妖精组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "212",
+      "name": "古钟蛇",
+      "height": "0.95~1.1",
+      "weight": "6.9~7.8",
+      "chain_id": 104,
+      "chain_order": 1,
+      "chain_name": "古钟蛇→寒音蛇",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "213",
+      "name": "寒音蛇",
+      "height": "1.85~2",
+      "weight": "65~78",
+      "chain_id": 104,
+      "chain_order": 2,
+      "chain_name": "古钟蛇→寒音蛇",
+      "egg_groups": [
+        "两栖组",
+        "动物组"
+      ]
+    },
+    {
+      "id": "214",
+      "name": "矮脚爬爬",
+      "height": "0.28~0.44",
+      "weight": "3.3~4.2",
+      "chain_id": 105,
+      "chain_order": 1,
+      "chain_name": "矮脚爬爬→恶魔红钻",
+      "egg_groups": [
+        "巨灵组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "215",
+      "name": "恶魔红钻",
+      "height": "1.32~1.55",
+      "weight": "42.5~62",
+      "chain_id": 105,
+      "chain_order": 2,
+      "chain_name": "矮脚爬爬→恶魔红钻",
+      "egg_groups": [
+        "巨灵组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "216",
+      "name": "火尾瓦特",
+      "height": "0.64~0.92",
+      "weight": "18.5~21.2",
+      "chain_id": 49,
+      "chain_order": 1,
+      "chain_name": "火尾瓦特→火尾战士→烈火守护",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "217",
+      "name": "火尾战士",
+      "height": "0.76~1.09",
+      "weight": "48.5~58.6",
+      "chain_id": 49,
+      "chain_order": 2,
+      "chain_name": "火尾瓦特→火尾战士→烈火守护",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "218",
+      "name": "烈火守护",
+      "height": "0.99~1.42",
+      "weight": "76.5~87.5",
+      "chain_id": 49,
+      "chain_order": 3,
+      "chain_name": "火尾瓦特→火尾战士→烈火守护",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "219",
+      "name": "里拉鳐",
+      "height": "0.94~1.1",
+      "weight": "38.6~49.5",
+      "chain_id": 150,
+      "chain_order": 1,
+      "chain_name": "里拉鳐",
+      "egg_groups": [
+        "妖精组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "220",
+      "name": "海枝枝",
+      "height": "0.75~0.85",
+      "weight": "3.51~6.82",
+      "chain_id": 151,
+      "chain_order": 1,
+      "chain_name": "海枝枝",
+      "egg_groups": [
+        "植物组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "221",
+      "name": "多西",
+      "height": "0.65~0.94",
+      "weight": "5.7~7.1",
+      "chain_id": 50,
+      "chain_order": 1,
+      "chain_name": "多西→库多西→波多西",
+      "egg_groups": [
+        "巨灵组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "222",
+      "name": "库多西",
+      "height": "0.99~1.42",
+      "weight": "115.8~175.02",
+      "chain_id": 50,
+      "chain_order": 2,
+      "chain_name": "多西→库多西→波多西",
+      "egg_groups": [
+        "巨灵组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "223",
+      "name": "波多西",
+      "height": "1.43~2.05",
+      "weight": "265~295",
+      "chain_id": 50,
+      "chain_order": 3,
+      "chain_name": "多西→库多西→波多西",
+      "egg_groups": [
+        "巨灵组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "224",
+      "name": "小翼龙",
+      "height": "0.61~0.87",
+      "weight": "25.1~36.5",
+      "chain_id": 106,
+      "chain_order": 1,
+      "chain_name": "小翼龙→翼龙",
+      "egg_groups": [
+        "天空组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "225",
+      "name": "翼龙",
+      "height": "1.79~1.99",
+      "weight": "240~265",
+      "chain_id": 106,
+      "chain_order": 2,
+      "chain_name": "小翼龙→翼龙",
+      "egg_groups": [
+        "天空组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "226",
+      "name": "电动长颈鹿",
+      "height": "0.7~1",
+      "weight": "29.8~36.8",
+      "chain_id": 51,
+      "chain_order": 1,
+      "chain_name": "电动长颈鹿→奔乐鹿→爵士鹿",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "227",
+      "name": "奔乐鹿",
+      "height": "0.85~1.22",
+      "weight": "68~77.5",
+      "chain_id": 51,
+      "chain_order": 2,
+      "chain_name": "电动长颈鹿→奔乐鹿→爵士鹿",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "228",
+      "name": "爵士鹿",
+      "height": "1.38~1.98",
+      "weight": "135~185.06",
+      "chain_id": 51,
+      "chain_order": 3,
+      "chain_name": "电动长颈鹿→奔乐鹿→爵士鹿",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "229",
+      "name": "缇塔",
+      "height": "0.65~0.75",
+      "weight": "38.2~45.2",
+      "chain_id": 107,
+      "chain_order": 1,
+      "chain_name": "缇塔→声波缇塔",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "230",
+      "name": "声波缇塔",
+      "height": "1.05~1.2",
+      "weight": "71.5~78.5",
+      "chain_id": 107,
+      "chain_order": 2,
+      "chain_name": "缇塔→声波缇塔",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "231",
+      "name": "小鹬",
+      "height": "0.25~0.36",
+      "weight": "1.4~2.2",
+      "chain_id": 52,
+      "chain_order": 1,
+      "chain_name": "小鹬→鄙目鹬→高脚鹬",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "232",
+      "name": "鄙目鹬",
+      "height": "0.67~0.96",
+      "weight": "6.75~8.9",
+      "chain_id": 52,
+      "chain_order": 2,
+      "chain_name": "小鹬→鄙目鹬→高脚鹬",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "233",
+      "name": "高脚鹬",
+      "height": "0.81~1.16",
+      "weight": "18~24.91",
+      "chain_id": 52,
+      "chain_order": 3,
+      "chain_name": "小鹬→鄙目鹬→高脚鹬",
+      "egg_groups": [
+        "天空组"
+      ]
+    },
+    {
+      "id": "234",
+      "name": "脆筒甜甜",
+      "height": "0.3~0.4",
+      "weight": "1.8~3.8",
+      "chain_id": 53,
+      "chain_order": 1,
+      "chain_name": "脆筒甜甜→香草甜甜→圣代甜甜",
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "235",
+      "name": "香草甜甜",
+      "height": "0.4~0.6",
+      "weight": "5.15~7.8",
+      "chain_id": 53,
+      "chain_order": 2,
+      "chain_name": "脆筒甜甜→香草甜甜→圣代甜甜",
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "236",
+      "name": "圣代甜甜",
+      "height": "0.7~1",
+      "weight": "16.5~22.75",
+      "chain_id": 53,
+      "chain_order": 3,
+      "chain_name": "脆筒甜甜→香草甜甜→圣代甜甜",
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "237",
+      "name": "刺轮砣",
+      "height": "0.18~0.31",
+      "weight": "2.7~4",
+      "chain_id": 108,
+      "chain_order": 1,
+      "chain_name": "刺轮砣→月亮砣",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "238",
+      "name": "月亮砣",
+      "height": "1.85~2.1",
+      "weight": "137.5~182.4",
+      "chain_id": 108,
+      "chain_order": 2,
+      "chain_name": "刺轮砣→月亮砣",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "239",
+      "name": "豆丁鱼",
+      "height": "0.31~0.44",
+      "weight": "1.2~3.4",
+      "chain_id": 54,
+      "chain_order": 1,
+      "chain_name": "豆丁鱼→快鳍鱼→龙鱼",
+      "egg_groups": [
+        "海洋组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "240",
+      "name": "快鳍鱼",
+      "height": "0.27~0.39",
+      "weight": "14.5~16.8",
+      "chain_id": 54,
+      "chain_order": 2,
+      "chain_name": "豆丁鱼→快鳍鱼→龙鱼",
+      "egg_groups": [
+        "海洋组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "241",
+      "name": "龙鱼",
+      "height": "0.69~0.99",
+      "weight": "39.5~44.5",
+      "chain_id": 54,
+      "chain_order": 3,
+      "chain_name": "豆丁鱼→快鳍鱼→龙鱼",
+      "egg_groups": [
+        "海洋组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "242",
+      "name": "胆小鳗鱼",
+      "height": "0.74~1.07",
+      "weight": "17.5~26.85",
+      "chain_id": 109,
+      "chain_order": 1,
+      "chain_name": "胆小鳗鱼→闪电鳗鱼",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "243",
+      "name": "闪电鳗鱼",
+      "height": "0.83~1.19",
+      "weight": "68.9~76.5",
+      "chain_id": 109,
+      "chain_order": 2,
+      "chain_name": "胆小鳗鱼→闪电鳗鱼",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "244",
+      "name": "翡翠水母",
+      "height": "0.49~0.7",
+      "weight": "31.5~36.8",
+      "chain_id": 110,
+      "chain_order": 1,
+      "chain_name": "翡翠水母→琉璃水母",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "245",
+      "name": "琉璃水母",
+      "height": "0.9~1.28",
+      "weight": "48~53",
+      "chain_id": 110,
+      "chain_order": 2,
+      "chain_name": "翡翠水母→琉璃水母",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "246",
+      "name": "裘洛",
+      "height": "0.7~1",
+      "weight": "7.5~12.5",
+      "chain_id": 55,
+      "chain_order": 1,
+      "chain_name": "裘洛→裘力→裘卡",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "247",
+      "name": "裘力",
+      "height": "0.81~1.16",
+      "weight": "14.07~18.02",
+      "chain_id": 55,
+      "chain_order": 2,
+      "chain_name": "裘洛→裘力→裘卡",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "248",
+      "name": "裘卡",
+      "height": "1.25~1.79",
+      "weight": "49.5~58.6",
+      "chain_id": 55,
+      "chain_order": 3,
+      "chain_name": "裘洛→裘力→裘卡",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "249",
+      "name": "可爱猿",
+      "height": "0.69~0.98",
+      "weight": "21~31.5",
+      "chain_id": 56,
+      "chain_order": 1,
+      "chain_name": "可爱猿→炽热猿→火焰猿",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "250",
+      "name": "炽热猿",
+      "height": "0.71~1.02",
+      "weight": "46.5~63.5",
+      "chain_id": 56,
+      "chain_order": 2,
+      "chain_name": "可爱猿→炽热猿→火焰猿",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "251",
+      "name": "火焰猿",
+      "height": "1.68~1.9",
+      "weight": "124.5~136.5",
+      "chain_id": 56,
+      "chain_order": 3,
+      "chain_name": "可爱猿→炽热猿→火焰猿",
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "252",
+      "name": "布鲁斯",
+      "height": "0.53~0.76",
+      "weight": "2.4~4.6",
+      "chain_id": 57,
+      "chain_order": 1,
+      "chain_name": "布鲁斯→雪顶布鲁斯→冰钻布鲁斯",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "253",
+      "name": "雪顶布鲁斯",
+      "height": "0.58~0.83",
+      "weight": "12.8~15.6",
+      "chain_id": 57,
+      "chain_order": 2,
+      "chain_name": "布鲁斯→雪顶布鲁斯→冰钻布鲁斯",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "254",
+      "name": "冰钻布鲁斯",
+      "height": "1.21~1.72",
+      "weight": "49.5~58.6",
+      "chain_id": 57,
+      "chain_order": 3,
+      "chain_name": "布鲁斯→雪顶布鲁斯→冰钻布鲁斯",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "255",
+      "name": "治愈兔",
+      "height": "0.57~0.82",
+      "weight": "12.03~14.42",
+      "chain_id": 58,
+      "chain_order": 1,
+      "chain_name": "治愈兔→红丝绒→红绒十字",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "256",
+      "name": "红丝绒",
+      "height": "0.68~0.97",
+      "weight": "22.4~28.6",
+      "chain_id": 58,
+      "chain_order": 2,
+      "chain_name": "治愈兔→红丝绒→红绒十字",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "257",
+      "name": "红绒十字",
+      "height": "1.04~1.49",
+      "weight": "32.5~36.8",
+      "chain_id": 58,
+      "chain_order": 3,
+      "chain_name": "治愈兔→红丝绒→红绒十字",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "258",
+      "name": "乌达",
+      "height": "0.44~0.58",
+      "weight": "4.6~6.1",
+      "chain_id": 59,
+      "chain_order": 1,
+      "chain_name": "乌达→迷你乌→乌拉塔",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "259",
+      "name": "迷你乌",
+      "height": "0.97~1.2",
+      "weight": "27.9~39.1",
+      "chain_id": 59,
+      "chain_order": 2,
+      "chain_name": "乌达→迷你乌→乌拉塔",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "260",
+      "name": "乌拉塔",
+      "height": "1.85~2.1",
+      "weight": "48.8~63.29",
+      "chain_id": 59,
+      "chain_order": 3,
+      "chain_name": "乌达→迷你乌→乌拉塔",
+      "egg_groups": [
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "261",
+      "name": "螺旋帕帕",
+      "height": "0.35~0.45",
+      "weight": "2.08~4.35",
+      "chain_id": 111,
+      "chain_order": 1,
+      "chain_name": "螺旋帕帕→帕帕斯卡",
+      "egg_groups": [
+        "天空组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "262",
+      "name": "帕帕斯卡",
+      "height": "1.05~1.47",
+      "weight": "48.7~60.1",
+      "chain_id": 111,
+      "chain_order": 2,
+      "chain_name": "螺旋帕帕→帕帕斯卡",
+      "egg_groups": [
+        "天空组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "263",
+      "name": "机械方方",
+      "height": "0.42~0.6",
+      "weight": "8~11",
+      "chain_id": 60,
+      "chain_order": 1,
+      "chain_name": "机械方方→多彩方方→立方人",
+      "egg_groups": [
+        "拟人组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "264",
+      "name": "多彩方方",
+      "height": "0.68~0.97",
+      "weight": "23.77~34.6",
+      "chain_id": 60,
+      "chain_order": 2,
+      "chain_name": "机械方方→多彩方方→立方人",
+      "egg_groups": [
+        "拟人组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "265",
+      "name": "立方人",
+      "height": "1.78~2.01",
+      "weight": "106.5~139.07",
+      "chain_id": 60,
+      "chain_order": 3,
+      "chain_name": "机械方方→多彩方方→立方人",
+      "egg_groups": [
+        "拟人组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "266",
+      "name": "可立鸡",
+      "height": "0.39~0.56",
+      "weight": "4.6~7.4",
+      "chain_id": 61,
+      "chain_order": 1,
+      "chain_name": "可立鸡→晕晕鸡→绅士鸡",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "267",
+      "name": "晕晕鸡",
+      "height": "0.68~0.91",
+      "weight": "12.03~18.06",
+      "chain_id": 61,
+      "chain_order": 2,
+      "chain_name": "可立鸡→晕晕鸡→绅士鸡",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "268",
+      "name": "绅士鸡",
+      "height": "1.31~1.87",
+      "weight": "46.8~58.2",
+      "chain_id": 61,
+      "chain_order": 3,
+      "chain_name": "可立鸡→晕晕鸡→绅士鸡",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "269",
+      "name": "武者鸡",
+      "height": "1.46~2.09",
+      "weight": "46.8~58.2",
+      "chain_id": 152,
+      "chain_order": 3,
+      "chain_name": "可立鸡→晕晕鸡→武者鸡",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "270",
+      "name": "优优",
+      "height": "0.38~0.56",
+      "weight": "3.03~4.1",
+      "chain_id": 112,
+      "chain_order": 1,
+      "chain_name": "优优→绒光优优",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "271",
+      "name": "绒光优优",
+      "height": "0.69~0.85",
+      "weight": "13.5~19.6",
+      "chain_id": 112,
+      "chain_order": 2,
+      "chain_name": "优优→绒光优优",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "272",
+      "name": "噼啪鸟",
+      "height": "2~2.15",
+      "weight": "89.5~127.5",
+      "chain_id": 153,
+      "chain_order": 1,
+      "chain_name": "噼啪鸟",
+      "egg_groups": [
+        "天空组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "273",
+      "name": "深蓝鲸",
+      "height": "2~2.65",
+      "weight": "645~700",
+      "chain_id": 154,
+      "chain_order": 1,
+      "chain_name": "深蓝鲸",
+      "egg_groups": [
+        "巨灵组",
+        "海洋组"
+      ]
+    },
+    {
+      "id": "274",
+      "name": "格兰种子",
+      "height": "0.4~0.57",
+      "weight": "3.5~5.4",
+      "chain_id": 62,
+      "chain_order": 1,
+      "chain_name": "格兰种子→格兰花→格兰球",
+      "egg_groups": [
+        "妖精组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "275",
+      "name": "格兰花",
+      "height": "0.48~0.68",
+      "weight": "6.5~7.8",
+      "chain_id": 62,
+      "chain_order": 2,
+      "chain_name": "格兰种子→格兰花→格兰球",
+      "egg_groups": [
+        "妖精组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "276",
+      "name": "格兰球",
+      "height": "0.81~1.16",
+      "weight": "12.5~16.5",
+      "chain_id": 62,
+      "chain_order": 3,
+      "chain_name": "格兰种子→格兰花→格兰球",
+      "egg_groups": [
+        "妖精组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "277",
+      "name": "地鼠",
+      "height": "0.46~0.66",
+      "weight": "1.8~2.85",
+      "chain_id": 63,
+      "chain_order": 1,
+      "chain_name": "地鼠→遁鼠→遁地鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "278",
+      "name": "遁鼠",
+      "height": "0.48~0.69",
+      "weight": "3.4~4.8",
+      "chain_id": 63,
+      "chain_order": 2,
+      "chain_name": "地鼠→遁鼠→遁地鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "279",
+      "name": "遁地鼠",
+      "height": "0.64~0.92",
+      "weight": "6.4~7.5",
+      "chain_id": 63,
+      "chain_order": 3,
+      "chain_name": "地鼠→遁鼠→遁地鼠",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "280",
+      "name": "墨鱿士",
+      "height": "0.35~0.46",
+      "weight": "3.25~5.02",
+      "chain_id": 113,
+      "chain_order": 1,
+      "chain_name": "墨鱿士→混乱鱿彩",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "281",
+      "name": "混乱鱿彩",
+      "height": "1.36~1.54",
+      "weight": "36.9~48.2",
+      "chain_id": 113,
+      "chain_order": 2,
+      "chain_name": "墨鱿士→混乱鱿彩",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "282",
+      "name": "秩序鱿墨",
+      "height": "1.59~1.72",
+      "weight": "45.6~60.1",
+      "chain_id": 155,
+      "chain_order": 2,
+      "chain_name": "墨鱿士→秩序鱿墨",
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "283",
+      "name": "小甲虫",
+      "height": "0.48~0.68",
+      "weight": "6.5~8.4",
+      "chain_id": 114,
+      "chain_order": 1,
+      "chain_name": "小甲虫→铠甲虫",
+      "egg_groups": [
+        "天空组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "284",
+      "name": "铠甲虫",
+      "height": "1.17~1.68",
+      "weight": "83~96",
+      "chain_id": 114,
+      "chain_order": 2,
+      "chain_name": "小甲虫→铠甲虫",
+      "egg_groups": [
+        "天空组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "285",
+      "name": "圣剑侍从",
+      "height": "0.94~1.18",
+      "weight": "115.7~173.6",
+      "chain_id": 115,
+      "chain_order": 1,
+      "chain_name": "圣剑侍从→圣剑-X",
+      "egg_groups": [
+        "巨灵组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "286",
+      "name": "圣剑-X",
+      "height": "1.83~2.07",
+      "weight": "481~658",
+      "chain_id": 115,
+      "chain_order": 2,
+      "chain_name": "圣剑侍从→圣剑-X",
+      "egg_groups": [
+        "巨灵组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "287",
+      "name": "吸泥鸥",
+      "height": "0.55~0.71",
+      "weight": "9.5~12.5",
+      "chain_id": 116,
+      "chain_order": 1,
+      "chain_name": "吸泥鸥→泥吼牙",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "288",
+      "name": "泥吼牙",
+      "height": "1.05~1.45",
+      "weight": "21.5~32.5",
+      "chain_id": 116,
+      "chain_order": 2,
+      "chain_name": "吸泥鸥→泥吼牙",
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ]
+    },
+    {
+      "id": "289",
+      "name": "大头骨龙",
+      "height": "0.85~1",
+      "weight": "18.6~33.5",
+      "chain_id": 117,
+      "chain_order": 1,
+      "chain_name": "大头骨龙→寂灭骨龙",
+      "egg_groups": [
+        "巨灵组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "290",
+      "name": "寂灭骨龙",
+      "height": "2.25~2.45",
+      "weight": "85.7~105",
+      "chain_id": 117,
+      "chain_order": 2,
+      "chain_name": "大头骨龙→寂灭骨龙",
+      "egg_groups": [
+        "巨灵组",
+        "龙组"
+      ]
+    },
+    {
+      "id": "291",
+      "name": "厉毒小萝",
+      "height": "0.55~0.65",
+      "weight": "8.73~14.92",
+      "chain_id": 118,
+      "chain_order": 1,
+      "chain_name": "厉毒小萝→厉毒修萝",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "292",
+      "name": "厉毒修萝",
+      "height": "1.45~1.55",
+      "weight": "33.75~41.6",
+      "chain_id": 118,
+      "chain_order": 2,
+      "chain_name": "厉毒小萝→厉毒修萝",
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "293",
+      "name": "小帕尔",
+      "height": "0.64~0.92",
+      "weight": "9.4~13.6",
+      "chain_id": 64,
+      "chain_order": 1,
+      "chain_name": "小帕尔→帕尔萨斯→龙息帕尔",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "294",
+      "name": "帕尔萨斯",
+      "height": "1.33~1.58",
+      "weight": "46.5~61.5",
+      "chain_id": 64,
+      "chain_order": 2,
+      "chain_name": "小帕尔→帕尔萨斯→龙息帕尔",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "295",
+      "name": "龙息帕尔",
+      "height": "1.93~2.4",
+      "weight": "96.5~115",
+      "chain_id": 64,
+      "chain_order": 3,
+      "chain_name": "小帕尔→帕尔萨斯→龙息帕尔",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "296",
+      "name": "毛头小蛛",
+      "height": "0.3~0.45",
+      "weight": "0.95~2",
+      "chain_id": 119,
+      "chain_order": 1,
+      "chain_name": "毛头小蛛→捕尘长绒",
+      "egg_groups": [
+        "妖精组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "297",
+      "name": "捕尘长绒",
+      "height": "1.15~1.45",
+      "weight": "2.35~4.19",
+      "chain_id": 119,
+      "chain_order": 2,
+      "chain_name": "毛头小蛛→捕尘长绒",
+      "egg_groups": [
+        "妖精组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "298",
+      "name": "食尘短绒",
+      "height": "0.75~0.9",
+      "weight": "2.65~5.15",
+      "chain_id": 156,
+      "chain_order": 2,
+      "chain_name": "毛头小蛛→食尘短绒",
+      "egg_groups": [
+        "妖精组",
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "299",
+      "name": "画精灵",
+      "height": "0.28~0.38",
+      "weight": "0.99~2.21",
+      "chain_id": 65,
+      "chain_order": 1,
+      "chain_name": "画精灵→画像守护→画间法师手",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "300",
+      "name": "画像守护",
+      "height": "0.49~0.6",
+      "weight": "5.85~6.9",
+      "chain_id": 65,
+      "chain_order": 2,
+      "chain_name": "画精灵→画像守护→画间法师手",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "301",
+      "name": "画间法师手",
+      "height": "2.08~2.45",
+      "weight": "46.05~58.1",
+      "chain_id": 65,
+      "chain_order": 3,
+      "chain_name": "画精灵→画像守护→画间法师手",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "302",
+      "name": "画间沉铁兽",
+      "height": "1.75~1.92",
+      "weight": "75.7~88.02",
+      "chain_id": 157,
+      "chain_order": 3,
+      "chain_name": "画精灵→画像守护→画间沉铁兽",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "303",
+      "name": "书魔虫",
+      "height": "0.3~0.41",
+      "weight": "2.28~3.86",
+      "chain_id": 66,
+      "chain_order": 1,
+      "chain_name": "书魔虫→书卷守护→古卷执政官",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "304",
+      "name": "书卷守护",
+      "height": "0.82~1.01",
+      "weight": "9.8~14.8",
+      "chain_id": 66,
+      "chain_order": 2,
+      "chain_name": "书魔虫→书卷守护→古卷执政官",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "305",
+      "name": "古卷执政官",
+      "height": "1.91~2.21",
+      "weight": "98.8~135.5",
+      "chain_id": 66,
+      "chain_order": 3,
+      "chain_name": "书魔虫→书卷守护→古卷执政官",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "306",
+      "name": "古卷匣魔像",
+      "height": "1.87~2.15",
+      "weight": "119.5~180.5",
+      "chain_id": 158,
+      "chain_order": 3,
+      "chain_name": "书魔虫→书卷守护→古卷匣魔像",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "307",
+      "name": "绒绒",
+      "height": "0.29~0.35",
+      "weight": "1~2.5",
+      "chain_id": 67,
+      "chain_order": 1,
+      "chain_name": "绒绒→小绒茧→绒仙子",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "308",
+      "name": "小绒茧",
+      "height": "0.59~0.84",
+      "weight": "7.6~9.2",
+      "chain_id": 67,
+      "chain_order": 2,
+      "chain_name": "绒绒→小绒茧→绒仙子",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "309",
+      "name": "绒仙子",
+      "height": "1.25~1.65",
+      "weight": "37.5~42.8",
+      "chain_id": 67,
+      "chain_order": 3,
+      "chain_name": "绒绒→小绒茧→绒仙子",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "310",
+      "name": "犀角鸟",
+      "height": "0.32~0.4",
+      "weight": "9.6~11.5",
+      "chain_id": 68,
+      "chain_order": 1,
+      "chain_name": "犀角鸟→光纤兽→疾光千兽",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "311",
+      "name": "光纤兽",
+      "height": "0.7~0.85",
+      "weight": "31.5~37.8",
+      "chain_id": 68,
+      "chain_order": 2,
+      "chain_name": "犀角鸟→光纤兽→疾光千兽",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "312",
+      "name": "疾光千兽",
+      "height": "1.75~2.1",
+      "weight": "112.9~165",
+      "chain_id": 68,
+      "chain_order": 3,
+      "chain_name": "犀角鸟→光纤兽→疾光千兽",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "313",
+      "name": "果冻",
+      "height": "0.3~0.36",
+      "weight": "4.35~5.6",
+      "chain_id": 120,
+      "chain_order": 1,
+      "chain_name": "果冻→抹茶布丁",
+      "egg_groups": [
+        "海洋组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "314",
+      "name": "抹茶布丁",
+      "height": "0.39~0.51",
+      "weight": "6.21~7.9",
+      "chain_id": 120,
+      "chain_order": 2,
+      "chain_name": "果冻→抹茶布丁",
+      "egg_groups": [
+        "海洋组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "315",
+      "name": "椰浆布丁",
+      "height": "0.39~0.51",
+      "weight": "6.21~7.9",
+      "chain_id": 159,
+      "chain_order": 2,
+      "chain_name": "果冻→椰浆布丁",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "316",
+      "name": "熔岩布丁",
+      "height": "0.39~0.51",
+      "weight": "6.21~7.9",
+      "chain_id": 160,
+      "chain_order": 2,
+      "chain_name": "果冻→熔岩布丁",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "317",
+      "name": "星尘虫",
+      "height": "0.15~0.2",
+      "weight": "0.45~1.4",
+      "chain_id": 69,
+      "chain_order": 1,
+      "chain_name": "星尘虫→落星虫→陨星虫",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "318",
+      "name": "落星虫",
+      "height": "0.35~0.4",
+      "weight": "1.25~2.25",
+      "chain_id": 69,
+      "chain_order": 2,
+      "chain_name": "星尘虫→落星虫→陨星虫",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "319",
+      "name": "陨星虫",
+      "height": "0.65~0.8",
+      "weight": "5.6~6.8",
+      "chain_id": 69,
+      "chain_order": 3,
+      "chain_name": "星尘虫→落星虫→陨星虫",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "320",
+      "name": "双灯鱼",
+      "height": "0.5~0.72",
+      "weight": "14.9~17.8",
+      "chain_id": 121,
+      "chain_order": 1,
+      "chain_name": "双灯鱼→利灯鱼",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "321",
+      "name": "利灯鱼",
+      "height": "0.62~0.89",
+      "weight": "26.8~31.5",
+      "chain_id": 121,
+      "chain_order": 2,
+      "chain_name": "双灯鱼→利灯鱼",
+      "egg_groups": [
+        "海洋组"
+      ]
+    },
+    {
+      "id": "322",
+      "name": "月牙雪熊",
+      "height": "1.25~1.45",
+      "weight": "76.5~92.5",
+      "chain_id": 161,
+      "chain_order": 1,
+      "chain_name": "月牙雪熊",
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "323",
+      "name": "嗜光嗡嗡",
+      "height": "0.24~0.32",
+      "weight": "1.46~3.05",
+      "chain_id": 122,
+      "chain_order": 1,
+      "chain_name": "嗜光嗡嗡→窃光蚊",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "324",
+      "name": "窃光蚊",
+      "height": "0.53~0.66",
+      "weight": "7.05~9.62",
+      "chain_id": 122,
+      "chain_order": 2,
+      "chain_name": "嗜光嗡嗡→窃光蚊",
+      "egg_groups": [
+        "昆虫组"
+      ]
+    },
+    {
+      "id": "325",
+      "name": "柴渣虫",
+      "height": "0.45~0.55",
+      "weight": "14.5~18.6",
+      "chain_id": 123,
+      "chain_order": 1,
+      "chain_name": "柴渣虫→燃薪虫",
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "326",
+      "name": "燃薪虫",
+      "height": "1.1~1.25",
+      "weight": "72.5~87.5",
+      "chain_id": 123,
+      "chain_order": 2,
+      "chain_name": "柴渣虫→燃薪虫",
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ]
+    },
+    {
+      "id": "327",
+      "name": "空空颅",
+      "height": "0.43~0.61",
+      "weight": "5.6~8.7",
+      "chain_id": 70,
+      "chain_order": 1,
+      "chain_name": "空空颅→夜宿颅→夜枭",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "328",
+      "name": "夜宿颅",
+      "height": "0.82~1.18",
+      "weight": "27.6~34.3",
+      "chain_id": 70,
+      "chain_order": 2,
+      "chain_name": "空空颅→夜宿颅→夜枭",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "329",
+      "name": "夜枭",
+      "height": "1.45~2.07",
+      "weight": "58.6~66.5",
+      "chain_id": 70,
+      "chain_order": 3,
+      "chain_name": "空空颅→夜宿颅→夜枭",
+      "egg_groups": [
+        "巨灵组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "330",
+      "name": "粉粉星",
+      "height": "0.53~0.76",
+      "weight": "2.1~3",
+      "chain_id": 124,
+      "chain_order": 1,
+      "chain_name": "粉粉星→小皮球",
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "331",
+      "name": "小皮球",
+      "height": "0.7~1",
+      "weight": "6.4~8.12",
+      "chain_id": 124,
+      "chain_order": 2,
+      "chain_name": "粉粉星→小皮球",
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ]
+    },
+    {
+      "id": "332",
+      "name": "贝瑟",
+      "height": "0.57~0.82",
+      "weight": "24.5~34.6",
+      "chain_id": 71,
+      "chain_order": 1,
+      "chain_name": "贝瑟→贝加尔→贝古斯",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "333",
+      "name": "贝加尔",
+      "height": "0.9~1.2",
+      "weight": "87.6~97.5",
+      "chain_id": 71,
+      "chain_order": 2,
+      "chain_name": "贝瑟→贝加尔→贝古斯",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "334",
+      "name": "贝古斯",
+      "height": "1.55~1.8",
+      "weight": "248~286",
+      "chain_id": 71,
+      "chain_order": 3,
+      "chain_name": "贝瑟→贝加尔→贝古斯",
+      "egg_groups": [
+        "机械组"
+      ]
+    },
+    {
+      "id": "335",
+      "name": "粉星仔",
+      "height": "0.39~0.5",
+      "weight": "9.8~12.8",
+      "chain_id": 125,
+      "chain_order": 1,
+      "chain_name": "粉星仔→粉耳星兔",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "336",
+      "name": "粉耳星兔",
+      "height": "0.55~0.75",
+      "weight": "16.82~23.81",
+      "chain_id": 125,
+      "chain_order": 2,
+      "chain_name": "粉星仔→粉耳星兔",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "337",
+      "name": "落陨星兔",
+      "height": "0.55~0.75",
+      "weight": "16.82~23.81",
+      "chain_id": 162,
+      "chain_order": 2,
+      "chain_name": "粉星仔→落陨星兔",
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "338",
+      "name": "布瓜蝌",
+      "height": "0.32~0.51",
+      "weight": "0.45~1.65",
+      "chain_id": 126,
+      "chain_order": 1,
+      "chain_name": "布瓜蝌→上岸蛙",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "339",
+      "name": "上岸蛙",
+      "height": "0.65~0.87",
+      "weight": "5.8~8.1",
+      "chain_id": 126,
+      "chain_order": 2,
+      "chain_name": "布瓜蝌→上岸蛙",
+      "egg_groups": [
+        "两栖组"
+      ]
+    },
+    {
+      "id": "340",
+      "name": "火红尾",
+      "height": "0.72~0.98",
+      "weight": "17.5~30.5",
+      "chain_id": 127,
+      "chain_order": 1,
+      "chain_name": "火红尾→雅丹鬃",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "341",
+      "name": "雅丹鬃",
+      "height": "1.7~2.06",
+      "weight": "49.5~71.2",
+      "chain_id": 127,
+      "chain_order": 2,
+      "chain_name": "火红尾→雅丹鬃",
+      "egg_groups": [
+        "动物组"
+      ]
+    },
+    {
+      "id": "342",
+      "name": "春团",
+      "height": "0.35~0.51",
+      "weight": "2.1~3.6",
+      "chain_id": 72,
+      "chain_order": 1,
+      "chain_name": "春团→春兔→春花兔",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "343",
+      "name": "春兔",
+      "height": "0.61~0.87",
+      "weight": "6.8~8.5",
+      "chain_id": 72,
+      "chain_order": 2,
+      "chain_name": "春团→春兔→春花兔",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "344",
+      "name": "春花兔",
+      "height": "0.85~1.15",
+      "weight": "18.5~33.5",
+      "chain_id": 72,
+      "chain_order": 3,
+      "chain_name": "春团→春兔→春花兔",
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "345",
+      "name": "幽星光",
+      "height": "0.4~0.55",
+      "weight": "0.6~1.65",
+      "chain_id": 73,
+      "chain_order": 1,
+      "chain_name": "幽星光→曜星光→暮星辰",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "346",
+      "name": "曜星光",
+      "height": "0.88~1.05",
+      "weight": "3~4.5",
+      "chain_id": 73,
+      "chain_order": 2,
+      "chain_name": "幽星光→曜星光→暮星辰",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "347",
+      "name": "暮星辰",
+      "height": "1.85~2.05",
+      "weight": "7.5~10.5",
+      "chain_id": 73,
+      "chain_order": 3,
+      "chain_name": "幽星光→曜星光→暮星辰",
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ]
+    },
+    {
+      "id": "348",
+      "name": "钨丝贝贝",
+      "height": "0.54~0.73",
+      "weight": "9.70~14.80",
+      "chain_id": 74,
+      "chain_order": 1,
+      "chain_name": "钨丝贝贝→辉光幕机→机幕方舟",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "349",
+      "name": "辉光幕机",
+      "height": "1.03~1.41",
+      "weight": "31.50~57.60",
+      "chain_id": 74,
+      "chain_order": 2,
+      "chain_name": "钨丝贝贝→辉光幕机→机幕方舟",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "350",
+      "name": "机幕方舟",
+      "height": "1.68~2.01",
+      "weight": "128.00~237.00",
+      "chain_id": 74,
+      "chain_order": 3,
+      "chain_name": "钨丝贝贝→辉光幕机→机幕方舟",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "351",
+      "name": "凡雀",
+      "height": "0.35~0.50",
+      "weight": "3.08~6.00",
+      "chain_id": 75,
+      "chain_order": 1,
+      "chain_name": "凡雀→紫翎鹰→凡鹰",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "352",
+      "name": "紫翎鹰",
+      "height": "0.65~0.85",
+      "weight": "13.04~20.50",
+      "chain_id": 75,
+      "chain_order": 2,
+      "chain_name": "凡雀→紫翎鹰→凡鹰",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "353",
+      "name": "凡鹰",
+      "height": "1.64~2.23",
+      "weight": "46.35~68.27",
+      "chain_id": 75,
+      "chain_order": 3,
+      "chain_name": "凡雀→紫翎鹰→凡鹰",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "354",
+      "name": "小雪人",
+      "height": "0.75~0.94",
+      "weight": "43.30~87.50",
+      "chain_id": 128,
+      "chain_order": 1,
+      "chain_name": "小雪人→雪怪",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "355",
+      "name": "雪怪",
+      "height": "1.75~2.33",
+      "weight": "120.00~187.40",
+      "chain_id": 128,
+      "chain_order": 2,
+      "chain_name": "小雪人→雪怪",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "356",
+      "name": "爆焰仔",
+      "height": "0.65~0.85",
+      "weight": "21.00~38.50",
+      "chain_id": 129,
+      "chain_order": 1,
+      "chain_name": "爆焰仔→爆焰喷喷",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "357",
+      "name": "爆焰喷喷",
+      "height": "1.65~1.81",
+      "weight": "47.50~69.50",
+      "chain_id": 129,
+      "chain_order": 2,
+      "chain_name": "爆焰仔→爆焰喷喷",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    },
+    {
+      "id": "358",
+      "name": "猴麦仔",
+      "height": "0.57~0.79",
+      "weight": "8.40~17.60",
+      "chain_id": 130,
+      "chain_order": 1,
+      "chain_name": "猴麦仔→音碟吼",
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "359",
+      "name": "音碟吼",
+      "height": "0.77~1.08",
+      "weight": "23.10~40.80",
+      "chain_id": 130,
+      "chain_order": 2,
+      "chain_name": "猴麦仔→音碟吼",
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "360",
+      "name": "加油海葵",
+      "height": "0.35~0.47",
+      "weight": "2.90~4.15",
+      "chain_id": 131,
+      "chain_order": 1,
+      "chain_name": "加油海葵→加油蟹",
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "361",
+      "name": "加油蟹",
+      "height": "0.51~0.78",
+      "weight": "6.75~11.70",
+      "chain_id": 131,
+      "chain_order": 2,
+      "chain_name": "加油海葵→加油蟹",
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ]
+    },
+    {
+      "id": "362",
+      "name": "小丑豆豆",
+      "height": "0.48~0.65",
+      "weight": "4.85~6.35",
+      "chain_id": 76,
+      "chain_order": 1,
+      "chain_name": "小丑豆豆→小丑兔→小丑公爵",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "363",
+      "name": "小丑兔",
+      "height": "0.78~0.96",
+      "weight": "11.75~14.75",
+      "chain_id": 76,
+      "chain_order": 2,
+      "chain_name": "小丑豆豆→小丑兔→小丑公爵",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "364",
+      "name": "小丑公爵",
+      "height": "1.24~1.63",
+      "weight": "38.50~47.60",
+      "chain_id": 76,
+      "chain_order": 3,
+      "chain_name": "小丑豆豆→小丑兔→小丑公爵",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "365",
+      "name": "烟花团",
+      "height": "0.33~0.50",
+      "weight": "5.05~6.32",
+      "chain_id": 132,
+      "chain_order": 1,
+      "chain_name": "烟花团→烟花伯爵",
+      "egg_groups": [
+        "机械组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "366",
+      "name": "烟花伯爵",
+      "height": "0.60~0.88",
+      "weight": "10.50~22.50",
+      "chain_id": 132,
+      "chain_order": 2,
+      "chain_name": "烟花团→烟花伯爵",
+      "egg_groups": [
+        "机械组",
+        "魔力组"
+      ]
+    },
+    {
+      "id": "367",
+      "name": "咕咕帽",
+      "height": "0.38~0.55",
+      "weight": "2.18~5.76",
+      "chain_id": 133,
+      "chain_order": 1,
+      "chain_name": "咕咕帽→咕德帽帽",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "368",
+      "name": "咕德帽帽",
+      "height": "0.69~0.96",
+      "weight": "7.68~14.30",
+      "chain_id": 133,
+      "chain_order": 2,
+      "chain_name": "咕咕帽→咕德帽帽",
+      "egg_groups": [
+        "妖精组"
+      ]
+    },
+    {
+      "id": "369",
+      "name": "炫光迪迪",
+      "height": "0.47~0.68",
+      "weight": "26.00~37.10",
+      "chain_id": 134,
+      "chain_order": 1,
+      "chain_name": "炫光迪迪→霹雳迪迪",
+      "egg_groups": [
+        "动物组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "370",
+      "name": "霹雳迪迪",
+      "height": "1.60~1.87",
+      "weight": "66.80~89.30",
+      "chain_id": 134,
+      "chain_order": 2,
+      "chain_name": "炫光迪迪→霹雳迪迪",
+      "egg_groups": [
+        "动物组",
+        "大地组"
+      ]
+    },
+    {
+      "id": "371",
+      "name": "小鼓象",
+      "height": "0.64~0.83",
+      "weight": "5.16~8.30",
+      "chain_id": 135,
+      "chain_order": 1,
+      "chain_name": "小鼓象→巨鼓象",
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "372",
+      "name": "巨鼓象",
+      "height": "0.93~1.20",
+      "weight": "35.60~59.10",
+      "chain_id": 135,
+      "chain_order": 2,
+      "chain_name": "小鼓象→巨鼓象",
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ]
+    },
+    {
+      "id": "373",
+      "name": "牵线木偶",
+      "height": "0.63~0.91",
+      "weight": "5.97~8.70",
+      "chain_id": 136,
+      "chain_order": 1,
+      "chain_name": "牵线木偶→帅帅魔偶",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "374",
+      "name": "帅帅魔偶",
+      "height": "0.89~1.27",
+      "weight": "15.10~21.20",
+      "chain_id": 136,
+      "chain_order": 2,
+      "chain_name": "牵线木偶→帅帅魔偶",
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ]
+    },
+    {
+      "id": "375",
+      "name": "学院呱呱",
+      "height": "0.49~0.66",
+      "weight": "4.82~5.50",
+      "chain_id": 163,
+      "chain_order": 1,
+      "chain_name": "学院呱呱",
+      "egg_groups": [
+        "无法孵蛋"
+      ]
+    }
+  ]
+}

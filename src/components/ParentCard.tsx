@@ -22,7 +22,8 @@ import {
   getEggGroupStyle,
   getBrandStyle,
   getAvailableSprites,
-  getSpriteFormDisplayName
+  getSpriteFormDisplayName,
+  getPetGuideSize
 } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
@@ -89,6 +90,7 @@ export const ParentCard = React.memo(function ParentCard({
   const spriteFile = getSpriteFileName(parent.sprite);
   const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
   const availableSprites = getAvailableSprites(parent.sprite);
+  const guideSize = getPetGuideSize(parent.sprite);
 
   const renderStatSelect = (sIdx: number, currentValue: string) => {
     const badgeColors = getStatBadgeStyle(currentValue);
@@ -157,7 +159,7 @@ export const ParentCard = React.memo(function ParentCard({
         </div>
 
         {/* Avatar Container */}
-        <div className="w-20 h-20 sm:w-full sm:h-auto sm:aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
+        <div className="w-24 h-24 sm:w-full sm:h-auto sm:aspect-square rounded-xl border border-slate-150 bg-slate-50/50 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
           {spriteUrl ? (
             <img
               src={spriteUrl}
@@ -242,6 +244,19 @@ export const ParentCard = React.memo(function ParentCard({
                   </span>
                 );
               })}
+            </div>
+          )}
+
+          {guideSize && (
+            <div className="flex flex-col gap-1 bg-slate-50/90 border border-slate-100/60 p-1.5 rounded-md text-[10px] text-slate-500 mt-1.5 select-none w-full sm:w-fit sm:min-w-[76px] shrink-0 shadow-3xs items-start sm:items-center">
+              <div className="flex items-center gap-1" title="标准身高范围">
+                <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span className="font-semibold text-slate-600 whitespace-nowrap">{guideSize.height} m</span>
+              </div>
+              <div className="flex items-center gap-1" title="标准体重范围">
+                <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span className="font-semibold text-slate-600 whitespace-nowrap">{guideSize.weight} kg</span>
+              </div>
             </div>
           )}
         </div>

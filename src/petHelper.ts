@@ -1,5 +1,6 @@
 import eggPetList from "../images/洛克王国_蛋组精灵表.json";
 import spriteFiles from "./sprite_files.json";
+import allGuideData from "../images/全图鉴.json";
 
 export interface PetData {
   display_name: string;
@@ -122,6 +123,43 @@ export const getPetDetails = (name: string): PetDetails | null => {
   if (!name) return null;
   const baseName = getBasePetName(name);
   return petDataMap[baseName] || null;
+};
+
+/**
+ * 获取精灵的标准身高和体重范围
+ * 支持带有下划线后缀的多形态智能匹配
+ */
+export const getPetGuideSize = (spriteName: string): { height: string; weight: string } | null => {
+  if (!spriteName) return null;
+  const parts = spriteName.split("_");
+  const baseName = parts[0];
+  const formName = parts[1];
+
+  const spirits = (allGuideData as any).spirits || [];
+
+  // 1. 若有特定形态后缀，优先尝试精确匹配基础名和形态名
+  if (formName) {
+    const matched = spirits.find(
+      (s: any) => s.name === baseName && s.region_form === formName
+    );
+    if (matched) {
+      return {
+        height: matched.height || "",
+        weight: matched.weight || "",
+      };
+    }
+  }
+
+  // 2. 兜底匹配：只查找基础名对应的第一个精灵条目
+  const matchedBase = spirits.find((s: any) => s.name === baseName);
+  if (matchedBase) {
+    return {
+      height: matchedBase.height || "",
+      weight: matchedBase.weight || "",
+    };
+  }
+
+  return null;
 };
 
 /**
