@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Egg,
@@ -145,6 +145,33 @@ export default function App() {
   const [editingAccountId, setEditingAccountId] = useState<string | null>(null);
   const [editingNickname, setEditingNickname] = useState("");
   const [editingUid, setEditingUid] = useState("");
+
+  const lastActiveAccountIdRef = useRef(activeAccountId);
+
+  // 自定义二次确认弹窗状态
+  const [confirmConfig, setConfirmConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {}
+  });
+
+  const showConfirm = (title: string, message: string, onConfirm: () => void) => {
+    setConfirmConfig({
+      isOpen: true,
+      title,
+      message,
+      onConfirm: () => {
+        onConfirm();
+        setConfirmConfig(prev => ({ ...prev, isOpen: false }));
+      }
+    });
+  };
   
   // 导入导出管理状态
   const [exportType, setExportType] = useState<"single" | "all">("single");
@@ -472,6 +499,18 @@ export default function App() {
   useEffect(() => {
     if (!isLoaded || !activeAccountId) return;
 
+    // 1. 账号切换拦截：如果 activeAccountId 改变，说明正在切换账号。
+    // 这时我们仅同步 ref 值并退出，不做保存，避免将旧账号的数据覆写到新账号上！
+    if (lastActiveAccountIdRef.current !== activeAccountId) {
+      lastActiveAccountIdRef.current = activeAccountId;
+      return;
+    }
+
+    // 2. 强校验：如果当前 activeAccountId 在 accounts 列表中已不存在，说明该账号已经被删除，绝对不保存！
+    if (!accounts.some(a => a.id === activeAccountId)) {
+      return;
+    }
+
     setIsSaving(true);
     
     const mergedDataMap = {
@@ -531,7 +570,7 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [
     pets, trades, parents, 
-    accounts, activeAccountId,
+    accounts, activeAccountId, accountDataMap,
     showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, 
     isLoaded
   ]);
@@ -918,7 +957,7 @@ export default function App() {
         motherStats: [...pair.mother.stats],
         groups: [...groups],
         brand: pair.brand,
-        status: "未开生",
+        status: "正在孵，可预约",
         isLimit: "无极限蛋",
         is3V: isStatsMatch ? "3V" : "否",
         hideStats: false,
@@ -2802,12 +2841,17 @@ export default function App() {
                           </div>
 
                           {/* Breed Indicator (Middle) */}
-                          <div className="flex flex-col items-center justify-center shrink-0 px-1.5 select-none">
+                          <div className="flex flex-col items-center justify-center shrink-0 px-1.5 select-none gap-0.5">
                             <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded border shadow-2xs ${getBrandStyle(pair.brand)}`}>
                               {pair.brand}
                             </span>
-                            <div className="text-[10px] text-indigo-400 font-bold mt-1">
-                              ❤
+                            <div className="text-[10px] text-indigo-400 font-bold mt-0.5 flex flex-col items-center gap-0.5">
+                              <span>❤</span>
+                              {isStatsMatch && (
+                                <span className="text-[9px] font-extrabold bg-emerald-100 text-emerald-700 px-1 rounded-sm border border-emerald-200 leading-tight">
+                                  3V
+                                </span>
+                              )}
                             </div>
                           </div>
 
@@ -3177,9 +3221,11 @@ export default function App() {
                                     {accounts.length > 1 && (
                                       <button
                                         onClick={() => {
-                                          if (confirm(`确定要删除账号「${acc.nickname}」吗？此操作无法恢复，且会同步抹去其所有孵蛋数据！`)) {
-                                            handleDeleteAccount(acc.id);
-                                          }
+                                          showConfirm(
+                                            "删除账号确认",
+                                            `确定要删除账号「${acc.nickname}」吗？此操作无法恢复，且会同步抹去其所有孵蛋数据！`,
+                                            () => handleDeleteAccount(acc.id)
+                                          );
                                         }}
                                         className="text-rose-500 hover:text-rose-700 font-semibold px-1.5 py-0.5 cursor-pointer border border-transparent"
                                       >
@@ -3283,9 +3329,11 @@ export default function App() {
                     </button>
                     <button
                       onClick={() => {
-                        if (confirm(`您确定要使用导入的数据，完全覆盖当前活动的账号「${accounts.find(a => a.id === activeAccountId)?.nickname || "默认账号"}」吗？覆盖后旧数据不可恢复！`)) {
-                          confirmImportSingle(false);
-                        }
+                        showConfirm(
+                          "覆盖数据确认",
+                          `您确定要使用导入的数据，完全覆盖当前活动的账号「${accounts.find(a => a.id === activeAccountId)?.nickname || "默认账号"}」吗？覆盖后旧数据不可恢复！`,
+                          () => confirmImportSingle(false)
+                        );
                       }}
                       className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg transition-colors shadow-sm text-xs cursor-pointer text-center border border-transparent"
                     >
@@ -3637,6 +3685,40 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* 自定义二次确认弹窗 */}
+      {confirmConfig.isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* 背景遮罩 */}
+          <div 
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-200" 
+            onClick={() => setConfirmConfig(prev => ({ ...prev, isOpen: false }))}
+          ></div>
+          
+          {/* 弹窗主体 */}
+          <div className="relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-2xl max-w-sm w-full text-center animate-in zoom-in-95 duration-150 z-[101]">
+            <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400 flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2">{confirmConfig.title}</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed whitespace-pre-wrap">{confirmConfig.message}</p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => setConfirmConfig(prev => ({ ...prev, isOpen: false }))}
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-transparent"
+              >
+                取消
+              </button>
+              <button
+                onClick={confirmConfig.onConfirm}
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-colors shadow-sm border border-transparent"
+              >
+                确定
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
     </div>
   );

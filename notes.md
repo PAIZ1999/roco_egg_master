@@ -145,3 +145,23 @@ window.electronAPI.saveData({
      - `UID` 输入框
      - `昵称` 输入框
      - “创建” 按钮
+
+---
+
+## 5. 严重竞态修复与自定义二次确认弹窗设计
+
+### 5.1 异步状态覆写竞态问题 (State Race Conditions)
+在多账号切换和删除流程中，`activeAccountId`（ID 状态）和 `pets, trades, parents`（数据状态）的修改是分离且异步的。
+- **问题表现**：当删除或切换账号时，`activeAccountId` 改变会触发自动保存的 `useEffect`。由于 React 状态合并更新机制，在此瞬间 `pets` 等数据还保留着上一个账号的内容。如果不加控制，`useEffect` 会将上一个账号的数据写到新账号的 ID 键值下，导致新账号的数据被旧账号数据彻底覆盖/污染。
+- **解决方案**：引入 `lastActiveAccountIdRef = useRef(activeAccountId)`。
+  - 在 `useEffect` 的最开头，校验 `lastActiveAccountIdRef.current !== activeAccountId`。如果为真，说明该轮渲染处于“账号切换过渡期”。
+  - 此时立刻同步 `lastActiveAccountIdRef.current = activeAccountId` 并执行 `return`，**强行拦截该次自动保存**，避开脏数据覆写。
+  - 随后，`setPets` 等状态对应的后续渲染发生，`pets` 数据就位，再次触发 `useEffect`，此时 `lastActiveAccountIdRef.current === activeAccountId` 成立，正常执行写盘。
+
+### 5.2 强校验防止僵尸账号写回
+在删除当前账号时，若 `useEffect` 侦听到状态变化，可能会在瞬间将已被剔除的账号数据重新保存回 local 数据。
+- **解决方案**：在 `useEffect` 开头增加防御校验 `if (!accounts.some(a => a.id === activeAccountId)) return;`，如激活账号在列表中已被删除，则直接安全拦截，杜绝被删除账号残留写回。
+
+### 5.3 彻底弃用原生 confirm
+原生 `window.confirm` 在 Electron (桌面客户端) 或部分沙箱环境下会产生主线程阻塞或抛出未捕获的弹窗状态错误，尤其影响自动化回归测试的稳定性。
+- **解决方案**：实现 React 态的 `confirmConfig` 和 `showConfirm` 函数，采用自定义的磨砂玻璃遮罩层和精美圆角 Modal 实现完全非阻塞的确认交互，视觉上与洛克王国孵蛋表的高清视觉风格达到 100% 协调。
