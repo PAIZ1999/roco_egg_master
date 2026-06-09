@@ -311,11 +311,10 @@ export const getSpriteFileName = (petName: string): string | null => {
 
 /**
  * Normalizes paths for development vs. production (packaged Electron App)
+ * Images are at dist/images/, so we always use ./ relative path.
+ * vite base: './' ensures relative paths work in both dev and packaged mode.
  */
 export const getImagePath = (relPath: string): string => {
-  if (window.location.protocol === "file:") {
-    return `../${relPath}`;
-  }
   return `./${relPath}`;
 };
 
