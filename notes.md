@@ -1,73 +1,44 @@
-# Roco Egg Master 移动端适配研究笔记
+# Roco Egg Master 精灵蛋窝卡片排版优化研究笔记
 
-## 1. 核心设计目标与体验约束
+## 1. 核心改进目标与设计原则
 
 > [!IMPORTANT]
-> 根据用户的核心反馈，我们在进行任何移动端排版适配时，必须严格遵守以下体验约束：
-> 1. **文字零重叠与零多余换行**：所有文本标签（包括系别 Badge、性格字样、三围数值、输入框占位符等）在小屏（小至 320px 宽）下均不可重叠，不允许出现不合理的折行断字。
-> 2. **紧凑有序的模块布局**：各个大模块（如过滤器、卡片列表、数据统计、交易表单及看板）在手机视口下应排列紧凑、边界清晰，禁止发生盒子挤压、拉伸变形、阴影折叠或超出视口的水平溢出。
-> 3. **完美对齐与物理隔离**：在优化移动端的同时，通过 CSS 媒体断点实现物理级隔离，确保 1200px 高清导出长图的 PC 端布局绝对不发生对齐错乱。
+> 针对用户提出的蛋窝中心卡片排版不够紧凑、文字偏小、牌子/极限/状态未对齐以及组别底色缺失等痛点，制定以下重构原则：
+> 1. **一行合并，精细分栏**：将“牌子 (brand)”、“有无极限蛋 (isLimit)”以及“蛋窝状态 (status)”三个原本占两行的配置合并到同一行，使用 `grid grid-cols-12` 布局，并分配 3:4:5 的列宽比例，以容纳最长的状态文本。
+> 2. **组别区块底色化与标签 Badge 化**：将原本悬浮在白底上的“宠物蛋组”配置行，改造成带有 `bg-slate-50/70` 浅灰色底盘的卡片区块，并且将“宠物蛋组”标签本身改造成带有精美边框和高对比底色的胶囊型 Badge，与父/母方配置标签呼应。
+> 3. **紧凑间距与放大字号**：
+>    - 缩小右侧栏组件之间的 Gap 间距（如从 `gap-1.5` 微调为 `gap-1` 或 `gap-1.25`）。
+>    - 调大所有 Select 下拉菜单的文字大小（从 `text-[10px]` 提升到 `text-xs`，并且使用 `font-bold` 或 `font-black`），同时调大性格输入框的文本大小（`text-[13px]`）。
+> 4. **保持 1200px 导出一致性**：由于 1200px 长图导出时使用克隆 DOM 容器且强制设宽，所涉及的所有 Tailwind 响应式及布局更改必须完美兼容 PC/1200px 克隆节点的渲染逻辑。
 
-## 2. 移动端主要痛点分析
+## 2. 详细重构细节方案
 
-### 2.1 头部与数据统计卡片
-- **当前现状**:
-  - 数据统计卡片在窄屏下会自动折行，但如果屏幕非常窄（如 320px - 360px），多列布局的文字还是容易发生换行或溢出。
-  - Credits 区域和标题栏在移动端会挤占过多的头部高度。
-- **改进方案**:
-  - 减小移动端的 Banner 内边距。
-  - 在移动端（小于 640px），统计卡片采用 `grid-cols-2` 且移除不太重要的图标，或缩减文本大小。
+### 2.1 牌子/极限蛋/状态一列化 (同一行)
+在 `SortableCard.tsx` 中，合并原本独立的 Brand/Limit Grid 与 Status Grid：
+- **容器样式**：
+  `grid grid-cols-12 gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60`
+- **列分配**：
+  - **牌子** (`col-span-3`):
+    - 标签: `text-[9px] font-bold text-slate-400 select-none`
+    - select: `text-xs font-bold py-0.5 px-0.5 ...`
+  - **极限蛋** (`col-span-4`):
+    - 标签: `text-[9px] font-bold text-slate-400 select-none`
+    - select: `text-xs font-bold py-0.5 px-0.5 ...`
+  - **状态** (`col-span-5`):
+    - 标签: `text-[9px] font-bold text-slate-400 select-none`
+    - select: `text-xs font-bold py-0.5 px-0.5 ...`
 
-### 2.2 搜索与筛选栏（Filters Row）
-- **当前现状**:
-  - 搜索、性格、蛋组、牌子、状态、极限、3V，共有 7 个过滤下拉框/输入框加一个水印控制面板。
-  - 在手机上它们会全部平铺开来，直接占满大半个手机屏幕，用户无法一眼看到底下的精灵卡片。
-- **改进方案**:
-  - 在移动端默认只展示“搜索框”和“高级筛选”按钮。
-  - 点击“高级筛选”按钮后，以下拉手风琴或滑出抽屉的形式展开其他 6 个筛选框和水印配置面板。
-  - 在大屏幕（`md:` 断点以上）依然保持原来的直接铺开布局，无缝兼容 PC 端。
+### 2.2 组别区块底色与 Badge 增强
+在 `SortableCard.tsx` 中，重构宠物蛋组行的结构：
+- **容器样式**：
+  `flex items-center justify-between gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60`
+- **宠物蛋组 Label 样式**：
+  `text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200/50 select-none shrink-0`
+- **下拉框 select 样式**：
+  `text-xs font-bold py-0.5 px-2.5 ...`
+- **操作按钮** (加减蛋组) 样式保持原有并微调间距。
 
-### 2.3 拖拽排序（Dnd-kit）与滑屏冲突
-- **当前现状**:
-  - 系统使用 `@dnd-kit/core` 的 `PointerSensor`，不支持移动端触屏拖拽。
-  - 如果盲目添加 `TouchSensor`，当用户在手机上用手指上下滑动翻页时，一旦碰到精灵卡片，就会误触发拖拽，导致页面卡死无法滚动。
-- **改进方案**:
-  - 引入 `TouchSensor`，并为其配置 `activationConstraint` 约束：
-    ```typescript
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 250,      // 按住 250ms 以上才触发拖拽（长按）
-        tolerance: 5,    // 允许按住期间的手指微小晃动偏差不超过 5px
-      }
-    })
-    ```
-  - 普通滑屏操作触发快、移动多，会直接被 Dnd-kit 忽略，从而触发浏览器的原生页面滚动，完美解决冲突。
-
-### 2.4 精灵蛋窝卡片（SortableCard）与换蛋卡片
-- **当前现状**:
-  - 蛋窝卡片为左右分栏（4/12 宽度头像，8/12 宽度表单）。在 370px 以下的极窄手机屏上，右边的性格多形态、三围图标和蛋组稍微有些拥挤。
-  - 换蛋发布表单在窄屏下依然是横向排版，会溢出或挤压变形。
-- **改进方案**:
-  - 换蛋表单使用 `grid-cols-1 md:grid-cols-3` 或 flex 堆叠，使其在移动端自动变成单列垂直布局。
-  - 精灵蛋窝卡片针对 `@media (max-width: 480px)` 进行微调，适度减小 `Autocomplete` 的字体和卡片的内边距，确保内容不溢出。
-  - 换蛋展示卡片使用 flex/grid 转换，缩减小屏幕的 padding。
-
-### 2.5 下拉联想 Portal（Autocomplete）移动端自适应
-- **当前现状**:
-  - `Autocomplete` 是通过 Portal 挂载在 body 上的，且会实时计算相对于输入框的绝对位置。
-  - 移动端输入法键盘弹出时，整个视口会被挤压（VisualViewport 变化），可能引起下拉框定位偏移或被键盘遮挡。
-- **改进方案**:
-  - 在 `Autocomplete` 组件中，监听窗口的滚动以及 `visualViewport` 的 `resize` 事件，实时更新位置。
-  - 为 Autocomplete 的 input 框设置适当的 `type="text"`，禁用浏览器的默认联想（`autoComplete="off" autocapitalize="off"`），防止遮挡 Portal 菜单。
-
----
-
-## 3. 长图导出（html2canvas-pro）一致性保障
-
-- **原理**:
-  - 系统导出长图时，会克隆一份独立的 `#export-container` 到离屏 DOM 中，并显式指定其样式 `width: 1200px`。
-  - `html2canvas` 是基于这个 1200px 的克隆容器进行渲染的。
-- **安全隔离**:
-  - 只要我们将移动端的响应式媒体查询限制在 `max-width: 768px` 以下（即使用 Tailwind 的默认 `md:` 640px/768px 或自定义的移动端条件），那么在 1200px 渲染宽度下，克隆容器将**必然匹配 PC 端的样式（> 768px）**。
-  - 因此，所有针对手机端（< 768px）的折叠、重排等样式调整，在导出 1200px 宽度的长图时**全部不生效**，长图将依然保持原来精致的 PC 端横向对称排版！
-  - 这保证了我们在优化移动端体验时，可以放开手脚，完全不用担心弄乱导出的高保真长图。
+### 2.3 间距与字号调优
+- **主要容器**: 将 `sm:col-span-8 flex flex-col justify-start gap-1.5` 的 `gap-1.5` 改为 `gap-1` 以实现极致紧凑。
+- **性格输入框 Autocomplete**: 将 `inputClassName` 中的 `text-xs` 改为 `text-[13px] font-semibold`。
+- **三围状态文字**: 若三围隐藏，说明条与显示按钮的字号保持 `text-xs`，优化其内边距。

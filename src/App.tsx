@@ -83,7 +83,7 @@ const migratePets = (rawList: any[]): EggPet[] => {
       sprite: p.sprite || "",
       groups: p.groups || [EGG_GROUPS[0]],
       brand: p.brand || BRAND_OPTIONS[0],
-      status: p.status || NEST_STATUS_OPTIONS[0],
+      status: p.status === "已撤窝，要提前换产线" ? "已撤窝" : (p.status || NEST_STATUS_OPTIONS[0]),
       isLimit: p.isLimit === "是" || p.isLimit === "极限" || p.isLimit === "有极限蛋" ? "有极限蛋" : "无极限蛋",
       is3V: p.is3V === "是" ? "3V" : (p.is3V === "" || !p.is3V ? "否" : p.is3V),
       hideStats: !!p.hideStats,

@@ -256,7 +256,7 @@ export const getStatusStyle = (status: string): string => {
       return "bg-sky-100 border-sky-300 text-sky-800 font-bold shadow-xs";
     case "接投资":
       return "bg-purple-100 border-purple-300 text-purple-800 font-bold shadow-xs";
-    case "已撤窝，要提前换产线":
+    case "已撤窝":
       return "bg-orange-100 border-orange-300 text-orange-850 font-bold shadow-xs";
     default:
       return "bg-slate-100 border-slate-250 text-slate-600 font-medium";

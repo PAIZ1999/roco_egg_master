@@ -302,7 +302,7 @@ export const SortableCard = React.memo(function SortableCard({
       </div>
 
       {/* Right Column: Editing settings (occupies 8/12 cols, approx 67% width) */}
-      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1.5 border-t sm:border-t-0 border-slate-100 pt-2.5 sm:pt-0">
+      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 pt-2.5 sm:pt-0">
         {/* Father & Mother Configurations */}
         <div className="grid grid-cols-2 gap-2">
           {/* Father Column */}
@@ -322,7 +322,7 @@ export const SortableCard = React.memo(function SortableCard({
                       placeholder="选择性格"
                       onChange={(val) => handleUpdateNature(pet.id as string, "father", nIdx, val)}
                       className="flex-1 min-w-0"
-                      inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
+                      inputClassName="font-bold text-[13px] text-center text-slate-800 bg-slate-50 border border-slate-200 rounded-md py-0.5 px-1 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
                     />
                     <div className="flex items-center gap-0.5 shrink-0 action-buttons select-action-buttons">
                       {(pet.fatherNatures || []).length > 1 && (
@@ -367,7 +367,7 @@ export const SortableCard = React.memo(function SortableCard({
                       placeholder="选择性格"
                       onChange={(val) => handleUpdateNature(pet.id as string, "mother", nIdx, val)}
                       className="flex-1 min-w-0"
-                      inputClassName="font-bold text-xs text-center text-slate-700 bg-slate-50 border border-slate-200 rounded-md py-1 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
+                      inputClassName="font-bold text-[13px] text-center text-slate-800 bg-slate-50 border border-slate-200 rounded-md py-0.5 px-1 w-full focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all shadow-3xs"
                     />
                     <div className="flex items-center gap-0.5 shrink-0 action-buttons select-action-buttons">
                       {(pet.motherNatures || []).length > 1 && (
@@ -423,8 +423,8 @@ export const SortableCard = React.memo(function SortableCard({
         {/* Egg Groups & Settings Footer */}
         <div className="flex flex-col gap-1.5 border-t border-slate-100 pt-2 shrink-0">
           {/* Egg Groups Row */}
-          <div className="flex items-center justify-between gap-1.5">
-            <span className="text-[10px] font-bold text-slate-400 select-none shrink-0">
+          <div className="flex items-center justify-between gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
+            <span className="text-[10px] font-bold text-teal-700 bg-teal-50 border border-teal-200/50 px-1.5 py-0.5 rounded-md select-none shrink-0 flex items-center gap-0.5">
               宠物蛋组
             </span>
             <div className="flex flex-wrap gap-1 items-center justify-end flex-1">
@@ -437,7 +437,7 @@ export const SortableCard = React.memo(function SortableCard({
                       <select
                         value={grp}
                         onChange={(e) => handleUpdateGroup(pet.id as string, gIdx, e.target.value)}
-                        className={`appearance-none text-[10px] font-bold text-center border rounded-full py-0.5 px-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300 transition-all ${getEggGroupStyle(
+                        className={`appearance-none text-xs font-bold text-center border rounded-full py-0.5 px-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300 transition-all ${getEggGroupStyle(
                           grp
                         )}`}
                       >
@@ -475,15 +475,15 @@ export const SortableCard = React.memo(function SortableCard({
             </div>
           </div>
 
-          {/* Brand, Limit Grid */}
-          <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
+          {/* Brand, Limit, Status Row */}
+          <div className="grid grid-cols-12 gap-1 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
             {/* Brand Column */}
-            <div className="flex flex-col gap-0.5">
+            <div className="col-span-3 flex flex-col gap-0.5">
               <span className="text-[9px] font-bold text-slate-400 select-none">牌子</span>
               <select
                 value={pet.brand}
                 onChange={(e) => handleUpdateBrand(pet.id as string, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-250 transition-colors ${getBrandStyle(
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-250 transition-colors ${getBrandStyle(
                   pet.brand
                 )}`}
               >
@@ -496,12 +496,12 @@ export const SortableCard = React.memo(function SortableCard({
             </div>
 
             {/* Limit Column */}
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[9px] font-bold text-slate-400 select-none">有无极限蛋</span>
+            <div className="col-span-4 flex flex-col gap-0.5">
+              <span className="text-[9px] font-bold text-slate-400 select-none">极限蛋</span>
               <select
                 value={pet.isLimit}
                 onChange={(e) => handleUpdateLimit(pet.id as string, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "有极限蛋"
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 transition-colors ${pet.isLimit === "有极限蛋"
                   ? "bg-amber-100 border-amber-300 text-amber-800 font-bold"
                   : "bg-slate-105 border-slate-205 text-slate-650 font-medium"
                   }`}
@@ -513,16 +513,14 @@ export const SortableCard = React.memo(function SortableCard({
                 ))}
               </select>
             </div>
-          </div>
 
-          {/* Status Column (Standalone Row) */}
-          <div className="bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[9px] font-bold text-slate-400 select-none">状态</span>
+            {/* Status Column */}
+            <div className="col-span-5 flex flex-col gap-0.5">
+              <span className="text-[9px] font-bold text-slate-400 select-none">蛋窝状态</span>
               <select
                 value={pet.status}
                 onChange={(e) => handleUpdateStatus(pet.id as string, e.target.value)}
-                className={`appearance-none text-[10px] font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors ${getStatusStyle(
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-0.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors ${getStatusStyle(
                   pet.status
                 )}`}
               >
@@ -568,13 +566,13 @@ export const SortableCard = React.memo(function SortableCard({
                 statusLabel = "孵化中";
                 desc = "精灵蛋在窝里温暖孵化";
                 isPing = true;
-              } else if (pet.status === "已撤窝，要提前换产线") {
+              } else if (pet.status === "已撤窝") {
                 containerClass = "bg-orange-50/70 border-orange-300/60";
                 dotClass = "bg-orange-500";
                 textClass = "text-orange-950";
                 statusTextClass = "text-orange-700 bg-orange-100/80 border border-orange-200";
-                statusLabel = "要提前换线";
-                desc = "已撤窝，换下条产线前置";
+                statusLabel = "已撤窝";
+                desc = "当前蛋窝精灵蛋已撤窝";
               } else if (pet.status === "接投资") {
                 containerClass = "bg-purple-50/70 border-purple-300/60";
                 dotClass = "bg-purple-500";

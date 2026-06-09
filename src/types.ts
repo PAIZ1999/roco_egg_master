@@ -57,7 +57,7 @@ export const BRAND_OPTIONS = ["大粗", "大婉", "小粗", "小婉", "普通", 
 export const NEST_STATUS_OPTIONS = [
   "有现蛋",
   "正在孵，可预约",
-  "已撤窝，要提前换产线",
+  "已撤窝",
   "接投资"
 ];
 
