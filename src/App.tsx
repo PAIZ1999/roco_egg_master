@@ -2841,17 +2841,12 @@ export default function App() {
                           </div>
 
                           {/* Breed Indicator (Middle) */}
-                          <div className="flex flex-col items-center justify-center shrink-0 px-1.5 select-none gap-0.5">
+                          <div className="flex flex-col items-center justify-center shrink-0 px-1.5 select-none">
                             <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded border shadow-2xs ${getBrandStyle(pair.brand)}`}>
                               {pair.brand}
                             </span>
-                            <div className="text-[10px] text-indigo-400 font-bold mt-0.5 flex flex-col items-center gap-0.5">
-                              <span>❤</span>
-                              {isStatsMatch && (
-                                <span className="text-[9px] font-extrabold bg-emerald-100 text-emerald-700 px-1 rounded-sm border border-emerald-200 leading-tight">
-                                  3V
-                                </span>
-                              )}
+                            <div className="text-[10px] text-indigo-400 font-bold mt-1">
+                              ❤
                             </div>
                           </div>
 
