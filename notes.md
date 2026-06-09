@@ -1,64 +1,147 @@
-# Roco Egg Master 临界值判断与牌子扩充研究笔记
+# Roco Egg Master 多账号管理及导入导出设计笔记
 
-## 1. 核心改进目标与设计原则
+## 1. 核心数据模型与类型扩展
 
-> [!IMPORTANT]
-> 针对用户提出的在身高体重录入时自动判断临界状态，并在智能繁育中加入临界值自动匹配，及格线数据展示，同时牌子加入“单粗嗓门”与“单婉转声”选项的要求，制定以下设计原则：
-> 1. **及格线计算精确度**：
->    - 大块头的及格线 = `最高重量 + (最低重量 - 最高重量) * 0.02`
->    - 小不点的及格线 = `最轻重量 - (最轻重量 - 最重重量) * 0.05`
->    - 解析 `guideSize` 字符串范围，处理单值与多值情形，保证数据计算的健壮性。
-> 2. **临界与达标双维度指示**：
->    - 引入状态判定高亮 Badge，放在左侧头像信息的下方。
->    - **大块头 (达标)**：`height >= maxHeight` 且 `weight >= giantWeightLine`。
->    - **大块头 (临界)**：`height >= maxHeight` 且 `weight < giantWeightLine`（身高达标，体重不够）。
->    - **小不点 (达标)**：`height <= minHeight` 且 `weight <= tinyWeightLine`。
->    - **小不点 (临界)**：`height <= minHeight` 且 `weight > tinyWeightLine`（身高最矮，体重未减够）。
-> 3. **临界值信息展示**：
->    - 父母本卡片中，展示在 `guideSize` 的下方，显示“大及格”与“小及格”具体数值（如 `大及格: 4.58kg`）。
->    - 智能繁育结果卡片中，在子代产出信息下方增加“📏 身高: min~max m”、“⚖️ 大及格: ≥giant kg”、“⚖️ 小及格: ≤tiny kg”的展示，保证繁育预测结果的明确度。
-> 4. **牌子扩充与智能配对机制**：
->    - 新增“单粗嗓门”和“单婉转声”牌子，分别作为“大粗”和“大婉”的临界前置状态。
->    - 智能配对算法适配：
->      - **大粗配对链**：父母牌子皆处于 `["大粗", "单粗嗓门"]` 时匹配通过，子代蛋的牌子强制指定为“大粗”；
->      - **大婉配对链**：父母牌子皆处于 `["大婉", "单婉转声"]` 时匹配通过，子代蛋的牌子强制指定为“大婉”；
->      - 如果是其他牌子，需 `father.brand === mother.brand`，子代蛋牌子继承父母的牌子。
->      - 繁育卡片展示时，子代蛋牌子会显示相应的“大粗”、“大婉”或对应的匹配牌子。
-
-## 2. 数据结构变化与预估
-
-在 `src/types.ts` 中：
+在 `src/types.ts` 中新增以下数据模型：
 ```typescript
-export const BRAND_OPTIONS = [
-  "大粗",
-  "大婉",
-  "小粗",
-  "小婉",
-  "普通",
-  "单大块头",
-  "单粗嗓门",
-  "单婉转声"
-];
+export interface Account {
+  id: string;      // 随机生成的内部唯一 ID
+  uid: string;     // 用户可见/可编辑的洛克王国 UID
+  nickname: string;// 用户可见/可编辑的昵称
+}
+
+export interface AccountData {
+  pets: EggPet[];
+  trades: EggTrade[];
+  parents: ParentPet[];
+}
 ```
 
-在 `src/petHelper.ts` 中实现：
-- `getPetSizeThresholds(spriteName: string): SizeThresholds | null`：包含 min/max 身高体重，以及计算后的小数点对齐的 `giantWeightLine` 与 `tinyWeightLine`。
-- `getBrandStyle(brand: string): string`：增加“单粗嗓门”和“单婉转声”的背景渐变或纯色。
+## 2. 数据存盘与兼容性设计
 
-在 `src/components/ParentCard.tsx` 中：
-- 读取 `getPetSizeThresholds(parent.sprite)`。
-- 判断当前 `height` 与 `weight` 的临界与达标。
-- 将临界值数据放置在身高体重下方。
+全局保存的大 JSON 字段结构演进：
+```typescript
+interface FullSaveData {
+  accounts: Account[];
+  activeAccountId: string;
+  accountDataMap: Record<string, AccountData>;
+  settings: {
+    showWatermarkPanel: boolean;
+    enableWatermark: boolean;
+    watermarkText: string;
+    watermarkOpacity: number;
+    watermarkDensity: string;
+    watermarkSize: number;
+  };
+}
+```
 
-在 `src/App.tsx` 中：
-- 重构 `getPairings()` 中的牌子交集检测规则。
-- 渲染子代繁育卡片下方的临界值。
+### 2.1 向下兼容与首次运行迁移 (Migration)
+当读取到没有 `accounts` 字段的旧数据时：
+- 创建“默认账号”：
+  `id: "default", uid: "default", nickname: "默认账号"`。
+- 将已读取到的 `pets`（经过 `migratePets`）、`trades`（经过 `migrateTrades`）和 `parents` 包装为 `accountDataMap["default"]`。
+- 设置 `activeAccountId: "default"`，`accounts: [defaultAccount]`。
+- 保证用户已有数据零损坏加载。
 
-## 3. 极限大与极限小的优化设计
+### 2.2 自动保存流程
+自动保存的副作用 `useEffect` 应当侦听：
+`[pets, trades, parents, accounts, activeAccountId, showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, isLoaded]`
 
-根据最新的规则要求，为大粗、大婉、小粗、小婉以及大块头（单大块头）体型牌新增极限大/极限小状态。
-当且仅当数据达到边界最值时才触发极限状态显示：
-1. **大体型极限大**：`isGiantBrand === true` 且 `hVal >= thresholds.maxHeight` 且 `wVal >= thresholds.maxWeight`。徽章显示为“极限大”，背景色采用淡粉红/玫瑰色系列高亮（`bg-rose-50 text-rose-700 border-rose-200/60`）。
-2. **小体型极限小**：`isTinyBrand === true` 且 `hVal <= thresholds.minHeight` 且 `wVal <= thresholds.minWeight`。徽章显示为“极限小”，背景色采用靛蓝/深蓝系列高亮（`bg-indigo-50 text-indigo-700 border-indigo-200/60`）。
-3. 如果未达到上述最值但达到及格线，则仍只显示“大块头 (达标)”或“小不点 (达标)”，确保极限判定具有最高特异度。
+每次数据修改时，都使用最新的当前状态组装写盘：
+```typescript
+const mergedMap = {
+  ...accountDataMap,
+  [activeAccountId]: { pets, trades, parents }
+};
+window.electronAPI.saveData({
+  accounts,
+  activeAccountId,
+  accountDataMap: mergedMap,
+  settings: { ... }
+});
+```
 
+### 2.3 账号切换平滑过渡
+切换账号的核心步骤：
+1. **保存当前**：把当前的 `pets, trades, parents` 序列化保存到局部变量 `updatedMap`：
+   ```typescript
+   const updatedMap = {
+     ...accountDataMap,
+     [activeAccountId]: { pets, trades, parents }
+   };
+   setAccountDataMap(updatedMap);
+   ```
+2. **读取目标**：从 `updatedMap` 中读取目标账号 `targetId` 的数据（若不存在则兜底为空数组/默认精灵）：
+   ```typescript
+   const targetData = updatedMap[targetId] || { pets: [], trades: [], parents: [] };
+   ```
+3. **状态更新**：
+   ```typescript
+   setPets(migratePets(targetData.pets));
+   setTrades(migrateTrades(targetData.trades || []));
+   setParents(targetData.parents || []);
+   setActiveAccountId(targetId);
+   ```
+
+---
+
+## 3. 导入导出逻辑细化
+
+为了同时支持**单个账号**和**多账号全量**的导入导出：
+
+### 3.1 导出格式规范
+- **单账号导出 (Single Account Export)**：
+  ```json
+  {
+    "version": "roco_egg_single_account_v1",
+    "uid": "123456",
+    "nickname": "测试账号",
+    "pets": [...],
+    "trades": [...],
+    "parents": [...]
+  }
+  ```
+- **多账号全量导出 (All Accounts Export)**：
+  ```json
+  {
+    "version": "roco_egg_multi_accounts_v1",
+    "accounts": [...],
+    "activeAccountId": "...",
+    "accountDataMap": { ... }
+  }
+  ```
+
+### 3.2 导入智能解析流程
+在 `executeImport(pastedText)` 中，对 JSON 进行格式探针：
+1. **全量多账号备份 (`version === "roco_egg_multi_accounts_v1"`)**：
+   - 提示：“检测到完整的全账号备份（共 X 个账号）。导入将覆盖现有全部账号和数据，是否确认导入？”
+   - 用户确认后，全量更新 `accounts`, `activeAccountId`, `accountDataMap` 并切换状态。
+2. **单账号备份 (`version === "roco_egg_single_account_v1"`) 或老版本备份 (没有 version 标志，但有 `pets` 字段或直接是数组)**：
+   - 提取备份中的 `pets`, `trades`, `parents`。如果包含 `uid` 和 `nickname`，则记录；如果是老版本，默认设为 `导入账号`。
+   - 弹出二级选择框或提供两个按钮选项：
+     - **“覆盖当前账号”**：将当前激活账号的数据（`pets`, `trades`, `parents`）替换为该备份数据，不创建新账号。
+     - **“作为新账号导入”**：在 `accounts` 中追加一个随机 ID 账号，并指定读取出来的 `uid` 和 `nickname`。将数据存入 `accountDataMap` 并自动切换至该新账号。
+
+---
+
+## 4. UI 界面设计细节
+
+1. **Header 右上角账号切换器**：
+   - 采用 Flex 布局，放置在 Credits/呼吸灯区域左侧。
+   - 外观为一个毛玻璃圆角按钮，点击后展开 Dropdown。
+   - 按钮内容：`👤 昵称 (UID)` 加上展开小箭头。
+   - 下拉菜单包含：
+     - 列表中列出所有账号。当前选中的账号右侧有绿色 Check 勾选图标。
+     - 下拉菜单底部有一条分隔线，分隔线下方为“➕ 新增账号”和“⚙️ 账号管理”两个选项。
+2. **账号管理 Modal**：
+   - 用表格或列表形式展示所有账号。
+   - 每行包括：
+     - 昵称（支持内联编辑或点击弹出输入框编辑）
+     - UID（支持编辑）
+     - 单独导出 JSON 按钮
+     - 删除按钮（在账号总数 > 1 时可用，且删除当前账号时会自动切换到其他账号，需二次确认）
+   - Modal 底部提供新增账号的输入表单：
+     - `UID` 输入框
+     - `昵称` 输入框
+     - “创建” 按钮

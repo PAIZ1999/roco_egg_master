@@ -27,7 +27,8 @@ import {
   Heart,
   ExternalLink,
   Ruler,
-  Weight
+  Weight,
+  ChevronDown
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -41,7 +42,9 @@ import {
   LIMIT_OPTIONS,
   THREE_V_OPTIONS,
   EggTrade,
-  cleanNature
+  cleanNature,
+  Account,
+  AccountData
 } from "./types";
 import {
   DndContext,
@@ -131,6 +134,26 @@ const migrateTrades = (rawList: any[]): EggTrade[] => {
 };
 
 export default function App() {
+  // 多账号核心状态
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [activeAccountId, setActiveAccountId] = useState<string>("");
+  const [accountDataMap, setAccountDataMap] = useState<Record<string, AccountData>>({});
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const [newAccUid, setNewAccUid] = useState("");
+  const [newAccNickname, setNewAccNickname] = useState("");
+  const [showAccountModal, setShowAccountModal] = useState(false);
+  const [editingAccountId, setEditingAccountId] = useState<string | null>(null);
+  const [editingNickname, setEditingNickname] = useState("");
+  const [editingUid, setEditingUid] = useState("");
+  
+  // 导入导出管理状态
+  const [exportType, setExportType] = useState<"single" | "all">("single");
+  const [pendingImportData, setPendingImportData] = useState<any>(null);
+  const [importInfoText, setImportInfoText] = useState("");
+  const [importConfirmType, setImportConfirmType] = useState<"none" | "single" | "multi">("none");
+  const [importAsNewNickname, setImportAsNewNickname] = useState("");
+  const [importAsNewUid, setImportAsNewUid] = useState("");
+
   // Persistence state
   const [pets, setPets] = useState<EggPet[]>(() => {
     const saved = localStorage.getItem("roco_egg_data_v2");
@@ -322,15 +345,47 @@ export default function App() {
         try {
           const loadedData = await window.electronAPI.loadData();
           if (loadedData) {
-            if (Array.isArray(loadedData.pets)) {
-              setPets(migratePets(loadedData.pets));
+            if (Array.isArray(loadedData.accounts) && loadedData.accounts.length > 0) {
+              setAccounts(loadedData.accounts);
+              const activeId = loadedData.activeAccountId || loadedData.accounts[0].id;
+              setActiveAccountId(activeId);
+              setAccountDataMap(loadedData.accountDataMap || {});
+              
+              // 装载激活账号的数据
+              const activeData = (loadedData.accountDataMap && loadedData.accountDataMap[activeId]) || { pets: [], trades: [], parents: [] };
+              setPets(migratePets(activeData.pets || []));
+              setTrades(migrateTrades(activeData.trades || []));
+              setParents(activeData.parents || []);
+            } else if (Array.isArray(loadedData.pets)) {
+              // 兼容老旧单账号数据
+              const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
+              const defaultData: AccountData = {
+                pets: migratePets(loadedData.pets),
+                trades: migrateTrades(loadedData.trades || []),
+                parents: loadedData.parents || []
+              };
+              setAccounts([defaultAccount]);
+              setActiveAccountId("default");
+              setAccountDataMap({ "default": defaultData });
+              setPets(defaultData.pets);
+              setTrades(defaultData.trades);
+              setParents(defaultData.parents);
+            } else {
+              // 空数据初始化
+              const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
+              const defaultData: AccountData = {
+                pets: migratePets(INITIAL_TABLE_DATA),
+                trades: [],
+                parents: []
+              };
+              setAccounts([defaultAccount]);
+              setActiveAccountId("default");
+              setAccountDataMap({ "default": defaultData });
+              setPets(defaultData.pets);
+              setTrades(defaultData.trades);
+              setParents(defaultData.parents);
             }
-            if (Array.isArray(loadedData.trades)) {
-              setTrades(migrateTrades(loadedData.trades));
-            }
-            if (Array.isArray(loadedData.parents)) {
-              setParents(loadedData.parents);
-            }
+
             if (loadedData.settings) {
               const s = loadedData.settings;
               if (s.showWatermarkPanel !== undefined) setShowWatermarkPanel(s.showWatermarkPanel);
@@ -346,24 +401,93 @@ export default function App() {
           setLocalSavePath(actualPath);
         } catch (err) {
           console.error("加载本地文件失败，回退到浏览器缓存:", err);
+          setupBrowserFallback();
         } finally {
           setIsLoaded(true);
         }
       } else {
+        setupBrowserFallback();
         setIsLoaded(true);
       }
     };
+
+    const setupBrowserFallback = () => {
+      const savedAccountsStr = localStorage.getItem("roco_accounts_v1");
+      const savedActiveId = localStorage.getItem("roco_active_account_id_v1");
+      const savedDataMapStr = localStorage.getItem("roco_account_data_map_v1");
+      
+      if (savedAccountsStr && savedActiveId && savedDataMapStr) {
+        try {
+          const parsedAccounts = JSON.parse(savedAccountsStr) as Account[];
+          const parsedActiveId = savedActiveId;
+          const parsedDataMap = JSON.parse(savedDataMapStr) as Record<string, AccountData>;
+          
+          setAccounts(parsedAccounts);
+          setActiveAccountId(parsedActiveId);
+          setAccountDataMap(parsedDataMap);
+          
+          const activeData = parsedDataMap[parsedActiveId] || { pets: [], trades: [], parents: [] };
+          setPets(migratePets(activeData.pets));
+          setTrades(migrateTrades(activeData.trades));
+          setParents(activeData.parents || []);
+          return;
+        } catch (e) {
+          console.error("解析浏览器多账号失败:", e);
+        }
+      }
+
+      // 迁移老旧单账号浏览器数据
+      const savedPets = localStorage.getItem("roco_egg_data_v2");
+      const savedTrades = localStorage.getItem("roco_egg_trades_v1");
+      const savedParents = localStorage.getItem("roco_egg_parents_v1");
+      
+      const defaultAccount: Account = { id: "default", uid: "default", nickname: "默认账号" };
+      let initialPets = migratePets(INITIAL_TABLE_DATA);
+      let initialTrades: EggTrade[] = [];
+      let initialParents: ParentPet[] = [];
+      
+      if (savedPets) {
+        try { initialPets = migratePets(JSON.parse(savedPets)); } catch(e){}
+      }
+      if (savedTrades) {
+        try { initialTrades = migrateTrades(JSON.parse(savedTrades)); } catch(e){}
+      }
+      if (savedParents) {
+        try { initialParents = JSON.parse(savedParents); } catch(e){}
+      }
+      
+      const defaultData: AccountData = { pets: initialPets, trades: initialTrades, parents: initialParents };
+      setAccounts([defaultAccount]);
+      setActiveAccountId("default");
+      setAccountDataMap({ "default": defaultData });
+      setPets(defaultData.pets);
+      setTrades(defaultData.trades);
+      setParents(defaultData.parents);
+    };
+
     loadLocalData();
   }, []);
 
   // Sync to localStorage and local file with visible auto-save status feedback
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !activeAccountId) return;
 
     setIsSaving(true);
+    
+    const mergedDataMap = {
+      ...accountDataMap,
+      [activeAccountId]: { pets, trades, parents }
+    };
+
+    localStorage.setItem("roco_accounts_v1", JSON.stringify(accounts));
+    localStorage.setItem("roco_active_account_id_v1", activeAccountId);
+    localStorage.setItem("roco_account_data_map_v1", JSON.stringify(mergedDataMap));
+    
+    // 同时也保留单账号缓存以备不时之需（兼容老代码可能的加载）
     localStorage.setItem("roco_egg_data_v2", JSON.stringify(pets));
     localStorage.setItem("roco_egg_trades_v1", JSON.stringify(trades));
     localStorage.setItem("roco_egg_parents_v1", JSON.stringify(parents));
+
     localStorage.setItem("roco_watermark_panel_open", String(showWatermarkPanel));
     localStorage.setItem("roco_watermark_enabled", String(enableWatermark));
     localStorage.setItem("roco_watermark_text", watermarkText);
@@ -375,9 +499,9 @@ export default function App() {
       const saveDataAsync = async () => {
         try {
           const res = await window.electronAPI.saveData({
-            pets,
-            trades,
-            parents,
+            accounts,
+            activeAccountId,
+            accountDataMap: mergedDataMap,
             settings: {
               showWatermarkPanel,
               enableWatermark,
@@ -405,7 +529,12 @@ export default function App() {
       setIsSaving(false);
     }, 600);
     return () => clearTimeout(timer);
-  }, [pets, trades, parents, showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, isLoaded]);
+  }, [
+    pets, trades, parents, 
+    accounts, activeAccountId,
+    showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, 
+    isLoaded
+  ]);
 
   // Statistics calculation
   const totalPets = pets.length;
@@ -851,7 +980,7 @@ export default function App() {
     setPets(resetList);
     setParents([]);
     setActiveModal("none");
-    showToast("成功还原到初始默认精灵列表！", "success");
+    showToast("成功还原到当前账号的初始默认精灵列表！", "success");
   };
 
   const handleImportClick = () => {
@@ -860,38 +989,140 @@ export default function App() {
     setActiveModal("import");
   };
 
+  // 支持单个账号/多账号的复杂导入逻辑
   const executeImport = (pastedText: string) => {
     try {
       if (!pastedText.trim()) {
-        setImportError("请粘贴或选择有效的 JSON 备份数据流");
+        setImportError("请粘贴或选择有效的 JSON 备份数据");
         return;
       }
       const parsed = JSON.parse(pastedText);
-      if (Array.isArray(parsed)) {
-        const validatedList = migratePets(parsed);
-        setPets(validatedList);
-        setParents([]);
-        setActiveModal("none");
-        showToast(`成功导入 ${validatedList.length} 只精灵备份数据！`, "success");
-      } else if (typeof parsed === "object" && parsed !== null) {
-        if (Array.isArray(parsed.pets)) {
-          setPets(migratePets(parsed.pets));
-        }
-        if (Array.isArray(parsed.trades)) {
-          setTrades(migrateTrades(parsed.trades));
-        }
-        if (Array.isArray(parsed.parents)) {
-          setParents(parsed.parents);
-        }
-        setActiveModal("none");
-        showToast("成功导入完整的备份数据！", "success");
-      } else {
-        setImportError("内容错误：数据根节点必须是一个数组或包含有效字段的对象");
+
+      // 1. 判断是否是多账号全量备份
+      if (parsed && parsed.version === "roco_egg_multi_accounts_v1" && Array.isArray(parsed.accounts)) {
+        setPendingImportData(parsed);
+        setImportConfirmType("multi");
+        setImportInfoText(`检测到您正在导入全量多账号备份。包含 ${parsed.accounts.length} 个账号，导入后将完全替换当前系统内的所有账号和数据，无法恢复。`);
         return;
+      }
+
+      // 2. 判断是否是单账号备份（包含新旧版本）
+      let singleData: AccountData | null = null;
+      let singleNickname = "导入账号";
+      let singleUid = "default";
+
+      if (parsed && parsed.version === "roco_egg_single_account_v1") {
+        singleNickname = parsed.nickname || "导入账号";
+        singleUid = parsed.uid || "default";
+        singleData = parsed.data || { pets: [], trades: [], parents: [] };
+      } else if (Array.isArray(parsed)) {
+        // 老版本纯数组格式
+        singleData = {
+          pets: migratePets(parsed),
+          trades: [],
+          parents: []
+        };
+      } else if (parsed && (Array.isArray(parsed.pets) || Array.isArray(parsed.trades) || Array.isArray(parsed.parents))) {
+        // 老版本包含 pets, trades, parents 的对象格式
+        singleData = {
+          pets: migratePets(parsed.pets || []),
+          trades: migrateTrades(parsed.trades || []),
+          parents: parsed.parents || []
+        };
+      }
+
+      if (singleData) {
+        setPendingImportData(singleData);
+        setImportConfirmType("single");
+        setImportAsNewNickname(`${singleNickname}_导入`);
+        setImportAsNewUid(singleUid);
+        setImportInfoText(`检测到单账号备份。您可以选择覆盖当前账号「${accounts.find(a => a.id === activeAccountId)?.nickname || '默认账号'}」，或者作为一个新账号导入。`);
+      } else {
+        setImportError("数据格式错误：无法识别的 JSON 备份格式");
       }
     } catch (err: any) {
       setImportError(`导入失败：${err.message || "无效的 JSON 字段/语法格式"}`);
     }
+  };
+
+  // 确认全量多账号导入
+  const confirmImportAll = () => {
+    if (!pendingImportData) return;
+    const { accounts: importedAccounts, activeAccountId: importedActiveId, accountDataMap: importedDataMap } = pendingImportData;
+    
+    setAccounts(importedAccounts);
+    setActiveAccountId(importedActiveId);
+    setAccountDataMap(importedDataMap);
+
+    const activeData = importedDataMap[importedActiveId] || { pets: [], trades: [], parents: [] };
+    setPets(migratePets(activeData.pets || []));
+    setTrades(migrateTrades(activeData.trades || []));
+    setParents(activeData.parents || []);
+
+    setPendingImportData(null);
+    setImportConfirmType("none");
+    setActiveModal("none");
+    showToast("已成功导入全量多账号备份数据！", "success");
+  };
+
+  // 确认单账号导入
+  const confirmImportSingle = (asNew: boolean) => {
+    if (!pendingImportData) return;
+    
+    if (asNew) {
+      if (!importAsNewNickname.trim()) {
+        showToast("新账号昵称不能为空", "error");
+        return;
+      }
+      const newId = `acc_${Date.now()}`;
+      const newAccount: Account = {
+        id: newId,
+        nickname: importAsNewNickname.trim(),
+        uid: importAsNewUid.trim() || "default"
+      };
+
+      // 保存当前账号的数据
+      const updatedMap = {
+        ...accountDataMap,
+        [activeAccountId]: { pets, trades, parents },
+        [newId]: {
+          pets: migratePets(pendingImportData.pets || []),
+          trades: migrateTrades(pendingImportData.trades || []),
+          parents: pendingImportData.parents || []
+        }
+      };
+
+      setAccounts(prev => [...prev, newAccount]);
+      setAccountDataMap(updatedMap);
+      setActiveAccountId(newId);
+
+      setPets(migratePets(pendingImportData.pets || []));
+      setTrades(migrateTrades(pendingImportData.trades || []));
+      setParents(pendingImportData.parents || []);
+
+      showToast(`成功导入并创建新账号：${importAsNewNickname}`, "success");
+    } else {
+      // 覆盖当前账号
+      setPets(migratePets(pendingImportData.pets || []));
+      setTrades(migrateTrades(pendingImportData.trades || []));
+      setParents(pendingImportData.parents || []);
+      
+      // 更新缓存 map
+      setAccountDataMap(prev => ({
+        ...prev,
+        [activeAccountId]: {
+          pets: migratePets(pendingImportData.pets || []),
+          trades: migrateTrades(pendingImportData.trades || []),
+          parents: pendingImportData.parents || []
+        }
+      }));
+
+      showToast("已覆盖当前账号的数据！", "success");
+    }
+
+    setPendingImportData(null);
+    setImportConfirmType("none");
+    setActiveModal("none");
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -903,17 +1134,55 @@ export default function App() {
       const text = event.target?.result as string;
       setJsonText(text);
       setImportError("");
+      executeImport(text); // 自动执行解析
     };
     reader.readAsText(file);
   };
 
   const handleExportClick = () => {
+    // 默认打开导出当前账号
+    handleExportSingleClick(activeAccountId);
+  };
+
+  // 导出单个账号
+  const handleExportSingleClick = (accountId: string) => {
+    const acc = accounts.find(a => a.id === accountId);
+    if (!acc) return;
+    
+    // 如果是当前激活账号，先合并当前内存数据
+    const targetData = accountId === activeAccountId 
+      ? { pets, trades, parents }
+      : accountDataMap[accountId] || { pets: [], trades: [], parents: [] };
+
     const backupData = JSON.stringify({
-      pets,
-      trades,
-      parents
+      version: "roco_egg_single_account_v1",
+      nickname: acc.nickname,
+      uid: acc.uid,
+      data: targetData
     }, null, 2);
+
     setJsonText(backupData);
+    setExportType("single");
+    setActiveModal("export");
+  };
+
+  // 导出所有账号
+  const handleExportAllClick = () => {
+    // 包含当前激活账号的最新数据
+    const mergedDataMap = {
+      ...accountDataMap,
+      [activeAccountId]: { pets, trades, parents }
+    };
+
+    const backupData = JSON.stringify({
+      version: "roco_egg_multi_accounts_v1",
+      accounts,
+      activeAccountId,
+      accountDataMap: mergedDataMap
+    }, null, 2);
+
+    setJsonText(backupData);
+    setExportType("all");
     setActiveModal("export");
   };
 
@@ -922,8 +1191,9 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     const dateStr = new Date().toLocaleDateString("zh-CN").replace(/\//g, "-");
+    const prefix = exportType === "all" ? "全部账号备份" : `单账号备份_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
     link.href = url;
-    link.download = `洛克王国孵蛋数据备份_${dateStr}.json`;
+    link.download = `洛克王国_${prefix}_${dateStr}.json`;
     link.click();
     URL.revokeObjectURL(url);
     showToast("备份文件已准备就绪并开始下载！", "success");
@@ -937,6 +1207,96 @@ export default function App() {
       .catch((err) => {
         showToast("复制失败，请手动全选复制！", "error");
       });
+  };
+
+  // 账号切换与管理函数
+  const handleSwitchAccount = (accountId: string) => {
+    if (accountId === activeAccountId) return;
+    
+    const updatedMap = {
+      ...accountDataMap,
+      [activeAccountId]: { pets, trades, parents }
+    };
+    setAccountDataMap(updatedMap);
+    setActiveAccountId(accountId);
+    
+    const targetData = updatedMap[accountId] || { pets: [], trades: [], parents: [] };
+    setPets(migratePets(targetData.pets || []));
+    setTrades(migrateTrades(targetData.trades || []));
+    setParents(targetData.parents || []);
+    
+    showToast(`已切换至账号：${accounts.find(a => a.id === accountId)?.nickname || '未知账号'}`, "success");
+  };
+
+  const handleCreateAccount = (nickname: string, uid: string) => {
+    if (!nickname.trim()) {
+      showToast("昵称不能为空", "error");
+      return;
+    }
+    const cleanUid = uid.trim() || "default";
+    const newId = `acc_${Date.now()}`;
+    const newAccount: Account = { id: newId, nickname: nickname.trim(), uid: cleanUid };
+    const newData: AccountData = {
+      pets: migratePets(INITIAL_TABLE_DATA),
+      trades: [],
+      parents: []
+    };
+    
+    const updatedMap = {
+      ...accountDataMap,
+      [activeAccountId]: { pets, trades, parents }
+    };
+
+    setAccounts(prev => [...prev, newAccount]);
+    setAccountDataMap({
+      ...updatedMap,
+      [newId]: newData
+    });
+    
+    setActiveAccountId(newId);
+    setPets(newData.pets);
+    setTrades(newData.trades);
+    setParents(newData.parents);
+    
+    setNewAccNickname("");
+    setNewAccUid("");
+    
+    showToast(`成功创建并切换至账号：${nickname}`, "success");
+  };
+
+  const handleUpdateAccountInfo = (accountId: string, nickname: string, uid: string) => {
+    if (!nickname.trim()) {
+      showToast("昵称不能为空", "error");
+      return;
+    }
+    setAccounts(prev => prev.map(a => a.id === accountId ? { ...a, nickname: nickname.trim(), uid: uid.trim() } : a));
+    setEditingAccountId(null);
+    showToast("账号信息更新成功！", "success");
+  };
+
+  const handleDeleteAccount = (accountId: string) => {
+    if (accounts.length <= 1) {
+      showToast("必须保留至少一个账号！", "error");
+      return;
+    }
+    
+    const remainingAccounts = accounts.filter(a => a.id !== accountId);
+    const updatedMap = { ...accountDataMap };
+    delete updatedMap[accountId];
+    
+    setAccounts(remainingAccounts);
+    setAccountDataMap(updatedMap);
+    
+    if (accountId === activeAccountId) {
+      const nextActiveId = remainingAccounts[0].id;
+      setActiveAccountId(nextActiveId);
+      const nextData = updatedMap[nextActiveId] || { pets: [], trades: [], parents: [] };
+      setPets(migratePets(nextData.pets || []));
+      setTrades(migrateTrades(nextData.trades || []));
+      setParents(nextData.parents || []);
+    }
+    
+    showToast("账号已成功删除！", "success");
   };
 
   const handleExportLongImage = async () => {
@@ -1188,17 +1548,16 @@ export default function App() {
 
     // Add custom diagonal watermarks if enabled
     if (enableWatermark) {
-      // Calculate pattern tile bounds depending on density setting:
-      // dense: 180x120, normal: 260x180, sparse: 360x260
-      let wWidth = 260;
-      let wHeight = 180;
-      if (watermarkDensity === "dense") {
-        wWidth = 180;
-        wHeight = 120;
-      } else if (watermarkDensity === "sparse") {
-        wWidth = 360;
-        wHeight = 260;
-      }
+      // Watermark config: uid+nickname, sparse (360x260), opacity 20% (0.2), font-size 18px
+      const currentAccount = accounts.find(a => a.id === activeAccountId);
+      const computedWatermarkText = currentAccount
+        ? `${currentAccount.nickname}${currentAccount.uid && currentAccount.uid !== "default" ? ` (UID: ${currentAccount.uid})` : ""}`
+        : "默认账号";
+
+      const wWidth = 360;
+      const wHeight = 260;
+      const wSize = 18;
+      const wOpacity = 0.20;
 
       // Create a temporary canvas for the watermark tile
       const tileCanvas = document.createElement("canvas");
@@ -1207,15 +1566,15 @@ export default function App() {
       const ctx = tileCanvas.getContext("2d");
       if (ctx) {
         ctx.clearRect(0, 0, wWidth, wHeight);
-        ctx.font = `600 ${watermarkSize}px system-ui, -apple-system, sans-serif`;
+        ctx.font = `600 ${wSize}px system-ui, -apple-system, sans-serif`;
         ctx.fillStyle = "#94a3b8";
-        ctx.globalAlpha = parseFloat(watermarkOpacity);
+        ctx.globalAlpha = wOpacity;
         // Translate and rotate around center
         ctx.translate(wWidth / 2, wHeight / 2);
         ctx.rotate((-23 * Math.PI) / 180);
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(watermarkText, 0, 0);
+        ctx.fillText(computedWatermarkText, 0, 0);
       }
       const watermarkDataUrl = tileCanvas.toDataURL("image/png");
 
@@ -1360,41 +1719,140 @@ export default function App() {
             <span className="text-[9px] sm:text-[10px] text-slate-500 tracking-wider font-mono">
               © 2026 Roco Incubator Table
             </span>
-            <button
-              onClick={() => setActiveModal("about")}
-              className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-indigo-400 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-indigo-500/50 px-2 py-1 rounded-lg transition-all cursor-pointer mt-0.5"
-              title="关于本工具 / 数据来源与致谢"
-            >
-              <Info className="w-3 h-3" />
-              <span>关于 &amp; 致谢</span>
-            </button>
+            <div className="flex items-center gap-2 mt-1 sm:mt-1.5 flex-wrap justify-center md:justify-end">
+              <button
+                onClick={() => setActiveModal("about")}
+                className="flex items-center gap-1 text-[10px] text-slate-450 hover:text-white bg-slate-800/60 hover:bg-slate-850 border border-slate-700/60 hover:border-slate-500/50 px-2 py-1 rounded-lg transition-all cursor-pointer"
+                title="关于本工具 / 数据来源与致谢"
+              >
+                <Info className="w-3.5 h-3.5 text-slate-400" />
+                <span>关于 &amp; 致谢</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Tab 导航切换 */}
-        <div className="bg-slate-900 border-t border-slate-800 px-4 sm:px-6 md:px-8 py-3 flex gap-4 select-none">
-          <button
-            onClick={() => setActiveTab("nest")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
-              activeTab === "nest"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
-          >
-            <Egg className="w-4 h-4" />
-            蛋窝与需求中心
-          </button>
-          <button
-            onClick={() => setActiveTab("parents")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
-              activeTab === "parents"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            父母本管理中心
-          </button>
+        <div className="bg-slate-900 border-t border-slate-800 px-4 sm:px-6 md:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 select-none relative z-30">
+          <div className="flex gap-2.5 sm:gap-4 justify-center sm:justify-start w-full sm:w-auto">
+            <button
+              onClick={() => setActiveTab("nest")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                activeTab === "nest"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+              }`}
+            >
+              <Egg className="w-4 h-4" />
+              蛋窝与需求中心
+            </button>
+            <button
+              onClick={() => setActiveTab("parents")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                activeTab === "parents"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              父母本管理中心
+            </button>
+          </div>
+
+          {/* 账号快速切换下拉菜单 */}
+          <div className="w-full sm:w-auto flex justify-center sm:justify-end relative">
+            <div className="relative inline-block text-left select-none">
+              <button
+                onClick={() => setShowAccountDropdown(!showAccountDropdown)}
+                className="flex items-center gap-2 text-xs text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-indigo-500/50 px-3 py-2 rounded-xl transition-all cursor-pointer font-medium shadow-sm hover:shadow shadow-indigo-950/20"
+                title="点击切换账号或进行账号管理"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-450 shrink-0 animate-pulse"></span>
+                <div className="flex items-center gap-1">
+                  <span className="truncate max-w-[110px] font-bold">
+                    {accounts.find(a => a.id === activeAccountId)?.nickname || "默认账号"}
+                  </span>
+                  {(() => {
+                    const activeAcc = accounts.find(a => a.id === activeAccountId);
+                    return activeAcc?.uid && activeAcc.uid !== "default" ? (
+                      <span className="text-[10px] text-slate-400 font-mono shrink-0">
+                        ({activeAcc.uid})
+                      </span>
+                    ) : null;
+                  })()}
+                </div>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0" style={{ transform: showAccountDropdown ? 'rotate(180deg)' : 'none' }} />
+              </button>
+
+              {showAccountDropdown && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowAccountDropdown(false)}></div>
+                  <div className="absolute right-1/2 translate-x-1/2 sm:right-0 sm:translate-x-0 mt-2 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-slate-800 shadow-[0_12px_40px_rgba(0,0,0,0.7)] z-50 overflow-hidden font-sans animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="px-4 py-3 border-b border-slate-800/60 bg-slate-950/20 flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A11.386 11.386 0 0110.081 18a11.375 11.375 0 01-6-3.297M14.214 15.584a2 2 0 00-2.583-1.246 3.5 3.5 0 00-4.047 3.07M3 10a4 4 0 118 0 4 4 0 01-8 0z" />
+                      </svg>
+                      <span className="block text-[10px] text-slate-400 uppercase tracking-wider font-semibold">切换账号</span>
+                    </div>
+                    <div className="max-h-60 overflow-y-auto px-2 py-1.5 flex flex-col gap-1">
+                      {accounts.map(acc => {
+                        const isActive = acc.id === activeAccountId;
+                        return (
+                          <button
+                            key={acc.id}
+                            onClick={() => {
+                              handleSwitchAccount(acc.id);
+                              setShowAccountDropdown(false);
+                            }}
+                            className={`group w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-all duration-200 rounded-xl border cursor-pointer ${
+                              isActive 
+                                ? "bg-indigo-600/20 border-indigo-500/30 text-indigo-300 font-bold shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" 
+                                : "bg-transparent border-transparent text-slate-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700/30"
+                            }`}
+                          >
+                            <span className="truncate flex-1 pr-2">{acc.nickname}</span>
+                            <div className="flex items-center gap-2 shrink-0">
+                              {acc.uid && acc.uid !== "default" && (
+                                <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md border transition-all duration-200 ${
+                                  isActive
+                                    ? "bg-indigo-500/10 border-indigo-500/20 text-indigo-400"
+                                    : "bg-slate-800/50 border-slate-800/80 text-slate-500 group-hover:text-slate-300 group-hover:border-slate-700/50"
+                                }`}>
+                                  {acc.uid}
+                                </span>
+                              )}
+                              {isActive && (
+                                <svg className="w-3.5 h-3.5 text-indigo-400 animate-in zoom-in-50 duration-200" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                              )}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="border-t border-slate-800/80 p-2 bg-slate-950/10">
+                      <button
+                        onClick={() => {
+                          setShowAccountDropdown(false);
+                          setShowAccountModal(true);
+                        }}
+                        className="w-full text-left px-3 py-2.5 rounded-xl text-xs text-indigo-400 hover:text-indigo-300 hover:bg-indigo-550/10 border border-transparent hover:border-indigo-500/20 font-bold flex items-center justify-between transition-all duration-200 cursor-pointer group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Settings className="w-3.5 h-3.5 transition-transform duration-500 group-hover:rotate-90 text-indigo-400" />
+                          <span>账号管理 &amp; 备份</span>
+                        </div>
+                        <svg className="w-3.5 h-3.5 text-indigo-400 opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
         {activeTab === "nest" && (
@@ -1583,128 +2041,27 @@ export default function App() {
                 ))}
               </select>
 
-              {/* Watermark custom configuration toggle */}
-              <button
+              {/* Watermark toggle */}
+              <label
                 id="header-watermark-btn"
-                onClick={() => setShowWatermarkPanel(!showWatermarkPanel)}
-                className={`sm:ml-auto text-xs font-semibold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-1.5 w-full sm:w-auto ${showWatermarkPanel
-                  ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-inner"
-                  : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm"
-                  }`}
-                title="配置长图导出时的防盗水印样式"
+                className={`sm:ml-auto text-xs font-bold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto select-none ${
+                  enableWatermark
+                    ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
+                    : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm"
+                }`}
+                title="开启/关闭长图导出时的防盗水印"
               >
-                <Settings className={`w-3.5 h-3.5 ${showWatermarkPanel ? "rotate-45" : ""} transition-transform duration-300`} />
-                <span>水印配置</span>
-              </button>
+                <input
+                  type="checkbox"
+                  checked={enableWatermark}
+                  onChange={e => setEnableWatermark(e.target.checked)}
+                  className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-350 accent-indigo-600 cursor-pointer"
+                />
+                <span>防盗水印</span>
+              </label>
             </div>
           </div>
         </div>
-
-        {/* Collapsible Custom Watermark Control Panel */}
-        <AnimatePresence>
-          {showWatermarkPanel && (
-            <motion.div
-              id="watermark-control-panel"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden border-b border-slate-100 bg-slate-50/40"
-            >
-              <div className="p-4 px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs font-sans">
-                <div className="flex flex-wrap items-center gap-5">
-                  {/* Enable Status checkbox */}
-                  <label className="flex items-center gap-2 font-bold text-slate-800 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={enableWatermark}
-                      onChange={e => setEnableWatermark(e.target.checked)}
-                      className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 accent-indigo-600 cursor-pointer"
-                    />
-                    <span>添加斜向防盗水印</span>
-                  </label>
-
-                  {enableWatermark && (
-                    <div className="flex flex-wrap items-center gap-4 border-l border-slate-200 pl-4">
-                      {/* Text Input */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-slate-500 font-semibold whitespace-nowrap">水印文字:</span>
-                        <input
-                          type="text"
-                          value={watermarkText}
-                          onChange={e => setWatermarkText(e.target.value)}
-                          placeholder="请输入水印文本内容..."
-                          className="bg-white border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 focus:outline-none focus:border-indigo-500 transition-all font-semibold text-xs w-52 shadow-sm"
-                        />
-                      </div>
-
-                      {/* Density selectors */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-slate-500 font-semibold whitespace-nowrap">格子密度:</span>
-                        <div className="flex bg-white border border-slate-200 rounded-lg p-0.5 shadow-sm overflow-hidden">
-                          {(["dense", "normal", "sparse"] as const).map(d => {
-                            const labels: Record<string, string> = {
-                              dense: "密集",
-                              normal: "普通",
-                              sparse: "稀疏"
-                            };
-                            return (
-                              <button
-                                key={d}
-                                onClick={() => setWatermarkDensity(d)}
-                                className={`px-2.5 py-1 rounded text-[10px] font-extrabold transition-all cursor-pointer ${watermarkDensity === d
-                                  ? "bg-slate-800 text-white shadow-sm font-bold"
-                                  : "text-slate-500 hover:text-slate-800"
-                                  }`}
-                              >
-                                {labels[d]}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      {/* Opacity slider */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-slate-500 font-semibold whitespace-nowrap">
-                          不透明度 ({(watermarkOpacity * 100).toFixed(0)}%):
-                        </span>
-                        <input
-                          type="range"
-                          min="0.04"
-                          max="0.40"
-                          step="0.02"
-                          value={watermarkOpacity}
-                          onChange={e => setEnableWatermark(true) || setWatermarkOpacity(parseFloat(e.target.value))}
-                          className="w-20 accent-indigo-600 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer"
-                        />
-                      </div>
-
-                      {/* Font Size slider */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-slate-500 font-semibold whitespace-nowrap">
-                          字号 ({watermarkSize}px):
-                        </span>
-                        <input
-                          type="range"
-                          min="10"
-                          max="24"
-                          step="1"
-                          value={watermarkSize}
-                          onChange={e => setEnableWatermark(true) || setWatermarkSize(parseInt(e.target.value))}
-                          className="w-20 accent-indigo-600 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="text-[11px] text-slate-400 font-medium shrink-0 bg-indigo-50/50 border border-indigo-100/50 px-2.5 py-1 rounded-lg">
-                  ⚡ 网页操作时背景清晰无碍，仅在导出长图渲染时，会加入防盗重影水印。
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* 我的蛋窝点看板标题 */}
         <div className="p-6 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
@@ -2649,6 +3006,309 @@ export default function App() {
                   className="px-4 py-2 text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors shadow-sm cursor-pointer"
                 >
                   确定重置
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {showAccountModal && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-2xl p-6 max-w-2xl w-full shadow-2xl border border-slate-100 flex flex-col gap-4 relative max-h-[85vh] overflow-y-auto"
+            >
+              <button
+                onClick={() => {
+                  setShowAccountModal(false);
+                  setEditingAccountId(null);
+                }}
+                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3 text-slate-800 border-b border-slate-100 pb-3">
+                <Settings className="w-5 h-5 text-indigo-500 shrink-0" />
+                <div>
+                  <h3 className="text-lg font-bold text-left">多账号中心与备份管理</h3>
+                  <p className="text-xs text-slate-400 text-left">在此新建账号、切换数据分区、或进行单账号及全量导入导出备份</p>
+                </div>
+              </div>
+
+              {/* 第一部分：新建账号 */}
+              <div className="bg-slate-50/60 rounded-xl p-4 border border-slate-100 text-left">
+                <h4 className="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
+                  创建新账号 / 数据分区
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1 text-left">账号昵称 (必填)</label>
+                    <input
+                      type="text"
+                      placeholder="例如：主号 / 换蛋小号 / 派派"
+                      value={newAccNickname}
+                      onChange={e => setNewAccNickname(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1 text-left">游戏 UID (选填)</label>
+                    <input
+                      type="text"
+                      placeholder="洛克王国角色 ID"
+                      value={newAccUid}
+                      onChange={e => setNewAccUid(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end mt-3">
+                  <button
+                    onClick={() => handleCreateAccount(newAccNickname, newAccUid)}
+                    className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-colors shadow-xs"
+                  >
+                    新建并切换
+                  </button>
+                </div>
+              </div>
+
+              {/* 第二部分：账号列表 */}
+              <div className="flex-1 flex flex-col min-h-[220px] text-left">
+                <h4 className="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
+                  账号列表 ({accounts.length})
+                </h4>
+                
+                <div className="border border-slate-100 rounded-xl overflow-hidden flex-1 overflow-y-auto max-h-60 bg-white">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50/75 border-b border-slate-100 text-[10px] font-bold text-slate-450 uppercase">
+                        <th className="px-4 py-2">账号昵称</th>
+                        <th className="px-4 py-2">UID</th>
+                        <th className="px-4 py-2 text-right">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50 text-xs">
+                      {accounts.map(acc => {
+                        const isActive = acc.id === activeAccountId;
+                        const isEditing = editingAccountId === acc.id;
+
+                        return (
+                          <tr key={acc.id} className={`hover:bg-slate-50/45 transition-colors ${isActive ? "bg-indigo-50/20" : ""}`}>
+                            <td className="px-4 py-2.5 font-medium">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={editingNickname}
+                                  onChange={e => setEditingNickname(e.target.value)}
+                                  className="border border-slate-200 rounded px-2 py-0.5 text-xs max-w-[120px] focus:outline-none focus:border-indigo-500"
+                                />
+                              ) : (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-slate-800 font-bold">{acc.nickname}</span>
+                                  {isActive && (
+                                    <span className="px-1.5 py-0.2 text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-md">
+                                      当前激活
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-4 py-2.5 font-mono text-slate-500">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={editingUid}
+                                  onChange={e => setEditingUid(e.target.value)}
+                                  className="border border-slate-200 rounded px-2 py-0.5 text-xs max-w-[100px] font-mono focus:outline-none focus:border-indigo-500"
+                                />
+                              ) : (
+                                acc.uid || "—"
+                              )}
+                            </td>
+                            <td className="px-4 py-2.5 text-right">
+                              <div className="flex items-center justify-end gap-2">
+                                {isEditing ? (
+                                  <>
+                                    <button
+                                      onClick={() => handleUpdateAccountInfo(acc.id, editingNickname, editingUid)}
+                                      className="text-emerald-600 hover:text-emerald-700 font-bold px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                    >
+                                      保存
+                                    </button>
+                                    <button
+                                      onClick={() => setEditingAccountId(null)}
+                                      className="text-slate-400 hover:text-slate-600 px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                    >
+                                      取消
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    {!isActive && (
+                                      <button
+                                        onClick={() => handleSwitchAccount(acc.id)}
+                                        className="text-indigo-600 hover:text-indigo-700 font-bold px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      >
+                                        切换
+                                      </button>
+                                    )}
+                                    <button
+                                      onClick={() => {
+                                        setEditingAccountId(acc.id);
+                                        setEditingNickname(acc.nickname);
+                                        setEditingUid(acc.uid || "");
+                                      }}
+                                      className="text-slate-500 hover:text-slate-700 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                    >
+                                      编辑
+                                    </button>
+                                    <button
+                                      onClick={() => handleExportSingleClick(acc.id)}
+                                      className="text-slate-500 hover:text-emerald-600 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      title="导出该账号的备份文件"
+                                    >
+                                      导出
+                                    </button>
+                                    {accounts.length > 1 && (
+                                      <button
+                                        onClick={() => {
+                                          if (confirm(`确定要删除账号「${acc.nickname}」吗？此操作无法恢复，且会同步抹去其所有孵蛋数据！`)) {
+                                            handleDeleteAccount(acc.id);
+                                          }
+                                        }}
+                                        className="text-rose-500 hover:text-rose-700 font-semibold px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      >
+                                        删除
+                                      </button>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* 第三部分：全局全量操作 */}
+              <div className="border-t border-slate-100 pt-4 flex flex-wrap items-center justify-between gap-3 bg-slate-50/20 p-2.5 rounded-xl border">
+                <div className="text-[10px] text-slate-400 text-left">
+                  💡 <strong>提示：</strong> 支持导入单个账号备份，也支持全量多账号导出/导入，实现多端同步。
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setShowAccountModal(false);
+                      handleExportAllClick();
+                    }}
+                    className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-slate-200/50"
+                  >
+                    导出所有账号
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAccountModal(false);
+                      handleImportClick();
+                    }}
+                    className="px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-indigo-100/30"
+                  >
+                    导入备份数据
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {importConfirmType !== "none" && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-55 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-100 flex flex-col gap-4 text-left"
+            >
+              <div className="flex items-center gap-3 text-amber-600">
+                <AlertCircle className="w-6 h-6 shrink-0" />
+                <h3 className="text-lg font-bold text-left">请确认数据导入方案</h3>
+              </div>
+
+              <p className="text-sm text-slate-550 leading-relaxed bg-amber-50/50 border border-amber-100/60 p-3 rounded-xl text-left">
+                {importInfoText}
+              </p>
+
+              {/* 如果是单账号数据导入，我们需要让用户核对/配置作为新账号导入时的参数 */}
+              {importConfirmType === "single" && (
+                <div className="bg-slate-50/50 rounded-xl p-3 border border-slate-100 text-xs space-y-2.5 text-left">
+                  <span className="block font-bold text-slate-700">导入为新分区设置：</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] text-slate-450 font-bold mb-0.5">导入新账号昵称</label>
+                      <input
+                        type="text"
+                        value={importAsNewNickname}
+                        onChange={e => setImportAsNewNickname(e.target.value)}
+                        className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-450 font-bold mb-0.5">UID</label>
+                      <input
+                        type="text"
+                        value={importAsNewUid}
+                        onChange={e => setImportAsNewUid(e.target.value)}
+                        className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col gap-2 mt-2">
+                {importConfirmType === "single" ? (
+                  <>
+                    <button
+                      onClick={() => confirmImportSingle(true)}
+                      className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-colors shadow-sm text-xs cursor-pointer text-center border border-transparent"
+                    >
+                      作为新账号导入（保留当前账号）
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm(`您确定要使用导入的数据，完全覆盖当前活动的账号「${accounts.find(a => a.id === activeAccountId)?.nickname || "默认账号"}」吗？覆盖后旧数据不可恢复！`)) {
+                          confirmImportSingle(false);
+                        }
+                      }}
+                      className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg transition-colors shadow-sm text-xs cursor-pointer text-center border border-transparent"
+                    >
+                      覆盖当前激活的账号
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={confirmImportAll}
+                    className="w-full py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg transition-colors shadow-md text-xs cursor-pointer text-center border border-transparent"
+                  >
+                    确定全量覆盖导入
+                  </button>
+                )}
+                
+                <button
+                  onClick={() => {
+                    setPendingImportData(null);
+                    setImportConfirmType("none");
+                  }}
+                  className="w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-lg transition-colors cursor-pointer text-center border border-transparent"
+                >
+                  取消
                 </button>
               </div>
             </motion.div>

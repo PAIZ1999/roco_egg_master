@@ -37,6 +37,18 @@ export interface ParentPet {
   checked?: boolean;
 }
 
+export interface Account {
+  id: string;
+  uid: string;
+  nickname: string;
+}
+
+export interface AccountData {
+  pets: EggPet[];
+  trades: EggTrade[];
+  parents: ParentPet[];
+}
+
 
 
 export const LIMIT_OPTIONS = ["无极限蛋", "有极限蛋"];
