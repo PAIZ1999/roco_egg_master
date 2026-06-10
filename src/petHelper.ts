@@ -383,6 +383,8 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-amber-50 border-amber-350 text-amber-800 font-extrabold border-dashed";
     case "概率大婉":
       return "bg-rose-50 border-rose-350 text-rose-800 font-extrabold border-dashed";
+    case "概率大块头":
+      return "bg-slate-50 border-slate-350 text-slate-800 font-extrabold border-dashed";
     default:
       return "bg-slate-50 border-slate-200 text-slate-500 font-medium";
   }

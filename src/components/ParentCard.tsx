@@ -5,8 +5,11 @@ import {
   Venus,
   Ruler,
   Weight,
-  Minus
+  Minus,
+  GripVertical
 } from "lucide-react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
   ParentPet,
   BRAND_OPTIONS,
@@ -218,8 +221,26 @@ export const ParentCard = React.memo(function ParentCard({
     );
   };
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: parent.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.6 : undefined,
+    zIndex: isDragging ? 50 : undefined
+  };
+
   return (
     <div
+      ref={setNodeRef}
+      style={style}
       className={`rounded-xl border hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${
         parent.checked
           ? "border-indigo-400 bg-indigo-50/5 shadow-xs"
@@ -231,15 +252,14 @@ export const ParentCard = React.memo(function ParentCard({
         
         {/* Checkbox and Delete Row */}
         <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-between w-auto sm:w-full gap-2 sm:pb-1.5 shrink-0 z-20">
-          <label className="flex items-center gap-1 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={!!parent.checked}
-              onChange={(e) => handleUpdateParentChecked(parent.id, e.target.checked)}
-              className="w-3.5 h-3.5 cursor-pointer text-indigo-600 focus:ring-indigo-400 rounded border-slate-300"
-            />
-            <span className="text-[10px] font-bold text-slate-500 hover:text-indigo-650 transition-colors">配组</span>
-          </label>
+          <div
+            {...attributes}
+            {...listeners}
+            className="text-slate-300 hover:text-slate-500 p-0.5 rounded transition-all cursor-grab active:cursor-grabbing hover:bg-slate-100 border border-transparent hover:border-slate-200 flex items-center justify-center"
+            title="按住拖拽排序"
+          >
+            <GripVertical className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
+          </div>
 
           <button
             onClick={() => handleDeleteParent(parent.id)}
@@ -260,6 +280,28 @@ export const ParentCard = React.memo(function ParentCard({
             />
           ) : (
             <div className="w-7 h-7 flex items-center justify-center text-slate-300">🧬</div>
+          )}
+
+          {/* Matchmaking Checkbox overlay */}
+          <label className="absolute inset-0 bg-slate-950/65 backdrop-blur-[1.5px] flex flex-col items-center justify-center gap-1.5 opacity-0 group-hover/avatar:opacity-100 transition-all duration-200 cursor-pointer z-30">
+            <input
+              type="checkbox"
+              checked={!!parent.checked}
+              onChange={(e) => handleUpdateParentChecked(parent.id, e.target.checked)}
+              className="w-4.5 h-4.5 cursor-pointer text-indigo-600 focus:ring-indigo-400 rounded border-slate-300 bg-white"
+            />
+            <span className="text-[10px] font-bold text-white select-none">
+              {parent.checked ? "取消配组" : "点击配组"}
+            </span>
+          </label>
+
+          {/* Selected Status Corner Badge */}
+          {parent.checked && (
+            <div className="absolute top-0.5 right-0.5 w-4.5 h-4.5 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-sm border border-white/20 z-20 pointer-events-none">
+              <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
           )}
 
           {/* Form dropdown overlay for multi-form sprites */}

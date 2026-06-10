@@ -29,6 +29,9 @@ import {
   Ruler,
   Weight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  GripVertical,
   Calendar
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
@@ -66,6 +69,7 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableCard } from "./components/SortableCard";
@@ -138,6 +142,8 @@ const migrateTrades = (rawList: any[]): EggTrade[] => {
     };
   });
 };
+
+const EGG_PAGE_SIZE = 6;
 
 export default function App() {
   // 多账号核心状态
@@ -245,6 +251,7 @@ export default function App() {
   const [eggFilterBrand, setEggFilterBrand] = useState("");
   const [eggFilterLimit, setEggFilterLimit] = useState("");
   const [eggFilter3V, setEggFilter3V] = useState("");
+  const [eggCurrentPage, setEggCurrentPage] = useState(1);
 
   // Parent Filter states (Fathers & Mothers separately)
   const [fatherSearchTerm, setFatherSearchTerm] = useState("");
@@ -300,6 +307,42 @@ export default function App() {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  const handleEggDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = eggs.findIndex((e) => e.id === active.id);
+    const newIndex = eggs.findIndex((e) => e.id === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      setEggs((prev) => arrayMove(prev, oldIndex, newIndex));
+    }
+  };
+
+  const handleFatherDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = parents.findIndex((p) => p.id === active.id);
+    const newIndex = parents.findIndex((p) => p.id === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      setParents((prev) => arrayMove(prev, oldIndex, newIndex));
+    }
+  };
+
+  const handleMotherDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = parents.findIndex((p) => p.id === active.id);
+    const newIndex = parents.findIndex((p) => p.id === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      setParents((prev) => arrayMove(prev, oldIndex, newIndex));
+    }
+  };
 
   // Filter conditions
   const [searchTerm, setSearchTerm] = useState("");
@@ -857,16 +900,10 @@ export default function App() {
     setPets(prev => prev.filter(p => p.id !== id));
   }, []);
 
-  const handleDeleteEgg = (id: string) => {
-    showConfirm(
-      "确认删除",
-      "您确定要删除这只精灵蛋的信息吗？此操作不可撤销。",
-      () => {
-        setEggs(prev => prev.filter(e => e.id !== id));
-        showToast("精灵蛋删除成功！", "success");
-      }
-    );
-  };
+  const handleDeleteEgg = useCallback((id: string) => {
+    setEggs(prev => prev.filter(e => e.id !== id));
+    showToast("精灵蛋删除成功！", "success");
+  }, []);
 
   const handleAddEggClick = () => {
     // Set default produce time to current local YYYY-MM-DD format
@@ -1073,6 +1110,18 @@ export default function App() {
             }
           }
         } else if (
+          (father.brand === "普通" && isNearGiantLimit(father) && mother.brand === "单大块头") ||
+          (mother.brand === "普通" && isNearGiantLimit(mother) && father.brand === "单大块头")
+        ) {
+          // 父母有一方是接近大块头临界值的普通精灵，另一方是单大块头 -> 概率大块头
+          brand = "概率大块头";
+        } else if (
+          father.brand === "普通" && isNearGiantLimit(father) &&
+          mother.brand === "普通" && isNearGiantLimit(mother)
+        ) {
+          // 父母双方都是接近大块头临界值的普通精灵 -> 概率大块头
+          brand = "概率大块头";
+        } else if (
           (father.brand === "普通" && (mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
           (mother.brand === "普通" && (father.brand === "单粗嗓门" || father.brand === "单婉转声"))
         ) {
@@ -1125,7 +1174,7 @@ export default function App() {
         fatherStats: [...pair.father.stats],
         motherStats: [...pair.mother.stats],
         groups: [...groups],
-        brand: pair.brand,
+        brand: pair.brand === "概率大块头" ? "普通" : pair.brand,
         status: "正在孵，可预约",
         isLimit: "无极限蛋",
         is3V: isStatsMatch ? "3V" : "否",
@@ -1939,6 +1988,41 @@ export default function App() {
 
     return matchSprite && matchGroup && matchBrand && matchLimit && match3V;
   });
+
+  const totalEggPages = Math.ceil(filteredEggs.length / EGG_PAGE_SIZE) || 1;
+  const paginatedEggs = filteredEggs.slice((eggCurrentPage - 1) * EGG_PAGE_SIZE, eggCurrentPage * EGG_PAGE_SIZE);
+
+  useEffect(() => {
+    setEggCurrentPage(1);
+  }, [eggSearchTerm, eggFilterGroup, eggFilterBrand, eggFilterLimit, eggFilter3V]);
+
+  useEffect(() => {
+    if (eggCurrentPage > totalEggPages) {
+      setEggCurrentPage(totalEggPages);
+    }
+  }, [filteredEggs.length, totalEggPages, eggCurrentPage]);
+
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalEggPages <= 7) {
+      for (let i = 1; i <= totalEggPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (eggCurrentPage > 3) {
+        pages.push("...");
+      }
+      const start = Math.max(2, eggCurrentPage - 1);
+      const end = Math.min(totalEggPages - 1, eggCurrentPage + 1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (eggCurrentPage < totalEggPages - 2) {
+        pages.push("...");
+      }
+      pages.push(totalEggPages);
+    }
+    return pages;
+  };
 
   const visibleFathers = parents.filter((p) => {
     if (p.gender !== "♂") return false;
@@ -3050,23 +3134,99 @@ export default function App() {
             <span className="text-xs text-slate-350 mt-1">点击右上角“登记精灵蛋”录入首只蛋</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
-            {filteredEggs.map((egg) => (
-              <EggCard
-                key={egg.id}
-                egg={egg}
-                handleDeleteEgg={handleDeleteEgg}
-                handleUpdateEggSprite={handleUpdateEggSprite}
-                handleUpdateEggBrand={handleUpdateEggBrand}
-                handleUpdateEggSize={handleUpdateEggSize}
-                handleUpdateEggWeight={handleUpdateEggWeight}
-                handleUpdateEggFatherNature={handleUpdateEggFatherNature}
-                handleUpdateEggMotherNature={handleUpdateEggMotherNature}
-                handleUpdateEggFatherStat={handleUpdateEggFatherStat}
-                handleUpdateEggMotherStat={handleUpdateEggMotherStat}
-                handleUpdateEggProduceTime={handleUpdateEggProduceTime}
-              />
-            ))}
+          <div className="flex flex-col gap-4">
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleEggDragEnd}>
+              <SortableContext items={paginatedEggs.map(egg => egg.id)} strategy={rectSortingStrategy}>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+                  {paginatedEggs.map((egg) => (
+                    <EggCard
+                      key={egg.id}
+                      egg={egg}
+                      handleDeleteEgg={handleDeleteEgg}
+                      handleUpdateEggSprite={handleUpdateEggSprite}
+                      handleUpdateEggBrand={handleUpdateEggBrand}
+                      handleUpdateEggSize={handleUpdateEggSize}
+                      handleUpdateEggWeight={handleUpdateEggWeight}
+                      handleUpdateEggFatherNature={handleUpdateEggFatherNature}
+                      handleUpdateEggMotherNature={handleUpdateEggMotherNature}
+                      handleUpdateEggFatherStat={handleUpdateEggFatherStat}
+                      handleUpdateEggMotherStat={handleUpdateEggMotherStat}
+                      handleUpdateEggProduceTime={handleUpdateEggProduceTime}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-1 py-3 border-t border-slate-100">
+              <div className="text-xs text-slate-500 font-medium select-none text-left">
+                共 <span className="font-bold font-mono text-slate-700">{filteredEggs.length}</span> 个精灵蛋，
+                当前展示第 <span className="font-bold font-mono text-indigo-600">{(eggCurrentPage - 1) * EGG_PAGE_SIZE + 1}-{Math.min(eggCurrentPage * EGG_PAGE_SIZE, filteredEggs.length)}</span> 个
+              </div>
+              
+              {totalEggPages > 1 && (
+                <div className="flex items-center gap-1.5 select-none">
+                  <button
+                    onClick={() => setEggCurrentPage(1)}
+                    disabled={eggCurrentPage === 1}
+                    className="px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    title="第一页"
+                  >
+                    首页
+                  </button>
+                  <button
+                    onClick={() => setEggCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={eggCurrentPage === 1}
+                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    上一页
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {getPageNumbers().map((pageNum, idx) => {
+                      if (pageNum === "...") {
+                        return (
+                          <span key={`dots-${idx}`} className="px-2 text-slate-400 font-bold select-none text-xs">
+                            ...
+                          </span>
+                        );
+                      }
+                      return (
+                        <button
+                          key={`page-${pageNum}`}
+                          onClick={() => setEggCurrentPage(Number(pageNum))}
+                          className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition-all cursor-pointer flex items-center justify-center ${
+                            eggCurrentPage === pageNum
+                              ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-600"
+                              : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    onClick={() => setEggCurrentPage(prev => Math.min(totalEggPages, prev + 1))}
+                    disabled={eggCurrentPage === totalEggPages}
+                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                  >
+                    下一页
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setEggCurrentPage(totalEggPages)}
+                    disabled={eggCurrentPage === totalEggPages}
+                    className="px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    title="最后一页"
+                  >
+                    末页
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -3197,29 +3357,35 @@ export default function App() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {visibleFathers.length === 0 ? (
-                <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
-                  <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
-                  <span className="text-xs font-bold text-slate-400">♂️ 暂无登记的父本精灵</span>
-                  <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加父本”录入</span>
-                </div>
-              ) : (
-                visibleFathers.map(parent => (
-                  <ParentCard
-                    key={parent.id}
-                    parent={parent}
-                    handleDeleteParent={handleDeleteParent}
-                    handleUpdateParentSprite={handleUpdateParentSprite}
-                    handleUpdateParentBrand={handleUpdateParentBrand}
-                    handleUpdateParentHeight={handleUpdateParentHeight}
-                    handleUpdateParentWeight={handleUpdateParentWeight}
-                    handleUpdateParentNature={handleUpdateParentNature}
-                    handleUpdateParentStat={handleUpdateParentStat}
-                    handleUpdateParentChecked={handleUpdateParentChecked}
-                  />
-                ))
-              )}
+            <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+                {visibleFathers.length === 0 ? (
+                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
+                    <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
+                    <span className="text-xs font-bold text-slate-400">♂️ 暂无登记的父本精灵</span>
+                    <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加父本”录入</span>
+                  </div>
+                ) : (
+                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleFatherDragEnd}>
+                    <SortableContext items={visibleFathers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                      {visibleFathers.map(parent => (
+                        <ParentCard
+                          key={parent.id}
+                          parent={parent}
+                          handleDeleteParent={handleDeleteParent}
+                          handleUpdateParentSprite={handleUpdateParentSprite}
+                          handleUpdateParentBrand={handleUpdateParentBrand}
+                          handleUpdateParentHeight={handleUpdateParentHeight}
+                          handleUpdateParentWeight={handleUpdateParentWeight}
+                          handleUpdateParentNature={handleUpdateParentNature}
+                          handleUpdateParentStat={handleUpdateParentStat}
+                          handleUpdateParentChecked={handleUpdateParentChecked}
+                        />
+                      ))}
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
             </div>
           </div>
 
@@ -3311,29 +3477,35 @@ export default function App() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {visibleMothers.length === 0 ? (
-                <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
-                  <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
-                  <span className="text-xs font-bold text-slate-400">♀️ 暂无登记的母本精灵</span>
-                  <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加母本”录入</span>
-                </div>
-              ) : (
-                visibleMothers.map(parent => (
-                  <ParentCard
-                    key={parent.id}
-                    parent={parent}
-                    handleDeleteParent={handleDeleteParent}
-                    handleUpdateParentSprite={handleUpdateParentSprite}
-                    handleUpdateParentBrand={handleUpdateParentBrand}
-                    handleUpdateParentHeight={handleUpdateParentHeight}
-                    handleUpdateParentWeight={handleUpdateParentWeight}
-                    handleUpdateParentNature={handleUpdateParentNature}
-                    handleUpdateParentStat={handleUpdateParentStat}
-                    handleUpdateParentChecked={handleUpdateParentChecked}
-                  />
-                ))
-              )}
+            <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+                {visibleMothers.length === 0 ? (
+                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
+                    <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
+                    <span className="text-xs font-bold text-slate-400">♀️ 暂无登记的母本精灵</span>
+                    <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加母本”录入</span>
+                  </div>
+                ) : (
+                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleMotherDragEnd}>
+                    <SortableContext items={visibleMothers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                      {visibleMothers.map(parent => (
+                        <ParentCard
+                          key={parent.id}
+                          parent={parent}
+                          handleDeleteParent={handleDeleteParent}
+                          handleUpdateParentSprite={handleUpdateParentSprite}
+                          handleUpdateParentBrand={handleUpdateParentBrand}
+                          handleUpdateParentHeight={handleUpdateParentHeight}
+                          handleUpdateParentWeight={handleUpdateParentWeight}
+                          handleUpdateParentNature={handleUpdateParentNature}
+                          handleUpdateParentStat={handleUpdateParentStat}
+                          handleUpdateParentChecked={handleUpdateParentChecked}
+                        />
+                      ))}
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
             </div>
           </div>
         </div>

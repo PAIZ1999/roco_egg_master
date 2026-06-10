@@ -7,8 +7,11 @@ import {
   Calendar,
   Mars,
   Venus,
-  Minus
+  Minus,
+  GripVertical
 } from "lucide-react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { EggData, BRAND_OPTIONS, NATURE_OPTIONS, STATS_OPTIONS } from "../types";
 import { Autocomplete } from "./Autocomplete";
 import {
@@ -270,13 +273,41 @@ export const EggCard = React.memo(function EggCard({
   const stdWeightRange = eggConfig ? `${(eggConfig.weight_low / 1000).toFixed(3)}kg - ${(eggConfig.weight_high / 1000).toFixed(3)}kg` : "未知";
   const hatchTimeStr = eggConfig ? formatHatchTime(eggConfig.hatch_data) : "未知";
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: egg.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.6 : undefined,
+    zIndex: isDragging ? 50 : undefined
+  };
+
   return (
-    <div className="rounded-xl border hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 bg-white border-slate-200/80 shadow-sm relative overflow-visible group/card">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="rounded-xl border hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 bg-white border-slate-200/80 shadow-sm relative overflow-visible group/card"
+    >
       {/* Left Column: Avatar & Standard info */}
       <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
         
         {/* Action Row */}
-        <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-end w-auto sm:w-full gap-2 sm:pb-1.5 shrink-0 z-20">
+        <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-end w-auto sm:w-full gap-1.5 sm:pb-1.5 shrink-0 z-20">
+          <div
+            {...attributes}
+            {...listeners}
+            className="text-slate-300 hover:text-slate-500 p-1 sm:p-0.5 rounded transition-all cursor-grab active:cursor-grabbing hover:bg-slate-100 flex items-center justify-center border border-transparent hover:border-slate-200"
+            title="按住拖拽排序"
+          >
+            <GripVertical className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
+          </div>
           <button
             onClick={() => handleDeleteEgg(egg.id)}
             className="text-slate-350 hover:text-rose-600 hover:bg-rose-50 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100"

@@ -124,3 +124,29 @@ body.exporting .drag-handle-column {
   display: none !important;
 }
 
+/* Custom scrollbar for lists */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Ensure no scrollbar or height limit during export */
+body.exporting .custom-scrollbar {
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
