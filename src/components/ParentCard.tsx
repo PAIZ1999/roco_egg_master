@@ -306,7 +306,10 @@ export const ParentCard = React.memo(function ParentCard({
 
           {/* Form dropdown overlay for multi-form sprites */}
           {availableSprites.length > 1 && (
-            <div className="absolute bottom-0.5 left-0.5 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded shadow-2xs z-10 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150">
+            <div 
+              className="absolute bottom-0.5 left-0.5 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded shadow-2xs z-40 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150"
+              onClick={(e) => e.stopPropagation()}
+            >
               <select
                 value={availableSprites.includes(parent.sprite) ? parent.sprite : (spriteFile ? spriteFile.slice(0, -4) : parent.sprite)}
                 onChange={(e) => handleUpdateParentSprite(parent.id, e.target.value)}
