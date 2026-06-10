@@ -1,86 +1,53 @@
-# Roco Egg Master 蛋管理中心设计笔记
+# 洛克王国孵蛋数据管理系统优化设计笔记
 
-## 1. 核心数据模型与类型扩展
+## 1. 父母本滚动查看布局
+- **目标**：彻底删除 parentCols 列数滑块，提供更纯粹的桌面与大屏体验。
+- **布局**：左右分栏中，左侧父本仓库和右侧母本仓库列表的 Grid 容器恢复为 `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4`，以完全支持鼠标滚轮向下滚动显示更多卡片。
 
-在 `src/types.ts` 中新增或扩展以下类型：
-```typescript
-export interface EggData {
-  id: string;            // 蛋的唯一主键 (如 egg-uuid)
-  sprite: string;        // 精灵名称 (关联精灵头像，例如 "喵喵")
-  fatherNature: string;  // 父亲性格
-  motherNature: string;  // 母亲性格
-  fatherStats: string[]; // 父亲三围
-  motherStats: string[]; // 母亲三围
-  brand: string;         // 牌子 (大粗、大婉、小粗、小婉、普通等)
-  eggSize: string;       // 蛋尺寸 (单位 m，用户输入)
-  eggWeight: string;     // 蛋重量 (单位 kg，用户输入)
-  produceTime: string;   // 蛋产出时间 (YYYY-MM-DD HH:mm)
-}
+## 2. 标签页初始化隔离
+- **目标**：各标签页的搜索和过滤状态相互独立，避免切换时互相影响。
+- **状态划分**：
+  - 蛋窝中心：`searchTerm`（模糊搜索）、`filterNature`、`filterGroup`、`filterBrand`、`filterStatus`、`filterLimit`、`filter3V`。
+  - 父母本中心：新增 `parentSearchTerm`（模糊搜索）、`parentFilterGroup`（组别筛选）、`parentFilterNature`（性格筛选）。
+  - 蛋管理中心：`eggSearchTerm`、`eggFilterGroup`、`eggFilterBrand`、`eggFilterLimit`、`eggFilter3V`。
+- 确保在账号切换、数据初始化时，这些筛选条件独立控制各自的卡片列表渲染。
 
-export interface AccountData {
-  pets: EggPet[];
-  trades: EggTrade[];
-  parents: ParentPet[];
-  eggs: EggData[];       // 扩展蛋数据，支持多账号隔离
-}
-```
+## 3. 蛋窝中心父母精灵名与性别底框
+- **蛋数据扩展**：在 `EggPet` 接口中扩展 `fatherName?: string` 和 `motherName?: string` 字段。
+- **UI 显示**：在 `SortableCard.tsx` 中：
+  - 父亲配置：若 `pet.fatherName` 存在，则显示 `pet.fatherName`；否则显示 `"父方配置"`。使用蓝色底框（`bg-blue-50 border border-blue-200 text-blue-600 rounded px-1.5 py-0.5`）和 `<Mars>` 符号。
+  - 母亲配置：若 `pet.motherName` 存在，则显示 `pet.motherName`；否则显示 `"母方配置"`。使用粉色底框（`bg-pink-50 border border-pink-200 text-pink-650 rounded px-1.5 py-0.5`）和 `<Venus>` 符号。
+- **自动录入**：在 `App.tsx` 中的 `handleImportPairingsToNest` 中，构建 `EggPet` 时自动录入父母的精灵名字：
+  - `fatherName: pair.father.sprite`
+  - `motherName: pair.mother.sprite`
 
-## 2. 蛋临界值计算算法
+## 4. 父母本管理独立筛选
+- **目标**：按组别、性格、牌子以及名字多重且相互独立地过滤父本和母本卡片。
+- **方案**：在左侧“♂️ 父本仓储库”下方和右侧“♀️ 母本仓储库”下方分别渲染一套独立的检索栏：
+  - **名称搜索**（`fatherSearchTerm` / `motherSearchTerm`）：过滤精灵名。
+  - **蛋组筛选**（`fatherFilterGroup` / `motherFilterGroup`）：过滤蛋组。
+  - **性格筛选**（`fatherFilterNature` / `motherFilterNature`）：过滤性格。
+  - **牌子筛选**（`fatherFilterBrand` / `motherFilterBrand`）：过滤牌子。
+- 过滤后计算 `filteredFathers` 与 `filteredMothers` 并渲染对应的 Grid。
 
-蛋的属性范围来源于 `images/蛋数据/PET_EGG_CONF.json`。数据中的属性：
-- `height_low`, `height_high`：以毫米 (mm) 为单位
-- `weight_low`, `weight_high`：以克 (g) 为单位
+## 5. 蛋管理分页显示
+- **目标**：一页展示 10 张蛋卡片。
+- **状态**：`eggCurrentPage: number`，默认为 `1`。
+- **计算**：对筛选后的蛋列表进行 Slice 截取展示。
+- **UI**：在蛋管理列表下方渲染响应式分页控制器（上一页、下一页、页码点击、总页数显示）。当过滤条件改变或删除蛋数据时，自动将 `eggCurrentPage` 重置或归拢至有效范围。
 
-在比对与临界值计算中，我们将这些数值除以 1000 转换为米 (m) 和千克 (kg)，从而保持与输入端和精灵原数据一致。
+## 6. 蛋管理中心行内编辑重构
+- **目标**：取消 Modal 弹窗，卡片上直接编辑；增加地区形态切换及其他选择。
+- **方案**：
+  - 对 `EggCard.tsx` 进行重构，点击各个文本字段可以直接展示对应的 input/select 控件。
+  - 整合多地区形态下拉菜单（毛玻璃形态选择菜单），支持带下划线形态和基础精灵还原。
+  - 父母性格使用 `Autocomplete`，三围指标提供点击气泡或 select 切换，与 `ParentCard` 的行内编辑交互保持完全一致。
+  - 精灵头像筛选和性格筛选等复用 `ParentCard` 相同逻辑。
 
-### 2.1 临界值公式：
-- **最大高度** `maxHeight = height_high / 1000`
-- **最小高度** `minHeight = height_low / 1000`
-- **最大重量** `maxWeight = weight_high / 1000`
-- **最小重量** `minWeight = weight_low / 1000`
-- **大块头及格线** `giantWeightLine = maxWeight - (maxWeight - minWeight) * 0.02`
-- **小不点及格线** `tinyWeightLine = minWeight + (maxWeight - minWeight) * 0.05`
-
-### 2.2 蛋形态标签推导逻辑：
-1. **尺寸牌子为大体型** ("大粗", "大婉", "单大块头")：
-   - 当 `eggSize >= maxHeight` 且 `eggWeight >= maxWeight` 时，标记为 **“极限大”** (极限蛋)。
-2. **尺寸牌子为小体型** ("小粗", "小婉", "单小不点")：
-   - 当 `eggSize <= minHeight` 且 `eggWeight <= minWeight` 时，标记为 **“极限小”** (极限蛋)。
-3. **其他牌子** (或非体型牌)：
-   - 当 `eggSize >= maxHeight` 且 `eggWeight >= giantWeightLine` 时，标记为 **“大块头 (达标)”**。
-   - 当 `eggSize <= minHeight` 且 `eggWeight <= tinyWeightLine` 时，标记为 **“小不点 (达标)”**。
-   - 如果未达标，计算距离大块头/小不点的临界值（如重量差在及格线 10% 以内），并在卡片上闪烁显示类似 **“差大块头临界值 X kg”** 或 **“差小块头临界值 Y kg”**。
-
-## 3. UI 界面与交互设计
-
-1. **标签页导航**：
-   - 新增“蛋管理中心”Tab，点击时展示蛋列表卡片。
-2. **卡片结构 (EggCard)**：
-   - 顶部：精灵头像、产出时间、删除按钮。
-   - 头像下方：精灵蛋名称 (如 "喵喵蛋")，显示系别、组别标签。
-   - 标准范围：展示标准蛋尺寸范围 (m) 和重量范围 (kg)，以及孵化时间。
-   - 蛋数据：展示输入的蛋尺寸和重量，附带临界值状态徽章（如“极限大”、“差大块头临界值 0.005kg”）。
-   - 父母数据：展示父母性格和三围标识。
-3. **搜索与过滤栏**：
-   - 顶部提供模糊搜索框（支持搜索精灵名）。
-   - 筛选选项：
-     - 蛋组 (天空组、动物组等)
-     - 系别 (草、火、水等)
-     - 牌子
-     - 极限/临界属性 (“全部”、“极限蛋”、“已达标蛋”、“临界蛋”)
-4. **添加/编辑弹窗 (Modal)**：
-   - 输入框：
-     - 精灵名称（自动联想，基于 `PET_EGG_CONF.json` 中的精灵，并支持显示头像）
-     - 父亲性格、母亲性格
-     - 父亲三围、母亲三围 (六围复选点击)
-     - 牌子选择
-     - 蛋尺寸 (m)、蛋重量 (kg)
-     - 产出时间 (默认当前时间，提供快捷设置)
-   - 当选择完精灵后，在弹窗内实时显示该精灵蛋的标准尺寸重量范围和孵化时间，帮助用户校验输入。
-
-## 4. 自动保存与导入导出兼容
-
-- **自动保存**：`localStorage` 和 Electron 写入的 JSON 中均增加 `eggs` 字段，并在多账号切换、编辑、删除时实时更新。
-- **单账号导出**：支持在导出 JSON 中包含 `eggs: EggData[]` 属性。
-- **全量多账号导出**：支持 `accountDataMap` 包含所有账号的 `eggs` 记录。
-- **老旧备份导入**：若导入的数据中没有 `eggs` 字段，自动补全为 `[]` 空数组，确保向前兼容。
+## 7. 全局卡片拖拽与筛选
+- **目标**：蛋窝、父母本、蛋管理所有卡片都可以自由拖动位置。
+- **方案**：
+  - 蛋窝：已支持拖拽。
+  - 蛋管理：引入 `@dnd-kit/sortable`，在 `eggs` 的渲染列表外包裹 `DndContext`、`SortableContext`，实现蛋管理卡片的拖拽排序，并通过 `setEggs` 更新和自动存档。
+  - 父母本：分别在父本和母本列表外包裹拖动上下文。由于父母本分为父本（男）和母本（女）两个独立的列表，需要支持在这两个独立的列表各自内部进行拖动排序，更新 `parents` 数组的顺序。
+- 确保所有标签页的所有卡片均支持模糊搜索和特定筛选条件。

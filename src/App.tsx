@@ -246,6 +246,20 @@ export default function App() {
   const [eggFilterLimit, setEggFilterLimit] = useState("");
   const [eggFilter3V, setEggFilter3V] = useState("");
 
+  // Parent Filter states (Fathers & Mothers separately)
+  const [fatherSearchTerm, setFatherSearchTerm] = useState("");
+  const [fatherFilterGroup, setFatherFilterGroup] = useState("");
+  const [fatherFilterBrand, setFatherFilterBrand] = useState("");
+  const [fatherNatureSearch, setFatherNatureSearch] = useState("");
+
+  const [motherSearchTerm, setMotherSearchTerm] = useState("");
+  const [motherFilterGroup, setMotherFilterGroup] = useState("");
+  const [motherFilterBrand, setMotherFilterBrand] = useState("");
+  const [motherNatureSearch, setMotherNatureSearch] = useState("");
+
+  // Tab reset target state
+  const [resetTabTarget, setResetTabTarget] = useState<"nest" | "parents" | "eggs" | null>(null);
+
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
   const [editingEggId, setEditingEggId] = useState<string | null>(null);
@@ -855,95 +869,77 @@ export default function App() {
   };
 
   const handleAddEggClick = () => {
-    setEditingEggId(null);
-    setEggFormSprite("");
-    setEggFormFatherNature("");
-    setEggFormMotherNature("");
-    setEggFormFatherStats(["无", "无", "无"]);
-    setEggFormMotherStats(["无", "无", "无"]);
-    setEggFormBrand("普通");
-    setEggFormSize("");
-    setEggFormWeight("");
-    
     // Set default produce time to current local YYYY-MM-DD format
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
     const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
-    setEggFormProduceTime(localISODate);
-    
-    setShowEggModal(true);
-  };
 
-  const handleEditEgg = (egg: EggData) => {
-    setEditingEggId(egg.id);
-    setEggFormSprite(egg.sprite);
-    setEggFormFatherNature(egg.fatherNature || "");
-    setEggFormMotherNature(egg.motherNature || "");
-    setEggFormFatherStats(egg.fatherStats || ["无", "无", "无"]);
-    setEggFormMotherStats(egg.motherStats || ["无", "无", "无"]);
-    setEggFormBrand(egg.brand || "普通");
-    setEggFormSize(egg.eggSize || "");
-    setEggFormWeight(egg.eggWeight || "");
-    
-    if (egg.produceTime) {
-      setEggFormProduceTime(egg.produceTime.slice(0, 10));
-    } else {
-      setEggFormProduceTime("");
-    }
-    
-    setShowEggModal(true);
-  };
-
-  const handleSaveEgg = () => {
-    if (!eggFormSprite.trim()) {
-      showToast("请输入精灵名字！", "error");
-      return;
-    }
-    
-    const sizeVal = parseFloat(eggFormSize);
-    const weightVal = parseFloat(eggFormWeight);
-    if (isNaN(sizeVal) || sizeVal <= 0) {
-      showToast("请输入合法的蛋尺寸！", "error");
-      return;
-    }
-    if (isNaN(weightVal) || weightVal <= 0) {
-      showToast("请输入合法的蛋重量！", "error");
-      return;
-    }
-
-    const getLocalTodayString = () => {
-      const d = new Date();
-      const offset = d.getTimezoneOffset() * 60000;
-      return (new Date(d.getTime() - offset)).toISOString().slice(0, 10);
+    const newEgg: EggData = {
+      id: `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      sprite: "", // blank sprite so user can type/autocomplete it on the card
+      fatherNature: "",
+      motherNature: "",
+      fatherStats: ["无", "无", "无"],
+      motherStats: ["无", "无", "无"],
+      brand: "普通",
+      eggSize: "",
+      eggWeight: "",
+      produceTime: localISODate
     };
 
-    const savedProduceTime = eggFormProduceTime 
-      ? eggFormProduceTime.slice(0, 10) 
-      : getLocalTodayString();
-
-    const eggObj: EggData = {
-      id: editingEggId || `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-      sprite: eggFormSprite.trim(),
-      fatherNature: eggFormFatherNature,
-      motherNature: eggFormMotherNature,
-      fatherStats: eggFormFatherStats,
-      motherStats: eggFormMotherStats,
-      brand: eggFormBrand,
-      eggSize: eggFormSize,
-      eggWeight: eggFormWeight,
-      produceTime: savedProduceTime
-    };
-
-    if (editingEggId) {
-      setEggs(prev => prev.map(e => e.id === editingEggId ? eggObj : e));
-      showToast("修改精灵蛋信息成功！", "success");
-    } else {
-      setEggs(prev => [eggObj, ...prev]);
-      showToast("登记精灵蛋成功！", "success");
-    }
-
-    setShowEggModal(false);
+    setEggs(prev => [newEgg, ...prev]);
+    showToast("已登记一只新精灵蛋卡片，请在卡片中填写信息！", "success");
   };
+
+  const handleUpdateEggSprite = useCallback((id: string, sprite: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, sprite } : e));
+  }, []);
+
+  const handleUpdateEggBrand = useCallback((id: string, brand: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, brand } : e));
+  }, []);
+
+  const handleUpdateEggSize = useCallback((id: string, size: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, eggSize: size } : e));
+  }, []);
+
+  const handleUpdateEggWeight = useCallback((id: string, weight: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, eggWeight: weight } : e));
+  }, []);
+
+  const handleUpdateEggFatherNature = useCallback((id: string, nature: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, fatherNature: nature } : e));
+  }, []);
+
+  const handleUpdateEggMotherNature = useCallback((id: string, nature: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, motherNature: nature } : e));
+  }, []);
+
+  const handleUpdateEggFatherStat = useCallback((id: string, statIdx: number, val: string) => {
+    setEggs(prev => prev.map(e => {
+      if (e.id === id) {
+        const fatherStats = [...(e.fatherStats || ["无", "无", "无"])];
+        fatherStats[statIdx] = val;
+        return { ...e, fatherStats };
+      }
+      return e;
+    }));
+  }, []);
+
+  const handleUpdateEggMotherStat = useCallback((id: string, statIdx: number, val: string) => {
+    setEggs(prev => prev.map(e => {
+      if (e.id === id) {
+        const motherStats = [...(e.motherStats || ["无", "无", "无"])];
+        motherStats[statIdx] = val;
+        return { ...e, motherStats };
+      }
+      return e;
+    }));
+  }, []);
+
+  const handleUpdateEggProduceTime = useCallback((id: string, produceTime: string) => {
+    setEggs(prev => prev.map(e => e.id === id ? { ...e, produceTime } : e));
+  }, []);
 
   const handleAddParent = (gender: "♂" | "♀") => {
     const newParent: ParentPet = {
@@ -1008,8 +1004,14 @@ export default function App() {
     }));
   }, []);
 
-  const handleToggleAllParents = useCallback((gender: "♂" | "♀", checked: boolean) => {
-    setParents(prev => prev.map(p => p.gender === gender ? { ...p, checked } : p));
+  const handleToggleAllParents = useCallback((gender: "♂" | "♀", checked: boolean, visibleIds: string[]) => {
+    const visibleSet = new Set(visibleIds);
+    setParents(prev => prev.map(p => {
+      if (p.gender === gender && visibleSet.has(p.id)) {
+        return { ...p, checked };
+      }
+      return p;
+    }));
   }, []);
 
   const getPairings = useCallback(() => {
@@ -1177,17 +1179,46 @@ export default function App() {
     setTrades(prev => prev.map(t => t.id === id ? { ...t, sprite: newSprite } : t));
   }, []);
 
-  const handleReset = () => {
+  const handleReset = (tab: "nest" | "parents" | "eggs") => {
+    setResetTabTarget(tab);
     setActiveModal("reset");
   };
 
   const executeReset = () => {
-    const resetList = migratePets(INITIAL_TABLE_DATA);
-    setPets(resetList);
-    setParents([]);
-    setEggs([]);
+    if (resetTabTarget === "nest") {
+      const resetList = migratePets(INITIAL_TABLE_DATA);
+      setPets(resetList);
+      setTrades([]);
+      setSearchTerm("");
+      setFilterNature("");
+      setFilterGroup("");
+      setFilterBrand("");
+      setFilterStatus("");
+      setFilterLimit("");
+      setFilter3V("");
+      showToast("已成功还原初始默认蛋窝与需求列表，且已重置筛选条件！", "success");
+    } else if (resetTabTarget === "parents") {
+      setParents([]);
+      setFatherSearchTerm("");
+      setFatherFilterGroup("");
+      setFatherFilterBrand("");
+      setFatherNatureSearch("");
+      setMotherSearchTerm("");
+      setMotherFilterGroup("");
+      setMotherFilterBrand("");
+      setMotherNatureSearch("");
+      showToast("已成功清空所有父母本仓储数据，且已重置筛选条件！", "success");
+    } else if (resetTabTarget === "eggs") {
+      setEggs([]);
+      setEggSearchTerm("");
+      setEggFilterGroup("");
+      setEggFilterBrand("");
+      setEggFilterLimit("");
+      setEggFilter3V("");
+      showToast("已成功清空所有精灵蛋管理记录，且已重置筛选条件！", "success");
+    }
     setActiveModal("none");
-    showToast("成功还原到当前账号的初始默认精灵列表！", "success");
+    setResetTabTarget(null);
   };
 
   const handleImportClick = () => {
@@ -1909,6 +1940,28 @@ export default function App() {
     return matchSprite && matchGroup && matchBrand && matchLimit && match3V;
   });
 
+  const visibleFathers = parents.filter((p) => {
+    if (p.gender !== "♂") return false;
+    const matchName = !fatherSearchTerm || p.sprite.toLowerCase().includes(fatherSearchTerm.toLowerCase());
+    const matchNature = !fatherNatureSearch || p.nature.toLowerCase().includes(fatherNatureSearch.toLowerCase());
+    const petDetails = getPetDetails(p.sprite);
+    const groups = petDetails ? petDetails.groups : [];
+    const matchGroup = !fatherFilterGroup || groups.includes(fatherFilterGroup);
+    const matchBrand = !fatherFilterBrand || p.brand === fatherFilterBrand;
+    return matchName && matchNature && matchGroup && matchBrand;
+  });
+
+  const visibleMothers = parents.filter((p) => {
+    if (p.gender !== "♀") return false;
+    const matchName = !motherSearchTerm || p.sprite.toLowerCase().includes(motherSearchTerm.toLowerCase());
+    const matchNature = !motherNatureSearch || p.nature.toLowerCase().includes(motherNatureSearch.toLowerCase());
+    const petDetails = getPetDetails(p.sprite);
+    const groups = petDetails ? petDetails.groups : [];
+    const matchGroup = !motherFilterGroup || groups.includes(motherFilterGroup);
+    const matchBrand = !motherFilterBrand || p.brand === motherFilterBrand;
+    return matchName && matchNature && matchGroup && matchBrand;
+  });
+
   return (
     <div className="bg-slate-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 selection:bg-indigo-500 selection:text-white">
       <div
@@ -2393,7 +2446,7 @@ export default function App() {
 
             {/* Reset directory */}
             <button
-              onClick={handleReset}
+              onClick={() => handleReset("nest")}
               className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer"
               title="一键还原到默认精灵列表"
             >
@@ -2907,13 +2960,23 @@ export default function App() {
               </div>
             </div>
             
-            <button
-              onClick={handleAddEggClick}
-              className="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-md shadow-indigo-600/20 w-fit shrink-0 ml-auto font-sans"
-            >
-              <Plus className="w-4 h-4" />
-              登记精灵蛋
-            </button>
+            <div className="flex gap-2 ml-auto shrink-0">
+              <button
+                onClick={() => handleReset("eggs")}
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                title="清空当前所有精灵蛋记录"
+              >
+                <RefreshCw className="w-4 h-4" />
+                重置列表
+              </button>
+              <button
+                onClick={handleAddEggClick}
+                className="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-md shadow-indigo-600/20 font-sans"
+              >
+                <Plus className="w-4 h-4" />
+                登记精灵蛋
+              </button>
+            </div>
           </div>
 
           <div className="h-px bg-slate-100" />
@@ -2993,7 +3056,15 @@ export default function App() {
                 key={egg.id}
                 egg={egg}
                 handleDeleteEgg={handleDeleteEgg}
-                handleEditEgg={handleEditEgg}
+                handleUpdateEggSprite={handleUpdateEggSprite}
+                handleUpdateEggBrand={handleUpdateEggBrand}
+                handleUpdateEggSize={handleUpdateEggSize}
+                handleUpdateEggWeight={handleUpdateEggWeight}
+                handleUpdateEggFatherNature={handleUpdateEggFatherNature}
+                handleUpdateEggMotherNature={handleUpdateEggMotherNature}
+                handleUpdateEggFatherStat={handleUpdateEggFatherStat}
+                handleUpdateEggMotherStat={handleUpdateEggMotherStat}
+                handleUpdateEggProduceTime={handleUpdateEggProduceTime}
               />
             ))}
           </div>
@@ -3017,12 +3088,24 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="flex gap-2 text-xs font-semibold text-slate-500 bg-slate-100/80 px-3 py-1.5 rounded-full border border-slate-200/40 select-none">
-            <span>父本 (♂): {parents.filter(p => p.gender === "♂").length} 只</span>
-            <span className="text-slate-300">|</span>
-            <span>母本 (♀): {parents.filter(p => p.gender === "♀").length} 只</span>
+          <div className="flex flex-col sm:flex-row items-center gap-3 ml-auto shrink-0">
+            <div className="flex gap-2 text-xs font-semibold text-slate-500 bg-slate-100/80 px-3 py-1.5 rounded-full border border-slate-200/40 select-none">
+              <span>父本 (♂): {visibleFathers.length}/{parents.filter(p => p.gender === "♂").length} 只</span>
+              <span className="text-slate-300">|</span>
+              <span>母本 (♀): {visibleMothers.length}/{parents.filter(p => p.gender === "♀").length} 只</span>
+            </div>
+            <button
+              onClick={() => handleReset("parents")}
+              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+              title="清空当前所有父母本登记数据"
+            >
+              <RefreshCw className="w-4 h-4" />
+              重置列表
+            </button>
           </div>
         </div>
+
+
 
         {/* 左右分栏 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -3036,12 +3119,12 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
-                    const allChecked = parents.filter(p => p.gender === "♂").every(p => p.checked);
-                    handleToggleAllParents("♂", !allChecked);
+                    const allChecked = visibleFathers.length > 0 && visibleFathers.every(p => p.checked);
+                    handleToggleAllParents("♂", !allChecked, visibleFathers.map(p => p.id));
                   }}
                   className="px-2.5 py-1 text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-all cursor-pointer"
                 >
-                  {parents.filter(p => p.gender === "♂").length > 0 && parents.filter(p => p.gender === "♂").every(p => p.checked) ? "取消全选" : "全选父本"}
+                  {visibleFathers.length > 0 && visibleFathers.every(p => p.checked) ? "取消全选" : "全选父本"}
                 </button>
                 <button
                   onClick={() => handleAddParent("♂")}
@@ -3053,15 +3136,76 @@ export default function App() {
               </div>
             </div>
 
+            {/* 父本单独过滤栏 */}
+            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-wrap gap-2 items-center">
+              <div className="relative flex-1 min-w-[120px] flex items-center">
+                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Autocomplete
+                  value={fatherSearchTerm}
+                  onChange={val => setFatherSearchTerm(val)}
+                  options={ALL_PET_NAMES}
+                  placeholder="搜索精灵名..."
+                  className="w-full"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                />
+              </div>
+              <div className="relative flex-1 min-w-[120px] flex items-center">
+                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Autocomplete
+                  value={fatherNatureSearch}
+                  onChange={val => setFatherNatureSearch(val)}
+                  options={NATURE_OPTIONS}
+                  placeholder="搜索性格..."
+                  className="w-full"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                />
+              </div>
+              <select
+                value={fatherFilterGroup}
+                onChange={e => setFatherFilterGroup(e.target.value)}
+                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto"
+              >
+                <option value="">全部蛋组</option>
+                {EGG_GROUPS.map(group => (
+                  <option key={group} value={group}>{group}</option>
+                ))}
+              </select>
+              <select
+                value={fatherFilterBrand}
+                onChange={e => setFatherFilterBrand(e.target.value)}
+                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto ${
+                  fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                <option value="">全部牌子</option>
+                {BRAND_OPTIONS.map(brand => (
+                  <option key={brand} value={brand}>{brand}</option>
+                ))}
+              </select>
+              {(fatherSearchTerm || fatherNatureSearch || fatherFilterGroup || fatherFilterBrand) && (
+                <button
+                  onClick={() => {
+                    setFatherSearchTerm("");
+                    setFatherNatureSearch("");
+                    setFatherFilterGroup("");
+                    setFatherFilterBrand("");
+                  }}
+                  className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer p-1 hover:bg-indigo-50 rounded"
+                >
+                  重置
+                </button>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {parents.filter(p => p.gender === "♂").length === 0 ? (
+              {visibleFathers.length === 0 ? (
                 <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
                   <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
                   <span className="text-xs font-bold text-slate-400">♂️ 暂无登记的父本精灵</span>
                   <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加父本”录入</span>
                 </div>
               ) : (
-                parents.filter(p => p.gender === "♂").map(parent => (
+                visibleFathers.map(parent => (
                   <ParentCard
                     key={parent.id}
                     parent={parent}
@@ -3089,12 +3233,12 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
-                    const allChecked = parents.filter(p => p.gender === "♀").every(p => p.checked);
-                    handleToggleAllParents("♀", !allChecked);
+                    const allChecked = visibleMothers.length > 0 && visibleMothers.every(p => p.checked);
+                    handleToggleAllParents("♀", !allChecked, visibleMothers.map(p => p.id));
                   }}
                   className="px-2.5 py-1 text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-all cursor-pointer"
                 >
-                  {parents.filter(p => p.gender === "♀").length > 0 && parents.filter(p => p.gender === "♀").every(p => p.checked) ? "取消全选" : "全选母本"}
+                  {visibleMothers.length > 0 && visibleMothers.every(p => p.checked) ? "取消全选" : "全选母本"}
                 </button>
                 <button
                   onClick={() => handleAddParent("♀")}
@@ -3106,15 +3250,76 @@ export default function App() {
               </div>
             </div>
 
+            {/* 母本单独过滤栏 */}
+            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-wrap gap-2 items-center">
+              <div className="relative flex-1 min-w-[120px] flex items-center">
+                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Autocomplete
+                  value={motherSearchTerm}
+                  onChange={val => setMotherSearchTerm(val)}
+                  options={ALL_PET_NAMES}
+                  placeholder="搜索精灵名..."
+                  className="w-full"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-pink-500 focus:ring-1 focus:ring-pink-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                />
+              </div>
+              <div className="relative flex-1 min-w-[120px] flex items-center">
+                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Autocomplete
+                  value={motherNatureSearch}
+                  onChange={val => setMotherNatureSearch(val)}
+                  options={NATURE_OPTIONS}
+                  placeholder="搜索性格..."
+                  className="w-full"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-pink-500 focus:ring-1 focus:ring-pink-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                />
+              </div>
+              <select
+                value={motherFilterGroup}
+                onChange={e => setMotherFilterGroup(e.target.value)}
+                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto"
+              >
+                <option value="">全部蛋组</option>
+                {EGG_GROUPS.map(group => (
+                  <option key={group} value={group}>{group}</option>
+                ))}
+              </select>
+              <select
+                value={motherFilterBrand}
+                onChange={e => setMotherFilterBrand(e.target.value)}
+                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto ${
+                  motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                <option value="">全部牌子</option>
+                {BRAND_OPTIONS.map(brand => (
+                  <option key={brand} value={brand}>{brand}</option>
+                ))}
+              </select>
+              {(motherSearchTerm || motherNatureSearch || motherFilterGroup || motherFilterBrand) && (
+                <button
+                  onClick={() => {
+                    setMotherSearchTerm("");
+                    setMotherNatureSearch("");
+                    setMotherFilterGroup("");
+                    setMotherFilterBrand("");
+                  }}
+                  className="text-[11px] text-pink-600 hover:text-pink-500 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 rounded"
+                >
+                  重置
+                </button>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {parents.filter(p => p.gender === "♀").length === 0 ? (
+              {visibleMothers.length === 0 ? (
                 <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
                   <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
                   <span className="text-xs font-bold text-slate-400">♀️ 暂无登记的母本精灵</span>
                   <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加母本”录入</span>
                 </div>
               ) : (
-                parents.filter(p => p.gender === "♀").map(parent => (
+                visibleMothers.map(parent => (
                   <ParentCard
                     key={parent.id}
                     parent={parent}
@@ -3385,7 +3590,7 @@ export default function App() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => setActiveModal("reset")}
+              onClick={() => handleReset("parents")}
               className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -3434,7 +3639,7 @@ export default function App() {
 
       {/* Custom Dialog Modals */}
       <AnimatePresence>
-        {showEggModal && (
+        {false && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -3693,7 +3898,7 @@ export default function App() {
                   取消
                 </button>
                 <button
-                  onClick={handleSaveEgg}
+                  onClick={() => {}}
                   className="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md shadow-indigo-600/10 transition-all cursor-pointer"
                 >
                   确认保存
@@ -3713,14 +3918,23 @@ export default function App() {
             >
               <div className="flex items-center gap-3 text-amber-600">
                 <AlertCircle className="w-6 h-6 shrink-0" />
-                <h3 className="text-lg font-bold">确定要重置孵蛋列表吗？</h3>
+                <h3 className="text-lg font-bold text-left">
+                  {resetTabTarget === "nest" && "确定要重置蛋窝与需求列表吗？"}
+                  {resetTabTarget === "parents" && "确定要清空父母本仓库吗？"}
+                  {resetTabTarget === "eggs" && "确定要清空精灵蛋管理中心吗？"}
+                </h3>
               </div>
-              <p className="text-sm text-slate-500 leading-relaxed">
-                这将清除您自建的所有精灵以及最新修改的状态，并还原到出厂初始精灵列表 (共 {INITIAL_TABLE_DATA.length} 个推荐精灵条目)。此操作无法撤销！
+              <p className="text-sm text-slate-500 leading-relaxed text-left">
+                {resetTabTarget === "nest" && `这将清除您自建的所有蛋窝精灵以及最新修改的状态，并还原到出厂初始精灵列表 (共 ${INITIAL_TABLE_DATA.length} 个推荐精灵条目)，同时清空换蛋需求记录。此操作无法撤销！`}
+                {resetTabTarget === "parents" && "这将清除您当前账号下登记的所有父母本精灵卡片及数据。此操作无法撤销！"}
+                {resetTabTarget === "eggs" && "这将清空您当前登记的所有精灵蛋管理卡片和产出记录。此操作无法撤销！"}
               </p>
               <div className="flex items-center justify-end gap-3 mt-2">
                 <button
-                  onClick={() => setActiveModal("none")}
+                  onClick={() => {
+                    setActiveModal("none");
+                    setResetTabTarget(null);
+                  }}
                   className="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer mr-0 border border-transparent"
                 >
                   取消

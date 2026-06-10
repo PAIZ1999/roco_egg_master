@@ -373,9 +373,9 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-purple-100 border-purple-300 text-purple-800 font-bold";
     case "单大块头":
       return "bg-slate-100 border-slate-300 text-slate-700 font-bold";
-    case "单粗嗓门":
+    case "单大粗":
       return "bg-orange-50 border-orange-200 text-orange-700 font-bold";
-    case "单婉转声":
+    case "单大婉":
       return "bg-pink-50 border-pink-200 text-pink-700 font-bold";
     case "单小不点":
       return "bg-cyan-50 border-cyan-200 text-cyan-700 font-bold";

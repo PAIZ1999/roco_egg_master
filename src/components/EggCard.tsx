@@ -9,7 +9,8 @@ import {
   Venus,
   Minus
 } from "lucide-react";
-import { EggData } from "../types";
+import { EggData, BRAND_OPTIONS, NATURE_OPTIONS, STATS_OPTIONS } from "../types";
+import { Autocomplete } from "./Autocomplete";
 import {
   getPetDetails,
   getSpriteFileName,
@@ -20,7 +21,10 @@ import {
   getEggConfig,
   formatHatchTime,
   isEgg3V,
-  getEggStatusType
+  getEggStatusType,
+  ALL_PET_NAMES,
+  getAvailableSprites,
+  getSpriteFormDisplayName
 } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
@@ -71,13 +75,29 @@ const getEggGroupBadgeStyle = (grp: string) => {
 interface EggCardProps {
   egg: EggData;
   handleDeleteEgg: (id: string) => void;
-  handleEditEgg: (egg: EggData) => void;
+  handleUpdateEggSprite: (id: string, sprite: string) => void;
+  handleUpdateEggBrand: (id: string, brand: string) => void;
+  handleUpdateEggSize: (id: string, size: string) => void;
+  handleUpdateEggWeight: (id: string, weight: string) => void;
+  handleUpdateEggFatherNature: (id: string, nature: string) => void;
+  handleUpdateEggMotherNature: (id: string, nature: string) => void;
+  handleUpdateEggFatherStat: (id: string, statIdx: number, val: string) => void;
+  handleUpdateEggMotherStat: (id: string, statIdx: number, val: string) => void;
+  handleUpdateEggProduceTime: (id: string, produceTime: string) => void;
 }
 
 export const EggCard = React.memo(function EggCard({
   egg,
   handleDeleteEgg,
-  handleEditEgg
+  handleUpdateEggSprite,
+  handleUpdateEggBrand,
+  handleUpdateEggSize,
+  handleUpdateEggWeight,
+  handleUpdateEggFatherNature,
+  handleUpdateEggMotherNature,
+  handleUpdateEggFatherStat,
+  handleUpdateEggMotherStat,
+  handleUpdateEggProduceTime
 }: EggCardProps) {
   const petDetails = getPetDetails(egg.sprite);
   const spriteName = petDetails ? petDetails.name : egg.sprite;
@@ -177,30 +197,70 @@ export const EggCard = React.memo(function EggCard({
     return null;
   };
 
-  const renderParentStats = (stats: string[]) => {
+  const renderFatherStatSelect = (sIdx: number, currentValue: string) => {
+    const badgeColors = getStatBadgeStyle(currentValue);
+    const isImageStat = STATS_WITH_IMAGES.includes(currentValue);
+
     return (
-      <div className="flex items-center gap-1">
-        {(stats || ["无", "无", "无"]).map((stat, sIdx) => {
-          const badgeColors = getStatBadgeStyle(stat);
-          const isImageStat = STATS_WITH_IMAGES.includes(stat);
-          return (
-            <div
-              key={sIdx}
-              className={`w-[20px] h-[20px] rounded-full border flex items-center justify-center text-[10px] shadow-3xs ${badgeColors}`}
-              title={stat}
-            >
-              {isImageStat ? (
-                <img
-                  src={getImagePath(`images/6围/${stat}.png`)}
-                  alt={stat}
-                  className="w-[12px] h-[12px] object-contain shrink-0"
-                />
-              ) : (
-                <Minus className="w-2.5 h-2.5 text-slate-400 shrink-0" />
-              )}
-            </div>
-          );
-        })}
+      <div
+        key={sIdx}
+        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-105 active:scale-95 stat-icon-select-container ${badgeColors}`}
+        title={`父亲三围[${sIdx + 1}]: ${currentValue}`}
+      >
+        {isImageStat ? (
+          <img
+            src={getImagePath(`images/6围/${currentValue}.png`)}
+            alt={currentValue}
+            className="w-[14px] h-[14px] object-contain shrink-0"
+          />
+        ) : (
+          <Minus className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+        )}
+        <select
+          value={currentValue}
+          onChange={(e) => handleUpdateEggFatherStat(egg.id, sIdx, e.target.value)}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        >
+          {STATS_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  };
+
+  const renderMotherStatSelect = (sIdx: number, currentValue: string) => {
+    const badgeColors = getStatBadgeStyle(currentValue);
+    const isImageStat = STATS_WITH_IMAGES.includes(currentValue);
+
+    return (
+      <div
+        key={sIdx}
+        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-105 active:scale-95 stat-icon-select-container ${badgeColors}`}
+        title={`母亲三围[${sIdx + 1}]: ${currentValue}`}
+      >
+        {isImageStat ? (
+          <img
+            src={getImagePath(`images/6围/${currentValue}.png`)}
+            alt={currentValue}
+            className="w-[14px] h-[14px] object-contain shrink-0"
+          />
+        ) : (
+          <Minus className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+        )}
+        <select
+          value={currentValue}
+          onChange={(e) => handleUpdateEggMotherStat(egg.id, sIdx, e.target.value)}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        >
+          {STATS_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
       </div>
     );
   };
@@ -217,13 +277,6 @@ export const EggCard = React.memo(function EggCard({
         
         {/* Action Row */}
         <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-end w-auto sm:w-full gap-2 sm:pb-1.5 shrink-0 z-20">
-          <button
-            onClick={() => handleEditEgg(egg)}
-            className="text-slate-350 hover:text-indigo-600 hover:bg-indigo-50 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-indigo-100"
-            title="编辑精灵蛋"
-          >
-            <Pencil className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
-          </button>
           <button
             onClick={() => handleDeleteEgg(egg.id)}
             className="text-slate-350 hover:text-rose-600 hover:bg-rose-50 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100"
@@ -242,8 +295,35 @@ export const EggCard = React.memo(function EggCard({
               className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover/avatar:scale-110"
             />
           ) : (
-            <div className="w-7 h-7 flex items-center justify-center text-slate-300">🥚</div>
+            <div className="w-7 h-7 flex items-center justify-center text-slate-300 select-none font-bold text-2xl">🥚</div>
           )}
+
+          {/* Form dropdown overlay for multi-form sprites */}
+          {(() => {
+            const availableSprites = getAvailableSprites(egg.sprite);
+            if (availableSprites.length > 1) {
+              return (
+                <div className="absolute bottom-0.5 left-0.5 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 rounded shadow-2xs z-10 border border-slate-200/85 flex items-center hover:bg-white transition-colors duration-150">
+                  <select
+                    value={availableSprites.includes(egg.sprite) ? egg.sprite : (spriteFile ? spriteFile.slice(0, -4) : egg.sprite)}
+                    onChange={(e) => handleUpdateEggSprite(egg.id, e.target.value)}
+                    className="text-[8px] sm:text-[9px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+                  >
+                    {availableSprites.map((spriteOption) => {
+                      const displayName = getSpriteFormDisplayName(spriteOption);
+                      return (
+                        <option key={spriteOption} value={spriteOption}>
+                          {displayName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span className="text-[6px] sm:text-[7px] text-slate-400 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+                </div>
+              );
+            }
+            return null;
+          })()}
 
           {/* Type Badge absolute overlay */}
           {petDetails && petDetails.types && petDetails.types.length > 0 && (
@@ -277,8 +357,16 @@ export const EggCard = React.memo(function EggCard({
 
         {/* Info below avatar */}
         <div className="flex flex-col items-start sm:items-center gap-1 sm:gap-1.5 flex-1 min-w-0 pr-10 sm:pr-0">
-          <div className="font-bold text-xs text-slate-800 text-left sm:text-center truncate w-full">
-            {spriteName}蛋
+          <div className="w-full text-left sm:text-center shrink-0 flex items-center justify-center gap-0.5">
+            <Autocomplete
+              value={egg.sprite}
+              options={ALL_PET_NAMES}
+              placeholder="输入精灵..."
+              onChange={(val) => handleUpdateEggSprite(egg.id, val)}
+              className="w-full text-left sm:text-center"
+              inputClassName="bg-transparent font-bold text-xs text-slate-800 placeholder:text-slate-400 w-full border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-left sm:text-center"
+            />
+            <span className="text-xs font-bold text-slate-500 select-none shrink-0 pr-1">蛋</span>
           </div>
 
           {/* Attributes and group badges */}
@@ -339,36 +427,56 @@ export const EggCard = React.memo(function EggCard({
           {/* Brand */}
           <div className="col-span-2 flex flex-col gap-0.5">
             <span className="text-[9px] font-bold text-slate-400 select-none">牌子</span>
-            <div className={`text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full select-none shadow-3xs ${getBrandStyle(egg.brand)}`}>
-              {egg.brand}
+            <div className="relative w-full">
+              <select
+                value={egg.brand}
+                onChange={(e) => handleUpdateEggBrand(egg.id, e.target.value)}
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-250 transition-colors shadow-3xs ${getBrandStyle(
+                  egg.brand
+                )}`}
+              >
+                {BRAND_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           {/* Height (Ruler) */}
           <div className="flex flex-col gap-0.5">
             <span className="text-[9px] font-bold text-slate-400 select-none">蛋尺寸</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 bg-white h-7 shadow-3xs">
+            <div className="relative flex items-center rounded-md border border-slate-200 bg-slate-50 focus-within:border-indigo-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-100 transition-all shadow-3xs overflow-hidden h-7">
               <div className="pl-1.5 pr-1 flex items-center text-slate-400 pointer-events-none select-none">
                 <Ruler className="w-3 h-3" />
               </div>
-              <span className="text-xs font-bold text-slate-800 py-0.5">
-                {egg.eggSize || "-"}
-              </span>
-              <span className="absolute right-1.5 text-[9px] font-bold text-slate-400 pointer-events-none select-none">m</span>
+              <input
+                type="text"
+                value={egg.eggSize || ""}
+                onChange={(e) => handleUpdateEggSize(egg.id, e.target.value)}
+                placeholder="数字..."
+                className="w-full text-xs font-bold text-slate-800 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400"
+              />
+              <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">m</span>
             </div>
           </div>
 
           {/* Weight (Weight/Scale) */}
           <div className="flex flex-col gap-0.5">
             <span className="text-[9px] font-bold text-slate-400 select-none">蛋重量</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 bg-white h-7 shadow-3xs">
+            <div className="relative flex items-center rounded-md border border-slate-200 bg-slate-50 focus-within:border-indigo-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-100 transition-all shadow-3xs overflow-hidden h-7">
               <div className="pl-1.5 pr-1 flex items-center text-slate-400 pointer-events-none select-none">
                 <Weight className="w-3 h-3" />
               </div>
-              <span className="text-xs font-bold text-slate-800 py-0.5">
-                {egg.eggWeight || "-"}
-              </span>
-              <span className="absolute right-1.5 text-[9px] font-bold text-slate-400 pointer-events-none select-none">kg</span>
+              <input
+                type="text"
+                value={egg.eggWeight || ""}
+                onChange={(e) => handleUpdateEggWeight(egg.id, e.target.value)}
+                placeholder="数字..."
+                className="w-full text-xs font-bold text-slate-800 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400"
+              />
+              <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">kg</span>
             </div>
           </div>
         </div>
@@ -394,29 +502,54 @@ export const EggCard = React.memo(function EggCard({
         {/* Parents Information */}
         <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 p-1.5 rounded-lg border border-slate-100/60 shrink-0">
           <div className="flex flex-col gap-1 border-r border-slate-100 pr-1.5">
-            <div className="flex items-center gap-0.5 text-[9px] font-bold text-blue-600 bg-blue-50/60 px-1 py-0.25 rounded w-fit">
+            <div className="flex items-center gap-0.5 text-[9px] font-bold text-blue-600 bg-blue-50/60 px-1 py-0.25 rounded w-fit select-none">
               <Mars className="w-2.5 h-2.5 shrink-0" />
               <span>父亲</span>
             </div>
-            <div className="text-[11px] font-bold text-slate-700 mt-0.5">
-              性格: <span className="text-indigo-650">{egg.fatherNature || "无"}</span>
+            
+            <div className="flex items-center gap-1 mt-0.5 w-full">
+              <span className="text-[10px] font-bold text-slate-400 shrink-0 select-none">性格:</span>
+              <Autocomplete
+                value={egg.fatherNature || ""}
+                options={NATURE_OPTIONS}
+                placeholder="性格"
+                onChange={(val) => handleUpdateEggFatherNature(egg.id, val)}
+                className="flex-1"
+                inputClassName="font-bold text-[11px] text-indigo-650 bg-white border border-slate-200 rounded py-0.25 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition-all shadow-3xs h-5.5 text-center leading-none"
+              />
             </div>
-            <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-[9px] text-slate-400">三围:</span>
-              {renderParentStats(egg.fatherStats)}
+
+            <div className="flex items-center gap-1 mt-1">
+              <span className="text-[9px] text-slate-400 select-none">三围:</span>
+              <div className="flex items-center gap-1">
+                {(egg.fatherStats || ["无", "无", "无"]).map((stat, sIdx) => renderFatherStatSelect(sIdx, stat))}
+              </div>
             </div>
           </div>
+          
           <div className="flex flex-col gap-1 pl-1.5">
-            <div className="flex items-center gap-0.5 text-[9px] font-bold text-pink-650 bg-pink-50/60 px-1 py-0.25 rounded w-fit">
+            <div className="flex items-center gap-0.5 text-[9px] font-bold text-pink-650 bg-pink-50/60 px-1 py-0.25 rounded w-fit select-none">
               <Venus className="w-2.5 h-2.5 shrink-0" />
               <span>母亲</span>
             </div>
-            <div className="text-[11px] font-bold text-slate-700 mt-0.5">
-              性格: <span className="text-indigo-650">{egg.motherNature || "无"}</span>
+
+            <div className="flex items-center gap-1 mt-0.5 w-full">
+              <span className="text-[10px] font-bold text-slate-400 shrink-0 select-none">性格:</span>
+              <Autocomplete
+                value={egg.motherNature || ""}
+                options={NATURE_OPTIONS}
+                placeholder="性格"
+                onChange={(val) => handleUpdateEggMotherNature(egg.id, val)}
+                className="flex-1"
+                inputClassName="font-bold text-[11px] text-indigo-650 bg-white border border-slate-200 rounded py-0.25 px-1.5 w-full focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition-all shadow-3xs h-5.5 text-center leading-none"
+              />
             </div>
-            <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-[9px] text-slate-400">三围:</span>
-              {renderParentStats(egg.motherStats)}
+
+            <div className="flex items-center gap-1 mt-1">
+              <span className="text-[9px] text-slate-400 select-none">三围:</span>
+              <div className="flex items-center gap-1">
+                {(egg.motherStats || ["无", "无", "无"]).map((stat, sIdx) => renderMotherStatSelect(sIdx, stat))}
+              </div>
             </div>
           </div>
         </div>
@@ -427,11 +560,15 @@ export const EggCard = React.memo(function EggCard({
             <Calendar className="w-3 h-3 text-teal-600" />
             产出时间
           </span>
-          <span className="text-[10px] font-bold text-slate-605">
-            {egg.produceTime}
-          </span>
+          <input
+            type="date"
+            value={egg.produceTime ? egg.produceTime.slice(0, 10) : ""}
+            onChange={(e) => handleUpdateEggProduceTime(egg.id, e.target.value)}
+            className="text-[10px] font-bold text-slate-600 bg-transparent border-none focus:outline-none select-all text-right cursor-pointer"
+          />
         </div>
       </div>
     </div>
   );
 });
+

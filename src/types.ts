@@ -94,7 +94,7 @@ export const EGG_GROUPS = [
   "昆虫组", "机械组", "植物组", "海洋组", "软体组", "魔力组", "龙组"
 ];
 
-export const BRAND_OPTIONS = ["大粗", "大婉", "小粗", "小婉", "普通", "单大块头", "单粗嗓门", "单婉转声", "单小不点"];
+export const BRAND_OPTIONS = ["大粗", "大婉", "小粗", "小婉", "普通", "单大块头", "单大粗", "单大婉", "单小不点"];
 
 export const NEST_STATUS_OPTIONS = [
   "有现蛋",
