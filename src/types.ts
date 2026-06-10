@@ -12,6 +12,8 @@ export interface EggPet {
   is3V: string;
   hideStats?: boolean;
   eggCount?: string;
+  fatherName?: string;
+  motherName?: string;
 }
 
 export interface EggTrade {

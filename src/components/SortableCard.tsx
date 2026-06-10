@@ -74,6 +74,7 @@ interface SortableCardProps {
   pet: EggPet;
   handleDeletePet: (id: string) => void;
   handleUpdateSprite: (id: string, name: string) => void;
+  handleUpdateParentName: (id: string, parent: "father" | "mother", name: string) => void;
   handleUpdateNature: (id: string, parent: "father" | "mother", natureIndex: number, value: string) => void;
   handleRemoveNature: (id: string, parent: "father" | "mother", natureIndex: number) => void;
   handleAddNature: (id: string, parent: "father" | "mother") => void;
@@ -92,6 +93,7 @@ export const SortableCard = React.memo(function SortableCard({
   pet,
   handleDeletePet,
   handleUpdateSprite,
+  handleUpdateParentName,
   handleUpdateNature,
   handleRemoveNature,
   handleAddNature,
@@ -307,9 +309,19 @@ export const SortableCard = React.memo(function SortableCard({
         <div className="grid grid-cols-2 gap-2">
           {/* Father Column */}
           <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-bold text-blue-600 bg-blue-50/60 px-1.5 py-0.5 rounded border border-blue-100/40 w-fit select-none flex items-center gap-0.5 shrink-0">
-              父方配置 <Mars className="w-2.5 h-2.5 text-blue-500" />
-            </span>
+            <div className="relative flex items-center w-full">
+              <Autocomplete
+                value={pet.fatherName || ""}
+                options={ALL_PET_NAMES}
+                placeholder="父方配置"
+                onChange={(val) => handleUpdateParentName(pet.id as string, "father", val)}
+                className="w-full"
+                inputClassName="font-bold text-[10px] text-blue-600 bg-blue-50 border border-blue-200 rounded pl-1.5 pr-5 py-0.5 w-full focus:outline-none focus:border-blue-400 focus:bg-white transition-all shadow-3xs"
+              />
+              <span className="absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none text-blue-500 font-bold text-[11px] flex items-center">
+                ♂
+              </span>
+            </div>
 
             {/* Father Natures */}
             <div className="flex flex-col gap-0.5">
@@ -352,9 +364,19 @@ export const SortableCard = React.memo(function SortableCard({
 
           {/* Mother Column */}
           <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-bold text-pink-650 bg-pink-50/60 px-1.5 py-0.5 rounded border border-pink-100/40 w-fit select-none flex items-center gap-0.5 shrink-0">
-              母方配置 <Venus className="w-2.5 h-2.5 text-pink-500" />
-            </span>
+            <div className="relative flex items-center w-full">
+              <Autocomplete
+                value={pet.motherName || ""}
+                options={ALL_PET_NAMES}
+                placeholder="母方配置"
+                onChange={(val) => handleUpdateParentName(pet.id as string, "mother", val)}
+                className="w-full"
+                inputClassName="font-bold text-[10px] text-pink-650 bg-pink-50 border border-pink-200 rounded pl-1.5 pr-5 py-0.5 w-full focus:outline-none focus:border-pink-400 focus:bg-white transition-all shadow-3xs"
+              />
+              <span className="absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none text-pink-500 font-bold text-[11px] flex items-center">
+                ♀
+              </span>
+            </div>
 
             {/* Mother Natures */}
             <div className="flex flex-col gap-0.5">

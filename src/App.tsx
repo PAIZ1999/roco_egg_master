@@ -698,6 +698,17 @@ export default function App() {
     setPets(prev => prev.map(p => p.id === id ? { ...p, eggCount: count } : p));
   }, []);
 
+  const handleUpdateParentName = useCallback((id: string, parent: "father" | "mother", name: string) => {
+    setPets(prev => prev.map(p => {
+      if (p.id !== id) return p;
+      if (parent === "father") {
+        return { ...p, fatherName: name };
+      } else {
+        return { ...p, motherName: name };
+      }
+    }));
+  }, []);
+
   // Natures list update
   const handleAddNature = useCallback((id: string, parent: "father" | "mother") => {
     setPets(prev => prev.map(p => {
@@ -1105,6 +1116,8 @@ export default function App() {
       return {
         id: `pet-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
         sprite: pair.eggSprite,
+        fatherName: pair.father.sprite,
+        motherName: pair.mother.sprite,
         fatherNatures: pair.father.nature ? [pair.father.nature] : [""],
         motherNatures: pair.mother.nature ? [pair.mother.nature] : [""],
         fatherStats: [...pair.father.stats],
@@ -2346,6 +2359,7 @@ export default function App() {
                     pet={pet}
                     handleDeletePet={handleDeletePet}
                     handleUpdateSprite={handleUpdateSprite}
+                    handleUpdateParentName={handleUpdateParentName}
                     handleUpdateNature={handleUpdateNature}
                     handleRemoveNature={handleRemoveNature}
                     handleAddNature={handleAddNature}
