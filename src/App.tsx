@@ -89,6 +89,8 @@ import {
   getPetGuideSize,
   getPetSizeThresholds
 } from "./petHelper";
+import { getPinyinInitials } from "./pinyin";
+
 
 
 const migratePets = (rawList: any[]): EggPet[] => {
@@ -280,6 +282,11 @@ export default function App() {
   const [eggFormWeight, setEggFormWeight] = useState("");
   const [eggFormProduceTime, setEggFormProduceTime] = useState("");
   const [excludedPairKeys, setExcludedPairKeys] = useState<Set<string>>(new Set());
+  // 配对中心筛选状态
+  const [pairingFilterName, setPairingFilterName] = useState("");
+  const [pairingFilterGroup, setPairingFilterGroup] = useState("");
+  const [pairingFilterBrand, setPairingFilterBrand] = useState("");
+  const [pairingFilter3V, setPairingFilter3V] = useState(""); // "" | "3V" | "非3V"
 
   // Egg trade form states
   const [newTradeSprite, setNewTradeSprite] = useState("");
@@ -2122,10 +2129,10 @@ export default function App() {
 
         {/* Tab 导航切换 */}
         <div className="bg-slate-900 border-t border-slate-800 px-4 sm:px-6 md:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 select-none relative z-30">
-          <div className="flex gap-2.5 sm:gap-4 justify-center sm:justify-start w-full sm:w-auto">
+          <div className="flex gap-2.5 sm:gap-4 justify-start overflow-x-auto no-scrollbar w-full sm:w-auto pb-1.5 sm:pb-0 whitespace-nowrap">
             <button
               onClick={() => setActiveTab("nest")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "nest"
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -2136,7 +2143,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveTab("parents")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "parents"
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -2147,7 +2154,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveTab("eggs")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "eggs"
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -3066,8 +3073,8 @@ export default function App() {
           <div className="h-px bg-slate-100" />
 
           {/* Filters row */}
-          <div className="flex flex-wrap gap-3 items-center">
-            <div className="relative flex-1 sm:w-60 sm:flex-none">
+          <div className="flex gap-3 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+            <div className="relative flex-1 sm:w-60 sm:flex-none shrink-0">
               <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
               <input
                 type="text"
@@ -3081,7 +3088,7 @@ export default function App() {
             <select
               value={eggFilterGroup}
               onChange={e => setEggFilterGroup(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="">全部蛋组</option>
               {EGG_GROUPS.map(group => (
@@ -3092,7 +3099,7 @@ export default function App() {
             <select
               value={eggFilterBrand}
               onChange={e => setEggFilterBrand(e.target.value)}
-              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer font-bold transition-all w-full sm:w-auto ${
+              className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer font-bold transition-all w-full sm:w-auto shrink-0 whitespace-nowrap ${
                 eggFilterBrand ? getBrandStyle(eggFilterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
               }`}
             >
@@ -3105,7 +3112,7 @@ export default function App() {
             <select
               value={eggFilterLimit}
               onChange={e => setEggFilterLimit(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="">全部(极限/临界/达标)</option>
               <option value="极限">仅看极限 (大/小)</option>
@@ -3117,7 +3124,7 @@ export default function App() {
             <select
               value={eggFilter3V}
               onChange={e => setEggFilter3V(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="">全部(是否3V)</option>
               <option value="是">是 3V</option>
@@ -3297,8 +3304,8 @@ export default function App() {
             </div>
 
             {/* 父本单独过滤栏 */}
-            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-wrap gap-2 items-center">
-              <div className="relative flex-1 min-w-[120px] flex items-center">
+            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+              <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
                 <Autocomplete
                   value={fatherSearchTerm}
@@ -3309,7 +3316,7 @@ export default function App() {
                   inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-7"
                 />
               </div>
-              <div className="relative flex-1 min-w-[120px] flex items-center">
+              <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
                 <Autocomplete
                   value={fatherNatureSearch}
@@ -3323,7 +3330,7 @@ export default function App() {
               <select
                 value={fatherFilterGroup}
                 onChange={e => setFatherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto"
+                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
                 <option value="">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
@@ -3333,7 +3340,7 @@ export default function App() {
               <select
                 value={fatherFilterBrand}
                 onChange={e => setFatherFilterBrand(e.target.value)}
-                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto ${
+                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
                   fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -3350,7 +3357,7 @@ export default function App() {
                     setFatherFilterGroup("");
                     setFatherFilterBrand("");
                   }}
-                  className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer p-1 hover:bg-indigo-50 rounded"
+                  className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer p-1 hover:bg-indigo-50 rounded shrink-0 whitespace-nowrap"
                 >
                   重置
                 </button>
@@ -3417,8 +3424,8 @@ export default function App() {
             </div>
 
             {/* 母本单独过滤栏 */}
-            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex flex-wrap gap-2 items-center">
-              <div className="relative flex-1 min-w-[120px] flex items-center">
+            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+              <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
                 <Autocomplete
                   value={motherSearchTerm}
@@ -3429,7 +3436,7 @@ export default function App() {
                   inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-pink-500 focus:ring-1 focus:ring-pink-100 transition-all font-medium placeholder:text-slate-400 h-7"
                 />
               </div>
-              <div className="relative flex-1 min-w-[120px] flex items-center">
+              <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
                 <Autocomplete
                   value={motherNatureSearch}
@@ -3443,7 +3450,7 @@ export default function App() {
               <select
                 value={motherFilterGroup}
                 onChange={e => setMotherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto"
+                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
                 <option value="">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
@@ -3453,7 +3460,7 @@ export default function App() {
               <select
                 value={motherFilterBrand}
                 onChange={e => setMotherFilterBrand(e.target.value)}
-                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto ${
+                className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
                   motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -3470,7 +3477,7 @@ export default function App() {
                     setMotherFilterGroup("");
                     setMotherFilterBrand("");
                   }}
-                  className="text-[11px] text-pink-600 hover:text-pink-500 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 rounded"
+                  className="text-[11px] text-pink-600 hover:text-pink-500 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 rounded shrink-0 whitespace-nowrap"
                 >
                   重置
                 </button>
@@ -3530,7 +3537,7 @@ export default function App() {
               return selectedPairings.length > 0 ? (
                 <button
                   onClick={() => handleImportPairingsToNest(selectedPairings)}
-                  className="px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-emerald-600/10 cursor-pointer flex items-center gap-1"
+                  className="px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-emerald-600/10 cursor-pointer flex items-center gap-1 shrink-0"
                 >
                   <Check className="w-3.5 h-3.5" />
                   一键导入所选配对 ({selectedPairings.length} 组)
@@ -3539,217 +3546,330 @@ export default function App() {
             })()}
           </div>
 
-          <div className="p-5 bg-slate-50/20">
+          <div className="p-5">
             {(() => {
-              const pairings = getPairings();
-              if (pairings.length === 0) {
+              const allPairings = getPairings();
+              if (allPairings.length === 0) {
                 return (
-                  <div className="py-8 flex flex-col items-center justify-center text-center select-none">
-                    <Dna className="w-8 h-8 text-slate-300 stroke-1 mb-2" />
-                    <p className="text-xs font-bold text-slate-400">暂无符合繁育条件的配对</p>
-                    <p className="text-[10px] text-slate-355 mt-1 max-w-md">
-                      请在上方勾选配组，且确保至少有一对父本 and 母本：(1) 精灵品种非空 (2) 属于同一个蛋组 (3) 牌子等级完全相同。
+                  <div className="py-12 flex flex-col items-center justify-center text-center select-none">
+                    <Dna className="w-10 h-10 text-slate-300 stroke-1 mb-3" />
+                    <p className="text-sm font-bold text-slate-400">暂无符合繁育条件的配对</p>
+                    <p className="text-xs text-slate-400 mt-1.5 max-w-md">
+                      请在上方勾选配组，且确保至少有一对父本和母本：(1) 精灵品种非空 (2) 属于同一个蛋组 (3) 牌子等级完全相同。
                     </p>
                   </div>
                 );
               }
 
+              // 计算所有蛋组选项（仅从当前配对结果中收集）
+              const allPairGroups = Array.from(new Set(allPairings.flatMap(p => p.matchingGroups))).sort();
+              const allPairBrands = Array.from(new Set(allPairings.map(p => p.brand))).sort();
+
+              // 筛选逻辑
+              const filteredPairings = allPairings.filter(pair => {
+                const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
+                  pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
+
+                const matchSprite = (spriteName: string) => {
+                  if (!spriteName) return false;
+                  const nameFilter = pairingFilterName.toLowerCase().trim();
+                  const lowerName = spriteName.toLowerCase();
+                  const initials = getPinyinInitials(spriteName).toLowerCase();
+                  return lowerName.includes(nameFilter) || initials.includes(nameFilter);
+                };
+
+                const nameMatch = !pairingFilterName ||
+                  matchSprite(pair.father.sprite) ||
+                  matchSprite(pair.mother.sprite) ||
+                  matchSprite(pair.eggSprite);
+                const groupMatch = !pairingFilterGroup || pair.matchingGroups.includes(pairingFilterGroup);
+                const brandMatch = !pairingFilterBrand || pair.brand === pairingFilterBrand;
+                const v3Match = !pairingFilter3V ||
+                  (pairingFilter3V === "3V" && isStatsMatch) ||
+                  (pairingFilter3V === "非3V" && !isStatsMatch);
+                return nameMatch && groupMatch && brandMatch && v3Match;
+              });
+
+              const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V;
+
               return (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 max-h-[400px] overflow-y-auto pr-1">
-                  {pairings.map((pair, idx) => {
-                    const fatherSpriteFile = getSpriteFileName(pair.father.sprite);
-                    const motherSpriteFile = getSpriteFileName(pair.mother.sprite);
-                    const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
-                      pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
+                <>
+                  {/* 筛选栏 */}
+                  <div className="mb-4 p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 shrink-0 whitespace-nowrap">
+                      <Filter className="w-3.5 h-3.5" />
+                      筛选配对
+                    </div>
+                    {/* 精灵名搜索 */}
+                    <div className="relative flex-1 min-w-[130px] max-w-[200px] flex items-center shrink-0">
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                      <Autocomplete
+                        value={pairingFilterName}
+                        onChange={val => setPairingFilterName(val)}
+                        options={ALL_PET_NAMES}
+                        placeholder="搜索精灵名..."
+                        className="w-full"
+                        inputClassName="w-full pl-8 pr-2 py-1.5 text-xs text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-8"
+                      />
+                    </div>
+                    {/* 蛋组筛选 */}
+                    <select
+                      value={pairingFilterGroup}
+                      onChange={e => setPairingFilterGroup(e.target.value)}
+                      className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                    >
+                      <option value="">全部蛋组</option>
+                      {allPairGroups.map(g => (
+                        <option key={g} value={g}>{g}</option>
+                      ))}
+                    </select>
+                    {/* 牌子筛选 */}
+                    <select
+                      value={pairingFilterBrand}
+                      onChange={e => setPairingFilterBrand(e.target.value)}
+                      className={`text-xs border rounded-lg px-2 py-1.5 h-8 focus:outline-none cursor-pointer font-bold transition-all w-auto shrink-0 whitespace-nowrap ${
+                        pairingFilterBrand ? getBrandStyle(pairingFilterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      <option value="">全部牌子</option>
+                      {allPairBrands.map(b => (
+                        <option key={b} value={b}>{b}</option>
+                      ))}
+                    </select>
+                    {/* 3V筛选 */}
+                    <select
+                      value={pairingFilter3V}
+                      onChange={e => setPairingFilter3V(e.target.value)}
+                      className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                    >
+                      <option value="">全部配对</option>
+                      <option value="3V">仅3V配对</option>
+                      <option value="非3V">仅非3V配对</option>
+                    </select>
+                    {/* 筛选结果计数 & 重置 */}
+                    <div className="flex items-center gap-2 ml-auto shrink-0 whitespace-nowrap">
+                      <span className="text-[11px] text-slate-400 font-medium">
+                        {hasFilter ? `筛选结果: ${filteredPairings.length} / ${allPairings.length} 组` : `共 ${allPairings.length} 组配对`}
+                      </span>
+                      {hasFilter && (
+                        <button
+                          onClick={() => {
+                            setPairingFilterName("");
+                            setPairingFilterGroup("");
+                            setPairingFilterBrand("");
+                            setPairingFilter3V("");
+                          }}
+                          className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 rounded-lg border border-indigo-100"
+                        >
+                          重置筛选
+                        </button>
+                      )}
+                    </div>
+                  </div>
 
-                    const pairKey = `${pair.father.id}-${pair.mother.id}`;
-                    const isSelected = !excludedPairKeys.has(pairKey);
+                  {/* 配对卡片列表 */}
+                  {filteredPairings.length === 0 ? (
+                    <div className="py-10 flex flex-col items-center justify-center text-center select-none">
+                      <Search className="w-8 h-8 text-slate-300 stroke-1 mb-2" />
+                      <p className="text-sm font-bold text-slate-400">没有符合筛选条件的配对</p>
+                      <p className="text-xs text-slate-400 mt-1">请尝试调整或重置筛选条件</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1 custom-scrollbar">
+                      {filteredPairings.map((pair, idx) => {
+                        const fatherSpriteFile = getSpriteFileName(pair.father.sprite);
+                        const motherSpriteFile = getSpriteFileName(pair.mother.sprite);
+                        const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
+                          pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
 
-                    const thresholds = getPetSizeThresholds(pair.eggSprite);
-                    const guideSize = getPetGuideSize(pair.eggSprite);
+                        const pairKey = `${pair.father.id}-${pair.mother.id}`;
+                        const isSelected = !excludedPairKeys.has(pairKey);
 
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => {
-                          setExcludedPairKeys(prev => {
-                            const next = new Set(prev);
-                            if (next.has(pairKey)) {
-                              next.delete(pairKey);
-                            } else {
-                              next.add(pairKey);
-                            }
-                            return next;
-                          });
-                        }}
-                        className={`rounded-xl border p-3 hover:shadow-md transition-all flex flex-col justify-between gap-3 relative overflow-hidden group cursor-pointer ${
-                          isSelected
-                            ? "bg-white border-emerald-300 ring-1 ring-emerald-300 shadow-xs"
-                            : "bg-slate-50/50 border-slate-200 opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        {/* Check circle on top-left */}
-                        <div className="absolute left-2.5 top-2.5 z-10 select-none pointer-events-none">
-                          {isSelected ? (
-                            <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center shadow-xs border border-emerald-600/10">
-                              <Check className="w-3.5 h-3.5 text-white stroke-[3.5]" />
-                            </div>
-                          ) : (
-                            <div className="w-5 h-5 bg-white border border-slate-300 rounded-full flex items-center justify-center shadow-2xs" />
-                          )}
-                        </div>
+                        const thresholds = getPetSizeThresholds(pair.eggSprite);
+                        const guideSize = getPetGuideSize(pair.eggSprite);
 
-                        {/* Card Background Accent */}
-                        {isSelected && (
-                          <div className="absolute right-0 top-0 w-12 h-12 bg-indigo-50/30 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform animate-fade-in" />
-                        )}
-
-                        <div className="flex items-center justify-between gap-2.5 mt-3.5">
-                          {/* Father (Left) */}
-                          <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <div className="w-9 h-9 bg-slate-50 rounded-lg border border-slate-150 flex items-center justify-center shrink-0 relative overflow-hidden">
-                              {fatherSpriteFile ? (
-                                <img
-                                  src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
-                                  alt={pair.father.sprite}
-                                  className="w-7 h-7 object-contain"
-                                  loading="lazy"
-                                />
+                        return (
+                          <div
+                            key={idx}
+                            onClick={() => {
+                              setExcludedPairKeys(prev => {
+                                const next = new Set(prev);
+                                if (next.has(pairKey)) {
+                                  next.delete(pairKey);
+                                } else {
+                                  next.add(pairKey);
+                                }
+                                return next;
+                              });
+                            }}
+                            className={`rounded-2xl border p-4 hover:shadow-lg transition-all flex flex-col gap-3.5 relative overflow-hidden group cursor-pointer ${
+                              isSelected
+                                ? "bg-white border-emerald-300 ring-1 ring-emerald-200 shadow-sm"
+                                : "bg-slate-50/60 border-slate-200 opacity-60 hover:opacity-90"
+                            }`}
+                          >
+                            {/* 选中角标 */}
+                            <div className="absolute left-3 top-3 z-10 select-none pointer-events-none">
+                              {isSelected ? (
+                                <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center shadow border border-emerald-600/10">
+                                  <Check className="w-4 h-4 text-white stroke-[3]" />
+                                </div>
                               ) : (
-                                <div className="text-slate-300 text-xs">♂</div>
+                                <div className="w-6 h-6 bg-white border-2 border-slate-300 rounded-full" />
                               )}
-                              <span className="absolute bottom-0 right-0 text-[8px] bg-sky-500 text-white leading-none px-0.5 rounded-tl-sm font-sans font-bold">♂</span>
                             </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-bold text-slate-700 truncate" title={pair.father.sprite}>
-                                {pair.father.sprite}
-                              </div>
-                              <div className="text-[9px] text-slate-400 truncate">
-                                {pair.father.nature || "无性格"}
-                              </div>
-                              <div className="text-[9px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
-                                {pair.father.height ? `${pair.father.height}m` : "未填"} / {pair.father.weight ? `${pair.father.weight}kg` : "未填"}
-                              </div>
-                            </div>
-                          </div>
 
-                          {/* Breed Indicator (Middle) */}
-                          <div className="flex flex-col items-center justify-center shrink-0 px-1.5 select-none">
-                            <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded border shadow-2xs ${getBrandStyle(pair.brand)}`}>
-                              {pair.brand}
-                            </span>
-                            <div className="text-[10px] text-indigo-400 font-bold mt-1">
-                              ❤
-                            </div>
-                          </div>
+                            {/* 右上角装饰 */}
+                            {isSelected && (
+                              <div className="absolute right-0 top-0 w-16 h-16 bg-gradient-to-bl from-indigo-50/60 to-transparent rounded-bl-full pointer-events-none" />
+                            )}
 
-                          {/* Mother (Right) */}
-                          <div className="flex items-center gap-2 min-w-0 flex-1 justify-end text-right">
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-bold text-slate-700 truncate" title={pair.mother.sprite}>
-                                {pair.mother.sprite}
-                              </div>
-                              <div className="text-[9px] text-slate-400 truncate">
-                                {pair.mother.nature || "无性格"}
-                              </div>
-                              <div className="text-[9px] font-bold text-slate-500 mt-0.5 whitespace-nowrap">
-                                {pair.mother.height ? `${pair.mother.height}m` : "未填"} / {pair.mother.weight ? `${pair.mother.weight}kg` : "未填"}
-                              </div>
-                            </div>
-                            <div className="w-9 h-9 bg-slate-50 rounded-lg border border-slate-150 flex items-center justify-center shrink-0 relative overflow-hidden">
-                              {motherSpriteFile ? (
-                                <img
-                                  src={getImagePath(`images/sprites/${motherSpriteFile}`)}
-                                  alt={pair.mother.sprite}
-                                  className="w-7 h-7 object-contain"
-                                  loading="lazy"
-                                />
-                              ) : (
-                                <div className="text-slate-300 text-xs">♀</div>
-                              )}
-                              <span className="absolute bottom-0 right-0 text-[8px] bg-pink-500 text-white leading-none px-0.5 rounded-tl-sm font-sans font-bold">♀</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* 子代规格及临界值指标 */}
-                        {guideSize && (
-                          <div className="bg-slate-50/70 border border-slate-100 rounded-lg p-2.5 text-[10px] space-y-1.5 font-medium select-none">
-                            <div className="flex items-center gap-1 text-slate-500 font-bold border-b border-slate-200/50 pb-1 mb-1">
-                              <span className="text-slate-700">【{pair.eggSprite}】子代规格参考</span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                              <div className="flex items-center gap-1 text-slate-600">
-                                <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                                <span>身高:</span>
-                                <span className="font-bold text-slate-700">{guideSize.height}</span>
-                              </div>
-                              <div className="flex items-center gap-1 text-slate-600">
-                                <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                                <span>体重:</span>
-                                <span className="font-bold text-slate-700">{guideSize.weight}</span>
-                              </div>
-                            </div>
-                            
-                            {thresholds && (
-                              <div className="grid grid-cols-2 gap-x-4 pt-1 border-t border-slate-200/40 text-[9px] text-slate-450 select-none">
-                                <div className="space-y-0.5 whitespace-nowrap">
-                                  <div className="whitespace-nowrap flex items-center justify-between">
-                                    <span>大及格身高:</span>
-                                    <span className="font-bold text-emerald-650 ml-1">≥{thresholds.maxHeight.toFixed(2)}m</span>
+                            {/* 父母信息行 */}
+                            <div className="flex items-center gap-3 mt-4">
+                              {/* 父本 */}
+                              <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                                <div className="w-14 h-14 bg-sky-50/60 rounded-xl border border-sky-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                  {fatherSpriteFile ? (
+                                    <img
+                                      src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
+                                      alt={pair.father.sprite}
+                                      className="w-11 h-11 object-contain"
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <div className="text-slate-300 text-lg">♂</div>
+                                  )}
+                                  <span className="absolute bottom-0 right-0 text-[9px] bg-sky-500 text-white leading-none px-1 py-0.5 rounded-tl-md font-bold">♂</span>
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-extrabold text-slate-800 truncate" title={pair.father.sprite}>
+                                    {pair.father.sprite}
                                   </div>
-                                  <div className="whitespace-nowrap flex items-center justify-between">
-                                    <span>大及格体重:</span>
-                                    <span className="font-bold text-emerald-650 ml-1">≥{thresholds.giantWeightLine.toFixed(4)}kg</span>
+                                  <div className="text-[11px] text-slate-500 truncate mt-0.5">
+                                    {pair.father.nature || <span className="text-slate-350 italic">无性格</span>}
+                                  </div>
+                                  <div className="text-[11px] font-semibold text-slate-500 mt-0.5">
+                                    {pair.father.height ? `${pair.father.height}m` : "—"} / {pair.father.weight ? `${pair.father.weight}kg` : "—"}
                                   </div>
                                 </div>
-                                <div className="space-y-0.5 border-l border-slate-200/50 pl-2 whitespace-nowrap">
-                                  <div className="whitespace-nowrap flex items-center justify-between">
-                                    <span>小及格身高:</span>
-                                    <span className="font-bold text-amber-650 ml-1">≤{thresholds.minHeight.toFixed(2)}m</span>
+                              </div>
+
+                              {/* 中间牌子 + 爱心 */}
+                              <div className="flex flex-col items-center justify-center shrink-0 gap-1 select-none">
+                                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-lg border shadow-sm ${getBrandStyle(pair.brand)}`}>
+                                  {pair.brand}
+                                </span>
+                                <div className="text-base text-rose-400 font-bold leading-none">❤</div>
+                              </div>
+
+                              {/* 母本 */}
+                              <div className="flex items-center gap-2.5 flex-1 min-w-0 justify-end text-right">
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-extrabold text-slate-800 truncate" title={pair.mother.sprite}>
+                                    {pair.mother.sprite}
                                   </div>
-                                  <div className="whitespace-nowrap flex items-center justify-between">
-                                    <span>小及格体重:</span>
-                                    <span className="font-bold text-amber-650 ml-1">≤{thresholds.tinyWeightLine.toFixed(4)}kg</span>
+                                  <div className="text-[11px] text-slate-500 truncate mt-0.5">
+                                    {pair.mother.nature || <span className="text-slate-350 italic">无性格</span>}
+                                  </div>
+                                  <div className="text-[11px] font-semibold text-slate-500 mt-0.5">
+                                    {pair.mother.height ? `${pair.mother.height}m` : "—"} / {pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
                                   </div>
                                 </div>
+                                <div className="w-14 h-14 bg-pink-50/60 rounded-xl border border-pink-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                  {motherSpriteFile ? (
+                                    <img
+                                      src={getImagePath(`images/sprites/${motherSpriteFile}`)}
+                                      alt={pair.mother.sprite}
+                                      className="w-11 h-11 object-contain"
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <div className="text-slate-300 text-lg">♀</div>
+                                  )}
+                                  <span className="absolute bottom-0 right-0 text-[9px] bg-pink-500 text-white leading-none px-1 py-0.5 rounded-tl-md font-bold">♀</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* 子代规格参考 */}
+                            {guideSize && (
+                              <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs space-y-2 font-medium select-none">
+                                <div className="flex items-center gap-1.5 text-slate-600 font-bold border-b border-slate-200/60 pb-2 mb-2">
+                                  <span className="text-slate-800">【{pair.eggSprite}】子代规格参考</span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                                  <div className="flex items-center gap-1.5 text-slate-600">
+                                    <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <span>身高:</span>
+                                    <span className="font-bold text-slate-800">{guideSize.height}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1.5 text-slate-600">
+                                    <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <span>体重:</span>
+                                    <span className="font-bold text-slate-800">{guideSize.weight}</span>
+                                  </div>
+                                </div>
+                                {thresholds && (
+                                  <div className="grid grid-cols-2 gap-x-4 pt-2 border-t border-slate-200/50 text-[11px] text-slate-500">
+                                    <div className="space-y-1">
+                                      <div className="flex items-center justify-between">
+                                        <span>大及格身高:</span>
+                                        <span className="font-bold text-emerald-600">≥{thresholds.maxHeight.toFixed(2)}m</span>
+                                      </div>
+                                      <div className="flex items-center justify-between">
+                                        <span>大及格体重:</span>
+                                        <span className="font-bold text-emerald-600">≥{thresholds.giantWeightLine.toFixed(4)}kg</span>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-1 border-l border-slate-200/60 pl-3">
+                                      <div className="flex items-center justify-between">
+                                        <span>小及格身高:</span>
+                                        <span className="font-bold text-amber-600">≤{thresholds.minHeight.toFixed(2)}m</span>
+                                      </div>
+                                      <div className="flex items-center justify-between">
+                                        <span>小及格体重:</span>
+                                        <span className="font-bold text-amber-600">≤{thresholds.tinyWeightLine.toFixed(4)}kg</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             )}
-                          </div>
-                        )}
 
-                        {/* Result Child Info */}
-                        <div className="bg-slate-50/50 rounded-lg border border-slate-100 p-2 flex items-center justify-between text-[10px]">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold text-slate-550">产出:</span>
-                            <span className="font-extrabold text-slate-750">{pair.eggSprite} 蛋</span>
+                            {/* 底部产出信息 + 操作 */}
+                            <div className="bg-gradient-to-r from-slate-50 to-indigo-50/30 rounded-xl border border-slate-200/80 px-3 py-2.5 flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-bold text-slate-500">产出:</span>
+                                <span className="text-sm font-extrabold text-slate-800">{pair.eggSprite} 蛋</span>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <span className="bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-2 py-0.5 rounded-lg text-[11px] font-bold select-none">
+                                  {pair.matchingGroups.join("/")}
+                                </span>
+                                <span className={`font-bold px-2 py-0.5 rounded-lg border text-[11px] select-none ${
+                                  isStatsMatch
+                                    ? "bg-rose-50 text-rose-600 border-rose-200"
+                                    : "bg-slate-100 text-slate-500 border-slate-200"
+                                }`}>
+                                  {isStatsMatch ? "✨ 3V" : "非3V"}
+                                </span>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleImportPairingsToNest([pair]);
+                                  }}
+                                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all shadow hover:shadow-md action-buttons"
+                                >
+                                  导入
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex gap-1.5 items-center">
-                            <span className="bg-indigo-50 text-indigo-600 border border-indigo-100/50 px-1 py-0.2 rounded scale-90 select-none">
-                              {pair.matchingGroups.join("/")}
-                            </span>
-                            <span className={`font-bold px-1.5 py-0.2 rounded scale-90 border select-none ${
-                              isStatsMatch 
-                                ? "bg-rose-50 text-rose-600 border-rose-100/80" 
-                                : "bg-slate-100 text-slate-500 border-slate-200/50"
-                            }`}>
-                              {isStatsMatch ? "3V" : "非3V"}
-                            </span>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleImportPairingsToNest([pair]);
-                              }}
-                              className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold rounded-lg cursor-pointer transition-colors shadow-2xs hover:shadow-xs action-buttons"
-                            >
-                              导入
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
               );
             })()}
           </div>
