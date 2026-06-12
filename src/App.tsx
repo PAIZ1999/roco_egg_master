@@ -3705,7 +3705,7 @@ export default function App() {
                                 return next;
                               });
                             }}
-                            className={`rounded-2xl border p-4 hover:shadow-lg transition-all flex flex-col gap-3.5 relative overflow-hidden group cursor-pointer ${
+                            className={`rounded-2xl border p-3 sm:p-4 hover:shadow-lg transition-all flex flex-col gap-2.5 sm:gap-3.5 relative overflow-hidden group cursor-pointer ${
                               isSelected
                                 ? "bg-white border-emerald-300 ring-1 ring-emerald-200 shadow-sm"
                                 : "bg-slate-50/60 border-slate-200 opacity-60 hover:opacity-90"
@@ -3728,68 +3728,68 @@ export default function App() {
                             )}
 
                             {/* 父母信息行 */}
-                            <div className="flex items-center gap-3 mt-4">
+                            <div className="flex items-center gap-2 sm:gap-3 mt-4">
                               {/* 父本 */}
-                              <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                                <div className="w-14 h-14 bg-sky-50/60 rounded-xl border border-sky-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                              <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0">
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-sky-50/60 rounded-lg sm:rounded-xl border border-sky-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {fatherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
                                       alt={pair.father.sprite}
-                                      className="w-11 h-11 object-contain"
+                                      className="w-8 h-8 sm:w-11 sm:h-11 object-contain"
                                       loading="lazy"
                                     />
                                   ) : (
-                                    <div className="text-slate-300 text-lg">♂</div>
+                                    <div className="text-slate-350 text-sm sm:text-lg">♂</div>
                                   )}
-                                  <span className="absolute bottom-0 right-0 text-[9px] bg-sky-500 text-white leading-none px-1 py-0.5 rounded-tl-md font-bold">♂</span>
+                                  <span className="absolute bottom-0 right-0 text-[8px] sm:text-[9px] bg-sky-500 text-white leading-none px-0.5 py-0.2 sm:px-1 sm:py-0.5 rounded-tl-md font-bold">♂</span>
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <div className="text-sm font-extrabold text-slate-800 truncate" title={pair.father.sprite}>
+                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 truncate" title={pair.father.sprite}>
                                     {pair.father.sprite}
                                   </div>
-                                  <div className="text-[11px] text-slate-500 truncate mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">
                                     {pair.father.nature || <span className="text-slate-350 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[11px] font-semibold text-slate-500 mt-0.5">
-                                    {pair.father.height ? `${pair.father.height}m` : "—"} / {pair.father.weight ? `${pair.father.weight}kg` : "—"}
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5">
+                                    {pair.father.height ? `${pair.father.height}m` : "—"}/{pair.father.weight ? `${pair.father.weight}kg` : "—"}
                                   </div>
                                 </div>
                               </div>
 
                               {/* 中间牌子 + 爱心 */}
-                              <div className="flex flex-col items-center justify-center shrink-0 gap-1 select-none">
-                                <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-lg border shadow-sm ${getBrandStyle(pair.brand)}`}>
+                              <div className="flex flex-col items-center justify-center shrink-0 gap-0.5 sm:gap-1 select-none">
+                                <span className={`text-[9.5px] sm:text-[11px] font-extrabold px-1.5 py-0.5 sm:px-2 rounded-lg border shadow-sm ${getBrandStyle(pair.brand)}`}>
                                   {pair.brand}
                                 </span>
                                 <div className="text-base text-rose-400 font-bold leading-none">❤</div>
                               </div>
 
                               {/* 母本 */}
-                              <div className="flex items-center gap-2.5 flex-1 min-w-0 justify-end text-right">
+                              <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 justify-end text-right">
                                 <div className="min-w-0 flex-1">
-                                  <div className="text-sm font-extrabold text-slate-800 truncate" title={pair.mother.sprite}>
+                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 truncate" title={pair.mother.sprite}>
                                     {pair.mother.sprite}
                                   </div>
-                                  <div className="text-[11px] text-slate-500 truncate mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">
                                     {pair.mother.nature || <span className="text-slate-350 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[11px] font-semibold text-slate-500 mt-0.5">
-                                    {pair.mother.height ? `${pair.mother.height}m` : "—"} / {pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5">
+                                    {pair.mother.height ? `${pair.mother.height}m` : "—"}/{pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
                                   </div>
                                 </div>
-                                <div className="w-14 h-14 bg-pink-50/60 rounded-xl border border-pink-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 rounded-lg sm:rounded-xl border border-pink-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {motherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${motherSpriteFile}`)}
                                       alt={pair.mother.sprite}
-                                      className="w-11 h-11 object-contain"
+                                      className="w-8 h-8 sm:w-11 sm:h-11 object-contain"
                                       loading="lazy"
                                     />
                                   ) : (
-                                    <div className="text-slate-300 text-lg">♀</div>
+                                    <div className="text-slate-350 text-sm sm:text-lg">♀</div>
                                   )}
-                                  <span className="absolute bottom-0 right-0 text-[9px] bg-pink-500 text-white leading-none px-1 py-0.5 rounded-tl-md font-bold">♀</span>
+                                  <span className="absolute bottom-0 right-0 text-[8px] sm:text-[9px] bg-pink-500 text-white leading-none px-0.5 py-0.2 sm:px-1 sm:py-0.5 rounded-tl-md font-bold">♀</span>
                                 </div>
                               </div>
                             </div>
@@ -3840,28 +3840,28 @@ export default function App() {
                             )}
 
                             {/* 底部产出信息 + 操作 */}
-                            <div className="bg-gradient-to-r from-slate-50 to-indigo-50/30 rounded-xl border border-slate-200/80 px-3 py-2.5 flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-slate-500">产出:</span>
-                                <span className="text-sm font-extrabold text-slate-800">{pair.eggSprite} 蛋</span>
+                            <div className="bg-gradient-to-r from-slate-50 to-indigo-50/30 rounded-xl border border-slate-200/80 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
+                              <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
+                                <span className="text-[10px] sm:text-xs font-bold text-slate-500 shrink-0">产出:</span>
+                                <span className="text-xs sm:text-sm font-extrabold text-slate-800 shrink-0">{pair.eggSprite}蛋</span>
                               </div>
-                              <div className="flex gap-2 items-center">
-                                <span className="bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-2 py-0.5 rounded-lg text-[11px] font-bold select-none">
+                              <div className="flex gap-1 sm:gap-2 items-center min-w-0">
+                                <span className="bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-1.5 py-0.5 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-bold select-none truncate shrink-0 max-w-[80px] xs:max-w-none" title={pair.matchingGroups.join("/")}>
                                   {pair.matchingGroups.join("/")}
                                 </span>
-                                <span className={`font-bold px-2 py-0.5 rounded-lg border text-[11px] select-none ${
+                                <span className={`font-bold px-1.5 py-0.5 sm:px-2 rounded-lg border text-[10px] sm:text-[11px] select-none shrink-0 ${
                                   isStatsMatch
                                     ? "bg-rose-50 text-rose-600 border-rose-200"
                                     : "bg-slate-100 text-slate-500 border-slate-200"
                                 }`}>
-                                  {isStatsMatch ? "✨ 3V" : "非3V"}
+                                  {isStatsMatch ? "✨3V" : "非3V"}
                                 </span>
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleImportPairingsToNest([pair]);
                                   }}
-                                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all shadow hover:shadow-md action-buttons"
+                                  className="px-2.5 py-1 sm:px-4 sm:py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] sm:text-xs font-bold rounded-lg cursor-pointer transition-all shadow hover:shadow-md action-buttons shrink-0 whitespace-nowrap"
                                 >
                                   导入
                                 </button>
