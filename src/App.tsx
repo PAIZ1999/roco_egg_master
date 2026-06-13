@@ -3952,14 +3952,14 @@ export default function App() {
               初始化列表
             </button>
             <button
-              onClick={() => setActiveModal("import")}
+              onClick={handleImportClick}
               className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5 text-slate-500" />
               导入数据
             </button>
             <button
-              onClick={() => setActiveModal("export")}
+              onClick={handleExportClick}
               className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <Share2 className="w-3.5 h-3.5 text-slate-500" />
