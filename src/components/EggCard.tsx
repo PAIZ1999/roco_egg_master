@@ -441,10 +441,20 @@ export const EggCard = React.memo(function EggCard({
               <Weight className="w-3 h-3 text-slate-400 shrink-0" />
               <span className="font-semibold text-slate-600 text-[9px]">{stdWeightRange}</span>
             </div>
-            {eggConfig && eggConfig.hatch_data > 0 && (
-              <div className="text-[8px] font-semibold text-teal-650 bg-teal-50/50 px-1 py-0.25 rounded-sm mt-0.5 border border-teal-100/50">
-                孵化: {hatchTimeStr}
-              </div>
+            {thresholds && (
+              <>
+                <div className="w-full border-t border-dashed border-slate-200 my-1 shrink-0" />
+                <div className="flex flex-col gap-0.5 w-full text-[9px] text-slate-400 items-stretch">
+                  <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="大块头及格重量">
+                    <span className="shrink-0 whitespace-nowrap">大及格:</span>
+                    <span className="font-bold text-slate-500 shrink-0 whitespace-nowrap">≥{thresholds.giantWeightLine}kg</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="小不点及格重量">
+                    <span className="shrink-0 whitespace-nowrap">小及格:</span>
+                    <span className="font-bold text-slate-500 shrink-0 whitespace-nowrap">≤{thresholds.tinyWeightLine}kg</span>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>
