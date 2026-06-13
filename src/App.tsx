@@ -4465,11 +4465,11 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-100 flex flex-col gap-4"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4"
             >
               <div className="flex items-center gap-3 text-amber-600">
                 <AlertCircle className="w-6 h-6 shrink-0" />
-                <h3 className="text-lg font-bold text-left">
+                <h3 className="text-lg font-bold text-left text-slate-800 dark:text-slate-100">
                   {resetTabTarget === "nest" && "确定要重置蛋窝与需求列表吗？"}
                   {resetTabTarget === "parents" && "确定要清空父母本仓库吗？"}
                   {resetTabTarget === "eggs" && "确定要清空精灵蛋管理中心吗？"}
@@ -4486,7 +4486,7 @@ export default function App() {
                     setActiveModal("none");
                     setResetTabTarget(null);
                   }}
-                  className="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer mr-0 border border-transparent"
+                  className="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer mr-0 border border-transparent"
                 >
                   取消
                 </button>
@@ -4507,7 +4507,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-2xl w-full shadow-2xl border border-slate-100 flex flex-col gap-4 relative max-h-[85vh] overflow-y-auto"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-2xl w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative max-h-[85vh] overflow-y-auto"
             >
               <button
                 onClick={() => {
@@ -4519,39 +4519,39 @@ export default function App() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 text-slate-800 border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-3 text-slate-800 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Settings className="w-5 h-5 text-indigo-500 shrink-0" />
                 <div>
                   <h3 className="text-lg font-bold text-left">多账号中心与备份管理</h3>
-                  <p className="text-xs text-slate-400 text-left">在此新建账号、切换数据分区、或进行单账号及全量导入导出备份</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 text-left">在此新建账号、切换数据分区、或进行单账号及全量导入导出备份</p>
                 </div>
               </div>
 
               {/* 第一部分：新建账号 */}
-              <div className="bg-slate-50/60 rounded-xl p-4 border border-slate-100 text-left">
-                <h4 className="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+              <div className="bg-slate-50/60 dark:bg-slate-950/40 rounded-xl p-4 border border-slate-100 dark:border-slate-800 text-left">
+                <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
                   创建新账号 / 数据分区
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 mb-1 text-left">账号昵称 (必填)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1 text-left">账号昵称 (必填)</label>
                     <input
                       type="text"
                       placeholder="例如：主号 / 换蛋小号 / 派派"
                       value={newAccNickname}
                       onChange={e => setNewAccNickname(e.target.value)}
-                      className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 mb-1 text-left">游戏 UID (选填)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1 text-left">游戏 UID (选填)</label>
                     <input
                       type="text"
                       placeholder="洛克王国角色 ID"
                       value={newAccUid}
                       onChange={e => setNewAccUid(e.target.value)}
-                      className="w-full border border-slate-200 rounded-lg px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
                     />
                   </div>
                 </div>
@@ -4725,21 +4725,21 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-100 flex flex-col gap-4 text-left"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4 text-left"
             >
               <div className="flex items-center gap-3 text-amber-600">
                 <AlertCircle className="w-6 h-6 shrink-0" />
-                <h3 className="text-lg font-bold text-left">请确认数据导入方案</h3>
+                <h3 className="text-lg font-bold text-left text-slate-800 dark:text-slate-100">请确认数据导入方案</h3>
               </div>
 
-              <p className="text-sm text-slate-550 leading-relaxed bg-amber-50/50 border border-amber-100/60 p-3 rounded-xl text-left">
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-amber-50/50 dark:bg-amber-950/20 border border-amber-100/60 dark:border-amber-900/30 p-3 rounded-xl text-left">
                 {importInfoText}
               </p>
 
               {/* 如果是单账号数据导入，我们需要让用户核对/配置作为新账号导入时的参数 */}
               {importConfirmType === "single" && (
-                <div className="bg-slate-50/50 rounded-xl p-3 border border-slate-100 text-xs space-y-2.5 text-left">
-                  <span className="block font-bold text-slate-700">导入为新分区设置：</span>
+                <div className="bg-slate-50/50 dark:bg-slate-950/20 rounded-xl p-3 border border-slate-100 dark:border-slate-800 text-xs space-y-2.5 text-left">
+                  <span className="block font-bold text-slate-700 dark:text-slate-305">导入为新分区设置：</span>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-[10px] text-slate-450 font-bold mb-0.5">导入新账号昵称</label>
@@ -4814,7 +4814,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 flex flex-col gap-4 relative"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative"
             >
               <button
                 onClick={() => setActiveModal("none")}
@@ -4833,7 +4833,7 @@ export default function App() {
                 </h3>
               </div>
 
-              <p className="text-xs text-slate-500 -mt-2 text-left leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 -mt-2 text-left leading-relaxed">
                 {importContext === "nest" && "💡 您当前处于局部导入模式。将仅覆盖「蛋窝中心」的精灵数据，其他标签页不受影响。支持导入蛋窝专有备份或单账号全量备份（会自动提取其中的蛋窝精灵数据）。"}
                 {importContext === "parents" && "💡 您当前处于局部导入模式。将仅覆盖「父母本仓库」的数据，其他标签页不受影响。支持导入父母本专有备份或单账号全量备份（会自动提取其中的父母本数据）。"}
                 {importContext === "eggs" && "💡 您当前处于局部导入模式。将仅覆盖「精灵蛋管理」的数据，其他标签页不受影响。支持导入精灵蛋专有备份或单账号全量备份（会自动提取其中的精灵蛋数据）。"}
@@ -4842,9 +4842,9 @@ export default function App() {
 
               <div className="flex flex-col gap-3">
                 {/* File dragging trigger/input */}
-                <label className="border border-dashed border-slate-300 hover:border-indigo-400 focus-within:border-indigo-500 rounded-xl p-5 flex flex-col items-center justify-center gap-1.5 bg-slate-50 hover:bg-indigo-50/20 cursor-pointer transition-all text-center">
+                <label className="border border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-500 focus-within:border-indigo-500 rounded-xl p-5 flex flex-col items-center justify-center gap-1.5 bg-slate-50 dark:bg-slate-950/20 hover:bg-indigo-50/20 cursor-pointer transition-all text-center">
                   <Upload className="w-8 h-8 text-indigo-400" />
-                  <span className="text-xs font-semibold text-slate-700">加载您的备份 .json 文件</span>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">加载您的备份 .json 文件</span>
                   <span className="text-[10px] text-slate-400">点击此处或拖拽数据文件到此处</span>
                   <input
                     type="file"
@@ -4867,7 +4867,7 @@ export default function App() {
                     setImportError("");
                   }}
                   placeholder='备份 JSON 数据, 例如: [{"sprite":"水蓝蓝","natures":["聪明"],"groups":["魔力组"]}]'
-                  className="w-full h-32 border border-slate-200 rounded-xl p-3 text-xs font-mono bg-slate-50 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-300 resize-none"
+                  className="w-full h-32 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none"
                 />
 
                 {importError && (
@@ -4902,7 +4902,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 flex flex-col gap-4 relative"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative"
             >
               <button
                 onClick={() => setActiveModal("none")}
@@ -4933,7 +4933,7 @@ export default function App() {
                 <textarea
                   value={jsonText}
                   readOnly
-                  className="w-full h-40 border border-slate-200 rounded-xl p-3 text-xs font-mono bg-slate-50 text-slate-700 resize-none select-all focus:outline-none"
+                  className="w-full h-40 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-850 text-slate-700 dark:text-slate-300 resize-none select-all focus:outline-none"
                 />
                 <button
                   onClick={copyToClipboard}
@@ -4971,7 +4971,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-2xl p-6 max-w-3xl w-full shadow-2xl border border-slate-100 flex flex-col gap-4 relative"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-3xl w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative"
             >
               <button
                 onClick={() => setActiveModal("none")}
@@ -4992,7 +4992,7 @@ export default function App() {
               </p>
 
               {/* Image Preview Container */}
-              <div className="border border-slate-100 rounded-xl overflow-hidden bg-slate-50 h-[45vh] overflow-y-auto p-4 flex justify-center shadow-inner relative group">
+              <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-950 h-[45vh] overflow-y-auto p-4 flex justify-center shadow-inner relative group">
                 {exportedImageUrl ? (
                   <img
                     src={exportedImageUrl}
@@ -5053,7 +5053,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden"
+              className="bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -5087,7 +5087,7 @@ export default function App() {
                       href="https://wiki.biligame.com/rocom/精灵图鉴/原始形态"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 px-3 py-2 rounded-lg transition-all group"
+                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
                     >
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">wiki.biligame.com — 洛克王国:手游WIKI（精灵图鉴/原始形态）</span>
@@ -5107,13 +5107,13 @@ export default function App() {
                 {/* Acknowledgements */}
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">🏅 特别鸣谢</p>
-                  <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 flex flex-col gap-1.5">
+                  <div className="bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/30 rounded-xl px-4 py-3 flex flex-col gap-1.5">
                     <div className="flex items-start gap-2">
                       <Heart className="w-3.5 h-3.5 text-rose-400 mt-0.5 shrink-0" />
-                      <p className="text-xs text-slate-700 leading-relaxed">
+                      <p className="text-xs text-slate-700 dark:text-slate-350 leading-relaxed">
                         精灵身高体重与精灵蛋数据由
-                        <strong className="text-amber-700"> 孟德尔实验室群（群号：1101858898）</strong>
-                        的 <strong className="text-amber-700">cinene</strong> 精心整理，特别感谢！
+                        <strong className="text-amber-700 dark:text-amber-400"> 孟德尔实验室群（群号：1101858898）</strong>
+                        的 <strong className="text-amber-700 dark:text-amber-400">cinene</strong> 精心整理，特别感谢！
                       </p>
                     </div>
                     <p className="text-[11px] text-slate-500 pl-5">感谢孟德尔实验室为洛克王国社区提供的优质数据资源。</p>
@@ -5121,7 +5121,7 @@ export default function App() {
                 </div>
 
                 {/* Author & Contact */}
-                <div className="bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">👤 作者 &amp; 联系方式</p>
                   <div className="flex flex-col gap-1.5 text-xs text-slate-700">
                     <div className="flex items-center gap-2">

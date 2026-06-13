@@ -249,12 +249,12 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
         autoCapitalize="off"
         autoCorrect="off"
         spellCheck={false}
-        className={inputClassName || "w-full px-2 py-1 text-xs bg-white border border-slate-200 rounded text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"}
+        className={inputClassName || "w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-750 rounded text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-550 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"}
       />
       {isOpen && filtered.length > 0 && createPortal(
         <div 
           ref={dropdownRef}
-          className={`max-h-56 overflow-y-auto bg-white border border-slate-200 rounded-lg shadow-xl z-[99999] scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent text-left ${coords.openUpward ? 'mb-1' : 'mt-1'}`}
+          className={`max-h-56 overflow-y-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl dark:shadow-slate-950/50 z-[99999] scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-700 scrollbar-track-transparent text-left ${coords.openUpward ? 'mb-1' : 'mt-1'}`}
           style={{
             position: 'absolute',
             top: `${coords.top}px`,
@@ -271,8 +271,8 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
               onMouseEnter={() => setHighlightedIndex(idx)}
               className={`px-3 py-1.5 text-xs cursor-pointer select-none transition-colors ${
                 idx === highlightedIndex 
-                  ? 'bg-indigo-50 text-indigo-700 font-semibold' 
-                  : 'text-slate-700 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-semibold' 
+                  : 'text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700/40'
               }`}
             >
               {opt}

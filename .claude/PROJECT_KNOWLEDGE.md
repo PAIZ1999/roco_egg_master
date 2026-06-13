@@ -111,6 +111,10 @@
 
       - **毛玻璃微交互切换 UI**: 右上角导航区加入了支持 Hover 显示及旋转 90 度动画的齿轮图标按钮、磨砂玻璃下拉账号切换卡片，以 Indigo 背景和打勾 SVG 标识当前激活账号。
       - **智能导入解析**: 支持单账号和全量多账号导入。若导入单个账号备份，自动提示用户选择“覆盖当前账号”或“作为新账号导入”（可自定义新 UID 和昵称）。
+      - **亮/暗色模式切换与全站适配 (2026-06-13)**:
+        - **状态管理与偏好持久化**: 引入亮暗色一键切换，采用 `theme` 状态并利用 `useEffect` 同步 `.dark` 类至根节点 `document.documentElement`，并自动把用户选择持久化在 `localStorage`，同时支持跟随系统模式。
+        - **全量 UI 适配**: 针对 `Autocomplete`、`SortableCard`、`EggCard`、`ParentCard`、`SortableRow` 以及主页面 `App.tsx` 内 6 个核心模态框（Reset, Account, ImportConfirm, Import, Export, Image-Preview, About）、分页器组件的背景色、边框、文字、高亮及输入元素进行了精细的 `dark:` 变体样式补全。
+        - **长图导出临时回退**: 为保障导出的长图在打印时绿色环保且在高对比度下字迹清晰，在 `generateLongImage` 方法中进行了定制：在 Canvas 绘图渲染前临时剥离全局 `html` 节点的 `dark` 类，并在渲染后的 `finally` 块中实时恢复，从而完美解决暗色长图的打印及对比度痛点，且不打断当前的暗色预览。
 
 2. **主进程 (Electron - CommonJS)**:
    - 文件入口设在 `electron/main.cjs`。由于根目录配置了 `"type": "module"`，Electron 的 CommonJS 代码必须显式命名为 `.cjs` 以确保兼容性。
