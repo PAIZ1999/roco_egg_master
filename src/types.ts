@@ -50,6 +50,7 @@ export interface EggData {
   eggSize: string;
   eggWeight: string;
   produceTime: string;
+  fromNestId?: string;
 }
 
 export interface Account {

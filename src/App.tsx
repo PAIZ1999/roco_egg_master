@@ -908,9 +908,34 @@ export default function App() {
   }, []);
 
   const handleDeleteEgg = useCallback((id: string) => {
-    setEggs(prev => prev.filter(e => e.id !== id));
+    let nestIdToDecrement: string | undefined = undefined;
+
+    setEggs(prev => {
+      const egg = prev.find(e => e.id === id);
+      if (egg && egg.fromNestId) {
+        nestIdToDecrement = egg.fromNestId;
+      }
+      return prev.filter(e => e.id !== id);
+    });
+
     showToast("精灵蛋删除成功！", "success");
-  }, []);
+
+    if (nestIdToDecrement) {
+      setPets(prev => prev.map(p => {
+        if (p.id === nestIdToDecrement) {
+          const currentCount = parseInt(p.eggCount || "0", 10);
+          const newCount = Math.max(0, currentCount - 1);
+          const newStatus = newCount === 0 ? "已撤窝" : p.status;
+          return {
+            ...p,
+            eggCount: newCount.toString(),
+            status: newStatus
+          };
+        }
+        return p;
+      }));
+    }
+  }, [setEggs, setPets]);
 
   const handleAddEggClick = () => {
     // Set default produce time to current local YYYY-MM-DD format
@@ -955,7 +980,8 @@ export default function App() {
       brand: nest.brand,
       eggSize: "", // 尺寸和重量留空
       eggWeight: "",
-      produceTime: localISODate
+      produceTime: localISODate,
+      fromNestId: nest.id
     };
 
     // 4. 新增到精灵蛋管理中心
