@@ -26,6 +26,8 @@ import {
   Info,
   Heart,
   ExternalLink,
+  Sun,
+  Moon,
   Ruler,
   Weight,
   ChevronDown,
@@ -148,6 +150,25 @@ const migrateTrades = (rawList: any[]): EggTrade[] => {
 const EGG_PAGE_SIZE = 6;
 
 export default function App() {
+  // 主题状态（亮/暗色模式）
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'light' || stored === 'dark') return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   // 多账号核心状态
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [activeAccountId, setActiveAccountId] = useState<string>("");
@@ -2145,6 +2166,12 @@ export default function App() {
     document.body.appendChild(wrapper);
     document.body.classList.add("exporting");
 
+    // 长图导出渲染时临时回退为亮色模式，保证图片对比度并省墨，渲染后实时复原，且不打断当前的暗色预览
+    const isCurrentlyDark = document.documentElement.classList.contains("dark");
+    if (isCurrentlyDark) {
+      document.documentElement.classList.remove("dark");
+    }
+
     try {
       // Use html2canvas to render the offscreen clone with fixed scaling and size parameters
       const canvas = await html2canvas(clone, {
@@ -2165,6 +2192,9 @@ export default function App() {
       console.error("生成长图错误:", error);
       showToast("生成长图失败，请重试", "error");
     } finally {
+      if (isCurrentlyDark) {
+        document.documentElement.classList.add("dark");
+      }
       // Safely dispose of our temporary offscreen element wrapper
       if (document.body.contains(wrapper)) {
         document.body.removeChild(wrapper);
@@ -2408,7 +2438,21 @@ export default function App() {
           </div>
 
           {/* 账号快速切换下拉菜单 */}
-          <div className="w-full sm:w-auto flex justify-center sm:justify-end relative">
+          <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-3 relative">
+            {/* 亮/暗色主题切换按钮 */}
+            <button
+              id="theme-toggle-btn"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/80 border border-slate-700/80 hover:border-slate-500/50 rounded-xl transition-all cursor-pointer shadow-sm relative group flex items-center justify-center shrink-0"
+              title={theme === "light" ? "切换至暗色模式" : "切换至亮色模式"}
+            >
+              {theme === "light" ? (
+                <Moon className="w-4 h-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 text-slate-400 group-hover:text-slate-100" />
+              ) : (
+                <Sun className="w-4 h-4 text-amber-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-45" />
+              )}
+            </button>
+
             <div className="relative inline-block text-left select-none">
               <button
                 onClick={() => setShowAccountDropdown(!showAccountDropdown)}
