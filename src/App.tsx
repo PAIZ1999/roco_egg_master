@@ -925,7 +925,7 @@ export default function App() {
         if (p.id === nestIdToDecrement) {
           const currentCount = parseInt(p.eggCount || "0", 10);
           const newCount = Math.max(0, currentCount - 1);
-          const newStatus = newCount === 0 ? "已撤窝" : p.status;
+          const newStatus = newCount === 0 ? "正在孵，可预约" : p.status;
           return {
             ...p,
             eggCount: newCount.toString(),
