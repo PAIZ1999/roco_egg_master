@@ -38,3 +38,7 @@
 - 原本当 `getStatusBadge()` 返回 `null` 时默认渲染“普通体型”标签。
 - 优化后，若牌子为 `"大粗"`, `"大婉"`, `"单大块头"` 之一，即使 `getStatusBadge() === null` 也不显示“普通体型”标签，只有在达到极限值时显示“极限大”。
 - 移除了卡片底部的“孵化时间”小标签，并自适应在“标准区间 (蛋)”底部新增了大块头和小不点“大及格”/“小及格”的临界值身高体重指示面板，与父母本卡片信息展示对齐。
+
+## 5. 父母本管理中心数据导出空白修复
+- **原因**：父母本管理中心底部的“导入数据”与“导出数据”按钮，其 `onClick` 原本直接绑定为 `setActiveModal("import")` 和 `setActiveModal("export")`。这导致点击导出时未能先执行 `handleExportClick`（生成 JSON 数据到内存变量 `jsonText` 中），从而使得导出的文本框呈现为空白；导入时也未能执行 `handleImportClick` 清空遗留的状态。
+- **解决**：将两个按钮的 `onClick` 方法分别更正为 `handleImportClick` 与 `handleExportClick`，使其与主表格的导入导出行为一致。
