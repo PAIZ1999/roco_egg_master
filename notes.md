@@ -28,8 +28,7 @@
   - 产出时间默认当前日期（YYYY-MM-DD）。
   - 追加新蛋到 `eggs` 列表顶部：`setEggs(prev => [newEgg, ...prev])`。
   - 更新蛋窝现蛋数与状态：
-    - 若 `eggCount > 1`，将 `eggCount` 减 1。
-    - 若 `eggCount <= 1`，将 `eggCount` 改为 `"0"`，且将窝点状态设为 `"已撤窝"`。
+    - 将蛋窝卡片上的现蛋数量（eggCount）加 1，并确保其窝点状态（status）自动切换为“有现蛋”。
 
 ## 3. 手动登记蛋默认三围优化 (`App.tsx` 中的 `handleAddEggClick`)
 - 默认三围 `fatherStats` 和 `motherStats` 由原先的 `["无", "无", "无"]` 修改为 `["生命", "物攻", "速度"]`，确保新增后即有 3V 候选数据。

@@ -961,17 +961,11 @@ export default function App() {
     // 4. 新增到精灵蛋管理中心
     setEggs(prev => [newEgg, ...prev]);
 
-    // 5. 扣减当前蛋窝现蛋数量或切换状态
-    const currentCount = parseInt(nest.eggCount || "1", 10);
-    if (currentCount > 1) {
-      // 扣减 1
-      setPets(prev => prev.map(p => p.id === nest.id ? { ...p, eggCount: (currentCount - 1).toString() } : p));
-      showToast(`产蛋成功！精灵蛋[${lowestName}]已录入蛋管理中心，窝点数量减1`, "success");
-    } else {
-      // 数量归 0，且状态设为已撤窝
-      setPets(prev => prev.map(p => p.id === nest.id ? { ...p, eggCount: "0", status: "已撤窝" } : p));
-      showToast(`产蛋成功！精灵蛋[${lowestName}]已录入，该蛋窝现蛋已产完，状态切换为“已撤窝”`, "success");
-    }
+    // 5. 增加当前蛋窝现蛋数量，并确保状态为“有现蛋”
+    const currentCount = parseInt(nest.eggCount || "0", 10);
+    const newCount = isNaN(currentCount) ? 1 : currentCount + 1;
+    setPets(prev => prev.map(p => p.id === nest.id ? { ...p, eggCount: newCount.toString(), status: "有现蛋" } : p));
+    showToast(`产蛋成功！精灵蛋[${lowestName}]已录入蛋管理中心，当前窝点数量已增加至 ${newCount}`, "success");
   }, [setEggs, setPets]);
 
   const handleUpdateEggSprite = useCallback((id: string, sprite: string) => {
