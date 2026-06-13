@@ -54,7 +54,7 @@ import {
 import petEggConf from "../images/蛋数据/PET_EGG_CONF.json";
 import { EggCard } from "./components/EggCard";
 import { EggData } from "./types";
-import { getEggConfig, getEggSizeThresholds, formatHatchTime, getEggStatusType, isEgg3V } from "./petHelper";
+import { getEggConfig, getEggSizeThresholds, formatHatchTime, getEggStatusType, isEgg3V, getLowestStageName } from "./petHelper";
 import {
   DndContext,
   closestCenter,
@@ -923,8 +923,8 @@ export default function App() {
       sprite: "", // blank sprite so user can type/autocomplete it on the card
       fatherNature: "",
       motherNature: "",
-      fatherStats: ["无", "无", "无"],
-      motherStats: ["无", "无", "无"],
+      fatherStats: ["生命", "物攻", "速度"],
+      motherStats: ["生命", "物攻", "速度"],
       brand: "普通",
       eggSize: "",
       eggWeight: "",
@@ -934,6 +934,45 @@ export default function App() {
     setEggs(prev => [newEgg, ...prev]);
     showToast("已登记一只新精灵蛋卡片，请在卡片中填写信息！", "success");
   };
+
+  const handleProduceEgg = useCallback((nest: EggPet) => {
+    // 1. 推导最低进化形态
+    const lowestName = getLowestStageName(nest.sprite);
+
+    // 2. 获取当前日期
+    const now = new Date();
+    const offset = now.getTimezoneOffset() * 60000;
+    const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
+
+    // 3. 构建新的精灵蛋 EggData
+    const newEgg: EggData = {
+      id: `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      sprite: lowestName,
+      fatherNature: nest.fatherNatures?.[0] || "",
+      motherNature: nest.motherNatures?.[0] || "",
+      fatherStats: nest.fatherStats && nest.fatherStats.length > 0 ? [...nest.fatherStats] : ["生命", "物攻", "速度"],
+      motherStats: nest.motherStats && nest.motherStats.length > 0 ? [...nest.motherStats] : ["生命", "物攻", "速度"],
+      brand: nest.brand,
+      eggSize: "", // 尺寸和重量留空
+      eggWeight: "",
+      produceTime: localISODate
+    };
+
+    // 4. 新增到精灵蛋管理中心
+    setEggs(prev => [newEgg, ...prev]);
+
+    // 5. 扣减当前蛋窝现蛋数量或切换状态
+    const currentCount = parseInt(nest.eggCount || "1", 10);
+    if (currentCount > 1) {
+      // 扣减 1
+      setPets(prev => prev.map(p => p.id === nest.id ? { ...p, eggCount: (currentCount - 1).toString() } : p));
+      showToast(`产蛋成功！精灵蛋[${lowestName}]已录入蛋管理中心，窝点数量减1`, "success");
+    } else {
+      // 数量归 0，且状态设为已撤窝
+      setPets(prev => prev.map(p => p.id === nest.id ? { ...p, eggCount: "0", status: "已撤窝" } : p));
+      showToast(`产蛋成功！精灵蛋[${lowestName}]已录入，该蛋窝现蛋已产完，状态切换为“已撤窝”`, "success");
+    }
+  }, [setEggs, setPets]);
 
   const handleUpdateEggSprite = useCallback((id: string, sprite: string) => {
     setEggs(prev => prev.map(e => e.id === id ? { ...e, sprite } : e));
@@ -2519,6 +2558,7 @@ export default function App() {
                     handleUpdateLimit={handleUpdateLimit}
                     handleUpdateHideStats={handleUpdateHideStats}
                     handleUpdateEggCount={handleUpdateEggCount}
+                    onProduceEgg={handleProduceEgg}
                   />
                 ))}
               </div>

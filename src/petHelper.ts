@@ -535,5 +535,25 @@ export const getEggStatusType = (egg: EggData) => {
   return "普通";
 };
 
+/**
+ * 获取该宠物的最低进化形态名称，若有形态后缀则自动保留后缀
+ */
+export const getLowestStageName = (petName: string): string => {
+  if (!petName) return "";
+  const parts = petName.split("_");
+  const baseName = parts[0];
+  const suffix = parts[1] ? `_${parts[1]}` : "";
+  
+  const details = getPetDetails(baseName);
+  if (details && details.familyChain) {
+    const chainParts = details.familyChain.split(" → ").map(p => p.trim());
+    if (chainParts.length > 0 && chainParts[0]) {
+      return `${chainParts[0]}${suffix}`;
+    }
+  }
+  return petName;
+};
+
+
 
 

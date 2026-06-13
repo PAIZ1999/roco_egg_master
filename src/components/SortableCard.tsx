@@ -5,6 +5,7 @@ import {
   Trash2,
   MinusCircle,
   PlusCircle,
+  Plus,
   GripVertical,
   Egg,
   Eye,
@@ -87,6 +88,7 @@ interface SortableCardProps {
   handleUpdateLimit: (id: string, limit: string) => void;
   handleUpdateHideStats: (id: string, hide: boolean) => void;
   handleUpdateEggCount: (id: string, count: string) => void;
+  onProduceEgg?: (pet: EggPet) => void;
 }
 
 export const SortableCard = React.memo(function SortableCard({
@@ -105,7 +107,8 @@ export const SortableCard = React.memo(function SortableCard({
   handleUpdateStatus,
   handleUpdateLimit,
   handleUpdateHideStats,
-  handleUpdateEggCount
+  handleUpdateEggCount,
+  onProduceEgg
 }: SortableCardProps) {
   const {
     attributes,
@@ -562,13 +565,28 @@ export const SortableCard = React.memo(function SortableCard({
                 <Egg className="w-3 h-3 text-amber-600 shrink-0" />
                 当前窝点现蛋数量
               </span>
-              <input
-                type="number"
-                min="0"
-                value={pet.eggCount || "1"}
-                onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
-                className="w-10 text-center text-xs font-bold text-amber-950 bg-white border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-400 py-0.5 px-0.5 shadow-3xs"
-              />
+              <div className="flex items-center gap-1.5 shrink-0">
+                <input
+                  type="number"
+                  min="0"
+                  value={pet.eggCount || "1"}
+                  onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
+                  className="w-10 text-center text-xs font-bold text-amber-950 bg-white border border-amber-200 rounded focus:outline-none focus:ring-2 focus:ring-amber-400 py-0.5 px-0.5 shadow-3xs"
+                />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (onProduceEgg) {
+                      onProduceEgg(pet);
+                    }
+                  }}
+                  className="text-[10px] font-bold text-white bg-amber-500 hover:bg-amber-600 active:scale-95 px-2 py-1 rounded-md shadow-3xs transition-all cursor-pointer flex items-center gap-0.5 border border-transparent action-buttons"
+                  title="一键产蛋并录入到蛋管理中心"
+                >
+                  <Plus className="w-2.5 h-2.5" />
+                  产蛋
+                </button>
+              </div>
             </div>
           ) : (
             (() => {

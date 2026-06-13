@@ -517,10 +517,12 @@ export const EggCard = React.memo(function EggCard({
           {getStatusBadge() ? (
             getStatusBadge()
           ) : (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 text-slate-500 border border-slate-200/60 shadow-3xs select-none whitespace-nowrap">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-350" />
-              普通体型
-            </span>
+            !["大粗", "大婉", "单大块头"].includes(egg.brand) && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 text-slate-500 border border-slate-200/60 shadow-3xs select-none whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-350" />
+                普通体型
+              </span>
+            )
           )}
           {isEgg3V(egg) && (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-3xs select-none whitespace-nowrap">
