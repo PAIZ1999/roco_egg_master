@@ -42,3 +42,15 @@
 ## 5. 父母本管理中心数据导出空白修复
 - **原因**：父母本管理中心底部的“导入数据”与“导出数据”按钮，其 `onClick` 原本直接绑定为 `setActiveModal("import")` 和 `setActiveModal("export")`。这导致点击导出时未能先执行 `handleExportClick`（生成 JSON 数据到内存变量 `jsonText` 中），从而使得导出的文本框呈现为空白；导入时也未能执行 `handleImportClick` 清空遗留的状态。
 - **解决**：将两个按钮的 `onClick` 方法分别更正为 `handleImportClick` 与 `handleExportClick`，使其与主表格的导入导出行为一致。
+
+## 6. 三标签页独立导入导出与覆盖隔离优化
+- **需求**：防止在单个标签页导入数据时将其他标签页的数据覆盖。只有在“账号管理”中的导入导出才会覆盖所有标签页。
+- **解决**：
+  - **状态扩展**：扩展 `exportType` 状态为 `single | all | nest | parents | eggs`；新增 `importContext` 状态以记录当前导入所处的模块。
+  - **局部导出**：新增 `handleExportNestClick`、`handleExportParentsClick`、`handleExportEggsClick` 方法。仅导出与模块相关的数据并带有专有的 `version` 标识，自动在文件名中追加该模块前缀。
+  - **局部导入**：新增 `handleImportNestClick`、`handleImportParentsClick`、`handleImportEggsClick`。重构 `executeImport` 支持隔离解析，无论粘贴纯模块数组、模块专有备份、还是全量账号备份，都只安全提取当前标签页所需的数据（例如父母本只更新 `parents`），绝不覆盖或影响其他标签页数据，并在导入成功后重置对应标签页的检索条件。
+  - **UI 绑定**：
+    - 蛋窝中心（主页）绑定调用 `handleImportNestClick`/`handleExportNestClick`。
+    - 父母本管理中心绑定调用 `handleImportParentsClick`/`handleExportParentsClick`。
+    - 精灵蛋管理中心新增“导入数据”与“导出数据”按钮并绑定对应的局部回调。
+    - 优化了导入导出模态框的标题与辅助文案，提示更贴心。

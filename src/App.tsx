@@ -188,7 +188,8 @@ export default function App() {
   };
   
   // 导入导出管理状态
-  const [exportType, setExportType] = useState<"single" | "all">("single");
+  const [exportType, setExportType] = useState<"single" | "all" | "nest" | "parents" | "eggs">("single");
+  const [importContext, setImportContext] = useState<"global" | "nest" | "parents" | "eggs">("global");
   const [pendingImportData, setPendingImportData] = useState<any>(null);
   const [importInfoText, setImportInfoText] = useState("");
   const [importConfirmType, setImportConfirmType] = useState<"none" | "single" | "multi">("none");
@@ -1339,6 +1340,28 @@ export default function App() {
   const handleImportClick = () => {
     setJsonText("");
     setImportError("");
+    setImportContext("global");
+    setActiveModal("import");
+  };
+
+  const handleImportNestClick = () => {
+    setJsonText("");
+    setImportError("");
+    setImportContext("nest");
+    setActiveModal("import");
+  };
+
+  const handleImportParentsClick = () => {
+    setJsonText("");
+    setImportError("");
+    setImportContext("parents");
+    setActiveModal("import");
+  };
+
+  const handleImportEggsClick = () => {
+    setJsonText("");
+    setImportError("");
+    setImportContext("eggs");
     setActiveModal("import");
   };
 
@@ -1350,6 +1373,120 @@ export default function App() {
         return;
       }
       const parsed = JSON.parse(pastedText);
+
+      // 如果是局部导入
+      if (importContext !== "global") {
+        let targetList: any[] | null = null;
+        let label = "";
+
+        if (importContext === "nest") {
+          label = "蛋窝";
+          if (parsed && parsed.version === "roco_egg_nest_data_v1") {
+            targetList = parsed.data;
+          } else if (parsed && parsed.version === "roco_egg_single_account_v1" && parsed.data) {
+            targetList = parsed.data.pets;
+          } else if (Array.isArray(parsed)) {
+            targetList = parsed;
+          } else if (parsed && Array.isArray(parsed.pets)) {
+            targetList = parsed.pets;
+          }
+
+          if (targetList) {
+            const migrated = migratePets(targetList);
+            setPets(migrated);
+            setAccountDataMap(prev => ({
+              ...prev,
+              [activeAccountId]: {
+                ...(prev[activeAccountId] || { pets: [], trades: [], parents: [], eggs: [] }),
+                pets: migrated
+              }
+            }));
+            // 重置过滤条件
+            setSearchTerm("");
+            setFilterNature("");
+            setFilterGroup("");
+            setFilterBrand("");
+            setFilterStatus("");
+            setFilterLimit("");
+            setFilter3V("");
+
+            showToast(`已成功导入${label}数据！`, "success");
+            setActiveModal("none");
+            return;
+          }
+        } else if (importContext === "parents") {
+          label = "父母本仓储";
+          if (parsed && parsed.version === "roco_egg_parents_data_v1") {
+            targetList = parsed.data;
+          } else if (parsed && parsed.version === "roco_egg_single_account_v1" && parsed.data) {
+            targetList = parsed.data.parents;
+          } else if (Array.isArray(parsed)) {
+            targetList = parsed;
+          } else if (parsed && Array.isArray(parsed.parents)) {
+            targetList = parsed.parents;
+          }
+
+          if (targetList) {
+            setParents(targetList);
+            setAccountDataMap(prev => ({
+              ...prev,
+              [activeAccountId]: {
+                ...(prev[activeAccountId] || { pets: [], trades: [], parents: [], eggs: [] }),
+                parents: targetList!
+              }
+            }));
+            // 重置过滤条件
+            setFatherSearchTerm("");
+            setFatherFilterGroup("");
+            setFatherFilterBrand("");
+            setFatherNatureSearch("");
+            setMotherSearchTerm("");
+            setMotherFilterGroup("");
+            setMotherFilterBrand("");
+            setMotherNatureSearch("");
+
+            showToast(`已成功导入${label}数据！`, "success");
+            setActiveModal("none");
+            return;
+          }
+        } else if (importContext === "eggs") {
+          label = "精灵蛋管理";
+          if (parsed && parsed.version === "roco_egg_eggs_data_v1") {
+            targetList = parsed.data;
+          } else if (parsed && parsed.version === "roco_egg_single_account_v1" && parsed.data) {
+            targetList = parsed.data.eggs;
+          } else if (Array.isArray(parsed)) {
+            targetList = parsed;
+          } else if (parsed && Array.isArray(parsed.eggs)) {
+            targetList = parsed.eggs;
+          }
+
+          if (targetList) {
+            setEggs(targetList);
+            setAccountDataMap(prev => ({
+              ...prev,
+              [activeAccountId]: {
+                ...(prev[activeAccountId] || { pets: [], trades: [], parents: [], eggs: [] }),
+                eggs: targetList!
+              }
+            }));
+            // 重置过滤条件
+            setEggSearchTerm("");
+            setEggFilterGroup("");
+            setEggFilterBrand("");
+            setEggFilterLimit("");
+            setEggFilter3V("");
+            setEggCurrentPage(1);
+
+            showToast(`已成功导入${label}数据！`, "success");
+            setActiveModal("none");
+            return;
+          }
+        }
+
+        setImportError(`无法识别的 JSON 格式或无法从中提取${label}数据`);
+        return;
+      }
 
       // 1. 判断是否是多账号全量备份
       if (parsed && parsed.version === "roco_egg_multi_accounts_v1" && Array.isArray(parsed.accounts)) {
@@ -1507,6 +1644,36 @@ export default function App() {
     handleExportSingleClick(activeAccountId);
   };
 
+  const handleExportNestClick = () => {
+    const backupData = JSON.stringify({
+      version: "roco_egg_nest_data_v1",
+      data: pets
+    }, null, 2);
+    setJsonText(backupData);
+    setExportType("nest");
+    setActiveModal("export");
+  };
+
+  const handleExportParentsClick = () => {
+    const backupData = JSON.stringify({
+      version: "roco_egg_parents_data_v1",
+      data: parents
+    }, null, 2);
+    setJsonText(backupData);
+    setExportType("parents");
+    setActiveModal("export");
+  };
+
+  const handleExportEggsClick = () => {
+    const backupData = JSON.stringify({
+      version: "roco_egg_eggs_data_v1",
+      data: eggs
+    }, null, 2);
+    setJsonText(backupData);
+    setExportType("eggs");
+    setActiveModal("export");
+  };
+
   // 导出单个账号
   const handleExportSingleClick = (accountId: string) => {
     const acc = accounts.find(a => a.id === accountId);
@@ -1554,7 +1721,20 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     const dateStr = new Date().toLocaleDateString("zh-CN").replace(/\//g, "-");
-    const prefix = exportType === "all" ? "全部账号备份" : `单账号备份_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
+    
+    let prefix = "";
+    if (exportType === "all") {
+      prefix = "全部账号备份";
+    } else if (exportType === "single") {
+      prefix = `单账号备份_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
+    } else if (exportType === "nest") {
+      prefix = `蛋窝数据_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
+    } else if (exportType === "parents") {
+      prefix = `父母本数据_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
+    } else if (exportType === "eggs") {
+      prefix = `精灵蛋数据_${accounts.find(a => a.id === activeAccountId)?.nickname || "默认"}`;
+    }
+
     link.href = url;
     link.download = `洛克王国_${prefix}_${dateStr}.json`;
     link.click();
@@ -2610,7 +2790,7 @@ export default function App() {
 
             {/* Import JSON button */}
             <button
-              onClick={handleImportClick}
+              onClick={handleImportNestClick}
               className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
               title="从备份文件或文本导入数据"
             >
@@ -2620,7 +2800,7 @@ export default function App() {
 
             {/* Export JSON button */}
             <button
-              onClick={handleExportClick}
+              onClick={handleExportNestClick}
               className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
               title="导出当前列表数据作为备份"
             >
@@ -3114,7 +3294,23 @@ export default function App() {
               </div>
             </div>
             
-            <div className="flex gap-2 ml-auto shrink-0">
+            <div className="flex flex-wrap gap-2 ml-auto shrink-0 justify-end">
+              <button
+                onClick={handleImportEggsClick}
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                title="从备份文件或文本导入精灵蛋数据"
+              >
+                <Upload className="w-4 h-4 text-slate-500" />
+                导入数据
+              </button>
+              <button
+                onClick={handleExportEggsClick}
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                title="导出当前精灵蛋数据作为备份"
+              >
+                <Share2 className="w-4 h-4 text-slate-500" />
+                导出数据
+              </button>
               <button
                 onClick={() => handleReset("eggs")}
                 className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
@@ -3952,14 +4148,14 @@ export default function App() {
               初始化列表
             </button>
             <button
-              onClick={handleImportClick}
+              onClick={handleImportParentsClick}
               className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5 text-slate-500" />
               导入数据
             </button>
             <button
-              onClick={handleExportClick}
+              onClick={handleExportParentsClick}
               className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <Share2 className="w-3.5 h-3.5 text-slate-500" />
@@ -4629,8 +4825,20 @@ export default function App() {
 
               <div className="flex items-center gap-3 text-slate-800">
                 <Upload className="w-5 h-5 text-indigo-500 shrink-0" />
-                <h3 className="text-lg font-bold">导入孵蛋备份数据</h3>
+                <h3 className="text-lg font-bold">
+                  {importContext === "nest" && "导入蛋窝精灵数据"}
+                  {importContext === "parents" && "导入父母本仓储数据"}
+                  {importContext === "eggs" && "导入精灵蛋数据"}
+                  {importContext === "global" && "导入全量备份数据"}
+                </h3>
               </div>
+
+              <p className="text-xs text-slate-500 -mt-2 text-left leading-relaxed">
+                {importContext === "nest" && "💡 您当前处于局部导入模式。将仅覆盖「蛋窝中心」的精灵数据，其他标签页不受影响。支持导入蛋窝专有备份或单账号全量备份（会自动提取其中的蛋窝精灵数据）。"}
+                {importContext === "parents" && "💡 您当前处于局部导入模式。将仅覆盖「父母本仓库」的数据，其他标签页不受影响。支持导入父母本专有备份或单账号全量备份（会自动提取其中的父母本数据）。"}
+                {importContext === "eggs" && "💡 您当前处于局部导入模式。将仅覆盖「精灵蛋管理」的数据，其他标签页不受影响。支持导入精灵蛋专有备份或单账号全量备份（会自动提取其中的精灵蛋数据）。"}
+                {importContext === "global" && "💡 您当前处于全局导入模式。导入的单账号或多账号备份将覆盖对应分区的全部标签页数据！"}
+              </p>
 
               <div className="flex flex-col gap-3">
                 {/* File dragging trigger/input */}
@@ -4705,11 +4913,20 @@ export default function App() {
 
               <div className="flex items-center gap-3 text-slate-800">
                 <Share2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                <h3 className="text-lg font-bold">备份并导出孵蛋数据</h3>
+                <h3 className="text-lg font-bold">
+                  {exportType === "nest" && "备份并导出蛋窝数据"}
+                  {exportType === "parents" && "备份并导出父母本仓库数据"}
+                  {exportType === "eggs" && "备份并导出精灵蛋数据"}
+                  {exportType === "single" && "备份并导出单账号数据"}
+                  {exportType === "all" && "备份并导出全量多账号数据"}
+                </h3>
               </div>
 
-              <p className="text-sm text-slate-500 leading-relaxed">
-                当前列表内所有的宠物、性格、蛋组以及窝点详情状态信息已成功打包。您可以将其保存到本地备份，也可以复制其文本在其它浏览器或账户上进行导入还原。
+              <p className="text-sm text-slate-500 leading-relaxed text-left">
+                {exportType === "nest" && "已为您成功打包当前账号下的「蛋窝精灵」及换蛋交易数据。您可以将其下载为专有的蛋窝备份，或复制代码直接用于单独的蛋窝导入。"}
+                {exportType === "parents" && "已为您成功打包当前账号下的「父母本仓库」配置数据。您可以将其下载为专有的父母本备份，或复制代码直接用于单独的父母本导入。"}
+                {exportType === "eggs" && "已为您成功打包当前账号下的「精灵蛋管理」卡片及产蛋纪录数据。您可以将其下载为专有的精灵蛋备份，或复制代码直接用于单独的精灵蛋导入。"}
+                {(exportType === "single" || exportType === "all") && "当前列表内所有的宠物、性格、蛋组以及窝点详情状态信息已成功打包。您可以将其保存到本地备份，也可以复制其文本在其它浏览器或账户上进行导入还原。"}
               </p>
 
               <div className="relative">
