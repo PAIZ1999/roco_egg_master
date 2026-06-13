@@ -3424,10 +3424,10 @@ export default function App() {
               </SortableContext>
             </DndContext>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-1 py-3 border-t border-slate-100">
-              <div className="text-xs text-slate-500 font-medium select-none text-left">
-                共 <span className="font-bold font-mono text-slate-700">{filteredEggs.length}</span> 个精灵蛋，
-                当前展示第 <span className="font-bold font-mono text-indigo-600">{(eggCurrentPage - 1) * EGG_PAGE_SIZE + 1}-{Math.min(eggCurrentPage * EGG_PAGE_SIZE, filteredEggs.length)}</span> 个
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-1 py-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium select-none text-left">
+                共 <span className="font-bold font-mono text-slate-700 dark:text-slate-300">{filteredEggs.length}</span> 个精灵蛋，
+                当前展示第 <span className="font-bold font-mono text-indigo-600 dark:text-indigo-400">{(eggCurrentPage - 1) * EGG_PAGE_SIZE + 1}-{Math.min(eggCurrentPage * EGG_PAGE_SIZE, filteredEggs.length)}</span> 个
               </div>
               
               {totalEggPages > 1 && (
@@ -3435,7 +3435,7 @@ export default function App() {
                   <button
                     onClick={() => setEggCurrentPage(1)}
                     disabled={eggCurrentPage === 1}
-                    className="px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    className="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 disabled:opacity-40 disabled:hover:bg-white dark:disabled:hover:bg-slate-800 disabled:hover:border-slate-200 dark:disabled:hover:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
                     title="第一页"
                   >
                     首页
@@ -3443,7 +3443,7 @@ export default function App() {
                   <button
                     onClick={() => setEggCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={eggCurrentPage === 1}
-                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 disabled:opacity-40 disabled:hover:bg-white dark:disabled:hover:bg-slate-800 disabled:hover:border-slate-200 dark:disabled:hover:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                     上一页
@@ -3465,7 +3465,7 @@ export default function App() {
                           className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition-all cursor-pointer flex items-center justify-center ${
                             eggCurrentPage === pageNum
                               ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-600"
-                              : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+                              : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                           }`}
                         >
                           {pageNum}
@@ -3477,7 +3477,7 @@ export default function App() {
                   <button
                     onClick={() => setEggCurrentPage(prev => Math.min(totalEggPages, prev + 1))}
                     disabled={eggCurrentPage === totalEggPages}
-                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                    className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 disabled:opacity-40 disabled:hover:bg-white dark:disabled:hover:bg-slate-800 disabled:hover:border-slate-200 dark:disabled:hover:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
                   >
                     下一页
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -3485,7 +3485,7 @@ export default function App() {
                   <button
                     onClick={() => setEggCurrentPage(totalEggPages)}
                     disabled={eggCurrentPage === totalEggPages}
-                    className="px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    className="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 disabled:opacity-40 disabled:hover:bg-white dark:disabled:hover:bg-slate-800 disabled:hover:border-slate-200 dark:disabled:hover:border-slate-700 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
                     title="最后一页"
                   >
                     末页
@@ -4475,7 +4475,7 @@ export default function App() {
                   {resetTabTarget === "eggs" && "确定要清空精灵蛋管理中心吗？"}
                 </h3>
               </div>
-              <p className="text-sm text-slate-500 leading-relaxed text-left">
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed text-left">
                 {resetTabTarget === "nest" && `这将清除您自建的所有蛋窝精灵以及最新修改的状态，并还原到出厂初始精灵列表 (共 ${INITIAL_TABLE_DATA.length} 个推荐精灵条目)，同时清空换蛋需求记录。此操作无法撤销！`}
                 {resetTabTarget === "parents" && "这将清除您当前账号下登记的所有父母本精灵卡片及数据。此操作无法撤销！"}
                 {resetTabTarget === "eggs" && "这将清空您当前登记的所有精灵蛋管理卡片和产出记录。此操作无法撤销！"}
@@ -4514,7 +4514,7 @@ export default function App() {
                   setShowAccountModal(false);
                   setEditingAccountId(null);
                 }}
-                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:bg-slate-800 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -4541,7 +4541,7 @@ export default function App() {
                       placeholder="例如：主号 / 换蛋小号 / 派派"
                       value={newAccNickname}
                       onChange={e => setNewAccNickname(e.target.value)}
-                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
                     />
                   </div>
                   <div>
@@ -4551,7 +4551,7 @@ export default function App() {
                       placeholder="洛克王国角色 ID"
                       value={newAccUid}
                       onChange={e => setNewAccUid(e.target.value)}
-                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all"
                     />
                   </div>
                 </div>
@@ -4567,21 +4567,21 @@ export default function App() {
 
               {/* 第二部分：账号列表 */}
               <div className="flex-1 flex flex-col min-h-[220px] text-left">
-                <h4 className="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2.5 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
                   账号列表 ({accounts.length})
                 </h4>
                 
-                <div className="border border-slate-100 rounded-xl overflow-hidden flex-1 overflow-y-auto max-h-60 bg-white">
+                <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden flex-1 overflow-y-auto max-h-60 bg-white dark:bg-slate-900">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50/75 border-b border-slate-100 text-[10px] font-bold text-slate-450 uppercase">
+                      <tr className="bg-slate-50/75 dark:bg-slate-950/45 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase">
                         <th className="px-4 py-2">账号昵称</th>
                         <th className="px-4 py-2">UID</th>
                         <th className="px-4 py-2 text-right">操作</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50 text-xs">
+                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800 text-xs">
                       {accounts.map(acc => {
                         const isActive = acc.id === activeAccountId;
                         const isEditing = editingAccountId === acc.id;
@@ -4598,22 +4598,22 @@ export default function App() {
                                 />
                               ) : (
                                 <div className="flex items-center gap-2">
-                                  <span className="text-slate-800 font-bold">{acc.nickname}</span>
+                                  <span className="text-slate-800 dark:text-slate-200 font-bold">{acc.nickname}</span>
                                   {isActive && (
-                                    <span className="px-1.5 py-0.2 text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-md">
+                                    <span className="px-1.5 py-0.2 text-[9px] font-bold bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40 rounded-md">
                                       当前激活
                                     </span>
                                   )}
                                 </div>
                               )}
                             </td>
-                            <td className="px-4 py-2.5 font-mono text-slate-500">
+                            <td className="px-4 py-2.5 font-mono text-slate-500 dark:text-slate-400">
                               {isEditing ? (
                                 <input
                                   type="text"
-                                  value={editingUid}
-                                  onChange={e => setEditingUid(e.target.value)}
-                                  className="border border-slate-200 rounded px-2 py-0.5 text-xs max-w-[100px] font-mono focus:outline-none focus:border-indigo-500"
+                                  value={editingNickname}
+                                  onChange={e => setEditingNickname(e.target.value)}
+                                  className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded px-2 py-0.5 text-xs max-w-[120px] focus:outline-none focus:border-indigo-500"
                                 />
                               ) : (
                                 acc.uid || "—"
@@ -4631,7 +4631,7 @@ export default function App() {
                                     </button>
                                     <button
                                       onClick={() => setEditingAccountId(null)}
-                                      className="text-slate-400 hover:text-slate-600 px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      className="text-slate-400 hover:text-slate-600 dark:text-slate-350 px-1.5 py-0.5 cursor-pointer border border-transparent"
                                     >
                                       取消
                                     </button>
@@ -4641,7 +4641,7 @@ export default function App() {
                                     {!isActive && (
                                       <button
                                         onClick={() => handleSwitchAccount(acc.id)}
-                                        className="text-indigo-600 hover:text-indigo-700 font-bold px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold px-1.5 py-0.5 cursor-pointer border border-transparent"
                                       >
                                         切换
                                       </button>
@@ -4652,13 +4652,13 @@ export default function App() {
                                         setEditingNickname(acc.nickname);
                                         setEditingUid(acc.uid || "");
                                       }}
-                                      className="text-slate-500 hover:text-slate-700 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
                                     >
                                       编辑
                                     </button>
                                     <button
                                       onClick={() => handleExportSingleClick(acc.id)}
-                                      className="text-slate-500 hover:text-emerald-600 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-450 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
                                       title="导出该账号的备份文件"
                                     >
                                       导出
@@ -4690,8 +4690,8 @@ export default function App() {
               </div>
 
               {/* 第三部分：全局全量操作 */}
-              <div className="border-t border-slate-100 pt-4 flex flex-wrap items-center justify-between gap-3 bg-slate-50/20 p-2.5 rounded-xl border">
-                <div className="text-[10px] text-slate-400 text-left">
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-4 flex flex-wrap items-center justify-between gap-3 bg-slate-50/20 dark:bg-slate-950/20 p-2.5 rounded-xl border border-slate-200/50 dark:border-slate-800">
+                <div className="text-[10px] text-slate-400 dark:text-slate-500 text-left">
                   💡 <strong>提示：</strong> 支持导入单个账号备份，也支持全量多账号导出/导入，实现多端同步。
                 </div>
                 <div className="flex gap-2">
@@ -4700,7 +4700,7 @@ export default function App() {
                       setShowAccountModal(false);
                       handleExportAllClick();
                     }}
-                    className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-slate-200/50"
+                    className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-slate-200/50 dark:border-slate-700"
                   >
                     导出所有账号
                   </button>
@@ -4709,7 +4709,7 @@ export default function App() {
                       setShowAccountModal(false);
                       handleImportClick();
                     }}
-                    className="px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-indigo-100/30"
+                    className="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-350 text-xs font-bold rounded-lg cursor-pointer transition-colors border border-indigo-100/30 dark:border-indigo-900/40"
                   >
                     导入备份数据
                   </button>
@@ -4747,7 +4747,7 @@ export default function App() {
                         type="text"
                         value={importAsNewNickname}
                         onChange={e => setImportAsNewNickname(e.target.value)}
-                        className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white"
+                        className="w-full border border-slate-200 dark:border-slate-700 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200"
                       />
                     </div>
                     <div>
@@ -4756,7 +4756,7 @@ export default function App() {
                         type="text"
                         value={importAsNewUid}
                         onChange={e => setImportAsNewUid(e.target.value)}
-                        className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white"
+                        className="w-full border border-slate-200 dark:border-slate-700 rounded px-2 py-1 text-xs focus:outline-none focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200"
                       />
                     </div>
                   </div>
@@ -4818,12 +4818,12 @@ export default function App() {
             >
               <button
                 onClick={() => setActiveModal("none")}
-                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:bg-slate-800 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 text-slate-800">
+              <div className="flex items-center gap-3 text-slate-800 dark:text-slate-100">
                 <Upload className="w-5 h-5 text-indigo-500 shrink-0" />
                 <h3 className="text-lg font-bold">
                   {importContext === "nest" && "导入蛋窝精灵数据"}
@@ -4881,7 +4881,7 @@ export default function App() {
               <div className="flex items-center justify-end gap-3 mt-2">
                 <button
                   onClick={() => setActiveModal("none")}
-                  className="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer border border-transparent mr-0"
+                  className="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer border border-transparent mr-0"
                 >
                   取消
                 </button>
@@ -4906,12 +4906,12 @@ export default function App() {
             >
               <button
                 onClick={() => setActiveModal("none")}
-                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:bg-slate-800 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 text-slate-800">
+              <div className="flex items-center gap-3 text-slate-800 dark:text-slate-100">
                 <Share2 className="w-5 h-5 text-emerald-500 shrink-0" />
                 <h3 className="text-lg font-bold">
                   {exportType === "nest" && "备份并导出蛋窝数据"}
@@ -4922,7 +4922,7 @@ export default function App() {
                 </h3>
               </div>
 
-              <p className="text-sm text-slate-500 leading-relaxed text-left">
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed text-left">
                 {exportType === "nest" && "已为您成功打包当前账号下的「蛋窝精灵」及换蛋交易数据。您可以将其下载为专有的蛋窝备份，或复制代码直接用于单独的蛋窝导入。"}
                 {exportType === "parents" && "已为您成功打包当前账号下的「父母本仓库」配置数据。您可以将其下载为专有的父母本备份，或复制代码直接用于单独的父母本导入。"}
                 {exportType === "eggs" && "已为您成功打包当前账号下的「精灵蛋管理」卡片及产蛋纪录数据。您可以将其下载为专有的精灵蛋备份，或复制代码直接用于单独的精灵蛋导入。"}
@@ -4937,7 +4937,7 @@ export default function App() {
                 />
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-3 right-3 py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm transition-colors cursor-pointer"
+                  className="absolute bottom-3 right-3 py-1.5 px-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm transition-colors cursor-pointer"
                   title="一键复制到剪贴板"
                 >
                   <Clipboard className="w-3.5 h-3.5" />
@@ -4948,7 +4948,7 @@ export default function App() {
               <div className="flex items-center justify-between gap-3 mt-2">
                 <button
                   onClick={downloadJsonBackup}
-                  className="px-4 py-2 text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/50 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shadow-sm"
+                  className="px-4 py-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 border border-emerald-200/50 dark:border-emerald-900/40 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shadow-sm"
                 >
                   <Download className="w-4 h-4" />
                   下载备份文件 (.json)
@@ -4956,7 +4956,7 @@ export default function App() {
 
                 <button
                   onClick={() => setActiveModal("none")}
-                  className="px-5 py-2 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors cursor-pointer shadow-sm"
+                  className="px-5 py-2 text-sm font-semibold text-white bg-slate-800 dark:bg-slate-750 hover:bg-slate-700 dark:hover:bg-slate-650 rounded-lg transition-colors cursor-pointer shadow-sm"
                 >
                   关闭
                 </button>
@@ -4975,20 +4975,20 @@ export default function App() {
             >
               <button
                 onClick={() => setActiveModal("none")}
-                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-4 top-4 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:bg-slate-800 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 text-slate-800">
+              <div className="flex items-center gap-3 text-slate-800 dark:text-slate-100">
                 <Camera className="w-5 h-5 text-indigo-500 shrink-0" />
                 <h3 className="text-lg font-bold">已为您生成超清长图</h3>
               </div>
 
-              <p className="text-sm text-slate-500 leading-relaxed">
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                 长图包含了您当前的全部精灵匹配表格，已自动过滤操作按钮、排序控制等。您可以点击
-                <strong className="text-indigo-600">「直接下载图片」</strong>
-                或在下方长图上 <strong className="text-indigo-600">鼠标右键 / 长按选择「图片另存为」</strong> 进行保存。
+                <strong className="text-indigo-600 dark:text-indigo-400">「直接下载图片」</strong>
+                或在下方长图上 <strong className="text-indigo-600 dark:text-indigo-400">鼠标右键 / 长按选择「图片另存为」</strong> 进行保存。
               </p>
 
               {/* Image Preview Container */}
@@ -4997,7 +4997,7 @@ export default function App() {
                   <img
                     src={exportedImageUrl}
                     alt="洛克王国孵蛋数据导出"
-                    className="shadow-md rounded border border-slate-200/60 h-auto max-w-full select-all object-contain bg-white"
+                    className="shadow-md rounded border border-slate-200/60 dark:border-slate-800 h-auto max-w-full select-all object-contain bg-white dark:bg-slate-900"
                     style={{ minWidth: "300px" }}
                     referrerPolicy="no-referrer"
                   />
@@ -5010,13 +5010,13 @@ export default function App() {
               </div>
 
               <div className="flex items-center justify-between gap-3 mt-2 flex-wrap sm:flex-nowrap">
-                <span className="text-[11px] text-slate-400">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500">
                   * 支持导出目前列表中经过搜索/筛选的完整精灵条目
                 </span>
                 <div className="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end">
                   <button
                     onClick={() => setActiveModal("none")}
-                    className="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer border border-transparent mr-0"
+                    className="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer border border-transparent mr-0"
                   >
                     取消
                   </button>
@@ -5081,13 +5081,13 @@ export default function App() {
 
                 {/* Data Sources */}
                 <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">📦 数据来源</p>
+                  <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">📦 数据来源</p>
                   <div className="flex flex-col gap-2">
                     <a
                       href="https://wiki.biligame.com/rocom/精灵图鉴/原始形态"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
+                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-305 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
                     >
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">wiki.biligame.com — 洛克王国:手游WIKI（精灵图鉴/原始形态）</span>
@@ -5096,7 +5096,7 @@ export default function App() {
                       href="https://roco.gptvip.chat/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 px-3 py-2 rounded-lg transition-all group"
+                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-305 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
                     >
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                       <span>roco.gptvip.chat — 精灵数据平台</span>
@@ -5106,7 +5106,7 @@ export default function App() {
 
                 {/* Acknowledgements */}
                 <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">🏅 特别鸣谢</p>
+                  <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">🏅 特别鸣谢</p>
                   <div className="bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/30 rounded-xl px-4 py-3 flex flex-col gap-1.5">
                     <div className="flex items-start gap-2">
                       <Heart className="w-3.5 h-3.5 text-rose-400 mt-0.5 shrink-0" />
@@ -5116,21 +5116,21 @@ export default function App() {
                         的 <strong className="text-amber-700 dark:text-amber-400">cinene</strong> 精心整理，特别感谢！
                       </p>
                     </div>
-                    <p className="text-[11px] text-slate-500 pl-5">感谢孟德尔实验室为洛克王国社区提供的优质数据资源。</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 pl-5">感谢孟德尔实验室为洛克王国社区提供的优质数据资源。</p>
                   </div>
                 </div>
 
                 {/* Author & Contact */}
                 <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3">
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">👤 作者 &amp; 联系方式</p>
-                  <div className="flex flex-col gap-1.5 text-xs text-slate-700">
+                  <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">👤 作者 &amp; 联系方式</p>
+                  <div className="flex flex-col gap-1.5 text-xs text-slate-700 dark:text-slate-300">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-indigo-600">Presented by 派</span>
                       <span className="text-slate-400">·</span>
-                      <span className="font-mono text-slate-500">QQ: 1095524934</span>
+                      <span className="font-mono text-slate-500 dark:text-slate-400">QQ: 1095524934</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-500">交流群：</span>
+                      <span className="text-slate-500 dark:text-slate-400">交流群：</span>
                       <span className="font-mono font-bold text-indigo-600">474567570</span>
                     </div>
                   </div>
