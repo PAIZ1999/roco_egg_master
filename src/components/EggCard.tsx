@@ -37,9 +37,9 @@ const typeColorMap: Record<string, string> = {
   "幻": "bg-pink-50 dark:bg-pink-950/20 text-pink-600 dark:text-pink-300 border-pink-200 dark:border-pink-900/30",
   "幽": "bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 border-violet-200 dark:border-violet-900/30",
   "恶": "bg-red-50 dark:bg-red-950/10 text-red-200 dark:text-red-300 border-red-200 dark:border-red-900/30",
-  "普通": "bg-slate-50 dark:bg-slate-850 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700",
+  "普通": "bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700",
   "机械": "bg-zinc-100 dark:bg-zinc-900/20 text-zinc-650 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800/30",
-  "武": "bg-orange-50 dark:bg-orange-950/20 text-orange-700 dark:text-orange-350 border-orange-200 dark:border-orange-900/30",
+  "武": "bg-orange-50 dark:bg-orange-950/20 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-900/30",
   "毒": "bg-purple-50 dark:bg-purple-950/20 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-900/30",
   "水": "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-300 border-blue-200 dark:border-blue-900/30",
   "火": "bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-300 border-red-200 dark:border-red-900/30",
@@ -48,22 +48,22 @@ const typeColorMap: Record<string, string> = {
   "草": "bg-green-50 dark:bg-green-950/20 text-green-600 dark:text-green-300 border-green-200 dark:border-green-900/30",
   "萌": "bg-rose-50 dark:bg-rose-950/20 text-rose-500 dark:text-rose-300 border-rose-200 dark:border-rose-900/30",
   "虫": "bg-lime-50 dark:bg-lime-950/20 text-lime-600 dark:text-lime-300 border-lime-200 dark:border-lime-900/30",
-  "龙": "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-350 border-rose-200 dark:border-rose-900/30",
+  "龙": "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/30",
 };
 
 const STATS_WITH_IMAGES = ["生命", "物攻", "速度", "魔攻", "物防", "魔防"];
 
 const getStatBadgeStyle = (stat: string): string => {
   const colors: Record<string, string> = {
-    "无": "bg-slate-200 text-slate-500 border-slate-300 hover:bg-slate-300",
-    "生命": "bg-rose-200 text-rose-800 border-rose-400 hover:bg-rose-300 shadow-2xs",
-    "物攻": "bg-amber-200 text-amber-900 border-amber-400 hover:bg-amber-300 shadow-2xs",
-    "速度": "bg-emerald-200 text-emerald-800 border-emerald-400 hover:bg-emerald-300 shadow-2xs",
-    "魔攻": "bg-purple-200 text-purple-800 border-purple-400 hover:bg-purple-300 shadow-2xs",
-    "物防": "bg-blue-200 text-blue-800 border-blue-400 hover:bg-blue-300 shadow-2xs",
-    "魔防": "bg-cyan-200 text-cyan-800 border-cyan-400 hover:bg-cyan-300 shadow-2xs",
+    "无": "bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600",
+    "生命": "bg-rose-200 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border-rose-400 dark:border-rose-900/60 hover:bg-rose-300 dark:hover:bg-rose-900/80 shadow-2xs",
+    "物攻": "bg-amber-200 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-400 dark:border-amber-900/60 hover:bg-amber-300 dark:hover:bg-amber-900/80 shadow-2xs",
+    "速度": "bg-emerald-200 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-400 dark:border-emerald-900/60 hover:bg-emerald-300 dark:hover:bg-emerald-900/80 shadow-2xs",
+    "魔攻": "bg-purple-200 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border-purple-400 dark:border-purple-900/60 hover:bg-purple-300 dark:hover:bg-purple-900/80 shadow-2xs",
+    "物防": "bg-blue-200 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-400 dark:border-blue-900/60 hover:bg-blue-300 dark:hover:bg-blue-900/80 shadow-2xs",
+    "魔防": "bg-cyan-200 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 border-cyan-400 dark:border-cyan-900/60 hover:bg-cyan-300 dark:hover:bg-cyan-900/80 shadow-2xs",
   };
-  return colors[stat] || "bg-slate-50 text-slate-700 border-slate-200";
+  return colors[stat] || "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border-slate-200 dark:border-slate-700";
 };
 
 const getEggGroupBadgeStyle = (grp: string) => {
@@ -156,7 +156,7 @@ export const EggCard = React.memo(function EggCard({
 
     if (sizeVal <= thresholds.minHeight && weightVal <= thresholds.tinyWeightLine) {
       return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 dark:bg-sky-955/20 text-sky-700 dark:text-sky-300 border border-sky-200/60 dark:border-sky-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 dark:bg-sky-950/20 text-sky-700 dark:text-sky-300 border border-sky-200/60 dark:border-sky-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
           小不点 (达标)
         </span>
@@ -172,7 +172,7 @@ export const EggCard = React.memo(function EggCard({
       const maxDiff = thresholds.giantWeightLine * 0.10;
       if (weightVal < thresholds.giantWeightLine && x <= maxDiff) {
         return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-955/15 text-amber-755 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-950/15 text-amber-755 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
             <span className="relative flex w-1.5 h-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
@@ -186,7 +186,7 @@ export const EggCard = React.memo(function EggCard({
       const maxDiff = thresholds.tinyWeightLine * 0.10;
       if (weightVal > thresholds.tinyWeightLine && y <= maxDiff) {
         return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-955/15 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-950/15 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
             <span className="relative flex w-1.5 h-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
@@ -207,7 +207,7 @@ export const EggCard = React.memo(function EggCard({
     return (
       <div
         key={sIdx}
-        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-105 active:scale-95 stat-icon-select-container ${badgeColors}`}
+        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-100 active:scale-95 stat-icon-select-container ${badgeColors}`}
         title={`父亲三围[${sIdx + 1}]: ${currentValue}`}
       >
         {isImageStat ? (
@@ -241,7 +241,7 @@ export const EggCard = React.memo(function EggCard({
     return (
       <div
         key={sIdx}
-        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-105 active:scale-95 stat-icon-select-container ${badgeColors}`}
+        className={`relative w-[22px] h-[22px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-100 active:scale-95 stat-icon-select-container ${badgeColors}`}
         title={`母亲三围[${sIdx + 1}]: ${currentValue}`}
       >
         {isImageStat ? (
@@ -310,7 +310,7 @@ export const EggCard = React.memo(function EggCard({
           </div>
           <button
             onClick={() => handleDeleteEgg(egg.id)}
-            className="text-slate-350 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-455 hover:bg-rose-50 dark:hover:bg-rose-955/30 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 dark:hover:border-rose-900/30"
+            className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 dark:hover:border-rose-900/30"
             title="删除精灵蛋"
           >
             <Trash2 className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
@@ -318,7 +318,7 @@ export const EggCard = React.memo(function EggCard({
         </div>
 
         {/* Avatar Container */}
-        <div className="w-24 h-24 sm:w-full sm:h-auto sm:aspect-square rounded-xl border border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-955/35 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
+        <div className="w-24 h-24 sm:w-full sm:h-auto sm:aspect-square rounded-xl border border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/35 flex items-center justify-center shadow-inner relative group/avatar overflow-hidden shrink-0">
           {spriteUrl ? (
             <img
               src={spriteUrl}
@@ -343,7 +343,7 @@ export const EggCard = React.memo(function EggCard({
                     {availableSprites.map((spriteOption) => {
                       const displayName = getSpriteFormDisplayName(spriteOption);
                       return (
-                        <option key={spriteOption} value={spriteOption} className="dark:bg-slate-800 dark:text-slate-205">
+                        <option key={spriteOption} value={spriteOption} className="dark:bg-slate-800 dark:text-slate-200">
                           {displayName}
                         </option>
                       );
@@ -358,7 +358,7 @@ export const EggCard = React.memo(function EggCard({
 
           {/* Type Badge absolute overlay */}
           {petDetails && petDetails.types && petDetails.types.length > 0 && (
-            <div className="absolute bottom-0.5 right-0.5 w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 bg-white dark:bg-slate-805 rounded-full flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 z-10">
+            <div className="absolute bottom-0.5 right-0.5 w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 z-10">
               <img
                 src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
                 alt={petDetails.types[0]}
@@ -395,7 +395,7 @@ export const EggCard = React.memo(function EggCard({
               placeholder="输入精灵..."
               onChange={(val) => handleUpdateEggSprite(egg.id, val)}
               className="w-full text-left sm:text-center"
-              inputClassName="bg-transparent font-bold text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-550 w-full border-b border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-left sm:text-center"
+              inputClassName="bg-transparent font-bold text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 w-full border-b border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none py-0.5 transition-colors text-left sm:text-center"
             />
             <span className="text-xs font-bold text-slate-500 dark:text-slate-400 select-none shrink-0 pr-1">蛋</span>
           </div>
@@ -404,7 +404,7 @@ export const EggCard = React.memo(function EggCard({
           <div className="flex gap-1 justify-start sm:justify-center items-center flex-wrap w-full shrink-0">
             {petDetails && petDetails.types && petDetails.types.map((t) => {
               const iconUrl = getImagePath(`images/attributes/${t}.png`);
-              const badgeStyle = typeColorMap[t] || "bg-slate-50 text-slate-600 border-slate-205";
+              const badgeStyle = typeColorMap[t] || "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
               return (
                 <span
                   key={t}
@@ -431,15 +431,15 @@ export const EggCard = React.memo(function EggCard({
           </div>
 
           {/* Standard egg ranges */}
-          <div className="flex flex-col gap-0.5 bg-slate-50/90 dark:bg-slate-950/30 border border-slate-100/60 dark:border-slate-800 p-1.5 rounded-md text-[10px] text-slate-500 dark:text-slate-400 mt-1 select-none w-full shrink-0 shadow-3xs items-start sm:items-center">
+          <div className="flex flex-col gap-0.5 bg-slate-50/90 dark:bg-slate-950 border border-slate-100/60 dark:border-slate-800 p-1.5 rounded-md text-[10px] text-slate-500 dark:text-slate-400 mt-1 select-none w-full shrink-0 shadow-3xs items-start sm:items-center">
             <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 mb-0.5">标准区间 (蛋)</span>
             <div className="flex items-center gap-1 whitespace-nowrap" title="标准蛋尺寸">
-              <Ruler className="w-3 h-3 text-slate-400 dark:text-slate-550 shrink-0" />
-              <span className="font-semibold text-slate-600 dark:text-slate-350 text-[9px]">{stdHeightRange}</span>
+              <Ruler className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0" />
+              <span className="font-semibold text-slate-600 dark:text-slate-400 text-[9px]">{stdHeightRange}</span>
             </div>
             <div className="flex items-center gap-1 whitespace-nowrap" title="标准蛋重量">
-              <Weight className="w-3 h-3 text-slate-400 dark:text-slate-550 shrink-0" />
-              <span className="font-semibold text-slate-600 dark:text-slate-350 text-[9px]">{stdWeightRange}</span>
+              <Weight className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0" />
+              <span className="font-semibold text-slate-600 dark:text-slate-400 text-[9px]">{stdWeightRange}</span>
             </div>
             {thresholds && (
               <>
@@ -461,18 +461,18 @@ export const EggCard = React.memo(function EggCard({
       </div>
 
       {/* Right Column: Details & Parents */}
-      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 pt-2.5 sm:pt-0">
+      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-0">
         
         {/* Egg Specifications: Brand, Size, Weight */}
-        <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
+        <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 dark:bg-slate-950 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
           {/* Brand */}
           <div className="col-span-2 flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 select-none">牌子</span>
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">牌子</span>
             <div className="relative w-full">
               <select
                 value={egg.brand}
                 onChange={(e) => handleUpdateEggBrand(egg.id, e.target.value)}
-                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-250 dark:focus:ring-indigo-950 transition-colors shadow-3xs ${getBrandStyle(
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors shadow-3xs ${getBrandStyle(
                   egg.brand
                 )}`}
               >
@@ -487,9 +487,9 @@ export const EggCard = React.memo(function EggCard({
 
           {/* Height (Ruler) */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 select-none">蛋尺寸</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-850 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-550 pointer-events-none select-none">
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">蛋尺寸</span>
+            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
                 <Ruler className="w-3 h-3" />
               </div>
               <input
@@ -497,7 +497,7 @@ export const EggCard = React.memo(function EggCard({
                 value={egg.eggSize || ""}
                 onChange={(e) => handleUpdateEggSize(egg.id, e.target.value)}
                 placeholder="数字..."
-                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-550"
+                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
               <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">m</span>
             </div>
@@ -505,9 +505,9 @@ export const EggCard = React.memo(function EggCard({
 
           {/* Weight (Weight/Scale) */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 select-none">蛋重量</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:bg-white dark:focus-within:bg-slate-850 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-550 pointer-events-none select-none">
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">蛋重量</span>
+            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
                 <Weight className="w-3 h-3" />
               </div>
               <input
@@ -515,7 +515,7 @@ export const EggCard = React.memo(function EggCard({
                 value={egg.eggWeight || ""}
                 onChange={(e) => handleUpdateEggWeight(egg.id, e.target.value)}
                 placeholder="数字..."
-                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-550"
+                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
               <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">kg</span>
             </div>
@@ -528,14 +528,14 @@ export const EggCard = React.memo(function EggCard({
             getStatusBadge()
           ) : (
             !["大粗", "大婉", "单大块头"].includes(egg.brand) && (
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 dark:bg-slate-850 text-slate-505 dark:text-slate-400 border border-slate-200/60 dark:border-slate-800 shadow-3xs select-none whitespace-nowrap">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-350 dark:bg-slate-500" />
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-slate-800 shadow-3xs select-none whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
                 普通体型
               </span>
             )
           )}
           {isEgg3V(egg) && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 dark:bg-emerald-955/20 text-emerald-700 dark:text-emerald-350 border border-emerald-205/60 dark:border-emerald-900/30 shadow-3xs select-none whitespace-nowrap">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-900/30 shadow-3xs select-none whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               3V 精灵蛋
             </span>
@@ -543,9 +543,9 @@ export const EggCard = React.memo(function EggCard({
         </div>
 
         {/* Parents Information */}
-        <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0">
+        <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 dark:bg-slate-950 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0">
           <div className="flex flex-col gap-1 border-r border-slate-100 dark:border-slate-800 pr-1.5">
-            <div className="flex items-center gap-0.5 text-[9px] font-bold text-blue-600 dark:text-blue-450 bg-blue-50/60 dark:bg-blue-950/20 px-1 py-0.25 rounded w-fit select-none">
+            <div className="flex items-center gap-0.5 text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50/60 dark:bg-blue-950/20 px-1 py-0.25 rounded w-fit select-none">
               <Mars className="w-2.5 h-2.5 shrink-0" />
               <span>父亲</span>
             </div>
@@ -571,7 +571,7 @@ export const EggCard = React.memo(function EggCard({
           </div>
           
           <div className="flex flex-col gap-1 pl-1.5">
-            <div className="flex items-center gap-0.5 text-[9px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50/60 dark:bg-pink-955/20 px-1 py-0.25 rounded w-fit select-none">
+            <div className="flex items-center gap-0.5 text-[9px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50/60 dark:bg-pink-950/20 px-1 py-0.25 rounded w-fit select-none">
               <Venus className="w-2.5 h-2.5 shrink-0" />
               <span>母亲</span>
             </div>
@@ -598,7 +598,7 @@ export const EggCard = React.memo(function EggCard({
         </div>
 
         {/* Produce Time */}
-        <div className="flex items-center justify-between gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0 mt-0.5">
+        <div className="flex items-center justify-between gap-1.5 bg-slate-50/70 dark:bg-slate-950 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0 mt-0.5">
           <span className="text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/20 border border-teal-200/50 dark:border-teal-900/40 px-1.5 py-0.5 rounded-md select-none shrink-0 flex items-center gap-0.5">
             <Calendar className="w-3 h-3 text-teal-600 dark:text-teal-400" />
             产出时间
@@ -607,7 +607,7 @@ export const EggCard = React.memo(function EggCard({
             type="date"
             value={egg.produceTime ? egg.produceTime.slice(0, 10) : ""}
             onChange={(e) => handleUpdateEggProduceTime(egg.id, e.target.value)}
-            className="text-[10px] font-bold text-slate-600 bg-transparent border-none focus:outline-none select-all text-right cursor-pointer"
+            className="text-[10px] font-bold text-slate-600 dark:text-slate-300 bg-transparent border-none focus:outline-none select-all text-right cursor-pointer dark:[color-scheme:dark]"
           />
         </div>
       </div>

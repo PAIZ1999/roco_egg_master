@@ -21,24 +21,24 @@ import { Autocomplete } from "./Autocomplete";
 import { ALL_PET_NAMES, getPetDetails, getSpriteFileName, getImagePath, getAvailableSprites, getSpriteFormDisplayName } from "../petHelper";
 
 const typeColorMap: Record<string, string> = {
-  "光": "bg-amber-50 dark:bg-amber-955/20 text-amber-600 dark:text-amber-300 border-amber-200 dark:border-amber-900/30",
-  "冰": "bg-cyan-50 dark:bg-cyan-955/20 text-cyan-600 dark:text-cyan-305 border-cyan-200 dark:border-cyan-900/30",
+  "光": "bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 border-amber-200 dark:border-amber-900/30",
+  "冰": "bg-cyan-50 dark:bg-cyan-950/20 text-cyan-600 dark:text-cyan-300 border-cyan-200 dark:border-cyan-900/30",
   "地": "bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800/30",
-  "幻": "bg-pink-50 dark:bg-pink-955/20 text-pink-600 dark:text-pink-300 border-pink-200 dark:border-pink-900/30",
-  "幽": "bg-violet-50 dark:bg-violet-955/20 text-violet-650 dark:text-violet-300 border-violet-200 dark:border-violet-900/30",
-  "恶": "bg-red-50 dark:bg-red-955/10 text-red-205 dark:text-red-300 border-red-205 dark:border-red-900/30",
-  "普通": "bg-slate-50 dark:bg-slate-850 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700",
+  "幻": "bg-pink-50 dark:bg-pink-950/20 text-pink-600 dark:text-pink-300 border-pink-200 dark:border-pink-900/30",
+  "幽": "bg-violet-50 dark:bg-violet-950/20 text-violet-650 dark:text-violet-300 border-violet-200 dark:border-violet-900/30",
+  "恶": "bg-red-50 dark:bg-red-950/10 text-red-200 dark:text-red-300 border-red-200 dark:border-red-900/30",
+  "普通": "bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700",
   "机械": "bg-zinc-100 dark:bg-zinc-900/20 text-zinc-650 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800/30",
-  "武": "bg-orange-50 dark:bg-orange-955/20 text-orange-700 dark:text-orange-355 border-orange-200 dark:border-orange-900/30",
-  "毒": "bg-purple-50 dark:bg-purple-955/20 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-900/30",
-  "水": "bg-blue-50 dark:bg-blue-955/20 text-blue-650 dark:text-blue-300 border-blue-200 dark:border-blue-900/30",
-  "火": "bg-red-50 dark:bg-red-955/20 text-red-650 dark:text-red-300 border-red-200 dark:border-red-900/30",
-  "电": "bg-yellow-50 dark:bg-yellow-955/10 text-yellow-500 dark:text-yellow-405 border-yellow-200 dark:border-yellow-900/30",
-  "翼": "bg-indigo-50 dark:bg-indigo-955/20 text-indigo-650 dark:text-indigo-305 border-indigo-200 dark:border-indigo-900/30",
-  "草": "bg-green-50 dark:bg-green-955/20 text-green-650 dark:text-green-300 border-green-200 dark:border-green-900/30",
-  "萌": "bg-rose-50 dark:bg-rose-955/20 text-rose-505 dark:text-rose-300 border-rose-200 dark:border-rose-900/30",
-  "虫": "bg-lime-50 dark:bg-lime-955/20 text-lime-650 dark:text-lime-300 border-lime-200 dark:border-lime-900/30",
-  "龙": "bg-rose-50 dark:bg-rose-955/20 text-rose-700 dark:text-rose-350 border-rose-200 dark:border-rose-900/30",
+  "武": "bg-orange-50 dark:bg-orange-950/20 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-900/30",
+  "毒": "bg-purple-50 dark:bg-purple-950/20 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-900/30",
+  "水": "bg-blue-50 dark:bg-blue-950/20 text-blue-650 dark:text-blue-300 border-blue-200 dark:border-blue-900/30",
+  "火": "bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-300 border-red-200 dark:border-red-900/30",
+  "电": "bg-yellow-50 dark:bg-yellow-950/10 text-yellow-500 dark:text-yellow-405 border-yellow-200 dark:border-yellow-900/30",
+  "翼": "bg-indigo-50 dark:bg-indigo-950/20 text-indigo-650 dark:text-indigo-300 border-indigo-200 dark:border-indigo-900/30",
+  "草": "bg-green-50 dark:bg-green-950/20 text-green-650 dark:text-green-300 border-green-200 dark:border-green-900/30",
+  "萌": "bg-rose-50 dark:bg-rose-950/20 text-rose-500 dark:text-rose-300 border-rose-200 dark:border-rose-900/30",
+  "虫": "bg-lime-50 dark:bg-lime-950/20 text-lime-650 dark:text-lime-300 border-lime-200 dark:border-lime-900/30",
+  "龙": "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/30",
 };
 
 interface SortableRowProps {
@@ -66,14 +66,14 @@ interface SortableRowProps {
 const getStatBadgeStyle = (stat: string): string => {
   const colors: Record<string, string> = {
     "无": "bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-600 border-slate-200 dark:border-slate-700 line-through decoration-dotted font-normal",
-    "生命": "bg-rose-50 dark:bg-rose-955/20 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-900/30",
-    "物攻": "bg-amber-50 dark:bg-amber-955/15 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-900/35",
-    "速度": "bg-emerald-50 dark:bg-emerald-955/20 text-emerald-705 dark:text-emerald-305 border-emerald-200 dark:border-emerald-900/30",
-    "魔攻": "bg-purple-50 dark:bg-purple-955/15 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-900/35",
-    "物防": "bg-blue-50 dark:bg-blue-955/20 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-900/30",
-    "魔防": "bg-cyan-50 dark:bg-cyan-955/20 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-900/30",
+    "生命": "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-900/30",
+    "物攻": "bg-amber-50 dark:bg-amber-950/15 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-900/35",
+    "速度": "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900/30",
+    "魔攻": "bg-purple-50 dark:bg-purple-950/15 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-900/35",
+    "物防": "bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-900/30",
+    "魔防": "bg-cyan-50 dark:bg-cyan-950/20 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-900/30",
   };
-  return colors[stat] || "bg-slate-50 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-750";
+  return colors[stat] || "bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-750";
 };
 
 export function SortableRow({
@@ -131,7 +131,7 @@ export function SortableRow({
         <div
           {...attributes}
           {...listeners}
-          className="inline-flex items-center justify-center p-1.5 text-slate-400 hover:text-slate-655 active:text-indigo-650 hover:bg-slate-100 dark:hover:bg-slate-805 rounded cursor-grab active:cursor-grabbing transition-colors drag-grip-handle"
+          className="inline-flex items-center justify-center p-1.5 text-slate-400 hover:text-slate-600 active:text-indigo-650 hover:bg-slate-100 dark:hover:bg-slate-800 rounded cursor-grab active:cursor-grabbing transition-colors drag-grip-handle"
           title="按住拖动排序"
         >
           <GripVertical className="w-4 h-4" />
@@ -146,7 +146,7 @@ export function SortableRow({
             {spriteUrl ? (
               <img src={spriteUrl} alt={spriteName} className="w-10 h-10 object-contain transition-transform duration-200" />
             ) : (
-              <span className="text-sm text-slate-350 dark:text-slate-500 font-bold transition-transform duration-200">?</span>
+              <span className="text-sm text-slate-400 dark:text-slate-500 font-bold transition-transform duration-200">?</span>
             )}
 
             {/* Hover Delete Button */}
@@ -170,12 +170,12 @@ export function SortableRow({
                 placeholder="精灵名称..."
                 onChange={val => handleUpdateSprite(originalIndex, val)}
                 className="w-28 text-left"
-                inputClassName="bg-transparent font-bold text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 w-full border-b-2 border-transparent hover:border-slate-205 dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
+                inputClassName="bg-transparent font-bold text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 w-full border-b-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none pb-0.5 transition-colors text-left"
               />
 
               {/* Form selector dropdown for multi-form sprites in row */}
               {availableSprites.length > 1 && (
-                <div className="bg-slate-100 hover:bg-slate-205 dark:bg-slate-800 dark:hover:bg-slate-750 px-1 py-0.25 rounded shadow-3xs border border-slate-200 dark:border-slate-700 flex items-center transition-colors duration-150 action-buttons shrink-0 -ml-1">
+                <div className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 px-1 py-0.25 rounded shadow-3xs border border-slate-200 dark:border-slate-700 flex items-center transition-colors duration-150 action-buttons shrink-0 -ml-1">
                   <select
                     value={availableSprites.includes(pet.sprite) ? pet.sprite : (spriteFile ? spriteFile.slice(0, -4) : pet.sprite)}
                     onChange={(e) => handleUpdateSprite(originalIndex, e.target.value)}
@@ -218,7 +218,7 @@ export function SortableRow({
         <div className="flex flex-col gap-2 w-[180px] mx-auto">
           {/* Father Natures */}
           <div className="flex items-center gap-1 justify-center w-full">
-            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-955/20 px-1 py-0.5 rounded border border-blue-105 dark:border-blue-900/30 shrink-0 select-none">父</span>
+            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20 px-1 py-0.5 rounded border border-blue-100 dark:border-blue-900/30 shrink-0 select-none">父</span>
             <div className="flex flex-col gap-1 w-full">
               {(pet.fatherNatures || []).map((nat, nIdx) => {
                 const isLast = nIdx === (pet.fatherNatures || []).length - 1;
@@ -237,7 +237,7 @@ export function SortableRow({
                       {(pet.fatherNatures || []).length > 1 && (
                         <button
                           onClick={() => handleRemoveNature(originalIndex, "father", nIdx)}
-                          className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-955/35 p-0.5 rounded-full transition-colors"
+                          className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-950/35 p-0.5 rounded-full transition-colors"
                           title="移除性格"
                         >
                           <MinusCircle className="w-3.5 h-3.5" />
@@ -246,7 +246,7 @@ export function SortableRow({
                       {isLast && (
                         <button
                           onClick={() => handleAddNature(originalIndex, "father")}
-                          className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-955/35 p-0.5 rounded-full transition-colors"
+                          className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-950/35 p-0.5 rounded-full transition-colors"
                           title="新增性格属性"
                         >
                           <PlusCircle className="w-3.5 h-3.5" />
@@ -261,7 +261,7 @@ export function SortableRow({
 
           {/* Mother Natures */}
           <div className="flex items-center gap-1 justify-center w-full">
-            <span className="text-[11px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50 dark:bg-pink-955/20 px-1 py-0.5 rounded border border-pink-105 dark:border-pink-900/30 shrink-0 select-none">母</span>
+            <span className="text-[11px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/20 px-1 py-0.5 rounded border border-pink-100 dark:border-pink-900/30 shrink-0 select-none">母</span>
             <div className="flex flex-col gap-1 w-full">
               {(pet.motherNatures || []).map((nat, nIdx) => {
                 const isLast = nIdx === (pet.motherNatures || []).length - 1;
@@ -273,14 +273,14 @@ export function SortableRow({
                       placeholder="选择性格"
                       onChange={val => handleUpdateNature(originalIndex, "mother", nIdx, val)}
                       className="w-28 text-center"
-                      inputClassName="font-medium text-[11px] text-center text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-805 border border-slate-200 dark:border-slate-700 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all shadow-sm"
+                      inputClassName="font-medium text-[11px] text-center text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-0.5 px-2 w-full focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all shadow-sm"
                     />
 
                     <div className="flex items-center gap-0.5 select-action-buttons w-10 shrink-0 action-buttons">
                       {(pet.motherNatures || []).length > 1 && (
                         <button
                           onClick={() => handleRemoveNature(originalIndex, "mother", nIdx)}
-                          className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-955/35 p-0.5 rounded-full transition-colors"
+                          className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-950/35 p-0.5 rounded-full transition-colors"
                           title="移除性格"
                         >
                           <MinusCircle className="w-3.5 h-3.5" />
@@ -289,7 +289,7 @@ export function SortableRow({
                       {isLast && (
                         <button
                           onClick={() => handleAddNature(originalIndex, "mother")}
-                          className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-955/35 p-0.5 rounded-full transition-colors"
+                          className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-950/35 p-0.5 rounded-full transition-colors"
                           title="新增性格属性"
                         >
                           <PlusCircle className="w-3.5 h-3.5" />
@@ -308,7 +308,7 @@ export function SortableRow({
       <td className="p-2.5 align-middle text-center">
         {pet.hideStats ? (
           <div className="flex flex-col items-center justify-center py-2 px-3 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-900/40 w-[200px] mx-auto min-h-[64px] select-none">
-            <span className="text-[11px] text-slate-400 dark:text-slate-550 font-medium">三围已隐藏</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">三围已隐藏</span>
             <button
               onClick={() => handleUpdateHideStats(originalIndex, false)}
               className="mt-1.5 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-full shadow-sm transition-colors action-buttons"
@@ -320,7 +320,7 @@ export function SortableRow({
           <div className="flex flex-col gap-2 w-[200px] mx-auto">
             {/* Father Stats */}
             <div className="flex items-center gap-1 justify-center w-full">
-              <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-955/20 px-1 py-0.5 rounded border border-blue-105 dark:border-blue-900/30 shrink-0 select-none">父</span>
+              <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20 px-1 py-0.5 rounded border border-blue-100 dark:border-blue-900/30 shrink-0 select-none">父</span>
               <div className="flex gap-1 justify-center flex-1">
                 {(pet.fatherStats || ["生命", "物攻", "速度"]).map((stat, sIdx) => {
                   return (
@@ -345,7 +345,7 @@ export function SortableRow({
 
             {/* Mother Stats */}
             <div className="flex items-center gap-1 justify-center w-full">
-              <span className="text-[11px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50 dark:bg-pink-955/20 px-1 py-0.5 rounded border border-pink-105 dark:border-pink-900/30 shrink-0 select-none">母</span>
+              <span className="text-[11px] font-bold text-pink-650 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/20 px-1 py-0.5 rounded border border-pink-100 dark:border-pink-900/30 shrink-0 select-none">母</span>
               <div className="flex gap-1 justify-center flex-1">
                 {(pet.motherStats || ["生命", "物攻", "速度"]).map((stat, sIdx) => {
                   return (
@@ -372,7 +372,7 @@ export function SortableRow({
             <div className="flex justify-center mt-0.5">
               <button
                 onClick={() => handleUpdateHideStats(originalIndex, true)}
-                className="text-[10px] font-medium text-slate-400 dark:text-slate-450 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors action-buttons border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-900/30 bg-slate-50/50 hover:bg-indigo-50/50 dark:bg-slate-800 dark:hover:bg-indigo-950/30 px-2 py-0.5 rounded-full select-none cursor-pointer"
+                className="text-[10px] font-medium text-slate-400 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors action-buttons border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-900/30 bg-slate-50/50 hover:bg-indigo-50/50 dark:bg-slate-800 dark:hover:bg-indigo-950/30 px-2 py-0.5 rounded-full select-none cursor-pointer"
               >
                 隐藏三围
               </button>
@@ -393,10 +393,10 @@ export function SortableRow({
                   <select
                     value={grp}
                     onChange={e => handleUpdateGroup(originalIndex, gIdx, e.target.value)}
-                    className={`appearance-none text-xs font-semibold text-center border rounded-full py-1.5 px-4 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-350 dark:focus:ring-slate-700 transition-all ${getEggGroupStyle(grp)}`}
+                    className={`appearance-none text-xs font-semibold text-center border rounded-full py-1.5 px-4 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400 dark:focus:ring-slate-700 transition-all ${getEggGroupStyle(grp)}`}
                   >
                     {EGG_GROUPS.map(opt => (
-                      <option key={opt} value={opt} className="dark:bg-slate-805 dark:text-slate-200">{opt}</option>
+                      <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">{opt}</option>
                     ))}
                   </select>
                   <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 dropdown-arrow">
@@ -408,7 +408,7 @@ export function SortableRow({
                   {pet.groups.length > 1 && (
                     <button
                       onClick={() => handleRemoveGroup(originalIndex, gIdx)}
-                      className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-955/35 p-0.5 rounded-full transition-colors"
+                      className="text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-950/35 p-0.5 rounded-full transition-colors"
                       title="移除蛋组属性"
                     >
                       <MinusCircle className="w-4 h-4" />
@@ -417,7 +417,7 @@ export function SortableRow({
                   {canAdd && (
                     <button
                       onClick={() => handleAddGroup(originalIndex)}
-                      className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-955/35 p-0.5 rounded-full transition-colors"
+                      className="text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-950/35 p-0.5 rounded-full transition-colors"
                       title="添加至多3个蛋组"
                     >
                       <PlusCircle className="w-4 h-4" />
@@ -439,7 +439,7 @@ export function SortableRow({
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-2.5 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors ${getBrandStyle(pet.brand)}`}
           >
             {BRAND_OPTIONS.map(opt => (
-              <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-205">{opt}</option>
+              <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">{opt}</option>
             ))}
           </select>
           <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 dropdown-arrow">
@@ -457,7 +457,7 @@ export function SortableRow({
             className={`appearance-none text-xs font-semibold text-center border rounded-full px-4 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400 dark:focus:ring-slate-700 transition-colors ${getStatusStyle(pet.status)}`}
           >
             {NEST_STATUS_OPTIONS.map(opt => (
-              <option key={opt} value={opt} className="bg-white text-slate-805 dark:bg-slate-800 dark:text-slate-200 font-semibold py-1">
+              <option key={opt} value={opt} className="bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-200 font-semibold py-1">
                 {opt}
               </option>
             ))}
@@ -474,7 +474,7 @@ export function SortableRow({
           <select
             value={pet.isLimit}
             onChange={e => handleUpdateLimit(originalIndex, e.target.value)}
-            className={`appearance-none text-xs font-semibold text-center border rounded-full px-2 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-colors ${pet.isLimit === "有极限蛋" ? "bg-amber-100 dark:bg-amber-955/20 text-amber-805 dark:text-amber-300 border-amber-300 dark:border-amber-900/35" : "bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"}`}
+            className={`appearance-none text-xs font-semibold text-center border rounded-full px-2 py-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-colors ${pet.isLimit === "有极限蛋" ? "bg-amber-100 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-900/35" : "bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"}`}
           >
             {LIMIT_OPTIONS.map(opt => (
               <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">{opt}</option>

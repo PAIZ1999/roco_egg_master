@@ -1,7 +1,12 @@
-# Task Plan: 暗色模式主题切换制作
+# Task Plan: 洛克王国孵蛋表全站暗色模式细节与文字对比度优化
 
 ## Goal
-实现高品质的暗色模式主题切换功能：支持在右上角进行亮/暗色一键切换并自动保存到 localStorage；同时全量适配 App.tsx 和 5 个核心子组件在暗色环境下的高颜值背景、文本、边框与输入框样式；确保长图导出时自动回退为亮色主题，保证导出的图片干净美观。
+实现高品质的暗色模式细节优化：
+1. 默认设置暗色模式（即使在没有 localStorage 或 prefers-color-scheme 的情况下也默认开启暗色模式）。
+2. 全局优化暗色模式底色与白块缺陷（解决精灵的蛋组标签、三围图标底盘、系别角标等在暗色模式下显示为亮色白块的问题）。
+3. 统一各标签页（Tab）整体的风格、底板背景与文字颜色，拉开高品质的 Elevation 黑灰层次。
+4. 长图导出功能完全支持暗色模式（当用户处于暗色模式时，导出的长图也为暗色；在亮色模式下则为亮色）。
+5. 构建项目并成功推送到远程 GitHub 仓库。
 
 ## MCP Status
 - [x] memory 检索完成
@@ -14,21 +19,23 @@
 - [x] Phase 2: 主体页面与过滤模态框适配 (调整 App.tsx 的背景色、主背景、统计卡片、搜索框、下拉框、账号菜单与模态框的暗色样式)
 - [x] Phase 3: 精灵卡片与列表适配 (适配 SortableCard.tsx, EggCard.tsx, ParentCard.tsx 和 SortableRow.tsx 的暗色背景、输入框、下拉框与边框)
 - [x] Phase 4: Autocomplete 组件适配 (调整 Autocomplete.tsx 下拉浮窗、拼音提示在暗色下的文字和悬浮高亮色)
-- [x] Phase 5: 长图导出兼容与生产打包验证 (在 App.tsx 的导出 clone 逻辑中剔除 dark 样式，确保长图默认亮色，执行 tsc 检查和打包)
+- [x] Phase 5: 网页端部署静态资源拷贝与生产打包验证 (配置拷贝脚本确保 images 资源在部署时不裂开)
+- [/] Phase 6: 全站暗色细节统一与长图导出暗色支持 (将默认主题改为 dark，修复三围图标、系别角标、换蛋表单头像的白色白块，将半透明 bg-slate-950/20 实色化为 bg-slate-950/bg-slate-900，统一 Tab 大背景风格，修改 html2canvas 长图导出逻辑使其支持暗色模式，最终打包并 push 到远程仓库)
 
 ## Key Questions
-1. 在暗色模式下，父母本仓储卡片和蛋窝卡片原本包含的彩条（例如体型牌、状态标签）是否需要调整？
-   - 决策：体型牌和状态标签本来具有高饱和度底色（如 `bg-rose-50 text-rose-700`），在暗色模式下可以映射为稍微深一点的背景或者保留它们的高对比度样式（可使用 `dark:bg-rose-950/40 dark:text-rose-300` 样式使其在暗色模式下不至于太晃眼，同时保留原来的视觉语义）。
-2. 长图导出时是否自动回退为亮色模式？
-   - 决策：是的，为了保证导出的图片具有极高的可读性，并且在实体打印时更加环保美观，在克隆 DOM 导出长图时将克隆树的 class 去除 `.dark`，保证导出的图片依然为亮色主题。
+1. 在暗色模式下，三围图标的白圈怎么优化？
+   - 决策：在 `SortableCard.tsx`、`EggCard.tsx` 和 `ParentCard.tsx` 中将三围选择圆圈样式在暗色下由原亮色底（如 `bg-rose-200`）映射为带透明度且更柔和的深底高对比度字（如 `dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-900/60`），消除晃眼的大白块。
+2. 导出图片如何支持暗色？
+   - 决策：移除克隆节点中剥离 `dark` 类的逻辑，并根据当前 theme 动态指定 html2canvas 的 `backgroundColor`，暗色下设为 `#020617`（即 `slate-950` 实色底），亮色下设为 `#f8fafc`。
 
 ## Decisions Made
-- [决策]: 使用 `document.documentElement.classList` 动态增删 `.dark`，通过 Tailwind 4 的原生 `dark:` 属性来实现暗色样式。
-- [决策]: 引入 `Sun` 和 `Moon` 图标进行切换，并为亮色和暗色状态加上缩放、透明度渐变等微交互动画。
-- [决策]: 在 `generateLongImage` 方法中，在 clone 被 append 到 offscreen wrapper 之前，调用 `clone.classList.remove('dark')`。由于克隆树原本继承了根元素的 class，这样可以强制将克隆体变回亮色渲染。
+- [决策]: 使用 `theme === 'dark' ? '#020617' : '#f8fafc'` 作为导出长图的 html2canvas 背景色，并保留克隆 DOM 的 `.dark` 类实现暗色长图导出。
+- [决策]: 将 App.tsx 内的初始化 theme 默认值更改为 'dark'。
+- [决策]: 优化 Tab 页面大背景及操作底栏为完全不透明的 `dark:bg-slate-950`，保证风格统一。
+- [决策]: 修复自建需求中心表单中的 label（精灵名称）在暗色下缺失字色、头像和系别容器未适配 `dark:` 而出现的亮白块问题。
 
 ## Errors Encountered
-- 在 multi_replace_file_content 匹配 showAccountModal 时因定位内容不唯一而出现错乱。解决方法是：使用 git checkout 恢复文件，并采用高独特性（含有特定组件变量名）的小范围定位 chunk 进行精准替换。
+- 无
 
 ## Status
-**Completed** - 所有的暗色模式切换、各大模态框和分页器的 dark 变体适配工作均已开发完毕，且已通过 Vite 生产打包编译检验。项目处于待提交交付状态。
+**Currently in Phase 6** - 正在编写并审核 Implementation Plan，等待用户批准后进行全站细节适配、打包与 Git 推送。

@@ -1,74 +1,87 @@
-# Research Notes: 暗色模式主题切换方案设计
+# Research Notes: 暗色模式细节补全与长图导出适配分析
 
 ## 模型信息
-- 模型名称：Gemini 3.5 Flash (High)
-- 模型大小：中等参数量
-- 模型类型：多模态对话模型
-- 修订版本：v6.0 (RIPER-5 + Manus + MCP + Skills)
+- 模型名称：Antigravity
+- 模型大小：超大参数规模
+- 模型类型：代码与智能体双模态模型
+- 修订版本：v6.0-Compacted-Resume
 
 ---
 
-## 1. 技术背景与 Tailwind CSS v4 暗色模式
-在 Tailwind CSS v4 中，暗色模式默认支持媒体查询和 `class` 机制。
-给顶层网页节点 `html` 注入 `class="dark"` 后，所有带有 `dark:` 前缀的 Tailwind 样式（如 `dark:bg-slate-900`）就会在对应的暗色模式下生效。
+## 1. 样式盲区问题与定位
 
-### 方案设计
-- **状态管理**：在 `App.tsx` 中定义 `theme` 状态：
+### 1.1 三围选择图标底盘白块
+在以下三个核心组件中：
+- `src/components/SortableCard.tsx` (L58)
+- `src/components/EggCard.tsx` (L56)
+- `src/components/ParentCard.tsx` (L56)
+各自实现了一个 `getStatBadgeStyle` 方法。
+在亮色下，三围（生命、物攻、速度、魔攻、物防、魔防）使用高饱和度亮底渲染（如 `bg-rose-200 text-rose-800`）。
+但在暗色模式下，它们缺失了任何 `dark:` 变体适配，导致在暗黑的卡片背景下渲染出极其突兀的圆形大白块。
+**解决方案**：
+统一适配其 colors 字典，使之在暗色模式下显示为优雅、低饱和度的柔和背景，并拉高文本对比度：
+```typescript
+"生命": "bg-rose-200 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border-rose-400 dark:border-rose-900/60 hover:bg-rose-300 dark:hover:bg-rose-900/80 shadow-2xs",
+"物攻": "bg-amber-200 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-400 dark:border-amber-900/60 hover:bg-amber-300 dark:hover:bg-amber-900/80 shadow-2xs",
+"速度": "bg-emerald-200 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-400 dark:border-emerald-900/60 hover:bg-emerald-300 dark:hover:bg-emerald-900/80 shadow-2xs",
+"魔攻": "bg-purple-200 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border-purple-400 dark:border-purple-900/60 hover:bg-purple-300 dark:hover:bg-purple-900/80 shadow-2xs",
+"物防": "bg-blue-200 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-400 dark:border-blue-900/60 hover:bg-blue-300 dark:hover:bg-blue-900/80 shadow-2xs",
+"魔防": "bg-cyan-200 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 border-cyan-400 dark:border-cyan-900/60 hover:bg-cyan-300 dark:hover:bg-cyan-900/80 shadow-2xs",
+```
+
+### 1.2 自建换蛋需求中心表单细节遗漏
+在 `src/App.tsx` 中：
+- **精灵名称的 Label (L2890)**: `className="text-xs font-bold text-slate-700"` 缺少 `dark:text-slate-300`。
+- **精灵头像容器 (L2902)**: `className="w-[38px] h-[38px] bg-white ... border border-slate-200 ..."` 缺少 `dark:bg-slate-800 dark:border-slate-700`，导致在暗色模式下也是一个大白块。
+- **属性图标容器 (L2913)**: 缺少 `dark:bg-slate-800 dark:border-slate-700`。
+**解决方案**：
+在这些元素上补上对应的 `dark:` 前缀。
+
+### 1.3 大背景不透光与统一
+在三个 Tab 面板下：
+- 页面底座与 footer 等采用 `bg-slate-50/50 dark:bg-slate-950/20`。
+- 半透明的 `dark:bg-slate-950/20` 在一些特殊浏览器上可能无法完美消除背后的透底。
+**解决方案**：
+将底盘的外壳在暗色下设为完全不透明的 `dark:bg-slate-950`，保证整个底板风格统一。
+
+---
+
+## 2. 长图导出支持暗色模式
+
+在 `src/App.tsx` 的 `generateLongImage` 方法中：
+- 之前强制在渲染前剥离了 `document.documentElement` 的 `dark` 类，渲染后再行恢复：
   ```typescript
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const stored = localStorage.getItem('theme');
-    if (stored === 'light' || stored === 'dark') return stored;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  });
+  const isCurrentlyDark = document.documentElement.classList.contains("dark");
+  if (isCurrentlyDark) {
+    document.documentElement.classList.remove("dark");
+  }
   ```
-- **挂载同步**：使用 `useEffect` 实时将 `theme` 同步到 `document.documentElement`：
+  这直接导致导出的长图一定是亮色风格。
+- 现在用户要求**长图导出支持暗色模式**。
+**解决方案**：
+- 彻底移除剥离/恢复 `dark` 的这几行代码，允许克隆节点自然继承当前页面的暗色/亮色状态。
+- 为 `html2canvas` 传入动态的 `backgroundColor`：
   ```typescript
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const isCurrentlyDark = document.documentElement.classList.contains("dark");
+  const exportBgColor = isCurrentlyDark ? "#020617" : "#f8fafc";
   ```
-- **切换入口**：在页面 Banner 区域的 Credits 旁边，增加一个高颜值的 Moon/Sun 切换按钮，配以微妙的 hover 和旋转过渡动效。
-- **持久化**：使用 `localStorage` 保存用户的偏好设置。
+  其中 `#020617` 是 `bg-slate-950` 的十六进制颜色，这能保证在暗色模式下导出的图拥有完美的黑底底座。
 
 ---
 
-## 2. 前端组件颜色适配清单
+## 3. 默认开启暗色模式
 
-### 2.1 全局背景与容器 (`App.tsx`)
-- 页面底层：`bg-slate-50` -> `bg-slate-50 dark:bg-slate-950`，`text-slate-900` -> `text-slate-900 dark:text-slate-100`。
-- 主面板卡片：`bg-white` -> `bg-white dark:bg-slate-900`，`border-slate-100` -> `border-slate-100 dark:border-slate-800`。
-- 统计卡片：`bg-white` -> `bg-white dark:bg-slate-850/50`，`border-slate-100` -> `border-slate-100 dark:border-slate-800`。
-
-### 2.2 筛选与过滤区 (`App.tsx`)
-- 过滤行：`bg-slate-50/20` -> `bg-slate-50/20 dark:bg-slate-900/40`。
-- 搜索输入框：`bg-white` -> `bg-white dark:bg-slate-800`，`text-slate-900` -> `text-slate-900 dark:text-slate-150`。
-- 下拉选择菜单（Select）：`bg-white` -> `bg-white dark:bg-slate-800`，`text-slate-700` -> `text-slate-700 dark:text-slate-200`，`border-slate-200` -> `border-slate-200 dark:border-slate-700`。
-
-### 2.3 蛋窝卡片 (`SortableCard.tsx`)
-- 卡片主体：`bg-white` -> `bg-white dark:bg-slate-850`，`border-slate-200/80` -> `border-slate-200/80 dark:border-slate-800`。
-- 性格、窝点详情输入框：在 Focus 时，改变 `focus-within:bg-white` -> `focus-within:bg-white dark:focus-within:bg-slate-800`。
-- 蛋数操作按钮与指示色带在暗色下的高对比度。
-
-### 2.4 父母本仓库与精灵蛋管理卡片 (`ParentCard.tsx`, `EggCard.tsx`)
-- 卡片主体：`bg-white` -> `bg-white dark:bg-slate-850`，`border-slate-200/80` -> `border-slate-200/80 dark:border-slate-800`。
-- 按钮、输入框、下拉框以及边框全部映射到 `dark:bg-slate-800` 和 `dark:border-slate-700`，确保不会出现刺眼的亮白色输入框。
-
-### 2.5 拼音 Autocomplete 下拉菜单 (`Autocomplete.tsx`)
-- 下拉浮窗：`bg-white` -> `bg-white dark:bg-slate-800`，悬浮高亮 `hover:bg-slate-50` -> `hover:bg-slate-50 dark:hover:bg-slate-700`。
-- 文本框与拼音提示文本颜色适配。
-
----
-
-## 3. 长图导出时的特殊处理
-当用户选择“导出长图”时，系统会在 `document.body` 增加 `.exporting` 类，并生成一个离线 Clone 的 DOM 树。
-为了保证导出的长图在打印和分享时有最好的对比度，**长图应当默认使用亮色主题进行渲染**，以防止暗色长图在打印时耗费墨水，或者在不同显示器上看不清。
-- 解决方案：在克隆 DOM 树的导出代码中，在克隆出的树中移除 `dark` 类（或者强制设置其为亮色环境），保证生成的 canvas 依然使用高对比度的亮色。
-- 我们可以在 `App.tsx` 的 `html2canvas` 导出逻辑（在 `wrapper` 或 `clone` 层级上）显式去除 `dark` 类。这样即使当前是暗色模式，克隆出来的 DOM 也是以亮色主题生成。
+在 `src/App.tsx` 中，`theme` 的 useState 初始化：
+```typescript
+const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+  const stored = localStorage.getItem('theme');
+  if (stored === 'light' || stored === 'dark') return stored;
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+});
+```
+**解决方案**：
+为了让应用在无缓存和无 prefers 状态下默认处于暗色模式，将兜底的 `return 'light'` 修改为 `return 'dark'`。
+由于 `localStorage.getItem` 依然有效，用户可以自由切换回亮色模式并持久化，这能提供最高灵活性且不破坏首屏加载逻辑。

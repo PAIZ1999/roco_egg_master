@@ -249,7 +249,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
         autoCapitalize="off"
         autoCorrect="off"
         spellCheck={false}
-        className={inputClassName || "w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-750 rounded text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-550 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"}
+        className={inputClassName || "w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-750 rounded text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"}
       />
       {isOpen && filtered.length > 0 && createPortal(
         <div 
@@ -272,7 +272,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
               className={`px-3 py-1.5 text-xs cursor-pointer select-none transition-colors ${
                 idx === highlightedIndex 
                   ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-semibold' 
-                  : 'text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700/40'
+                  : 'text-slate-700 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/40'
               }`}
             >
               {opt}

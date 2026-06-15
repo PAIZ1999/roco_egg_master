@@ -157,7 +157,7 @@ export default function App() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {
@@ -2166,16 +2166,14 @@ export default function App() {
     document.body.appendChild(wrapper);
     document.body.classList.add("exporting");
 
-    // 长图导出渲染时临时回退为亮色模式，保证图片对比度并省墨，渲染后实时复原，且不打断当前的暗色预览
+    // 长图导出渲染时不再临时回退亮色模式，根据当前模式指定 Canvas 背景色，完美支持暗色导出
     const isCurrentlyDark = document.documentElement.classList.contains("dark");
-    if (isCurrentlyDark) {
-      document.documentElement.classList.remove("dark");
-    }
+    const exportBgColor = isCurrentlyDark ? "#020617" : "#f8fafc";
 
     try {
       // Use html2canvas to render the offscreen clone with fixed scaling and size parameters
       const canvas = await html2canvas(clone, {
-        backgroundColor: "#f8fafc",
+        backgroundColor: exportBgColor,
         scale: 2, // Double resolution for crystal-sharp text and borders
         useCORS: true,
         logging: false,
@@ -2192,9 +2190,6 @@ export default function App() {
       console.error("生成长图错误:", error);
       showToast("生成长图失败，请重试", "error");
     } finally {
-      if (isCurrentlyDark) {
-        document.documentElement.classList.add("dark");
-      }
       // Safely dispose of our temporary offscreen element wrapper
       if (document.body.contains(wrapper)) {
         document.body.removeChild(wrapper);
@@ -2550,41 +2545,41 @@ export default function App() {
         {activeTab === "nest" && (
           <>
             {/* Real-time stats section */}
-            <div className="p-5 bg-slate-50/30 border-b border-slate-100">
+            <div className="p-5 bg-slate-50/30 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
-            {/* Card 1: 总收录 */}
-            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+                        {/* Card 1: 总收录 */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 dark:bg-slate-800/40 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">总收录精灵</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
-                  <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-450 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">总收录精灵</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-50 dark:bg-slate-805 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
+                  <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-455 dark:text-slate-500 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 tracking-tight">{totalPets}</span>
-                <span className="text-xs text-slate-400 font-semibold">只</span>
+                <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 dark:text-slate-200 tracking-tight">{totalPets}</span>
+                <span className="text-xs text-slate-400 dark:text-slate-505 font-semibold">只</span>
               </div>
             </div>
 
             {/* Card 2: 牌子规格 */}
-            <div className="col-span-2 md:col-span-1 lg:col-span-1 order-last bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-indigo-50/30 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+            <div className="col-span-2 md:col-span-1 lg:col-span-1 order-last bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-indigo-50/30 dark:bg-indigo-950/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">牌子规格统计</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-50/50 rounded-lg flex items-center justify-center border border-indigo-100/50">
-                  <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">牌子规格统计</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-50/50 dark:bg-indigo-955/30 rounded-lg flex items-center justify-center border border-indigo-100/50 dark:border-indigo-900/40">
+                  <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                 </div>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 mt-2 sm:mt-2.5 z-10">
                 {(["大婉", "大粗", "普通", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
                   const colors = [
-                    "bg-rose-50/60 text-rose-700 border-rose-100/60",
-                    "bg-amber-50/60 text-amber-700 border-amber-100/60",
-                    "bg-emerald-50/60 text-emerald-700 border-emerald-100/60",
-                    "bg-blue-50/60 text-blue-700 border-blue-100/60",
-                    "bg-purple-50/60 text-purple-700 border-purple-100/60",
-                    "bg-slate-50/60 text-slate-700 border-slate-100/60"
+                    "bg-rose-50/60 dark:bg-rose-955/20 text-rose-700 dark:text-rose-300 border-rose-100/60 dark:border-rose-900/30",
+                    "bg-amber-50/60 dark:bg-amber-955/20 text-amber-700 dark:text-amber-300 border-amber-100/60 dark:border-amber-900/30",
+                    "bg-emerald-50/60 dark:bg-emerald-955/20 text-emerald-700 dark:text-emerald-300 border-emerald-100/60 dark:border-emerald-900/30",
+                    "bg-blue-50/60 dark:bg-blue-955/20 text-blue-700 dark:text-blue-300 border-blue-100/60 dark:border-blue-900/30",
+                    "bg-purple-50/60 dark:bg-purple-955/20 text-purple-700 dark:text-purple-300 border-purple-100/60 dark:border-purple-900/30",
+                    "bg-slate-50/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-355 border-slate-100/60 dark:border-slate-700/60"
                   ];
                   return (
                     <div key={brand} className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-lg border ${colors[idx]} text-center`}>
@@ -2597,68 +2592,68 @@ export default function App() {
             </div>
 
             {/* Card 3: 现有窝点 */}
-            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-emerald-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+            <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-emerald-50 dark:bg-emerald-950/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">现有现蛋窝点</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-50 rounded-lg flex items-center justify-center border border-emerald-100">
-                  <Egg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">现有现蛋窝点</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-emerald-50 dark:bg-emerald-950/40 rounded-lg flex items-center justify-center border border-emerald-100 dark:border-emerald-900/50">
+                  <Egg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1 flex-wrap">
-                <span className="text-xl sm:text-2xl font-black font-mono text-emerald-600 tracking-tight">{hasEggsCount}</span>
-                <span className="text-[10px] sm:text-xs text-emerald-500 font-semibold">窝({totalEggsCount}蛋)</span>
+                <span className="text-xl sm:text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">{hasEggsCount}</span>
+                <span className="text-[10px] sm:text-xs text-emerald-500 dark:text-emerald-450 font-semibold">窝({totalEggsCount}蛋)</span>
               </div>
             </div>
 
             {/* Card 4: 极限蛋 */}
-            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+            <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 dark:bg-amber-955/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">极限精灵蛋</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
-                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">极限精灵蛋</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-50 dark:bg-amber-955/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 dark:text-amber-405 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-xl sm:text-2xl font-black font-mono text-amber-500 tracking-tight">{limitsCount}</span>
-                <span className="text-xs text-amber-500 font-semibold">只</span>
+                <span className="text-xl sm:text-2xl font-black font-mono text-amber-500 dark:text-amber-400 tracking-tight">{limitsCount}</span>
+                <span className="text-xs text-amber-500 dark:text-amber-450 font-semibold">只</span>
               </div>
             </div>
 
             {/* Card 5: 3V蛋 */}
-            <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+            <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 dark:bg-rose-955/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold">3V 精灵蛋</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
-                  <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500 shrink-0" />
+                <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">3V 精灵蛋</span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-rose-50 dark:bg-rose-950/40 rounded-lg flex items-center justify-center border border-rose-100 dark:border-rose-900/50">
+                  <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500 dark:text-rose-405 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-                <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 tracking-tight">{threeVsCount}</span>
-                <span className="text-xs text-rose-500 font-semibold">只</span>
+                <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 dark:text-rose-400 tracking-tight">{threeVsCount}</span>
+                <span className="text-xs text-rose-500 dark:text-rose-455 font-semibold">只</span>
               </div>
             </div>
           </div>
         </div>        {/* Filters Header Row */}
-        <div id="filter-header-bar" className="p-4 bg-slate-50/20 border-b border-slate-100 flex flex-wrap gap-4 items-center justify-between">
+        <div id="filter-header-bar" className="p-4 bg-slate-50/20 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-800 flex flex-wrap gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-3 items-center w-full">
             {/* Search filter input and mobile toggle */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <div className="relative flex-1 sm:w-48 sm:flex-none">
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-505" />
                 <input
                   type="text"
                   placeholder="搜索精灵名字..."
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-505"
                 />
               </div>
               <button
                 onClick={() => setShowMobileFilters(!showMobileFilters)}
-                className="sm:hidden px-3 py-1.5 text-xs font-semibold bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-100 flex items-center gap-1 active:bg-indigo-100 transition-all shrink-0"
+                className="sm:hidden px-3 py-1.5 text-xs font-semibold bg-indigo-50 dark:bg-indigo-955/40 text-indigo-600 dark:text-indigo-400 rounded-lg border border-indigo-100 dark:border-indigo-900 flex items-center gap-1 active:bg-indigo-100 transition-all shrink-0"
               >
                 <Filter className="w-3.5 h-3.5" />
                 <span>{showMobileFilters ? "收起" : "筛选"}</span>
@@ -2671,11 +2666,11 @@ export default function App() {
               <select
                 value={filterNature}
                 onChange={e => setFilterNature(e.target.value)}
-                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
-                <option value="">全部性格</option>
+                <option value="" className="dark:bg-slate-800">全部性格</option>
                 {NATURE_OPTIONS.map(nature => (
-                  <option key={nature} value={nature}>{nature}</option>
+                  <option key={nature} value={nature} className="dark:bg-slate-800">{nature}</option>
                 ))}
               </select>
 
@@ -2683,11 +2678,11 @@ export default function App() {
               <select
                 value={filterGroup}
                 onChange={e => setFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
-                <option value="">全部蛋组</option>
+                <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
-                  <option key={group} value={group}>{group}</option>
+                  <option key={group} value={group} className="dark:bg-slate-800">{group}</option>
                 ))}
               </select>
 
@@ -2696,12 +2691,12 @@ export default function App() {
                 value={filterBrand}
                 onChange={e => setFilterBrand(e.target.value)}
                 className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-250 cursor-pointer font-bold transition-all w-full sm:w-auto ${
-                  filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                  filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 dark:text-slate-202 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
-                <option value="">全部牌子</option>
+                <option value="" className="dark:bg-slate-800">全部牌子</option>
                 {BRAND_OPTIONS.map(brand => (
-                  <option key={brand} value={brand}>{brand}</option>
+                  <option key={brand} value={brand} className="dark:bg-slate-800">{brand}</option>
                 ))}
               </select>
 
@@ -2710,12 +2705,12 @@ export default function App() {
                 value={filterStatus}
                 onChange={e => setFilterStatus(e.target.value)}
                 className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-350 cursor-pointer font-bold transition-all w-full sm:w-auto ${
-                  filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                  filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 dark:text-slate-202 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
-                <option value="" className="bg-white text-slate-800 font-semibold py-1">全部状态/窝点</option>
+                <option value="" className="dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold py-1">全部状态/窝点</option>
                 {NEST_STATUS_OPTIONS.map(status => (
-                  <option key={status} value={status} className="bg-white text-slate-850 font-semibold py-1">
+                  <option key={status} value={status} className="dark:bg-slate-800 text-slate-850 dark:text-slate-200 font-semibold py-1">
                     {status}
                   </option>
                 ))}
@@ -2725,11 +2720,11 @@ export default function App() {
               <select
                 value={filterLimit}
                 onChange={e => setFilterLimit(e.target.value)}
-                className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
-                <option value="">全部(有无极限蛋)</option>
+                <option value="" className="dark:bg-slate-800">全部(有无极限蛋)</option>
                 {LIMIT_OPTIONS.map(opt => (
-                  <option key={opt} value={opt}>{opt}</option>
+                  <option key={opt} value={opt} className="dark:bg-slate-800">{opt}</option>
                 ))}
               </select>
 
@@ -2738,8 +2733,8 @@ export default function App() {
                 id="header-watermark-btn"
                 className={`sm:ml-auto text-xs font-bold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto select-none ${
                   enableWatermark
-                    ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
-                    : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm"
+                    ? "bg-indigo-50 dark:bg-indigo-955/40 border-indigo-200 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                    : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm"
                 }`}
                 title="开启/关闭长图导出时的防盗水印"
               >
@@ -2756,23 +2751,23 @@ export default function App() {
         </div>
 
         {/* 我的蛋窝点看板标题 */}
-        <div className="p-6 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-6 bg-slate-50/30 dark:bg-slate-955/20 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
-              <Egg className="w-5 h-5 text-indigo-600 animate-pulse" />
+            <div className="p-2 bg-indigo-50 dark:bg-indigo-955/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
+              <Egg className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
             </div>
             <div>
-              <h2 id="nest-center-title" className="text-lg font-bold text-slate-800">我的精灵蛋窝中心</h2>
-              <p className="text-xs text-slate-500 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
+              <h2 id="nest-center-title" className="text-lg font-bold text-slate-800 dark:text-slate-200">我的精灵蛋窝中心</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
             </div>
           </div>
-          <span className="text-xs font-semibold text-slate-500 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/40">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800 px-2.5 py-1 rounded-full border border-slate-200/40 dark:border-slate-700">
             当前有 {filteredPets.length} 个蛋窝
           </span>
         </div>
 
         {/* Main Editable Card Grid Container */}
-        <div className="p-4 bg-slate-50/50">
+        <div className="p-4 bg-slate-50/50 dark:bg-slate-950">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -2811,7 +2806,7 @@ export default function App() {
         </div>
 
         {/* Bottom utility controls */}
-        <div id="footer-actions" className="p-4 sm:p-5 bg-slate-50/50 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-between">
+        <div id="footer-actions" className="p-4 sm:p-5 bg-slate-50/50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-between">
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 items-center w-full sm:w-auto">
             {/* Adding row button */}
             <button
@@ -2887,7 +2882,7 @@ export default function App() {
             {/* 第一行：核心配置 */}
             {/* 精灵选择 */}
             <div className="md:col-span-5 flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-slate-700">精灵名称</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">精灵名称</label>
               <div className="flex items-center gap-3 w-full">
                 {(() => {
                   const trimmed = newTradeSprite.trim();
@@ -2899,7 +2894,7 @@ export default function App() {
                   const spriteFileName = getSpriteFileName(resolvedSprite);
 
                   return (
-                    <div className="w-[38px] h-[38px] bg-white rounded-lg border border-slate-200 flex items-center justify-center shrink-0 shadow-sm relative group/avatar overflow-hidden">
+                    <div className="w-[38px] h-[38px] bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-sm relative group/avatar overflow-hidden">
                       {spriteFileName ? (
                         <img
                           src={getImagePath(`images/sprites/${spriteFileName}`)}
@@ -2907,10 +2902,10 @@ export default function App() {
                           className="w-8 h-8 object-contain transition-transform group-hover/avatar:scale-110"
                         />
                       ) : (
-                        <Egg className="w-5 h-5 text-slate-300" />
+                        <Egg className="w-5 h-5 text-slate-300 dark:text-slate-600" />
                       )}
                       {finalDetails?.types && finalDetails.types.length > 0 && (
-                        <div className="absolute -bottom-1 -right-1 w-4.5 h-4.5 bg-white rounded-full flex items-center justify-center shadow-xs border border-slate-100 z-10">
+                        <div className="absolute -bottom-1 -right-1 w-4.5 h-4.5 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-xs border border-slate-100 dark:border-slate-700 z-10">
                           <img
                             src={getImagePath(`images/attributes/${finalDetails.types[0]}.png`)}
                             alt={finalDetails.types[0]}
@@ -3083,12 +3078,12 @@ export default function App() {
           </div>
 
           {/* 卡片墙面板 */}
-          <div className="p-3 sm:p-6 bg-slate-50/30">
+          <div className="p-3 sm:p-6 bg-slate-50/30 dark:bg-slate-950">
             {trades.length === 0 ? (
-              <div className="border-2 border-dashed border-slate-200 rounded-2xl py-12 px-4 flex flex-col items-center justify-center text-slate-400 text-center gap-2">
-                <Egg className="w-10 h-10 text-slate-300 stroke-1" />
-                <span className="text-xs font-semibold text-slate-500">暂无换蛋需求看板</span>
-                <span className="text-[10px] text-slate-450">在上方填写需求表单并点击“加入换蛋卡片墙”即可生成</span>
+              <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl py-12 px-4 flex flex-col items-center justify-center text-slate-400 dark:text-slate-550 text-center gap-2">
+                <Egg className="w-10 h-10 text-slate-300 dark:text-slate-605 stroke-1" />
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">暂无换蛋需求看板</span>
+                <span className="text-[10px] text-slate-450 dark:text-slate-500">在上方填写需求表单并点击“加入换蛋卡片墙”即可生成</span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -3101,7 +3096,7 @@ export default function App() {
                   return (
                     <div
                       key={trade.id}
-                      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 relative overflow-hidden group/card"
+                      className="bg-white dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 relative overflow-hidden group/card"
                     >
                       {/* Delete Button at top-right */}
                       <button
@@ -3109,7 +3104,7 @@ export default function App() {
                           e.stopPropagation();
                           handleDeleteTrade(trade.id);
                         }}
-                        className="absolute top-2 right-2 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all opacity-100 sm:opacity-0 group-hover/card:opacity-100 cursor-pointer action-buttons z-20"
+                        className="absolute top-2 right-2 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-405 hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-transparent hover:border-rose-100 dark:hover:border-rose-900/40 transition-all opacity-100 sm:opacity-0 group-hover/card:opacity-100 cursor-pointer action-buttons z-20"
                         title="删除该条换蛋需求"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -3118,7 +3113,7 @@ export default function App() {
                       {/* 左侧：头像 + 详情 */}
                       <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
                         {/* 头像 */}
-                        <div className="relative w-14 h-14 sm:w-20 sm:h-20 bg-slate-50 border border-slate-100/80 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 group/avatar overflow-hidden">
+                        <div className="relative w-14 h-14 sm:w-20 sm:h-20 bg-slate-50 dark:bg-slate-800 border border-slate-100/80 dark:border-slate-700 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 group/avatar overflow-hidden">
                           {spriteFileName ? (
                             <img
                               src={getImagePath(`images/sprites/${spriteFileName}`)}
@@ -3126,10 +3121,10 @@ export default function App() {
                               className="w-11 h-11 sm:w-16 sm:h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-105"
                             />
                           ) : (
-                            <Egg className="w-7 h-7 sm:w-10 sm:h-10 text-slate-300 transition-transform duration-200 avatar-fallback-icon" />
+                            <Egg className="w-7 h-7 sm:w-10 sm:h-10 text-slate-300 dark:text-slate-605 transition-transform duration-200 avatar-fallback-icon" />
                           )}
                           {details?.types && details.types.length > 0 && (
-                            <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-50 z-10">
+                            <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm border border-slate-50 dark:border-slate-700 z-10">
                               <img
                                 src={getImagePath(`images/attributes/${details.types[0]}.png`)}
                                 alt={details.types[0]}
@@ -3140,22 +3135,22 @@ export default function App() {
 
                           {/* Form dropdown overlay for multi-form sprites */}
                           {availableSprites.length > 1 && (
-                            <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-xs px-1 py-0.5 rounded shadow-2xs z-10 border border-slate-200/80 flex items-center hover:bg-white transition-colors duration-150 action-buttons">
+                            <div className="absolute bottom-1 left-1 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xs px-1 py-0.5 rounded shadow-2xs z-10 border border-slate-200/80 dark:border-slate-700 flex items-center hover:bg-white dark:hover:bg-slate-750 transition-colors duration-150 action-buttons">
                               <select
                                 value={availableSprites.includes(trade.sprite) ? trade.sprite : (spriteFileName ? spriteFileName.slice(0, -4) : trade.sprite)}
                                 onChange={(e) => handleUpdateTradeSprite(trade.id, e.target.value)}
-                                className="text-[8px] font-bold text-slate-700 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+                                className="text-[8px] font-bold text-slate-700 dark:text-slate-305 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
                               >
                                 {availableSprites.map((spriteOption) => {
                                   const displayName = getSpriteFormDisplayName(spriteOption);
                                   return (
-                                    <option key={spriteOption} value={spriteOption}>
+                                    <option key={spriteOption} value={spriteOption} className="dark:bg-slate-800 dark:text-slate-205">
                                       {displayName}
                                     </option>
                                   );
                                 })}
                               </select>
-                              <span className="text-[6px] text-slate-450 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+                              <span className="text-[6px] text-slate-450 dark:text-slate-500 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
                             </div>
                           )}
                         </div>
@@ -3164,19 +3159,19 @@ export default function App() {
                         <div className="flex-1 flex flex-col min-w-0 justify-between">
                           {/* 名字 */}
                           <div className="flex items-center gap-1.5">
-                            <h4 className="text-sm font-bold text-slate-800 truncate" title={trade.sprite}>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate" title={trade.sprite}>
                               {trade.sprite}
                             </h4>
                           </div>
 
                           {/* 属性：性格/牌子 */}
-                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-1.5 text-[11px] font-medium text-slate-500">
+                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-455">
                             <div className="flex items-center gap-1.5">
-                              <span className="text-slate-400">性格:</span>
-                              <span className="text-slate-700 font-semibold">{trade.nature || "不限"}</span>
+                              <span className="text-slate-400 dark:text-slate-500">性格:</span>
+                              <span className="text-slate-700 dark:text-slate-300 font-semibold">{trade.nature || "不限"}</span>
                             </div>
                             <div className="flex items-center gap-1.5">
-                              <span className="text-slate-400">牌子:</span>
+                              <span className="text-slate-400 dark:text-slate-500">牌子:</span>
                               <span className={`px-1.5 py-0.25 rounded text-[10px] border ${getBrandStyle(trade.brand)}`}>
                                 {trade.brand}
                               </span>
@@ -3184,8 +3179,8 @@ export default function App() {
                           </div>
 
                           {/* 蛋组 */}
-                          <div className="flex items-center gap-1.5 my-1 text-[11px] font-medium text-slate-500">
-                            <span className="text-slate-400">蛋组:</span>
+                          <div className="flex items-center gap-1.5 my-1 text-[11px] font-medium text-slate-500 dark:text-slate-455">
+                            <span className="text-slate-400 dark:text-slate-500">蛋组:</span>
                             <div className="flex gap-1 flex-wrap">
                               {details?.groups && details.groups.length > 0 ? (
                                 details.groups.map(group => (
@@ -3194,7 +3189,7 @@ export default function App() {
                                   </span>
                                 ))
                               ) : (
-                                <span className="text-[10px] text-slate-400">无</span>
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500">无</span>
                               )}
                             </div>
                           </div>
@@ -3212,7 +3207,7 @@ export default function App() {
                               </span>
                             )}
                             {!trade.is3V && !trade.isLimit && (
-                              <span className="text-[9px] font-semibold text-slate-400">
+                              <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-505">
                                 常规配置
                               </span>
                             )}
@@ -3220,7 +3215,7 @@ export default function App() {
 
                           {/* 备注 */}
                           {trade.notes ? (
-                            <p className="text-[10px] text-slate-400 italic mt-2 border-t border-slate-50 pt-1.5 line-clamp-2" title={trade.notes}>
+                            <p className="text-[10px] text-slate-400 dark:text-slate-500 italic mt-2 border-t border-slate-50 dark:border-slate-800 pt-1.5 line-clamp-2" title={trade.notes}>
                               “{trade.notes}”
                             </p>
                           ) : (
@@ -3242,48 +3237,48 @@ export default function App() {
 
     {/* 蛋管理中心 */}
     {activeTab === "eggs" && (
-      <div className="bg-slate-50/50 p-4 sm:p-6 flex flex-col gap-6">
+      <div className="bg-slate-50/50 dark:bg-slate-950 p-4 sm:p-6 flex flex-col gap-6">
         {/* Statistics section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
-          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 rounded-full pointer-events-none" />
+          <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 dark:bg-slate-800/50 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
-              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">总录入精灵蛋</span>
-              <div className="w-6 h-6 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
-                <Database className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">总录入精灵蛋</span>
+              <div className="w-6 h-6 bg-slate-50 dark:bg-slate-850 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
+                <Database className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
               </div>
             </div>
             <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-              <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 tracking-tight">{eggs.length}</span>
-              <span className="text-xs text-slate-400 font-semibold">个</span>
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 dark:text-slate-205 tracking-tight">{eggs.length}</span>
+              <span className="text-xs text-slate-400 dark:text-slate-505 font-semibold">个</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50/30 rounded-full pointer-events-none" />
+          <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50/30 dark:bg-rose-955/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
-              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">极限精灵蛋</span>
-              <div className="w-6 h-6 bg-rose-50 rounded-lg flex items-center justify-center border border-rose-100">
-                <Award className="w-3.5 h-3.5 text-rose-500 animate-pulse" />
+              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">极限精灵蛋</span>
+              <div className="w-6 h-6 bg-rose-50 dark:bg-rose-950/40 rounded-lg flex items-center justify-center border border-rose-100 dark:border-rose-900/50">
+                <Award className="w-3.5 h-3.5 text-rose-500 dark:text-rose-405 animate-pulse" />
               </div>
             </div>
             <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-              <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 tracking-tight">
+              <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 dark:text-rose-400 tracking-tight">
                 {eggs.filter(e => {
                   const type = getEggStatusType(e);
                   return type === "极限大" || type === "极限小";
                 }).length}
               </span>
-              <span className="text-xs text-rose-500 font-semibold">个</span>
+              <span className="text-xs text-rose-500 dark:text-rose-450 font-semibold">个</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50/30 rounded-full pointer-events-none" />
+          <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50/30 dark:bg-amber-955/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
-              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">临界/达标蛋</span>
-              <div className="w-6 h-6 bg-amber-50 rounded-lg flex items-center justify-center border border-amber-100">
-                <Zap className="w-3.5 h-3.5 text-amber-500" />
+              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">临界/达标蛋</span>
+              <div className="w-6 h-6 bg-amber-50 dark:bg-amber-955/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
+                <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-405" />
               </div>
             </div>
             <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
@@ -3293,20 +3288,20 @@ export default function App() {
                   return type !== "普通" && type !== "极限大" && type !== "极限小";
                 }).length}
               </span>
-              <span className="text-xs text-amber-500 font-semibold">个</span>
+              <span className="text-xs text-amber-500 dark:text-amber-450 font-semibold">个</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-50/30 rounded-full pointer-events-none" />
+          <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-50/30 dark:bg-teal-955/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
-              <span className="text-[11px] sm:text-xs text-slate-500 font-bold">3V性格合格蛋</span>
-              <div className="w-6 h-6 bg-teal-50 rounded-lg flex items-center justify-center border border-teal-100">
-                <Dna className="w-3.5 h-3.5 text-teal-600" />
+              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">3V性格合格蛋</span>
+              <div className="w-6 h-6 bg-teal-50 dark:bg-teal-955/40 rounded-lg flex items-center justify-center border border-teal-100 dark:border-teal-900/50">
+                <Dna className="w-3.5 h-3.5 text-teal-600 dark:text-teal-405" />
               </div>
             </div>
             <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-              <span className="text-xl sm:text-2xl font-black font-mono text-teal-600 tracking-tight">
+              <span className="text-xl sm:text-2xl font-black font-mono text-teal-600 dark:text-teal-400 tracking-tight">
                 {eggs.filter(e => {
                   const fStats = e.fatherStats || [];
                   const mStats = e.motherStats || [];
@@ -3318,21 +3313,21 @@ export default function App() {
                   return fSorted.every((v, idx) => v === mSorted[idx]);
                 }).length}
               </span>
-              <span className="text-xs text-teal-500 font-semibold">个</span>
+              <span className="text-xs text-teal-500 dark:text-teal-450 font-semibold">个</span>
             </div>
           </div>
         </div>
 
         {/* Filters and Header inside center */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col gap-4 p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-4 p-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
-                <Egg className="w-5 h-5 text-indigo-600 animate-pulse" />
+              <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
+                <Egg className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
               </div>
               <div className="text-left">
-                <h2 className="text-lg font-bold text-slate-800">精灵蛋管理中心</h2>
-                <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">精灵蛋管理中心</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
                   记录与管理极品精灵蛋的三围性格、牌子，自动判定大块头/小不点达标与极限
                 </p>
               </div>
@@ -3341,23 +3336,23 @@ export default function App() {
             <div className="flex flex-wrap gap-2 ml-auto shrink-0 justify-end">
               <button
                 onClick={handleImportEggsClick}
-                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
                 title="从备份文件或文本导入精灵蛋数据"
               >
-                <Upload className="w-4 h-4 text-slate-500" />
+                <Upload className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 导入数据
               </button>
               <button
                 onClick={handleExportEggsClick}
-                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
                 title="导出当前精灵蛋数据作为备份"
               >
-                <Share2 className="w-4 h-4 text-slate-500" />
+                <Share2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 导出数据
               </button>
               <button
                 onClick={() => handleReset("eggs")}
-                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+                className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
                 title="清空当前所有精灵蛋记录"
               >
                 <RefreshCw className="w-4 h-4" />
@@ -3365,7 +3360,7 @@ export default function App() {
               </button>
               <button
                 onClick={handleAddEggClick}
-                className="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-md shadow-indigo-600/20 font-sans"
+                className="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 font-sans"
               >
                 <Plus className="w-4 h-4" />
                 登记精灵蛋
@@ -3373,29 +3368,29 @@ export default function App() {
             </div>
           </div>
 
-          <div className="h-px bg-slate-100" />
+          <div className="h-px bg-slate-100 dark:bg-slate-800" />
 
           {/* Filters row */}
           <div className="flex gap-3 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
             <div className="relative flex-1 sm:w-60 sm:flex-none shrink-0">
-              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-500" />
               <input
                 type="text"
                 placeholder="模糊搜索精灵名称..."
                 value={eggSearchTerm}
                 onChange={e => setEggSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400"
+                className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
 
             <select
               value={eggFilterGroup}
               onChange={e => setEggFilterGroup(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
-              <option value="">全部蛋组</option>
+              <option value="" className="dark:bg-slate-800">全部蛋组</option>
               {EGG_GROUPS.map(group => (
-                <option key={group} value={group}>{group}</option>
+                <option key={group} value={group} className="dark:bg-slate-800">{group}</option>
               ))}
             </select>
 
@@ -3403,45 +3398,45 @@ export default function App() {
               value={eggFilterBrand}
               onChange={e => setEggFilterBrand(e.target.value)}
               className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none cursor-pointer font-bold transition-all w-full sm:w-auto shrink-0 whitespace-nowrap ${
-                eggFilterBrand ? getBrandStyle(eggFilterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                eggFilterBrand ? getBrandStyle(eggFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50'
               }`}
             >
-              <option value="">全部牌子</option>
+              <option value="" className="dark:bg-slate-800">全部牌子</option>
               {BRAND_OPTIONS.map(brand => (
-                <option key={brand} value={brand}>{brand}</option>
+                <option key={brand} value={brand} className="dark:bg-slate-800">{brand}</option>
               ))}
             </select>
 
             <select
               value={eggFilterLimit}
               onChange={e => setEggFilterLimit(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
-              <option value="">全部(极限/临界/达标)</option>
-              <option value="极限">仅看极限 (大/小)</option>
-              <option value="达标">仅看达标 (大块头/小不点)</option>
-              <option value="临界">仅看临界值 (10%以内)</option>
-              <option value="普通">仅看普通/未合格</option>
+              <option value="" className="dark:bg-slate-800">全部(极限/临界/达标)</option>
+              <option value="极限" className="dark:bg-slate-800">仅看极限 (大/小)</option>
+              <option value="达标" className="dark:bg-slate-800">仅看达标 (大块头/小不点)</option>
+              <option value="临界" className="dark:bg-slate-800">仅看临界值 (10%以内)</option>
+              <option value="普通" className="dark:bg-slate-800">仅看普通/未合格</option>
             </select>
 
             <select
               value={eggFilter3V}
               onChange={e => setEggFilter3V(e.target.value)}
-              className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
-              <option value="">全部(是否3V)</option>
-              <option value="是">是 3V</option>
-              <option value="否">否 3V</option>
+              <option value="" className="dark:bg-slate-800">全部(是否3V)</option>
+              <option value="是" className="dark:bg-slate-800">是 3V</option>
+              <option value="否" className="dark:bg-slate-800">否 3V</option>
             </select>
           </div>
         </div>
 
         {/* Eggs list grid */}
         {filteredEggs.length === 0 ? (
-          <div className="py-16 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm select-none">
-            <Egg className="w-12 h-12 text-slate-350 stroke-1 mb-2 animate-bounce" />
-            <span className="text-sm font-bold text-slate-400">🥚 暂无符合条件的精灵蛋记录</span>
-            <span className="text-xs text-slate-350 mt-1">点击右上角“登记精灵蛋”录入首只蛋</span>
+          <div className="py-16 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm select-none">
+            <Egg className="w-12 h-12 text-slate-350 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
+            <span className="text-sm font-bold text-slate-400 dark:text-slate-300">🥚 暂无符合条件的精灵蛋记录</span>
+            <span className="text-xs text-slate-350 dark:text-slate-550 mt-1">点击右上角“登记精灵蛋”录入首只蛋</span>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
@@ -3544,29 +3539,29 @@ export default function App() {
 
     {/* 父母本管理中心 */}
     {activeTab === "parents" && (
-      <div className="bg-slate-50/50 p-4 sm:p-6 flex flex-col gap-6">
+      <div className="bg-slate-50/50 dark:bg-slate-950 p-4 sm:p-6 flex flex-col gap-6">
         {/* 父母本头部 */}
-        <div className="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
-              <Users className="w-5 h-5 text-indigo-600 animate-pulse" />
+            <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
+              <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-800">父母本管理中心</h2>
-              <p className="text-xs text-slate-500 mt-0.5 font-medium">
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200">父母本管理中心</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
                 登记您仓库中的父母本精灵，设置独立的身高体重、性格三围，计算跨蛋组繁育路径
               </p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 ml-auto shrink-0">
-            <div className="flex gap-2 text-xs font-semibold text-slate-500 bg-slate-100/80 px-3 py-1.5 rounded-full border border-slate-200/40 select-none">
+            <div className="flex gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-200/40 dark:border-slate-700/40 select-none">
               <span>父本 (♂): {visibleFathers.length}/{parents.filter(p => p.gender === "♂").length} 只</span>
-              <span className="text-slate-300">|</span>
+              <span className="text-slate-300 dark:text-slate-600">|</span>
               <span>母本 (♀): {visibleMothers.length}/{parents.filter(p => p.gender === "♀").length} 只</span>
             </div>
             <button
               onClick={() => handleReset("parents")}
-              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
               title="清空当前所有父母本登记数据"
             >
               <RefreshCw className="w-4 h-4" />
@@ -3607,49 +3602,49 @@ export default function App() {
             </div>
 
             {/* 父本单独过滤栏 */}
-            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+            <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
-                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
                   value={fatherSearchTerm}
                   onChange={val => setFatherSearchTerm(val)}
                   options={ALL_PET_NAMES}
                   placeholder="搜索精灵名..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
-                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
                   value={fatherNatureSearch}
                   onChange={val => setFatherNatureSearch(val)}
                   options={NATURE_OPTIONS}
                   placeholder="搜索性格..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <select
                 value={fatherFilterGroup}
                 onChange={e => setFatherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
+                className="text-xs text-slate-700 dark:text-slate-250 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
-                <option value="">全部蛋组</option>
+                <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
-                  <option key={group} value={group}>{group}</option>
+                  <option key={group} value={group} className="dark:bg-slate-800">{group}</option>
                 ))}
               </select>
               <select
                 value={fatherFilterBrand}
                 onChange={e => setFatherFilterBrand(e.target.value)}
                 className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
-                  fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
+                  fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-105 dark:hover:bg-slate-700'
                 }`}
               >
-                <option value="">全部牌子</option>
+                <option value="" className="dark:bg-slate-800">全部牌子</option>
                 {BRAND_OPTIONS.map(brand => (
-                  <option key={brand} value={brand}>{brand}</option>
+                  <option key={brand} value={brand} className="dark:bg-slate-800">{brand}</option>
                 ))}
               </select>
               {(fatherSearchTerm || fatherNatureSearch || fatherFilterGroup || fatherFilterBrand) && (
@@ -3660,7 +3655,7 @@ export default function App() {
                     setFatherFilterGroup("");
                     setFatherFilterBrand("");
                   }}
-                  className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer p-1 hover:bg-indigo-50 rounded shrink-0 whitespace-nowrap"
+                  className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-bold transition-colors cursor-pointer p-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded shrink-0 whitespace-nowrap"
                 >
                   重置
                 </button>
@@ -3670,10 +3665,10 @@ export default function App() {
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                 {visibleFathers.length === 0 ? (
-                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
-                    <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
-                    <span className="text-xs font-bold text-slate-400">♂️ 暂无登记的父本精灵</span>
-                    <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加父本”录入</span>
+                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                    <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
+                    <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♂️ 暂无登记的父本精灵</span>
+                    <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加父本”录入</span>
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleFatherDragEnd}>
@@ -3727,49 +3722,49 @@ export default function App() {
             </div>
 
             {/* 母本单独过滤栏 */}
-            <div className="p-3 bg-white rounded-xl border border-slate-100 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+            <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
-                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
                   value={motherSearchTerm}
                   onChange={val => setMotherSearchTerm(val)}
                   options={ALL_PET_NAMES}
                   placeholder="搜索精灵名..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-pink-500 focus:ring-1 focus:ring-pink-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
-                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                <Filter className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
                   value={motherNatureSearch}
                   onChange={val => setMotherNatureSearch(val)}
                   options={NATURE_OPTIONS}
                   placeholder="搜索性格..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-pink-500 focus:ring-1 focus:ring-pink-100 transition-all font-medium placeholder:text-slate-400 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <select
                 value={motherFilterGroup}
                 onChange={e => setMotherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:bg-white focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
+                className="text-xs text-slate-700 dark:text-slate-250 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
-                <option value="">全部蛋组</option>
+                <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
-                  <option key={group} value={group}>{group}</option>
+                  <option key={group} value={group} className="dark:bg-slate-800">{group}</option>
                 ))}
               </select>
               <select
                 value={motherFilterBrand}
                 onChange={e => setMotherFilterBrand(e.target.value)}
                 className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
-                  motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100'
+                  motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-105 dark:hover:bg-slate-700'
                 }`}
               >
-                <option value="">全部牌子</option>
+                <option value="" className="dark:bg-slate-800">全部牌子</option>
                 {BRAND_OPTIONS.map(brand => (
-                  <option key={brand} value={brand}>{brand}</option>
+                  <option key={brand} value={brand} className="dark:bg-slate-800">{brand}</option>
                 ))}
               </select>
               {(motherSearchTerm || motherNatureSearch || motherFilterGroup || motherFilterBrand) && (
@@ -3780,7 +3775,7 @@ export default function App() {
                     setMotherFilterGroup("");
                     setMotherFilterBrand("");
                   }}
-                  className="text-[11px] text-pink-600 hover:text-pink-500 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 rounded shrink-0 whitespace-nowrap"
+                  className="text-[11px] text-pink-600 dark:text-pink-400 hover:text-pink-500 dark:hover:text-pink-305 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 dark:hover:bg-pink-950/40 rounded shrink-0 whitespace-nowrap"
                 >
                   重置
                 </button>
@@ -3790,10 +3785,10 @@ export default function App() {
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                 {visibleMothers.length === 0 ? (
-                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-sm">
-                    <Users className="w-10 h-10 text-slate-300 stroke-1 mb-2 animate-bounce" />
-                    <span className="text-xs font-bold text-slate-400">♀️ 暂无登记的母本精灵</span>
-                    <span className="text-[10px] text-slate-350 mt-1">点击右上方“添加母本”录入</span>
+                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                    <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
+                    <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♀️ 暂无登记的母本精灵</span>
+                    <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加母本”录入</span>
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleMotherDragEnd}>
@@ -3821,15 +3816,15 @@ export default function App() {
         </div>
 
         {/* 智能配对与导入中心 */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden mt-4">
-          <div className="p-4 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mt-4">
+          <div className="p-4 bg-slate-900 dark:bg-slate-950/60 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
                 <Dna className="w-4.5 h-4.5 text-indigo-300 animate-pulse" />
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">🧬 智能繁育配对与一键导入中心</h3>
-                <p className="text-[10px] text-slate-400 mt-0.5">
+                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
                   同蛋组且同牌子的勾选宠物可进行繁育，子代精灵品种及形态随母本，三围相同自动判定3V
                 </p>
               </div>
@@ -3855,9 +3850,9 @@ export default function App() {
               if (allPairings.length === 0) {
                 return (
                   <div className="py-12 flex flex-col items-center justify-center text-center select-none">
-                    <Dna className="w-10 h-10 text-slate-300 stroke-1 mb-3" />
-                    <p className="text-sm font-bold text-slate-400">暂无符合繁育条件的配对</p>
-                    <p className="text-xs text-slate-400 mt-1.5 max-w-md">
+                    <Dna className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-3" />
+                    <p className="text-sm font-bold text-slate-400 dark:text-slate-300">暂无符合繁育条件的配对</p>
+                    <p className="text-xs text-slate-400 dark:text-slate-550 mt-1.5 max-w-md">
                       请在上方勾选配组，且确保至少有一对父本和母本：(1) 精灵品种非空 (2) 属于同一个蛋组 (3) 牌子等级完全相同。
                     </p>
                   </div>
@@ -3898,32 +3893,32 @@ export default function App() {
               return (
                 <>
                   {/* 筛选栏 */}
-                  <div className="mb-4 p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 shrink-0 whitespace-nowrap">
+                  <div className="mb-4 p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200/80 dark:border-slate-800 flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">
                       <Filter className="w-3.5 h-3.5" />
                       筛选配对
                     </div>
                     {/* 精灵名搜索 */}
                     <div className="relative flex-1 min-w-[130px] max-w-[200px] flex items-center shrink-0">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 z-10 pointer-events-none" />
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-slate-550 z-10 pointer-events-none" />
                       <Autocomplete
                         value={pairingFilterName}
                         onChange={val => setPairingFilterName(val)}
                         options={ALL_PET_NAMES}
                         placeholder="搜索精灵名..."
                         className="w-full"
-                        inputClassName="w-full pl-8 pr-2 py-1.5 text-xs text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition-all font-medium placeholder:text-slate-400 h-8"
+                        inputClassName="w-full pl-8 pr-2 py-1.5 text-xs text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-8"
                       />
                     </div>
                     {/* 蛋组筛选 */}
                     <select
                       value={pairingFilterGroup}
                       onChange={e => setPairingFilterGroup(e.target.value)}
-                      className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
-                      <option value="">全部蛋组</option>
+                      <option value="" className="dark:bg-slate-850">全部蛋组</option>
                       {allPairGroups.map(g => (
-                        <option key={g} value={g}>{g}</option>
+                        <option key={g} value={g} className="dark:bg-slate-850">{g}</option>
                       ))}
                     </select>
                     {/* 牌子筛选 */}
@@ -3931,27 +3926,27 @@ export default function App() {
                       value={pairingFilterBrand}
                       onChange={e => setPairingFilterBrand(e.target.value)}
                       className={`text-xs border rounded-lg px-2 py-1.5 h-8 focus:outline-none cursor-pointer font-bold transition-all w-auto shrink-0 whitespace-nowrap ${
-                        pairingFilterBrand ? getBrandStyle(pairingFilterBrand) : 'text-slate-700 bg-white border-slate-200 hover:bg-slate-50'
+                        pairingFilterBrand ? getBrandStyle(pairingFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-850 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50'
                       }`}
                     >
-                      <option value="">全部牌子</option>
+                      <option value="" className="dark:bg-slate-850">全部牌子</option>
                       {allPairBrands.map(b => (
-                        <option key={b} value={b}>{b}</option>
+                        <option key={b} value={b} className="dark:bg-slate-850">{b}</option>
                       ))}
                     </select>
                     {/* 3V筛选 */}
                     <select
                       value={pairingFilter3V}
                       onChange={e => setPairingFilter3V(e.target.value)}
-                      className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-855 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
-                      <option value="">全部配对</option>
-                      <option value="3V">仅3V配对</option>
-                      <option value="非3V">仅非3V配对</option>
+                      <option value="" className="dark:bg-slate-850">全部配对</option>
+                      <option value="3V" className="dark:bg-slate-850">仅3V配对</option>
+                      <option value="非3V" className="dark:bg-slate-850">仅非3V配对</option>
                     </select>
                     {/* 筛选结果计数 & 重置 */}
                     <div className="flex items-center gap-2 ml-auto shrink-0 whitespace-nowrap">
-                      <span className="text-[11px] text-slate-400 font-medium">
+                      <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
                         {hasFilter ? `筛选结果: ${filteredPairings.length} / ${allPairings.length} 组` : `共 ${allPairings.length} 组配对`}
                       </span>
                       {hasFilter && (
@@ -3962,7 +3957,7 @@ export default function App() {
                             setPairingFilterBrand("");
                             setPairingFilter3V("");
                           }}
-                          className="text-[11px] text-indigo-600 hover:text-indigo-500 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 rounded-lg border border-indigo-100"
+                          className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-305 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"
                         >
                           重置筛选
                         </button>
@@ -3973,9 +3968,9 @@ export default function App() {
                   {/* 配对卡片列表 */}
                   {filteredPairings.length === 0 ? (
                     <div className="py-10 flex flex-col items-center justify-center text-center select-none">
-                      <Search className="w-8 h-8 text-slate-300 stroke-1 mb-2" />
-                      <p className="text-sm font-bold text-slate-400">没有符合筛选条件的配对</p>
-                      <p className="text-xs text-slate-400 mt-1">请尝试调整或重置筛选条件</p>
+                      <Search className="w-8 h-8 text-slate-300 dark:text-slate-600 stroke-1 mb-2" />
+                      <p className="text-sm font-bold text-slate-400 dark:text-slate-300">没有符合筛选条件的配对</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-550 mt-1">请尝试调整或重置筛选条件</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1 custom-scrollbar">
@@ -4007,8 +4002,8 @@ export default function App() {
                             }}
                             className={`rounded-2xl border p-3 sm:p-4 hover:shadow-lg transition-all flex flex-col gap-2.5 sm:gap-3.5 relative overflow-hidden group cursor-pointer ${
                               isSelected
-                                ? "bg-white border-emerald-300 ring-1 ring-emerald-200 shadow-sm"
-                                : "bg-slate-50/60 border-slate-200 opacity-60 hover:opacity-90"
+                                ? "bg-white dark:bg-slate-900 border-emerald-300 dark:border-emerald-950/60 ring-1 ring-emerald-200 dark:ring-emerald-950/40 shadow-sm"
+                                : "bg-slate-50/60 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800/80 opacity-60 hover:opacity-90"
                             }`}
                           >
                             {/* 选中角标 */}
@@ -4018,20 +4013,20 @@ export default function App() {
                                   <Check className="w-4 h-4 text-white stroke-[3]" />
                                 </div>
                               ) : (
-                                <div className="w-6 h-6 bg-white border-2 border-slate-300 rounded-full" />
+                                <div className="w-6 h-6 bg-white dark:bg-slate-850 border-2 border-slate-300 dark:border-slate-700 rounded-full" />
                               )}
                             </div>
 
                             {/* 右上角装饰 */}
                             {isSelected && (
-                              <div className="absolute right-0 top-0 w-16 h-16 bg-gradient-to-bl from-indigo-50/60 to-transparent rounded-bl-full pointer-events-none" />
+                              <div className="absolute right-0 top-0 w-16 h-16 bg-gradient-to-bl from-indigo-50/60 dark:from-indigo-950/30 to-transparent rounded-bl-full pointer-events-none" />
                             )}
 
                             {/* 父母信息行 */}
                             <div className="flex items-center gap-2 sm:gap-3 mt-4">
                               {/* 父本 */}
                               <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0">
-                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-sky-50/60 rounded-lg sm:rounded-xl border border-sky-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-sky-50/60 dark:bg-sky-950/20 rounded-lg sm:rounded-xl border border-sky-100 dark:border-sky-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {fatherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
@@ -4040,18 +4035,18 @@ export default function App() {
                                       loading="lazy"
                                     />
                                   ) : (
-                                    <div className="text-slate-350 text-sm sm:text-lg">♂</div>
+                                    <div className="text-slate-350 dark:text-slate-600 text-sm sm:text-lg">♂</div>
                                   )}
                                   <span className="absolute bottom-0 right-0 text-[8px] sm:text-[9px] bg-sky-500 text-white leading-none px-0.5 py-0.2 sm:px-1 sm:py-0.5 rounded-tl-md font-bold">♂</span>
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 truncate" title={pair.father.sprite}>
+                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate" title={pair.father.sprite}>
                                     {pair.father.sprite}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">
-                                    {pair.father.nature || <span className="text-slate-350 italic">无性格</span>}
+                                  <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                                    {pair.father.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-450 mt-0.5">
                                     {pair.father.height ? `${pair.father.height}m` : "—"}/{pair.father.weight ? `${pair.father.weight}kg` : "—"}
                                   </div>
                                 </div>
@@ -4068,17 +4063,17 @@ export default function App() {
                               {/* 母本 */}
                               <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 justify-end text-right">
                                 <div className="min-w-0 flex-1">
-                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 truncate" title={pair.mother.sprite}>
+                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate" title={pair.mother.sprite}>
                                     {pair.mother.sprite}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">
-                                    {pair.mother.nature || <span className="text-slate-350 italic">无性格</span>}
+                                  <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                                    {pair.mother.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-450 mt-0.5">
                                     {pair.mother.height ? `${pair.mother.height}m` : "—"}/{pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
                                   </div>
                                 </div>
-                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 rounded-lg sm:rounded-xl border border-pink-100 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 dark:bg-pink-955/20 rounded-lg sm:rounded-xl border border-pink-100 dark:border-pink-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {motherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${motherSpriteFile}`)}
@@ -4087,7 +4082,7 @@ export default function App() {
                                       loading="lazy"
                                     />
                                   ) : (
-                                    <div className="text-slate-350 text-sm sm:text-lg">♀</div>
+                                    <div className="text-slate-350 dark:text-slate-600 text-sm sm:text-lg">♀</div>
                                   )}
                                   <span className="absolute bottom-0 right-0 text-[8px] sm:text-[9px] bg-pink-500 text-white leading-none px-0.5 py-0.2 sm:px-1 sm:py-0.5 rounded-tl-md font-bold">♀</span>
                                 </div>
@@ -4096,42 +4091,42 @@ export default function App() {
 
                             {/* 子代规格参考 */}
                             {guideSize && (
-                              <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs space-y-2 font-medium select-none">
-                                <div className="flex items-center gap-1.5 text-slate-600 font-bold border-b border-slate-200/60 pb-2 mb-2">
-                                  <span className="text-slate-800">【{pair.eggSprite}】子代规格参考</span>
+                              <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl p-3 text-xs space-y-2 font-medium select-none">
+                                <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 font-bold border-b border-slate-200/60 dark:border-slate-800 pb-2 mb-2">
+                                  <span className="text-slate-800 dark:text-slate-200">【{pair.eggSprite}】子代规格参考</span>
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                                  <div className="flex items-center gap-1.5 text-slate-600">
-                                    <Ruler className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                  <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                                    <Ruler className="w-3.5 h-3.5 text-slate-400 dark:text-slate-505 shrink-0" />
                                     <span>身高:</span>
-                                    <span className="font-bold text-slate-800">{guideSize.height}</span>
+                                    <span className="font-bold text-slate-800 dark:text-slate-200">{guideSize.height}</span>
                                   </div>
-                                  <div className="flex items-center gap-1.5 text-slate-600">
-                                    <Weight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                  <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                                    <Weight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-505 shrink-0" />
                                     <span>体重:</span>
-                                    <span className="font-bold text-slate-800">{guideSize.weight}</span>
+                                    <span className="font-bold text-slate-800 dark:text-slate-200">{guideSize.weight}</span>
                                   </div>
                                 </div>
                                 {thresholds && (
-                                  <div className="grid grid-cols-2 gap-x-4 pt-2 border-t border-slate-200/50 text-[11px] text-slate-500">
+                                  <div className="grid grid-cols-2 gap-x-4 pt-2 border-t border-slate-200/50 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-450">
                                     <div className="space-y-1">
                                       <div className="flex items-center justify-between">
                                         <span>大及格身高:</span>
-                                        <span className="font-bold text-emerald-600">≥{thresholds.maxHeight.toFixed(2)}m</span>
+                                        <span className="font-bold text-emerald-600 dark:text-emerald-400">≥{thresholds.maxHeight.toFixed(2)}m</span>
                                       </div>
                                       <div className="flex items-center justify-between">
                                         <span>大及格体重:</span>
-                                        <span className="font-bold text-emerald-600">≥{thresholds.giantWeightLine.toFixed(4)}kg</span>
+                                        <span className="font-bold text-emerald-600 dark:text-emerald-400">≥{thresholds.giantWeightLine.toFixed(4)}kg</span>
                                       </div>
                                     </div>
-                                    <div className="space-y-1 border-l border-slate-200/60 pl-3">
+                                    <div className="space-y-1 border-l border-slate-200/60 dark:border-slate-800 pl-3">
                                       <div className="flex items-center justify-between">
                                         <span>小及格身高:</span>
-                                        <span className="font-bold text-amber-600">≤{thresholds.minHeight.toFixed(2)}m</span>
+                                        <span className="font-bold text-amber-600 dark:text-amber-400">≤{thresholds.minHeight.toFixed(2)}m</span>
                                       </div>
                                       <div className="flex items-center justify-between">
                                         <span>小及格体重:</span>
-                                        <span className="font-bold text-amber-600">≤{thresholds.tinyWeightLine.toFixed(4)}kg</span>
+                                        <span className="font-bold text-amber-600 dark:text-amber-400">≤{thresholds.tinyWeightLine.toFixed(4)}kg</span>
                                       </div>
                                     </div>
                                   </div>
@@ -4140,19 +4135,19 @@ export default function App() {
                             )}
 
                             {/* 底部产出信息 + 操作 */}
-                            <div className="bg-gradient-to-r from-slate-50 to-indigo-50/30 rounded-xl border border-slate-200/80 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
+                            <div className="bg-gradient-to-r from-slate-50 dark:from-slate-800/40 to-indigo-50/30 dark:to-indigo-955/20 rounded-xl border border-slate-200/80 dark:border-slate-800 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
                               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
-                                <span className="text-[10px] sm:text-xs font-bold text-slate-500 shrink-0">产出:</span>
-                                <span className="text-xs sm:text-sm font-extrabold text-slate-800 shrink-0">{pair.eggSprite}蛋</span>
+                                <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-450 shrink-0">产出:</span>
+                                <span className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 shrink-0">{pair.eggSprite}蛋</span>
                               </div>
                               <div className="flex gap-1 sm:gap-2 items-center min-w-0">
-                                <span className="bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-1.5 py-0.5 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-bold select-none truncate shrink-0 max-w-[80px] xs:max-w-none" title={pair.matchingGroups.join("/")}>
+                                <span className="bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-900/40 px-1.5 py-0.5 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-bold select-none truncate shrink-0 max-w-[80px] xs:max-w-none" title={pair.matchingGroups.join("/")}>
                                   {pair.matchingGroups.join("/")}
                                 </span>
                                 <span className={`font-bold px-1.5 py-0.5 sm:px-2 rounded-lg border text-[10px] sm:text-[11px] select-none shrink-0 ${
                                   isStatsMatch
-                                    ? "bg-rose-50 text-rose-600 border-rose-200"
-                                    : "bg-slate-100 text-slate-500 border-slate-200"
+                                    ? "bg-rose-55 dark:bg-rose-955/20 text-rose-600 dark:text-rose-300 border-rose-200 dark:border-rose-900/40"
+                                    : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"
                                 }`}>
                                   {isStatsMatch ? "✨3V" : "非3V"}
                                 </span>

@@ -322,79 +322,105 @@ export const getImagePath = (relPath: string): string => {
 };
 
 export const getEggGroupStyle = (groupName: string): string => {
-  switch (groupName) {
-    case "精灵蛋组":
-      return "bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-900/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/65 hover:border-teal-300 dark:hover:border-teal-800";
-    case "天空蛋组":
-      return "bg-sky-50 dark:bg-sky-950/20 border-sky-200 dark:border-sky-900/40 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/65 hover:border-sky-300 dark:hover:border-sky-800";
-    case "陆地蛋组":
-      return "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/40 text-amber-700 dark:text-amber-300 hover:bg-amber-105 dark:hover:bg-amber-900/65 hover:border-amber-305 dark:hover:border-amber-805";
-    case "神智蛋组":
-      return "bg-indigo-50 dark:bg-indigo-950/20 border-indigo-200 dark:border-indigo-900/40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/65 hover:border-indigo-300 dark:hover:border-indigo-800";
-    case "动物蛋组":
-      return "bg-rose-50 dark:bg-rose-950/20 border-rose-200 dark:border-rose-900/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/65 hover:border-rose-300 dark:hover:border-rose-800";
-    case "植物蛋组":
-      return "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-105 dark:hover:bg-emerald-900/65 hover:border-emerald-305 dark:hover:border-emerald-805";
-    case "守护蛋组":
-      return "bg-violet-50 dark:bg-violet-950/20 border-violet-200 dark:border-violet-900/40 text-violet-700 dark:text-violet-300 hover:bg-violet-100 dark:hover:bg-violet-900/65 hover:border-violet-300 dark:hover:border-violet-800";
-    case "不死蛋组":
-      return "bg-slate-50 dark:bg-slate-800 border-slate-205 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-105 dark:hover:bg-slate-700 hover:border-slate-305 dark:hover:border-slate-600";
+  if (!groupName) return "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+  
+  let cleanName = groupName;
+  if (cleanName.endsWith("蛋组")) {
+    cleanName = cleanName.slice(0, -2);
+  }
+  if (cleanName.endsWith("组")) {
+    cleanName = cleanName.slice(0, -1);
+  }
+  if (cleanName === "大地" || cleanName === "陆地") {
+    cleanName = "大地";
+  }
+
+  switch (cleanName) {
+    case "两栖":
+      return "bg-cyan-50 dark:bg-cyan-950 border-cyan-200 dark:border-cyan-900 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-100 dark:hover:bg-cyan-900/80 hover:border-cyan-300 dark:hover:border-cyan-800";
+    case "动物":
+      return "bg-rose-50 dark:bg-rose-950 border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/80 hover:border-rose-300 dark:hover:border-rose-800";
+    case "大地":
+      return "bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/80 hover:border-amber-300 dark:hover:border-amber-800";
+    case "天空":
+      return "bg-sky-50 dark:bg-sky-950 border-sky-200 dark:border-sky-900 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/80 hover:border-sky-300 dark:hover:border-sky-800";
+    case "妖精":
+      return "bg-pink-50 dark:bg-pink-950 border-pink-200 dark:border-pink-900 text-pink-700 dark:text-pink-300 hover:bg-pink-100 dark:hover:bg-pink-900/80 hover:border-pink-300 dark:hover:border-pink-800";
+    case "巨灵":
+      return "bg-indigo-50 dark:bg-indigo-950 border-indigo-200 dark:border-indigo-900 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 hover:border-indigo-300 dark:hover:border-indigo-800";
+    case "拟人":
+      return "bg-purple-50 dark:bg-purple-950 border-purple-200 dark:border-purple-900 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/80 hover:border-purple-300 dark:hover:border-purple-800";
+    case "昆虫":
+      return "bg-lime-50 dark:bg-lime-950 border-lime-200 dark:border-lime-900 text-lime-700 dark:text-lime-300 hover:bg-lime-100 dark:hover:bg-lime-900/80 hover:border-lime-300 dark:hover:border-lime-800";
+    case "机械":
+      return "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:border-zinc-350 dark:hover:border-zinc-650";
+    case "植物":
+      return "bg-emerald-50 dark:bg-emerald-950 border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 hover:border-emerald-300 dark:hover:border-emerald-800";
+    case "海洋":
+      return "bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/80 hover:border-blue-300 dark:hover:border-blue-800";
+    case "软体":
+      return "bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/80 hover:border-red-300 dark:hover:border-red-800";
+    case "魔力":
+      return "bg-violet-50 dark:bg-violet-950 border-violet-200 dark:border-violet-900 text-violet-700 dark:text-violet-300 hover:bg-violet-100 dark:hover:bg-violet-900/80 hover:border-violet-300 dark:hover:border-violet-800";
+    case "龙":
+      return "bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-900 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/80 hover:border-orange-300 dark:hover:border-orange-800";
+    case "精灵":
+    case "守护":
+      return "bg-teal-50 dark:bg-teal-950 border-teal-200 dark:border-teal-900 text-teal-700 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/80 hover:border-teal-300 dark:hover:border-teal-800";
+    case "不死":
+      return "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600";
     default:
-      return "bg-slate-50 dark:bg-slate-850 border-slate-205 dark:border-slate-755 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+      return "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
   }
 };
 
 export const getStatusStyle = (status: string): string => {
   switch (status) {
     case "有现蛋":
-      return "bg-amber-100 dark:bg-amber-950/30 border-amber-300 dark:border-amber-900/40 text-amber-800 dark:text-amber-300 font-bold shadow-xs";
+      return "bg-amber-100 dark:bg-amber-950 border-amber-300 dark:border-amber-900 text-amber-800 dark:text-amber-300 font-bold shadow-xs";
     case "正在孵，可预约":
-      return "bg-sky-100 dark:bg-sky-950/30 border-sky-300 dark:border-sky-900/40 text-sky-800 dark:text-sky-300 font-bold shadow-xs";
+      return "bg-sky-100 dark:bg-sky-950 border-sky-300 dark:border-sky-900 text-sky-800 dark:text-sky-300 font-bold shadow-xs";
     case "接投资":
-      return "bg-purple-100 dark:bg-violet-950/30 border-purple-300 dark:border-violet-900/40 text-purple-800 dark:text-violet-300 font-bold shadow-xs";
+      return "bg-purple-100 dark:bg-violet-950 border-purple-300 dark:border-violet-900 text-purple-800 dark:text-violet-300 font-bold shadow-xs";
     case "已撤窝":
-      return "bg-orange-100 dark:bg-orange-950/30 border-orange-300 dark:border-orange-900/40 text-orange-850 dark:text-orange-300 font-bold shadow-xs";
+      return "bg-orange-100 dark:bg-orange-950 border-orange-300 dark:border-orange-900 text-orange-900 dark:text-orange-300 font-bold shadow-xs";
     default:
-      return "bg-slate-100 dark:bg-slate-800 border-slate-250 dark:border-slate-700 text-slate-600 dark:text-slate-350 font-medium";
+      return "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium";
   }
 };
 
 export const getBrandStyle = (brand: string): string => {
   switch (brand) {
     case "大婉":
-      return "bg-rose-100 dark:bg-rose-950/30 border-rose-300 dark:border-rose-900/40 text-rose-800 dark:text-rose-300 font-bold";
+      return "bg-rose-100 dark:bg-rose-950 border-rose-300 dark:border-rose-900 text-rose-800 dark:text-rose-300 font-bold";
     case "大粗":
-      return "bg-amber-100 dark:bg-amber-950/30 border-amber-300 dark:border-amber-900/40 text-amber-800 dark:text-amber-300 font-bold";
+      return "bg-amber-100 dark:bg-amber-950 border-amber-300 dark:border-amber-900 text-amber-800 dark:text-amber-300 font-bold";
     case "普通":
-      return "bg-emerald-100 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-900/40 text-emerald-800 dark:text-emerald-300 font-bold";
+      return "bg-emerald-100 dark:bg-emerald-950 border-emerald-300 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 font-bold";
     case "小婉":
-      return "bg-sky-100 dark:bg-sky-950/30 border-sky-300 dark:border-sky-900/40 text-sky-800 dark:text-sky-300 font-bold";
+      return "bg-sky-100 dark:bg-sky-950 border-sky-300 dark:border-sky-900 text-sky-800 dark:text-sky-300 font-bold";
     case "小粗":
-      return "bg-purple-100 dark:bg-purple-950/30 border-purple-300 dark:border-purple-900/40 text-purple-800 dark:text-purple-300 font-bold";
+      return "bg-purple-100 dark:bg-purple-950 border-purple-300 dark:border-purple-900 text-purple-800 dark:text-purple-300 font-bold";
     case "单大块头":
-      return "bg-slate-100 dark:bg-slate-850 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold";
+      return "bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold";
     case "单粗嗓门":
-      return "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-900/30 text-orange-700 dark:text-orange-350 font-bold";
+      return "bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-900 text-orange-700 dark:text-orange-300 font-bold";
     case "单婉转声":
-      return "bg-pink-50 dark:bg-pink-950/20 border-pink-200 dark:border-pink-900/30 text-pink-700 dark:text-pink-350 font-bold";
+      return "bg-pink-50 dark:bg-pink-950 border-pink-200 dark:border-pink-900 text-pink-700 dark:text-pink-300 font-bold";
     case "单小不点":
-      return "bg-cyan-50 dark:bg-cyan-950/20 border-cyan-200 dark:border-cyan-900/30 text-cyan-700 dark:text-cyan-350 font-bold";
+      return "bg-cyan-50 dark:bg-cyan-950 border-cyan-200 dark:border-cyan-900 text-cyan-700 dark:text-cyan-300 font-bold";
     case "概率大粗":
-      return "bg-amber-50 dark:bg-amber-950/10 border-amber-350 dark:border-amber-800/40 text-amber-800 dark:text-amber-305 font-extrabold border-dashed";
+      return "bg-amber-50 dark:bg-amber-950 border-amber-400 dark:border-amber-900 text-amber-800 dark:text-amber-300 font-extrabold border-dashed";
     case "概率大婉":
-      return "bg-rose-50 dark:bg-rose-950/10 border-rose-350 dark:border-rose-800/40 text-rose-800 dark:text-rose-305 font-extrabold border-dashed";
+      return "bg-rose-50 dark:bg-rose-950 border-rose-400 dark:border-rose-900 text-rose-800 dark:text-rose-300 font-extrabold border-dashed";
     case "概率大块头":
-      return "bg-slate-50 dark:bg-slate-850 border-slate-350 dark:border-slate-700 text-slate-800 dark:text-slate-300 font-extrabold border-dashed";
+      return "bg-slate-50 dark:bg-slate-900 border-slate-400 dark:border-slate-700 text-slate-800 dark:text-slate-300 font-extrabold border-dashed";
     default:
-      return "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-750 text-slate-500 dark:text-slate-400 font-medium";
+      return "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-medium";
   }
 };
 
-/**
- * Gets a user-friendly display name for a sprite form option.
- * If the pet has parallel branch evolutions, return clean branch names (e.g. "翠顶", "黑羽", "秩序", "混乱").
- * Otherwise, return the suffix after "_" or "默认".
- */
+
 export const getSpriteFormDisplayName = (spriteOption: string): string => {
   if (!spriteOption) return "默认";
   
