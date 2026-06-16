@@ -5217,7 +5217,7 @@ export default function App() {
                       <Heart className="w-3.5 h-3.5 text-rose-400 mt-0.5 shrink-0" />
                       <p className="text-xs text-slate-700 dark:text-slate-350 leading-relaxed">
                         精灵身高体重与精灵蛋数据由
-                        <strong className="text-amber-700 dark:text-amber-400"> 孟德尔实验室群（群号：1101858898）</strong>
+                        <strong className="text-amber-700 dark:text-amber-400"> 孟德尔实验室群</strong>
                         的 <strong className="text-amber-700 dark:text-amber-400">cinene</strong> 精心整理，特别感谢！
                       </p>
                     </div>
