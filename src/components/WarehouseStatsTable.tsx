@@ -10,7 +10,7 @@ interface WarehouseStatsTableProps {
   activeGroup: string;
   activeNature: string;
   activeBrand: string;
-  onSelectGrid: (group: string | null, nature: string | null, brand: "大粗" | "大腕" | null) => void;
+  onSelectGrid: (group: string | null, nature: string | null, brand: "大粗" | "大婉" | null) => void;
   onSelectPair: (fatherId: string, motherId: string) => void;
 }
 
@@ -22,12 +22,12 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
   onSelectGrid,
   onSelectPair,
 }) => {
-  // 1. 内部维护大粗/大腕的切换状态，默认大粗
-  const [mode, setMode] = useState<"大粗" | "大腕">("大粗");
+  // 1. 内部维护大粗/大婉的切换状态，默认大婉
+  const [mode, setMode] = useState<"大粗" | "大婉">("大婉");
 
-  // 只要下方筛选框的牌子过滤变成了大粗或大腕，同步更新此处的模式
+  // 只要下方筛选框的牌子过滤变成了大粗或大婉，同步更新此处的模式
   useEffect(() => {
-    if (activeBrand === "大粗" || activeBrand === "大腕") {
+    if (activeBrand === "大粗" || activeBrand === "大婉") {
       setMode(activeBrand);
     }
   }, [activeBrand]);
@@ -208,7 +208,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
   }, [stats]);
 
   // 处理模式切换并同步联动下方列表
-  const handleModeChange = (newMode: "大粗" | "大腕") => {
+  const handleModeChange = (newMode: "大粗" | "大婉") => {
     setMode(newMode);
     // 切换后，自动把下方列表筛选中的牌子也同步更改为对应品牌
     onSelectGrid(activeGroup || null, activeNature || null, newMode);
@@ -283,14 +283,14 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                   大粗 🧱
                 </button>
                 <button
-                  onClick={() => handleModeChange("大腕")}
+                  onClick={() => handleModeChange("大婉")}
                   className={`px-3 py-1 text-xs font-bold rounded-md transition-all cursor-pointer ${
-                    mode === "大腕"
+                    mode === "大婉"
                       ? "bg-white dark:bg-slate-900 text-purple-600 dark:text-purple-400 shadow-sm"
                       : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
                   }`}
                 >
-                  大腕 🎵
+                  大碗 🎵
                 </button>
               </div>
             </div>

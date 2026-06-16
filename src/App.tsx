@@ -1140,7 +1140,7 @@ export default function App() {
     }));
   }, []);
 
-  const handleSelectGrid = useCallback((group: string | null, nature: string | null, brand: "大粗" | "大腕" | null) => {
+  const handleSelectGrid = useCallback((group: string | null, nature: string | null, brand: "大粗" | "大婉" | null) => {
     if (group === null) {
       setFatherFilterGroup("");
       setMotherFilterGroup("");
