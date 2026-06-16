@@ -77,6 +77,7 @@ import {
 import { SortableCard } from "./components/SortableCard";
 import { ParentCard } from "./components/ParentCard";
 import { Autocomplete } from "./components/Autocomplete";
+import { WarehouseStatsTable } from "./components/WarehouseStatsTable";
 import {
   getPetDetails,
   ALL_PET_NAMES,
@@ -1138,6 +1139,55 @@ export default function App() {
       return p;
     }));
   }, []);
+
+  const handleSelectGrid = useCallback((group: string | null, nature: string | null) => {
+    if (group === null) {
+      setFatherFilterGroup("");
+      setMotherFilterGroup("");
+      setFatherNatureSearch("");
+      setMotherNatureSearch("");
+    } else {
+      setFatherFilterGroup(group);
+      setMotherFilterGroup(group);
+      if (nature) {
+        const fullNature = NATURE_OPTIONS.find(opt => opt.startsWith(nature)) || "";
+        setFatherNatureSearch(fullNature);
+        setMotherNatureSearch(fullNature);
+      } else {
+        setFatherNatureSearch("");
+        setMotherNatureSearch("");
+      }
+    }
+  }, []);
+
+  const handleSelectPair = useCallback((fatherId: string, motherId: string) => {
+    setParents(prev => prev.map(p => {
+      if (p.id === fatherId || p.id === motherId) {
+        return { ...p, checked: true };
+      }
+      return { ...p, checked: false };
+    }));
+    
+    // 清空过滤条件，确保用户能看到这两个卡片
+    setFatherSearchTerm("");
+    setFatherFilterGroup("");
+    setFatherFilterBrand("");
+    setFatherNatureSearch("");
+    
+    setMotherSearchTerm("");
+    setMotherFilterGroup("");
+    setMotherFilterBrand("");
+    setMotherNatureSearch("");
+
+    showToast("已成功为您勾选此推荐配对！且已清空过滤，您可在下方「繁育与配对中心」直接查看结果。", "success");
+
+    setTimeout(() => {
+      const el = document.getElementById("parents-pairing-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  }, [setParents]);
 
   const getPairings = useCallback(() => {
     const checkedFathers = parents.filter(p => p.gender === "♂" && p.checked && p.sprite);
@@ -3570,7 +3620,13 @@ export default function App() {
           </div>
         </div>
 
-
+        <WarehouseStatsTable
+          parents={parents}
+          activeGroup={fatherFilterGroup}
+          activeNature={fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : ""}
+          onSelectGrid={handleSelectGrid}
+          onSelectPair={handleSelectPair}
+        />
 
         {/* 左右分栏 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -3816,7 +3872,7 @@ export default function App() {
         </div>
 
         {/* 智能配对与导入中心 */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mt-4">
+        <div id="parents-pairing-section" className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mt-4">
           <div className="p-4 bg-slate-900 dark:bg-slate-950/60 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
