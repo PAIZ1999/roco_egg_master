@@ -1140,12 +1140,14 @@ export default function App() {
     }));
   }, []);
 
-  const handleSelectGrid = useCallback((group: string | null, nature: string | null) => {
+  const handleSelectGrid = useCallback((group: string | null, nature: string | null, brand: "大粗" | "大腕" | null) => {
     if (group === null) {
       setFatherFilterGroup("");
       setMotherFilterGroup("");
       setFatherNatureSearch("");
       setMotherNatureSearch("");
+      setFatherFilterBrand("");
+      setMotherFilterBrand("");
     } else {
       setFatherFilterGroup(group);
       setMotherFilterGroup(group);
@@ -1156,6 +1158,13 @@ export default function App() {
       } else {
         setFatherNatureSearch("");
         setMotherNatureSearch("");
+      }
+      if (brand) {
+        setFatherFilterBrand(brand);
+        setMotherFilterBrand(brand);
+      } else {
+        setFatherFilterBrand("");
+        setMotherFilterBrand("");
       }
     }
   }, []);
@@ -3624,6 +3633,7 @@ export default function App() {
           parents={parents}
           activeGroup={fatherFilterGroup}
           activeNature={fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : ""}
+          activeBrand={fatherFilterBrand}
           onSelectGrid={handleSelectGrid}
           onSelectPair={handleSelectPair}
         />

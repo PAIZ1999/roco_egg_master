@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ParentPet, EGG_GROUPS, cleanNature } from "../types";
 import { Sparkles, Check, Play, UserCheck } from "lucide-react";
 
@@ -9,7 +9,8 @@ interface WarehouseStatsTableProps {
   parents: ParentPet[];
   activeGroup: string;
   activeNature: string;
-  onSelectGrid: (group: string | null, nature: string | null) => void;
+  activeBrand: string;
+  onSelectGrid: (group: string | null, nature: string | null, brand: "大粗" | "大腕" | null) => void;
   onSelectPair: (fatherId: string, motherId: string) => void;
 }
 
@@ -17,17 +18,28 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
   parents,
   activeGroup,
   activeNature,
+  activeBrand,
   onSelectGrid,
   onSelectPair,
 }) => {
-  // 1. 常用性格归一化提取辅助函数
+  // 1. 内部维护大粗/大腕的切换状态，默认大粗
+  const [mode, setMode] = useState<"大粗" | "大腕">("大粗");
+
+  // 只要下方筛选框的牌子过滤变成了大粗或大腕，同步更新此处的模式
+  useEffect(() => {
+    if (activeBrand === "大粗" || activeBrand === "大腕") {
+      setMode(activeBrand);
+    }
+  }, [activeBrand]);
+
+  // 2. 常用性格归一化提取辅助函数
   const getShortNature = (fullNature: string): string | null => {
     const cleanN = cleanNature(fullNature);
     if (!cleanN) return null;
     return STATS_NATURES.find(n => cleanN.startsWith(n)) || null;
   };
 
-  // 2. 统计每个格子下的父母本
+  // 3. 统计每个格子下的父母本 (严格限定 brand === mode)
   const stats = useMemo(() => {
     const tempStats: Record<string, Record<string, { fathers: ParentPet[]; mothers: ParentPet[] }>> = {};
     
@@ -39,9 +51,9 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
       }
     }
 
-    // 填充数据
+    // 填充数据 (仅限当前 mode 的品牌计入表格)
     for (const p of parents) {
-      if (!p.sprite) continue;
+      if (!p.sprite || p.brand !== mode) continue;
       const shortN = getShortNature(p.nature);
       if (!shortN) continue;
 
@@ -57,9 +69,9 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
     }
 
     return tempStats;
-  }, [parents]);
+  }, [parents, mode]);
 
-  // 3. 计算“可产蛋区域（呼吸灯）”智能判定
+  // 4. 计算“可产蛋区域（呼吸灯）”智能判定 (父母都必须拥有当前选择的 brand)
   const spawnableGrid = useMemo(() => {
     const tempSpawnable: Record<
       string,
@@ -73,8 +85,8 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
       }
     }
 
-    // 过滤出所有有名字的父母本
-    const allValidParents = parents.filter(p => p.sprite);
+    // 过滤出所有有名字且牌子与当前 mode 吻合的父母本
+    const allValidParents = parents.filter(p => p.sprite && p.brand === mode);
     const fathers = allValidParents.filter(p => p.gender === "♂");
     const mothers = allValidParents.filter(p => p.gender === "♀");
 
@@ -90,8 +102,8 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
         if (hasFather && hasMother) continue;
 
         // 寻找满足直接交配路径的父母：
-        // 母本 M 必须含有蛋组 group (子代继承母本种类与蛋组)
-        // 父本 F 必须是性格 nature
+        // 母本 M 必须含有蛋组 group，且牌子为当前 mode
+        // 父本 F 必须是性格 nature，且牌子为当前 mode
         // 且 F 和 M 至少有一个蛋组相交
         const targetMothers = mothers.filter(m => m.groups.includes(group));
         const targetFathers = fathers.filter(f => getShortNature(f.nature) === nature);
@@ -124,9 +136,9 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
     }
 
     return tempSpawnable;
-  }, [parents, stats]);
+  }, [parents, stats, mode]);
 
-  // 4. 生成配组建议列表
+  // 5. 生成配组建议列表
   const breedingRecommendations = useMemo(() => {
     const list: Array<{
       id: string;
@@ -168,7 +180,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
     });
   }, [stats, spawnableGrid]);
 
-  // 计算总收集进度：112 个常用位置 (14 蛋组 x 8 性格) 中，已拥有种公的格子数
+  // 计算总收集进度：112 个常用位置 (14 蛋组 x 8 性格) 中，已拥有当前 mode 种公的格子数
   const totalFathersCollected = useMemo(() => {
     let count = 0;
     for (const group of EGG_GROUPS) {
@@ -195,17 +207,24 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
     return count;
   }, [stats]);
 
+  // 处理模式切换并同步联动下方列表
+  const handleModeChange = (newMode: "大粗" | "大腕") => {
+    setMode(newMode);
+    // 切换后，自动把下方列表筛选中的牌子也同步更改为对应品牌
+    onSelectGrid(activeGroup || null, activeNature || null, newMode);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {/* 顶层面板：数据统计与全局概览卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-xs flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">种公收集进度 (核心目标)</p>
+            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">{mode}种公收集进度</p>
             <h3 className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 mt-1">
               {totalFathersCollected} <span className="text-sm font-medium text-slate-500">/ 112 种</span>
             </h3>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">已点亮 14 蛋组 × 8 常用性格的父本数量</p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">已点亮 14 蛋组 × 8 常用性格的【{mode}】父本</p>
           </div>
           <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center text-blue-500 dark:text-blue-400">
             <Sparkles className="w-6 h-6 animate-pulse" />
@@ -214,11 +233,11 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
 
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-xs flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">公母配对达成度</p>
+            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">{mode}公母配对达成度</p>
             <h3 className="text-2xl font-extrabold text-purple-600 dark:text-purple-400 mt-1">
               {totalPairsCollected} <span className="text-sm font-medium text-slate-500">/ 112 对</span>
             </h3>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">已同时拥有同组同性格种公和种母的格子数</p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">已同时拥有同组同性格【{mode}】种公和种母的格子数</p>
           </div>
           <div className="w-12 h-12 rounded-lg bg-purple-50 dark:bg-purple-950/30 flex items-center justify-center text-purple-500 dark:text-purple-400">
             <UserCheck className="w-6 h-6" />
@@ -227,11 +246,11 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
 
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-xs flex items-center justify-between col-span-1 md:col-span-1">
           <div>
-            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">可直接繁育缺口</p>
+            <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase">{mode}直接繁育缺口</p>
             <h3 className="text-2xl font-extrabold text-amber-600 dark:text-amber-400 mt-1">
               {breedingRecommendations.length} <span className="text-sm font-medium text-slate-500">处</span>
             </h3>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">当前仓库支持一键勾选直接繁育的性格蛋组</p>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">当前仓库支持直接配对繁育【{mode}】的性格蛋组</p>
           </div>
           <div className="w-12 h-12 rounded-lg bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center text-amber-500 dark:text-amber-400">
             <Play className="w-5 h-5 animate-bounce" />
@@ -245,12 +264,39 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
         {/* 左侧：仓库精灵全览表格 */}
         <div className="flex-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm overflow-hidden flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">仓库精灵全览</h3>
-              <p className="text-xs text-slate-400 dark:text-slate-500">提示: 双蛋组会同时亮起。单击表格格子或蛋组名可自动筛选下方列表。</p>
+            <div className="flex items-center gap-4">
+              <div>
+                <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">仓库精灵全览</h3>
+                <p className="text-xs text-slate-400 dark:text-slate-500">提示: 仅统计当前选中的体型牌。双蛋组会同时亮起。</p>
+              </div>
+
+              {/* 大粗/大腕滑动切换组件 */}
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 select-none">
+                <button
+                  onClick={() => handleModeChange("大粗")}
+                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all cursor-pointer ${
+                    mode === "大粗"
+                      ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
+                  }`}
+                >
+                  大粗 🧱
+                </button>
+                <button
+                  onClick={() => handleModeChange("大腕")}
+                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all cursor-pointer ${
+                    mode === "大腕"
+                      ? "bg-white dark:bg-slate-900 text-purple-600 dark:text-purple-400 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
+                  }`}
+                >
+                  大腕 🎵
+                </button>
+              </div>
             </div>
+
             <button 
-              onClick={() => onSelectGrid(null, null)}
+              onClick={() => onSelectGrid(null, null, null)}
               className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 px-2 py-1 rounded-md hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors"
             >
               清空筛选
@@ -276,7 +322,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                     <tr key={group} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
                       {/* 蛋组名列 */}
                       <td 
-                        onClick={() => onSelectGrid(group, null)}
+                        onClick={() => onSelectGrid(group, null, mode)}
                         className={`py-2 px-3 border-r border-slate-200/60 dark:border-slate-800 font-bold text-left cursor-pointer transition-colors ${
                           isGroupFiltered 
                             ? "bg-indigo-100/70 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300" 
@@ -327,7 +373,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                         return (
                           <td
                             key={nature}
-                            onClick={() => onSelectGrid(group, nature)}
+                            onClick={() => onSelectGrid(group, nature, mode)}
                             className={`relative py-2 px-1 cursor-pointer transition-all border border-b-slate-100 dark:border-b-slate-800 font-sans h-11 min-w-[65px] ${bgClass} ${borderClass} hover:brightness-[0.98] dark:hover:brightness-110`}
                           >
                             {/* 公母只数显示 */}
@@ -352,7 +398,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                             {isSpawnable && !isGridFiltered && (
                               <div 
                                 className="absolute inset-0.5 border-1.5 border-dashed border-amber-400/90 dark:border-amber-500/80 rounded-md pointer-events-none animate-pulse"
-                                title="当前拥有一对能繁育该组合的父母，可产蛋！"
+                                title={`当前拥有一对能直接繁育出【${mode}】该性格的父母，可产蛋！`}
                               />
                             )}
                           </td>
@@ -381,7 +427,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3.5 h-3.5 rounded border-1.5 border-dashed border-amber-400 dark:border-amber-500"></span>
-              <span>呼吸灯: 可产蛋区域</span>
+              <span>呼吸灯: 可产蛋区域 (产当前体型)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3.5 h-3.5 rounded bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800"></span>
@@ -395,10 +441,10 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
           <div className="shrink-0">
             <h3 className="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-indigo-500 animate-spin" style={{ animationDuration: "3s" }} />
-              配组智能建议
+              {mode}配组建议
             </h3>
             <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
-              分析当前缺口，为您推荐可直接繁育的黄金配对
+              推荐可繁育【{mode}】的常用性格黄金配对
             </p>
           </div>
 
@@ -408,7 +454,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                 <Sparkles className="w-8 h-8 text-slate-300 dark:text-slate-600 mb-2" />
                 <p className="text-xs font-bold text-slate-500 dark:text-slate-400">暂无可繁育的建议</p>
                 <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
-                  配对需要你有特定性格的父本和对应蛋组的母本。请先在仓库录入更多精灵吧！
+                  需要你有【{mode}】且特定性格的父本和对应蛋组的母本。请先在仓库录入更多精灵吧！
                 </p>
               </div>
             ) : (
