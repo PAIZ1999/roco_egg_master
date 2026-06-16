@@ -350,16 +350,16 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
 
                         if (hasFather && hasMother) {
                           // 公母均有 -> 紫色底
-                          bgClass = "bg-purple-50/80 dark:bg-purple-950/20";
-                          borderClass = "border-purple-100/80 dark:border-purple-950/30";
+                          bgClass = "bg-purple-100/80 dark:bg-purple-950/40";
+                          borderClass = "border-purple-200/80 dark:border-purple-900/50";
                         } else if (hasFather) {
                           // 只有公 -> 蓝色底
-                          bgClass = "bg-blue-50/80 dark:bg-blue-950/20";
-                          borderClass = "border-blue-100/80 dark:border-blue-950/30";
+                          bgClass = "bg-sky-100/80 dark:bg-sky-950/40";
+                          borderClass = "border-sky-200/80 dark:border-sky-900/50";
                         } else if (hasMother) {
                           // 只有母 -> 粉色底
-                          bgClass = "bg-rose-50/80 dark:bg-rose-950/20";
-                          borderClass = "border-rose-100/80 dark:border-rose-950/30";
+                          bgClass = "bg-rose-100/80 dark:bg-rose-950/40";
+                          borderClass = "border-rose-200/80 dark:border-rose-900/50";
                         }
 
                         // 如果该格子正处于被点击筛选状态，则强制应用主题色高亮边框
@@ -414,15 +414,15 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
           {/* 表格图例 */}
           <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-850 select-none">
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40"></span>
+              <span className="w-3.5 h-3.5 rounded bg-sky-100 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50"></span>
               <span>只有种公</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded bg-purple-50 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40"></span>
+              <span className="w-3.5 h-3.5 rounded bg-purple-100 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/50"></span>
               <span>公母均有</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/40"></span>
+              <span className="w-3.5 h-3.5 rounded bg-rose-100 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50"></span>
               <span>只有种母</span>
             </div>
             <div className="flex items-center gap-1.5">
