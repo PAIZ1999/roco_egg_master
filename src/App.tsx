@@ -2050,7 +2050,8 @@ export default function App() {
     wrapper.style.top = "-9999px";
     wrapper.style.width = "1200px";
     wrapper.style.height = "auto";
-    wrapper.style.backgroundColor = "#f8fafc";
+    const isCurrentlyDark = document.documentElement.classList.contains("dark");
+    wrapper.style.backgroundColor = isCurrentlyDark ? "#020617" : "#f8fafc";
 
     // Customize clone layout style to spread beautifully over 1200px
     clone.style.width = "1200px";
@@ -2167,7 +2168,6 @@ export default function App() {
     document.body.classList.add("exporting");
 
     // 长图导出渲染时不再临时回退亮色模式，根据当前模式指定 Canvas 背景色，完美支持暗色导出
-    const isCurrentlyDark = document.documentElement.classList.contains("dark");
     const exportBgColor = isCurrentlyDark ? "#020617" : "#f8fafc";
 
     try {
@@ -2318,10 +2318,10 @@ export default function App() {
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 selection:bg-indigo-500 selection:text-white">
+    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
       <div
         id="export-container"
-        className="max-w-[1400px] mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
+        className="max-w-[1400px] mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden"
       >
         {/* Banner Section */}
         <div className="bg-slate-900 text-white p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 relative overflow-hidden">
@@ -2364,7 +2364,7 @@ export default function App() {
                 </span>
                 <button
                   onClick={handleChangeSavePath}
-                  className="text-indigo-450 hover:text-indigo-350 cursor-pointer font-sans font-bold border-l border-slate-800 pl-1.5 shrink-0 transition-colors select-none"
+                  className="text-indigo-400 hover:text-indigo-350 cursor-pointer font-sans font-bold border-l border-slate-800 pl-1.5 shrink-0 transition-colors select-none"
                   title="点击更改自动保存文件夹"
                 >
                   修改
@@ -2381,7 +2381,7 @@ export default function App() {
             <div className="flex items-center gap-2 mt-1 sm:mt-1.5 flex-wrap justify-center md:justify-end">
               <button
                 onClick={() => setActiveModal("about")}
-                className="flex items-center gap-1 text-[10px] text-slate-450 hover:text-white bg-slate-800/60 hover:bg-slate-850 border border-slate-700/60 hover:border-slate-500/50 px-2 py-1 rounded-lg transition-all cursor-pointer"
+                className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-900 border border-slate-700/60 hover:border-slate-500/50 px-2 py-1 rounded-lg transition-all cursor-pointer"
                 title="关于本工具 / 数据来源与致谢"
               >
                 <Info className="w-3.5 h-3.5 text-slate-400" />
@@ -2398,7 +2398,7 @@ export default function App() {
               onClick={() => setActiveTab("nest")}
               className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "nest"
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-100"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
               }`}
             >
@@ -2410,7 +2410,7 @@ export default function App() {
               onClick={() => setActiveTab("parents")}
               className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "parents"
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-100"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
               }`}
             >
@@ -2422,7 +2422,7 @@ export default function App() {
               onClick={() => setActiveTab("eggs")}
               className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "eggs"
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-100"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
               }`}
             >
@@ -2454,7 +2454,7 @@ export default function App() {
                 className="flex items-center gap-2 text-xs text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-indigo-500/50 px-3 py-2 rounded-xl transition-all cursor-pointer font-medium shadow-sm hover:shadow shadow-indigo-950/20"
                 title="点击切换账号或进行账号管理"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-450 shrink-0 animate-pulse"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 animate-pulse"></span>
                 <div className="flex items-center gap-1">
                   <span className="truncate max-w-[110px] font-bold">
                     {accounts.find(a => a.id === activeAccountId)?.nickname || "默认账号"}
@@ -2552,13 +2552,13 @@ export default function App() {
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 dark:bg-slate-800/40 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
                 <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">总收录精灵</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-50 dark:bg-slate-805 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
-                  <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-455 dark:text-slate-500 shrink-0" />
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
+                  <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 dark:text-slate-500 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
                 <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 dark:text-slate-200 tracking-tight">{totalPets}</span>
-                <span className="text-xs text-slate-400 dark:text-slate-505 font-semibold">只</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-semibold">只</span>
               </div>
             </div>
 
@@ -2567,19 +2567,19 @@ export default function App() {
               <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-indigo-50/30 dark:bg-indigo-950/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
                 <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">牌子规格统计</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-50/50 dark:bg-indigo-955/30 rounded-lg flex items-center justify-center border border-indigo-100/50 dark:border-indigo-900/40">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-50/50 dark:bg-indigo-950/30 rounded-lg flex items-center justify-center border border-indigo-100/50 dark:border-indigo-900/40">
                   <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                 </div>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 mt-2 sm:mt-2.5 z-10">
                 {(["大婉", "大粗", "普通", "小婉", "小粗", "单大块头"] as const).map((brand, idx) => {
                   const colors = [
-                    "bg-rose-50/60 dark:bg-rose-955/20 text-rose-700 dark:text-rose-300 border-rose-100/60 dark:border-rose-900/30",
-                    "bg-amber-50/60 dark:bg-amber-955/20 text-amber-700 dark:text-amber-300 border-amber-100/60 dark:border-amber-900/30",
-                    "bg-emerald-50/60 dark:bg-emerald-955/20 text-emerald-700 dark:text-emerald-300 border-emerald-100/60 dark:border-emerald-900/30",
-                    "bg-blue-50/60 dark:bg-blue-955/20 text-blue-700 dark:text-blue-300 border-blue-100/60 dark:border-blue-900/30",
-                    "bg-purple-50/60 dark:bg-purple-955/20 text-purple-700 dark:text-purple-300 border-purple-100/60 dark:border-purple-900/30",
-                    "bg-slate-50/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-355 border-slate-100/60 dark:border-slate-700/60"
+                    "bg-rose-50/60 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300 border-rose-100/60 dark:border-rose-900/30",
+                    "bg-amber-50/60 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300 border-amber-100/60 dark:border-amber-900/30",
+                    "bg-emerald-50/60 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border-emerald-100/60 dark:border-emerald-900/30",
+                    "bg-blue-50/60 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300 border-blue-100/60 dark:border-blue-900/30",
+                    "bg-purple-50/60 dark:bg-purple-950/20 text-purple-700 dark:text-purple-300 border-purple-100/60 dark:border-purple-900/30",
+                    "bg-slate-50/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border-slate-100/60 dark:border-slate-700/60"
                   ];
                   return (
                     <div key={brand} className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-lg border ${colors[idx]} text-center`}>
@@ -2602,28 +2602,28 @@ export default function App() {
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1 flex-wrap">
                 <span className="text-xl sm:text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">{hasEggsCount}</span>
-                <span className="text-[10px] sm:text-xs text-emerald-500 dark:text-emerald-450 font-semibold">窝({totalEggsCount}蛋)</span>
+                <span className="text-[10px] sm:text-xs text-emerald-500 dark:text-emerald-400 font-semibold">窝({totalEggsCount}蛋)</span>
               </div>
             </div>
 
             {/* Card 4: 极限蛋 */}
             <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 dark:bg-amber-955/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50 dark:bg-amber-950/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
                 <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">极限精灵蛋</span>
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-50 dark:bg-amber-955/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-50 dark:bg-amber-950/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
                   <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 dark:text-amber-405 shrink-0" />
                 </div>
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
                 <span className="text-xl sm:text-2xl font-black font-mono text-amber-500 dark:text-amber-400 tracking-tight">{limitsCount}</span>
-                <span className="text-xs text-amber-500 dark:text-amber-450 font-semibold">只</span>
+                <span className="text-xs text-amber-500 dark:text-amber-400 font-semibold">只</span>
               </div>
             </div>
 
             {/* Card 5: 3V蛋 */}
             <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 dark:bg-rose-955/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
+              <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50 dark:bg-rose-950/10 rounded-full group-hover:scale-110 transition-transform duration-300 pointer-events-none" />
               <div className="flex items-center justify-between z-10">
                 <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">3V 精灵蛋</span>
                 <div className="w-6 h-6 sm:w-7 sm:h-7 bg-rose-50 dark:bg-rose-950/40 rounded-lg flex items-center justify-center border border-rose-100 dark:border-rose-900/50">
@@ -2632,7 +2632,7 @@ export default function App() {
               </div>
               <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
                 <span className="text-xl sm:text-2xl font-black font-mono text-rose-600 dark:text-rose-400 tracking-tight">{threeVsCount}</span>
-                <span className="text-xs text-rose-500 dark:text-rose-455 font-semibold">只</span>
+                <span className="text-xs text-rose-500 dark:text-rose-400 font-semibold">只</span>
               </div>
             </div>
           </div>
@@ -2642,18 +2642,18 @@ export default function App() {
             {/* Search filter input and mobile toggle */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <div className="relative flex-1 sm:w-48 sm:flex-none">
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-505" />
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-500" />
                 <input
                   type="text"
                   placeholder="搜索精灵名字..."
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-505"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
               <button
                 onClick={() => setShowMobileFilters(!showMobileFilters)}
-                className="sm:hidden px-3 py-1.5 text-xs font-semibold bg-indigo-50 dark:bg-indigo-955/40 text-indigo-600 dark:text-indigo-400 rounded-lg border border-indigo-100 dark:border-indigo-900 flex items-center gap-1 active:bg-indigo-100 transition-all shrink-0"
+                className="sm:hidden px-3 py-1.5 text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-lg border border-indigo-100 dark:border-indigo-900 flex items-center gap-1 active:bg-indigo-100 transition-all shrink-0"
               >
                 <Filter className="w-3.5 h-3.5" />
                 <span>{showMobileFilters ? "收起" : "筛选"}</span>
@@ -2666,7 +2666,7 @@ export default function App() {
               <select
                 value={filterNature}
                 onChange={e => setFilterNature(e.target.value)}
-                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
                 <option value="" className="dark:bg-slate-800">全部性格</option>
                 {NATURE_OPTIONS.map(nature => (
@@ -2678,7 +2678,7 @@ export default function App() {
               <select
                 value={filterGroup}
                 onChange={e => setFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
                 <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
@@ -2690,8 +2690,8 @@ export default function App() {
               <select
                 value={filterBrand}
                 onChange={e => setFilterBrand(e.target.value)}
-                className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-250 cursor-pointer font-bold transition-all w-full sm:w-auto ${
-                  filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 dark:text-slate-202 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer font-bold transition-all w-full sm:w-auto ${
+                  filterBrand ? getBrandStyle(filterBrand) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
                 <option value="" className="dark:bg-slate-800">全部牌子</option>
@@ -2705,12 +2705,12 @@ export default function App() {
                 value={filterStatus}
                 onChange={e => setFilterStatus(e.target.value)}
                 className={`text-xs border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-slate-350 cursor-pointer font-bold transition-all w-full sm:w-auto ${
-                  filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 dark:text-slate-202 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                  filterStatus ? getStatusStyle(filterStatus) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
                 <option value="" className="dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold py-1">全部状态/窝点</option>
                 {NEST_STATUS_OPTIONS.map(status => (
-                  <option key={status} value={status} className="dark:bg-slate-800 text-slate-850 dark:text-slate-200 font-semibold py-1">
+                  <option key={status} value={status} className="dark:bg-slate-800 text-slate-900 dark:text-slate-200 font-semibold py-1">
                     {status}
                   </option>
                 ))}
@@ -2720,7 +2720,7 @@ export default function App() {
               <select
                 value={filterLimit}
                 onChange={e => setFilterLimit(e.target.value)}
-                className="text-xs text-slate-700 dark:text-slate-205 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
+                className="text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
               >
                 <option value="" className="dark:bg-slate-800">全部(有无极限蛋)</option>
                 {LIMIT_OPTIONS.map(opt => (
@@ -2733,7 +2733,7 @@ export default function App() {
                 id="header-watermark-btn"
                 className={`sm:ml-auto text-xs font-bold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto select-none ${
                   enableWatermark
-                    ? "bg-indigo-50 dark:bg-indigo-955/40 border-indigo-200 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                    ? "bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300 shadow-sm"
                     : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm"
                 }`}
                 title="开启/关闭长图导出时的防盗水印"
@@ -2751,9 +2751,9 @@ export default function App() {
         </div>
 
         {/* 我的蛋窝点看板标题 */}
-        <div className="p-6 bg-slate-50/30 dark:bg-slate-955/20 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div className="p-6 bg-slate-50/30 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-50 dark:bg-indigo-955/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
+            <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
               <Egg className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
             </div>
             <div>
@@ -2820,30 +2820,30 @@ export default function App() {
             {/* Reset directory */}
             <button
               onClick={() => handleReset("nest")}
-              className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer"
+              className="py-2 px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer"
               title="一键还原到默认精灵列表"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-4 h-4 dark:text-slate-400" />
               初始化列表
             </button>
 
             {/* Import JSON button */}
             <button
               onClick={handleImportNestClick}
-              className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
+              className="py-2 px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
               title="从备份文件或文本导入数据"
             >
-              <Upload className="w-4 h-4 text-slate-500" />
+              <Upload className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               导入数据
             </button>
 
             {/* Export JSON button */}
             <button
               onClick={handleExportNestClick}
-              className="py-2 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
+              className="py-2 px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-sm text-sm cursor-pointer flex items-center gap-1.5"
               title="导出当前列表数据作为备份"
             >
-              <Share2 className="w-4 h-4 text-slate-500" />
+              <Share2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               导出数据
             </button>
 
@@ -2860,25 +2860,25 @@ export default function App() {
         </div>
 
         {/* 自建换蛋交易看板 */}
-        <div className="border-t border-slate-100 bg-white">
+        <div className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
           {/* 标题 */}
-          <div className="p-6 bg-slate-50/30 border-b border-slate-100 flex items-center justify-between">
+          <div className="p-6 bg-slate-50/30 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-indigo-50 rounded-xl border border-indigo-100/50">
+              <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
                 <RefreshCw className="w-5 h-5 text-indigo-600" />
               </div>
               <div>
-                <h2 id="trade-center-title" className="text-lg font-bold text-slate-800">自建换蛋需求中心</h2>
-                <p className="text-xs text-slate-500 mt-0.5 font-medium">发布并管理您需要的或者可以提供交换的宠物蛋信息</p>
+                <h2 id="trade-center-title" className="text-lg font-bold text-slate-800 dark:text-slate-200">自建换蛋需求中心</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">发布并管理您需要的或者可以提供交换的宠物蛋信息</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-slate-500 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/40">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800 px-2.5 py-1 rounded-full border border-slate-200/40 dark:border-slate-700">
               共有 {trades.length} 条需求
             </span>
           </div>
 
           {/* 表单输入区域 */}
-          <div id="trade-form-panel" className="p-6 bg-slate-50/10 border-b border-slate-100 grid grid-cols-1 md:grid-cols-12 gap-x-5 gap-y-4 items-start">
+          <div id="trade-form-panel" className="p-6 bg-slate-50/10 dark:bg-slate-950/10 border-b border-slate-100 dark:border-slate-800 grid grid-cols-1 md:grid-cols-12 gap-x-5 gap-y-4 items-start">
             {/* 第一行：核心配置 */}
             {/* 精灵选择 */}
             <div className="md:col-span-5 flex flex-col gap-1.5">
@@ -2925,7 +2925,7 @@ export default function App() {
                   options={ALL_PET_NAMES}
                   placeholder="输入精灵名称或首字、拼音首字母..."
                   className="flex-1"
-                  inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-medium h-[38px]"
+                  inputClassName="w-full px-3 py-2 text-xs bg-white dark:bg-slate-800 border border-slate-200 rounded-lg text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 focus:border-indigo-500 transition-all font-medium h-[38px]"
                 />
                 {(() => {
                   const trimmed = newTradeSprite.trim();
@@ -2943,7 +2943,7 @@ export default function App() {
                     <select
                       value={availableSprites.includes(currentVal) ? currentVal : finalBase}
                       onChange={(e) => setNewTradeSprite(e.target.value)}
-                      className="px-2 py-1 text-xs border border-slate-200 rounded-lg text-slate-700 bg-white h-[38px] font-bold focus:outline-none focus:border-indigo-500 cursor-pointer shrink-0 max-w-[120px] transition-colors"
+                      className="px-2 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 h-[38px] font-bold focus:outline-none focus:border-indigo-500 cursor-pointer shrink-0 max-w-[120px] transition-colors"
                     >
                       {availableSprites.map(spriteName => {
                         const displayName = getSpriteFormDisplayName(spriteName);
@@ -2968,15 +2968,15 @@ export default function App() {
                 if (!finalDetails) return null;
                 return (
                   <div className="text-[10px] text-slate-400 mt-0.5 flex flex-wrap items-center gap-1.5 leading-none">
-                    <span className="font-semibold text-slate-500">属性:</span>
-                    <span className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">{finalDetails.types?.join("/")}</span>
-                    <span className="text-slate-200">|</span>
-                    <span className="font-semibold text-slate-500">蛋组:</span>
-                    <span className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">{finalDetails.groups?.join("/")}</span>
+                    <span className="font-semibold text-slate-500 dark:text-slate-400">属性:</span>
+                    <span className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-300 font-medium">{finalDetails.types?.join("/")}</span>
+                    <span className="text-slate-200 dark:text-slate-700">|</span>
+                    <span className="font-semibold text-slate-500 dark:text-slate-400">蛋组:</span>
+                    <span className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-300 font-medium">{finalDetails.groups?.join("/")}</span>
                     {base !== finalBase && (
                       <>
-                        <span className="text-slate-200">|</span>
-                        <span className="text-slate-400 italic">进化链最高阶: {finalBase}</span>
+                        <span className="text-slate-200 dark:text-slate-700">|</span>
+                        <span className="text-slate-400 dark:text-slate-500 italic">进化链最高阶: {finalBase}</span>
                       </>
                     )}
                   </div>
@@ -2986,33 +2986,33 @@ export default function App() {
 
             {/* 性格需求 */}
             <div className="md:col-span-2 flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-slate-700">性格需求</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">性格需求</label>
               <Autocomplete
                 value={newTradeNature}
                 onChange={setNewTradeNature}
                 options={NATURE_OPTIONS}
                 placeholder="输入性格或拼音首字母..."
                 className="w-full"
-                inputClassName="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all font-medium h-[38px]"
+                inputClassName="w-full px-3 py-2 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 focus:border-indigo-500 dark:focus:border-indigo-500 transition-all font-medium h-[38px]"
               />
             </div>
 
             {/* 备注说明 */}
             <div className="md:col-span-5 flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-slate-700">备注说明</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">备注说明</label>
               <input
                 type="text"
                 value={newTradeNotes}
                 onChange={e => setNewTradeNotes(e.target.value)}
                 placeholder="可写具体要求，例如：公母不限、用大婉换、多换一等..."
-                className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all text-slate-800 placeholder-slate-400 font-medium h-[38px]"
+                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 font-medium h-[38px]"
               />
             </div>
 
             {/* 第二行：规格与动作 */}
             {/* 牌子选择 */}
             <div className="md:col-span-7 flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-slate-700">牌子</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">牌子</label>
               <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5">
                 {BRAND_OPTIONS.map(brand => (
                   <button
@@ -3020,7 +3020,7 @@ export default function App() {
                     type="button"
                     onClick={() => setNewTradeBrand(brand)}
                     className={`px-2 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer h-[34px] flex items-center justify-center truncate ${getBrandStyle(brand)} ${newTradeBrand === brand
-                        ? 'ring-2 ring-indigo-500 scale-105 border-transparent shadow-sm'
+                        ? 'ring-2 ring-indigo-500 scale-100 border-transparent shadow-sm'
                         : 'opacity-60 hover:opacity-100 hover:scale-102'
                       }`}
                   >
@@ -3032,7 +3032,7 @@ export default function App() {
 
             {/* 附加规格选项 */}
             <div className="md:col-span-2 flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-slate-700">附加规格</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">附加规格</label>
               <div className="flex items-center gap-4 h-[34px] pt-1">
                 <label className="flex items-center gap-1.5 cursor-pointer group select-none">
                   <div className="relative">
@@ -3042,9 +3042,9 @@ export default function App() {
                       onChange={e => setNewTradeIs3V(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-8 h-4.5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-emerald-500"></div>
+                    <div className="w-8 h-4.5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 dark:after:border-slate-600 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-emerald-500"></div>
                   </div>
-                  <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-800 transition-colors">3V</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">3V</span>
                 </label>
 
                 <label className="flex items-center gap-1.5 cursor-pointer group select-none">
@@ -3055,9 +3055,9 @@ export default function App() {
                       onChange={e => setNewTradeIsLimit(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-8 h-4.5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-amber-500"></div>
+                    <div className="w-8 h-4.5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 dark:after:border-slate-600 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-amber-500"></div>
                   </div>
-                  <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-800 transition-colors">极限</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">极限</span>
                 </label>
               </div>
             </div>
@@ -3081,9 +3081,9 @@ export default function App() {
           <div className="p-3 sm:p-6 bg-slate-50/30 dark:bg-slate-950">
             {trades.length === 0 ? (
               <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl py-12 px-4 flex flex-col items-center justify-center text-slate-400 dark:text-slate-550 text-center gap-2">
-                <Egg className="w-10 h-10 text-slate-300 dark:text-slate-605 stroke-1" />
+                <Egg className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1" />
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">暂无换蛋需求看板</span>
-                <span className="text-[10px] text-slate-450 dark:text-slate-500">在上方填写需求表单并点击“加入换蛋卡片墙”即可生成</span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500">在上方填写需求表单并点击“加入换蛋卡片墙”即可生成</span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -3096,7 +3096,7 @@ export default function App() {
                   return (
                     <div
                       key={trade.id}
-                      className="bg-white dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 relative overflow-hidden group/card"
+                      className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 relative overflow-hidden group/card"
                     >
                       {/* Delete Button at top-right */}
                       <button
@@ -3118,10 +3118,10 @@ export default function App() {
                             <img
                               src={getImagePath(`images/sprites/${spriteFileName}`)}
                               alt={trade.sprite}
-                              className="w-11 h-11 sm:w-16 sm:h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-105"
+                              className="w-11 h-11 sm:w-16 sm:h-16 object-contain transition-transform duration-200 group-hover/avatar:scale-100"
                             />
                           ) : (
-                            <Egg className="w-7 h-7 sm:w-10 sm:h-10 text-slate-300 dark:text-slate-605 transition-transform duration-200 avatar-fallback-icon" />
+                            <Egg className="w-7 h-7 sm:w-10 sm:h-10 text-slate-300 dark:text-slate-600 transition-transform duration-200 avatar-fallback-icon" />
                           )}
                           {details?.types && details.types.length > 0 && (
                             <div className="absolute bottom-1 right-1 w-5.5 h-5.5 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm border border-slate-50 dark:border-slate-700 z-10">
@@ -3139,18 +3139,18 @@ export default function App() {
                               <select
                                 value={availableSprites.includes(trade.sprite) ? trade.sprite : (spriteFileName ? spriteFileName.slice(0, -4) : trade.sprite)}
                                 onChange={(e) => handleUpdateTradeSprite(trade.id, e.target.value)}
-                                className="text-[8px] font-bold text-slate-700 dark:text-slate-305 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
+                                className="text-[8px] font-bold text-slate-700 dark:text-slate-300 bg-transparent border-none focus:outline-none cursor-pointer pr-1 py-0.25 leading-none appearance-none"
                               >
                                 {availableSprites.map((spriteOption) => {
                                   const displayName = getSpriteFormDisplayName(spriteOption);
                                   return (
-                                    <option key={spriteOption} value={spriteOption} className="dark:bg-slate-800 dark:text-slate-205">
+                                    <option key={spriteOption} value={spriteOption} className="dark:bg-slate-800 dark:text-slate-200">
                                       {displayName}
                                     </option>
                                   );
                                 })}
                               </select>
-                              <span className="text-[6px] text-slate-450 dark:text-slate-500 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
+                              <span className="text-[6px] text-slate-400 dark:text-slate-500 pointer-events-none select-none ml-0.5 -mt-0.5">▼</span>
                             </div>
                           )}
                         </div>
@@ -3165,7 +3165,7 @@ export default function App() {
                           </div>
 
                           {/* 属性：性格/牌子 */}
-                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-455">
+                          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
                             <div className="flex items-center gap-1.5">
                               <span className="text-slate-400 dark:text-slate-500">性格:</span>
                               <span className="text-slate-700 dark:text-slate-300 font-semibold">{trade.nature || "不限"}</span>
@@ -3179,7 +3179,7 @@ export default function App() {
                           </div>
 
                           {/* 蛋组 */}
-                          <div className="flex items-center gap-1.5 my-1 text-[11px] font-medium text-slate-500 dark:text-slate-455">
+                          <div className="flex items-center gap-1.5 my-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">
                             <span className="text-slate-400 dark:text-slate-500">蛋组:</span>
                             <div className="flex gap-1 flex-wrap">
                               {details?.groups && details.groups.length > 0 ? (
@@ -3207,7 +3207,7 @@ export default function App() {
                               </span>
                             )}
                             {!trade.is3V && !trade.isLimit && (
-                              <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-505">
+                              <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-500">
                                 常规配置
                               </span>
                             )}
@@ -3244,18 +3244,18 @@ export default function App() {
             <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 dark:bg-slate-800/50 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
               <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">总录入精灵蛋</span>
-              <div className="w-6 h-6 bg-slate-50 dark:bg-slate-850 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
+              <div className="w-6 h-6 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-center border border-slate-100 dark:border-slate-800">
                 <Database className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
               </div>
             </div>
             <div className="mt-2 sm:mt-2.5 z-10 flex items-baseline gap-1">
-              <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 dark:text-slate-205 tracking-tight">{eggs.length}</span>
-              <span className="text-xs text-slate-400 dark:text-slate-505 font-semibold">个</span>
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-800 dark:text-slate-200 tracking-tight">{eggs.length}</span>
+              <span className="text-xs text-slate-400 dark:text-slate-500 font-semibold">个</span>
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50/30 dark:bg-rose-955/10 rounded-full pointer-events-none" />
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-rose-50/30 dark:bg-rose-950/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
               <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">极限精灵蛋</span>
               <div className="w-6 h-6 bg-rose-50 dark:bg-rose-950/40 rounded-lg flex items-center justify-center border border-rose-100 dark:border-rose-900/50">
@@ -3269,15 +3269,15 @@ export default function App() {
                   return type === "极限大" || type === "极限小";
                 }).length}
               </span>
-              <span className="text-xs text-rose-500 dark:text-rose-450 font-semibold">个</span>
+              <span className="text-xs text-rose-500 dark:text-rose-400 font-semibold">个</span>
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50/30 dark:bg-amber-955/10 rounded-full pointer-events-none" />
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-50/30 dark:bg-amber-950/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
               <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">临界/达标蛋</span>
-              <div className="w-6 h-6 bg-amber-50 dark:bg-amber-955/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
+              <div className="w-6 h-6 bg-amber-50 dark:bg-amber-950/40 rounded-lg flex items-center justify-center border border-amber-100 dark:border-amber-900/50">
                 <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-405" />
               </div>
             </div>
@@ -3288,15 +3288,15 @@ export default function App() {
                   return type !== "普通" && type !== "极限大" && type !== "极限小";
                 }).length}
               </span>
-              <span className="text-xs text-amber-500 dark:text-amber-450 font-semibold">个</span>
+              <span className="text-xs text-amber-500 dark:text-amber-400 font-semibold">个</span>
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
-            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-50/30 dark:bg-teal-955/10 rounded-full pointer-events-none" />
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-teal-50/30 dark:bg-teal-950/10 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
               <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold">3V性格合格蛋</span>
-              <div className="w-6 h-6 bg-teal-50 dark:bg-teal-955/40 rounded-lg flex items-center justify-center border border-teal-100 dark:border-teal-900/50">
+              <div className="w-6 h-6 bg-teal-50 dark:bg-teal-950/40 rounded-lg flex items-center justify-center border border-teal-100 dark:border-teal-900/50">
                 <Dna className="w-3.5 h-3.5 text-teal-600 dark:text-teal-405" />
               </div>
             </div>
@@ -3313,7 +3313,7 @@ export default function App() {
                   return fSorted.every((v, idx) => v === mSorted[idx]);
                 }).length}
               </span>
-              <span className="text-xs text-teal-500 dark:text-teal-450 font-semibold">个</span>
+              <span className="text-xs text-teal-500 dark:text-teal-400 font-semibold">个</span>
             </div>
           </div>
         </div>
@@ -3386,7 +3386,7 @@ export default function App() {
             <select
               value={eggFilterGroup}
               onChange={e => setEggFilterGroup(e.target.value)}
-              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="" className="dark:bg-slate-800">全部蛋组</option>
               {EGG_GROUPS.map(group => (
@@ -3410,7 +3410,7 @@ export default function App() {
             <select
               value={eggFilterLimit}
               onChange={e => setEggFilterLimit(e.target.value)}
-              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="" className="dark:bg-slate-800">全部(极限/临界/达标)</option>
               <option value="极限" className="dark:bg-slate-800">仅看极限 (大/小)</option>
@@ -3422,7 +3422,7 @@ export default function App() {
             <select
               value={eggFilter3V}
               onChange={e => setEggFilter3V(e.target.value)}
-              className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
+              className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto shrink-0 whitespace-nowrap"
             >
               <option value="" className="dark:bg-slate-800">全部(是否3V)</option>
               <option value="是" className="dark:bg-slate-800">是 3V</option>
@@ -3579,7 +3579,7 @@ export default function App() {
             <div className="flex items-center justify-between p-2.5 sm:p-3.5 bg-slate-900/95 text-white rounded-xl shadow-md select-none whitespace-nowrap overflow-hidden">
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
                 <span className="text-xs sm:text-sm font-bold tracking-wide shrink-0 whitespace-nowrap">♂️ 父本仓储库</span>
-                <span className="text-[9px] sm:text-[10px] bg-sky-500/20 text-sky-305 border border-sky-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">FATHER</span>
+                <span className="text-[9px] sm:text-[10px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">FATHER</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
                 <button
@@ -3611,7 +3611,7 @@ export default function App() {
                   options={ALL_PET_NAMES}
                   placeholder="搜索精灵名..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
@@ -3622,13 +3622,13 @@ export default function App() {
                   options={NATURE_OPTIONS}
                   placeholder="搜索性格..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <select
                 value={fatherFilterGroup}
                 onChange={e => setFatherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 dark:text-slate-250 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
+                className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
                 <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
@@ -3639,7 +3639,7 @@ export default function App() {
                 value={fatherFilterBrand}
                 onChange={e => setFatherFilterBrand(e.target.value)}
                 className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
-                  fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-105 dark:hover:bg-slate-700'
+                  fatherFilterBrand ? getBrandStyle(fatherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
                 }`}
               >
                 <option value="" className="dark:bg-slate-800">全部牌子</option>
@@ -3699,7 +3699,7 @@ export default function App() {
             <div className="flex items-center justify-between p-2.5 sm:p-3.5 bg-slate-900/95 text-white rounded-xl shadow-md select-none whitespace-nowrap overflow-hidden">
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
                 <span className="text-xs sm:text-sm font-bold tracking-wide shrink-0 whitespace-nowrap">♀️ 母本仓储库</span>
-                <span className="text-[9px] sm:text-[10px] bg-pink-500/20 text-pink-305 border border-pink-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">MOTHER</span>
+                <span className="text-[9px] sm:text-[10px] bg-pink-500/20 text-pink-300 border border-pink-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">MOTHER</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
                 <button
@@ -3731,7 +3731,7 @@ export default function App() {
                   options={ALL_PET_NAMES}
                   placeholder="搜索精灵名..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
@@ -3742,13 +3742,13 @@ export default function App() {
                   options={NATURE_OPTIONS}
                   placeholder="搜索性格..."
                   className="w-full"
-                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
+                  inputClassName="w-full pl-8 pr-2 py-1 text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-pink-500 focus:ring-1 focus:ring-pink-100 dark:focus:ring-pink-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-7"
                 />
               </div>
               <select
                 value={motherFilterGroup}
                 onChange={e => setMotherFilterGroup(e.target.value)}
-                className="text-xs text-slate-700 dark:text-slate-250 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-850 focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
+                className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-pink-500 cursor-pointer font-medium hover:bg-slate-100 dark:hover:bg-slate-705 transition-colors h-7 w-auto shrink-0 whitespace-nowrap"
               >
                 <option value="" className="dark:bg-slate-800">全部蛋组</option>
                 {EGG_GROUPS.map(group => (
@@ -3759,7 +3759,7 @@ export default function App() {
                 value={motherFilterBrand}
                 onChange={e => setMotherFilterBrand(e.target.value)}
                 className={`text-xs border rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer font-bold transition-all h-7 w-auto shrink-0 whitespace-nowrap ${
-                  motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-105 dark:hover:bg-slate-700'
+                  motherFilterBrand ? getBrandStyle(motherFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
                 }`}
               >
                 <option value="" className="dark:bg-slate-800">全部牌子</option>
@@ -3775,7 +3775,7 @@ export default function App() {
                     setMotherFilterGroup("");
                     setMotherFilterBrand("");
                   }}
-                  className="text-[11px] text-pink-600 dark:text-pink-400 hover:text-pink-500 dark:hover:text-pink-305 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 dark:hover:bg-pink-950/40 rounded shrink-0 whitespace-nowrap"
+                  className="text-[11px] text-pink-600 dark:text-pink-400 hover:text-pink-500 dark:hover:text-pink-300 font-bold transition-colors cursor-pointer p-1 hover:bg-pink-50 dark:hover:bg-pink-950/40 rounded shrink-0 whitespace-nowrap"
                 >
                   重置
                 </button>
@@ -3907,18 +3907,18 @@ export default function App() {
                         options={ALL_PET_NAMES}
                         placeholder="搜索精灵名..."
                         className="w-full"
-                        inputClassName="w-full pl-8 pr-2 py-1.5 text-xs text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-8"
+                        inputClassName="w-full pl-8 pr-2 py-1.5 text-xs text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 h-8"
                       />
                     </div>
                     {/* 蛋组筛选 */}
                     <select
                       value={pairingFilterGroup}
                       onChange={e => setPairingFilterGroup(e.target.value)}
-                      className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
-                      <option value="" className="dark:bg-slate-850">全部蛋组</option>
+                      <option value="" className="dark:bg-slate-900">全部蛋组</option>
                       {allPairGroups.map(g => (
-                        <option key={g} value={g} className="dark:bg-slate-850">{g}</option>
+                        <option key={g} value={g} className="dark:bg-slate-900">{g}</option>
                       ))}
                     </select>
                     {/* 牌子筛选 */}
@@ -3926,23 +3926,23 @@ export default function App() {
                       value={pairingFilterBrand}
                       onChange={e => setPairingFilterBrand(e.target.value)}
                       className={`text-xs border rounded-lg px-2 py-1.5 h-8 focus:outline-none cursor-pointer font-bold transition-all w-auto shrink-0 whitespace-nowrap ${
-                        pairingFilterBrand ? getBrandStyle(pairingFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-850 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                        pairingFilterBrand ? getBrandStyle(pairingFilterBrand) : 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50'
                       }`}
                     >
-                      <option value="" className="dark:bg-slate-850">全部牌子</option>
+                      <option value="" className="dark:bg-slate-900">全部牌子</option>
                       {allPairBrands.map(b => (
-                        <option key={b} value={b} className="dark:bg-slate-850">{b}</option>
+                        <option key={b} value={b} className="dark:bg-slate-900">{b}</option>
                       ))}
                     </select>
                     {/* 3V筛选 */}
                     <select
                       value={pairingFilter3V}
                       onChange={e => setPairingFilter3V(e.target.value)}
-                      className="text-xs text-slate-700 dark:text-slate-250 bg-white dark:bg-slate-855 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
-                      <option value="" className="dark:bg-slate-850">全部配对</option>
-                      <option value="3V" className="dark:bg-slate-850">仅3V配对</option>
-                      <option value="非3V" className="dark:bg-slate-850">仅非3V配对</option>
+                      <option value="" className="dark:bg-slate-900">全部配对</option>
+                      <option value="3V" className="dark:bg-slate-900">仅3V配对</option>
+                      <option value="非3V" className="dark:bg-slate-900">仅非3V配对</option>
                     </select>
                     {/* 筛选结果计数 & 重置 */}
                     <div className="flex items-center gap-2 ml-auto shrink-0 whitespace-nowrap">
@@ -3957,7 +3957,7 @@ export default function App() {
                             setPairingFilterBrand("");
                             setPairingFilter3V("");
                           }}
-                          className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-305 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"
+                          className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"
                         >
                           重置筛选
                         </button>
@@ -4013,7 +4013,7 @@ export default function App() {
                                   <Check className="w-4 h-4 text-white stroke-[3]" />
                                 </div>
                               ) : (
-                                <div className="w-6 h-6 bg-white dark:bg-slate-850 border-2 border-slate-300 dark:border-slate-700 rounded-full" />
+                                <div className="w-6 h-6 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-full" />
                               )}
                             </div>
 
@@ -4046,7 +4046,7 @@ export default function App() {
                                   <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
                                     {pair.father.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-450 mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
                                     {pair.father.height ? `${pair.father.height}m` : "—"}/{pair.father.weight ? `${pair.father.weight}kg` : "—"}
                                   </div>
                                 </div>
@@ -4069,11 +4069,11 @@ export default function App() {
                                   <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
                                     {pair.mother.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
                                   </div>
-                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-450 mt-0.5">
+                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
                                     {pair.mother.height ? `${pair.mother.height}m` : "—"}/{pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
                                   </div>
                                 </div>
-                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 dark:bg-pink-955/20 rounded-lg sm:rounded-xl border border-pink-100 dark:border-pink-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 dark:bg-pink-950/20 rounded-lg sm:rounded-xl border border-pink-100 dark:border-pink-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {motherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${motherSpriteFile}`)}
@@ -4097,18 +4097,18 @@ export default function App() {
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                                   <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
-                                    <Ruler className="w-3.5 h-3.5 text-slate-400 dark:text-slate-505 shrink-0" />
+                                    <Ruler className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                                     <span>身高:</span>
                                     <span className="font-bold text-slate-800 dark:text-slate-200">{guideSize.height}</span>
                                   </div>
                                   <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
-                                    <Weight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-505 shrink-0" />
+                                    <Weight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                                     <span>体重:</span>
                                     <span className="font-bold text-slate-800 dark:text-slate-200">{guideSize.weight}</span>
                                   </div>
                                 </div>
                                 {thresholds && (
-                                  <div className="grid grid-cols-2 gap-x-4 pt-2 border-t border-slate-200/50 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-450">
+                                  <div className="grid grid-cols-2 gap-x-4 pt-2 border-t border-slate-200/50 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
                                     <div className="space-y-1">
                                       <div className="flex items-center justify-between">
                                         <span>大及格身高:</span>
@@ -4135,9 +4135,9 @@ export default function App() {
                             )}
 
                             {/* 底部产出信息 + 操作 */}
-                            <div className="bg-gradient-to-r from-slate-50 dark:from-slate-800/40 to-indigo-50/30 dark:to-indigo-955/20 rounded-xl border border-slate-200/80 dark:border-slate-800 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
+                            <div className="bg-gradient-to-r from-slate-50 dark:from-slate-800/40 to-indigo-50/30 dark:to-indigo-950/20 rounded-xl border border-slate-200/80 dark:border-slate-800 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
                               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
-                                <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-450 shrink-0">产出:</span>
+                                <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">产出:</span>
                                 <span className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 shrink-0">{pair.eggSprite}蛋</span>
                               </div>
                               <div className="flex gap-1 sm:gap-2 items-center min-w-0">
@@ -4146,7 +4146,7 @@ export default function App() {
                                 </span>
                                 <span className={`font-bold px-1.5 py-0.5 sm:px-2 rounded-lg border text-[10px] sm:text-[11px] select-none shrink-0 ${
                                   isStatsMatch
-                                    ? "bg-rose-55 dark:bg-rose-955/20 text-rose-600 dark:text-rose-300 border-rose-200 dark:border-rose-900/40"
+                                    ? "bg-rose-100 dark:bg-rose-950/20 text-rose-600 dark:text-rose-300 border-rose-200 dark:border-rose-900/40"
                                     : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"
                                 }`}>
                                   {isStatsMatch ? "✨3V" : "非3V"}
@@ -4174,30 +4174,30 @@ export default function App() {
         </div>
 
         {/* Bottom Global Settings Bar */}
-        <div className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-wrap gap-2.5 items-center justify-between mt-4 select-none">
-          <div className="text-xs text-slate-400 font-medium">
+        <div className="p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-wrap gap-2.5 items-center justify-between mt-4 select-none">
+          <div className="text-xs text-slate-400 dark:text-slate-500 font-medium">
             父母本中心的数据修改会自动保存至本地，也可以在下方进行全局备份操作
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleReset("parents")}
-              className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
+              className="py-1.5 px-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               初始化列表
             </button>
             <button
               onClick={handleImportParentsClick}
-              className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
+              className="py-1.5 px-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
-              <Upload className="w-3.5 h-3.5 text-slate-500" />
+              <Upload className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               导入数据
             </button>
             <button
               onClick={handleExportParentsClick}
-              className="py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
+              className="py-1.5 px-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-lg transition-all font-medium flex items-center justify-center gap-1.5 shadow-xs text-xs cursor-pointer"
             >
-              <Share2 className="w-3.5 h-3.5 text-slate-500" />
+              <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               导出数据
             </button>
           </div>
@@ -4243,7 +4243,7 @@ export default function App() {
                   <div className="p-1.5 bg-indigo-50 rounded-lg border border-indigo-100/50">
                     <Egg className="w-4.5 h-4.5 text-indigo-600" />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-805">
+                  <h3 className="text-sm font-bold text-slate-800">
                     {editingEggId ? "修改精灵蛋信息" : "登记新精灵蛋"}
                   </h3>
                 </div>
@@ -4266,7 +4266,7 @@ export default function App() {
                       const spriteFile = getSpriteFileName(eggFormSprite);
                       const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
                       return (
-                        <div className="w-10 h-10 rounded-lg border border-slate-205 bg-slate-50 flex items-center justify-center relative overflow-hidden shrink-0">
+                        <div className="w-10 h-10 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-center relative overflow-hidden shrink-0">
                           {spriteUrl ? (
                             <img src={spriteUrl} alt="" className="w-8.5 h-8.5 object-contain" />
                           ) : (
@@ -4614,7 +4614,7 @@ export default function App() {
                 <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden flex-1 overflow-y-auto max-h-60 bg-white dark:bg-slate-900">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50/75 dark:bg-slate-950/45 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase">
+                      <tr className="bg-slate-50/75 dark:bg-slate-950/45 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">
                         <th className="px-4 py-2">账号昵称</th>
                         <th className="px-4 py-2">UID</th>
                         <th className="px-4 py-2 text-right">操作</th>
@@ -4697,7 +4697,7 @@ export default function App() {
                                     </button>
                                     <button
                                       onClick={() => handleExportSingleClick(acc.id)}
-                                      className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-450 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
+                                      className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium px-1.5 py-0.5 cursor-pointer border border-transparent"
                                       title="导出该账号的备份文件"
                                     >
                                       导出
@@ -4778,10 +4778,10 @@ export default function App() {
               {/* 如果是单账号数据导入，我们需要让用户核对/配置作为新账号导入时的参数 */}
               {importConfirmType === "single" && (
                 <div className="bg-slate-50/50 dark:bg-slate-950/20 rounded-xl p-3 border border-slate-100 dark:border-slate-800 text-xs space-y-2.5 text-left">
-                  <span className="block font-bold text-slate-700 dark:text-slate-305">导入为新分区设置：</span>
+                  <span className="block font-bold text-slate-700 dark:text-slate-300">导入为新分区设置：</span>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] text-slate-450 font-bold mb-0.5">导入新账号昵称</label>
+                      <label className="block text-[10px] text-slate-400 font-bold mb-0.5">导入新账号昵称</label>
                       <input
                         type="text"
                         value={importAsNewNickname}
@@ -4790,7 +4790,7 @@ export default function App() {
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] text-slate-450 font-bold mb-0.5">UID</label>
+                      <label className="block text-[10px] text-slate-400 font-bold mb-0.5">UID</label>
                       <input
                         type="text"
                         value={importAsNewUid}
@@ -4906,7 +4906,7 @@ export default function App() {
                     setImportError("");
                   }}
                   placeholder='备份 JSON 数据, 例如: [{"sprite":"水蓝蓝","natures":["聪明"],"groups":["魔力组"]}]'
-                  className="w-full h-32 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-850 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none"
+                  className="w-full h-32 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/50 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none"
                 />
 
                 {importError && (
@@ -4972,7 +4972,7 @@ export default function App() {
                 <textarea
                   value={jsonText}
                   readOnly
-                  className="w-full h-40 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-850 text-slate-700 dark:text-slate-300 resize-none select-all focus:outline-none"
+                  className="w-full h-40 border border-slate-200 dark:border-slate-750 rounded-xl p-3 text-xs font-mono bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 resize-none select-all focus:outline-none"
                 />
                 <button
                   onClick={copyToClipboard}
@@ -5126,7 +5126,7 @@ export default function App() {
                       href="https://wiki.biligame.com/rocom/精灵图鉴/原始形态"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-305 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
+                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
                     >
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">wiki.biligame.com — 洛克王国:手游WIKI（精灵图鉴/原始形态）</span>
@@ -5135,7 +5135,7 @@ export default function App() {
                       href="https://roco.gptvip.chat/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-305 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
+                      className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-900/50 px-3 py-2 rounded-lg transition-all group"
                     >
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                       <span>roco.gptvip.chat — 精灵数据平台</span>

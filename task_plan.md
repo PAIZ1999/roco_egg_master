@@ -20,7 +20,9 @@
 - [x] Phase 3: 精灵卡片与列表适配 (适配 SortableCard.tsx, EggCard.tsx, ParentCard.tsx 和 SortableRow.tsx 的暗色背景、输入框、下拉框与边框)
 - [x] Phase 4: Autocomplete 组件适配 (调整 Autocomplete.tsx 下拉浮窗、拼音提示在暗色下的文字和悬浮高亮色)
 - [x] Phase 5: 网页端部署静态资源拷贝与生产打包验证 (配置拷贝脚本确保 images 资源在部署时不裂开)
-- [/] Phase 6: 全站暗色细节统一与长图导出暗色支持 (将默认主题改为 dark，修复三围图标、系别角标、换蛋表单头像的白色白块，将半透明 bg-slate-950/20 实色化为 bg-slate-950/bg-slate-900，统一 Tab 大背景风格，修改 html2canvas 长图导出逻辑使其支持暗色模式，最终打包并 push 到远程仓库)
+- [x] Phase 6: 全站暗色细节统一与长图导出暗色支持 (全局替换 955 笔误颜色类，修复第一组批量操作按钮未暗化缺陷，修复自建需求中心性格输入框与辅助信息背景未暗化问题，进行编译测试与长图导出验证，最终打包并 push 到远程仓库)
+- [/] Phase 7: 交付与项目知识库归档
+
 
 ## Key Questions
 1. 在暗色模式下，三围图标的白圈怎么优化？
@@ -35,7 +37,8 @@
 - [决策]: 修复自建需求中心表单中的 label（精灵名称）在暗色下缺失字色、头像和系别容器未适配 `dark:` 而出现的亮白块问题。
 
 ## Errors Encountered
-- 无
+- [错误]: 编译时 esbuild 提示 "isCurrentlyDark" 重复声明，导致打包失败。
+  - [解决方案]: 移除了在 handleExportLongImage 中重复声明的 const isCurrentlyDark 变量，直接复用已定义的作用域内变量。
 
 ## Status
-**Currently in Phase 6** - 正在编写并审核 Implementation Plan，等待用户批准后进行全站细节适配、打包与 Git 推送。
+**Currently in Phase 6** - 正在进行编译与手动验证。
