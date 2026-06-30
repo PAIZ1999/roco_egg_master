@@ -1,4 +1,4 @@
-# Research Notes: 暗色模式细节补全与长图导出适配分析
+# Research Notes: 智能配对升级与小体型临界规则设计
 
 ## 模型信息
 - 模型名称：Antigravity
@@ -8,175 +8,87 @@
 
 ---
 
-## 1. 样式盲区问题与定位
+## 1. 智能配对升级背景
+用户需要让系统智能支持以下小体型牌子和普通牌子的交叉繁殖配对：
+1. **小粗** + **单粗嗓门**
+2. **小婉** + **单婉转声**
+3. **小不点** (单小不点) + **普通**
 
-### 1.1 三围选择图标底盘白块
-在以下三个核心组件中：
-- `src/components/SortableCard.tsx` (L58)
-- `src/components/EggCard.tsx` (L56)
-- `src/components/ParentCard.tsx` (L56)
-各自实现了一个 `getStatBadgeStyle` 方法。
-在亮色下，三围（生命、物攻、速度、魔攻、物防、魔防）使用高饱和度亮底渲染（如 `bg-rose-200 text-rose-800`）。
-但在暗色模式下，它们缺失了任何 `dark:` 变体适配，导致在暗黑的卡片背景下渲染出极其突兀的圆形大白块。
-**解决方案**：
-统一适配其 colors 字典，使之在暗色模式下显示为优雅、低饱和度的柔和背景，并拉高文本对比度：
+原先的系统仅定义了大体型牌子的特殊概率配对逻辑（如“概率大粗”、“概率大婉”、“概率大块头”），以及体型一致时的基础配对（如“小粗+小粗”、“单粗嗓门+单粗嗓门”等）。
+
+为了支持小体型的智能繁育系统，需要做三点升级：
+- 在配对逻辑中引入 `isNearTinyLimit` (接近小不点体重临界值且身高已缩减至最小值) 的判定。
+- 在配对产出中补充 `"概率小粗"`、`"概率小婉"`、`"概率小不点"` 等虚拟概率牌子。
+- 对可能产生的体型冲突（例如 `大粗 + 小粗`、`大婉 + 小婉`）进行物理拦截，因为相反的特化体型是无法兼容繁育的。
+
+---
+
+## 2. 核心判定规则与算法推演
+
+### 2.1 isNearTinyLimit (小不点临界) 判定公式
+参考 `ParentCard.tsx` 中小不点达标与临界的数学逻辑：
+- `minHeight`：该宠物的标准身高最小值。
+- `tinyWeightLine`：该宠物的标准小不点及格重量线，计算公式为：`minWeight + (maxWeight - minWeight) * 0.05`。
+- **达标小不点**：`height <= minHeight` 且 `weight <= tinyWeightLine`。
+- **小不点临界**：`height <= minHeight` 且重量处于临界带。临界带为：重量大于 `tinyWeightLine` 且距离 `tinyWeightLine` 差值在 10% 以内。
+  即：`weight > tinyWeightLine` 且 `weight - tinyWeightLine <= tinyWeightLine * 0.10`（即 `weight <= tinyWeightLine * 1.10`）。
+
+代码实现：
 ```typescript
-"生命": "bg-rose-200 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border-rose-400 dark:border-rose-900/60 hover:bg-rose-300 dark:hover:bg-rose-900/80 shadow-2xs",
-"物攻": "bg-amber-200 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-400 dark:border-amber-900/60 hover:bg-amber-300 dark:hover:bg-amber-900/80 shadow-2xs",
-"速度": "bg-emerald-200 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-400 dark:border-emerald-900/60 hover:bg-emerald-300 dark:hover:bg-emerald-900/80 shadow-2xs",
-"魔攻": "bg-purple-200 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border-purple-400 dark:border-purple-900/60 hover:bg-purple-300 dark:hover:bg-purple-900/80 shadow-2xs",
-"物防": "bg-blue-200 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-400 dark:border-blue-900/60 hover:bg-blue-300 dark:hover:bg-blue-900/80 shadow-2xs",
-"魔防": "bg-cyan-200 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 border-cyan-400 dark:border-cyan-900/60 hover:bg-cyan-300 dark:hover:bg-cyan-900/80 shadow-2xs",
+const isNearTinyLimit = (pet: ParentPet) => {
+  const t = getPetSizeThresholds(pet.sprite);
+  if (!t || !pet.height || !pet.weight) return false;
+  const hVal = parseFloat(pet.height);
+  const wVal = parseFloat(pet.weight);
+  if (isNaN(hVal) || isNaN(wVal)) return false;
+  return hVal <= t.minHeight && wVal > t.tinyWeightLine && wVal <= t.tinyWeightLine * 1.10;
+};
 ```
 
-### 1.2 自建换蛋需求中心表单细节遗漏
-在 `src/App.tsx` 中：
-- **精灵名称的 Label (L2890)**: `className="text-xs font-bold text-slate-700"` 缺少 `dark:text-slate-300`。
-- **精灵头像容器 (L2902)**: `className="w-[38px] h-[38px] bg-white ... border border-slate-200 ..."` 缺少 `dark:bg-slate-800 dark:border-slate-700`，导致在暗色模式下也是一个大白块。
-- **属性图标容器 (L2913)**: 缺少 `dark:bg-slate-800 dark:border-slate-700`。
-- **性格需求相关组件**: 性格需求 Label、性格 Autocomplete 输入框均缺失 `dark:` 类，在暗色下为大白底与暗色文本混杂，对比度过低。
-- **精灵辅助信息提示底盘 (L2972, L2975)**: 属性与蛋组的背景 `bg-slate-100` 缺失 `dark:bg-slate-800` 适配，导致在暗色模式下也是两个亮斑。
+### 2.2 粗嗓门组 (Coarse Voice) 配对公式
+包含牌子：`大粗`、`小粗`、`单粗嗓门`。
+- **大粗 + 大粗**：
+  - 若均不接近大块头临界 -> `大粗`
+  - 否则 -> `概率大粗`
+- **小粗 + 小粗**：
+  - 若均不接近小不点临界 -> `小粗`
+  - 否则 -> `概率小粗`
+- **大粗 + 单粗嗓门**：
+  - 若有任意一方接近大块头临界 -> `概率大粗`
+  - 否则 -> `单粗嗓门`
+- **小粗 + 单粗嗓门**：
+  - 若有任意一方接近小不点临界 -> `概率小粗`
+  - 否则 -> `单粗嗓门`
+- **大粗 + 小粗**：不兼容（拦截）。
+- **单粗嗓门 + 单粗嗓门**：`单粗嗓门`。
 
-### 1.3 大背景不透光与统一
-在三个 Tab 面板下：
-- 页面底座与 footer 等采用 `bg-slate-50/50 dark:bg-slate-955/20`（原代码写成了错误的 `955`，无法被编译渲染）。
-- 半透明的 `dark:bg-slate-950/20` 在一些特殊浏览器上可能无法完美消除背后的透底。
-**解决方案**：
-将底盘的外壳在暗色下设为完全不透明的 `dark:bg-slate-955`，并将所有 `dark:bg-slate-955` 彻底修正为真正的 `dark:bg-slate-950`，保证整个底板风格统一且颜色渲染生效。
+### 2.3 婉转声组 (Soft Voice) 配对公式
+包含牌子：`大婉`、`小婉`、`单婉转声`。
+与粗嗓门完全镜像：
+- **大婉 + 大婉** -> `大婉` 或 `概率大婉`
+- **小婉 + 小婉** -> `小婉` 或 `概率小婉`
+- **大婉 + 单婉转声** -> `概率大婉` 或 `单婉转声`
+- **小婉 + 单婉转声** -> `概率小婉` 或 `单婉转声`
+- **大婉 + 小婉**：不兼容（拦截）。
+- **单婉转声 + 单婉转声** -> `单婉转声`。
 
-### 1.4 Tailwind 颜色值 955 笔误问题
-经过全局分析，发现整个项目中共有 20 余处混入了类似于 `slate-955`、`rose-955`、`amber-955`、`emerald-955`、`indigo-955` 等以 `955` 结尾的 Tailwind 颜色定义。因为 Tailwind 没有 `955` 颜色级别，这直接导致这些暗色适配样式完全失效（表现为透明或继承错误底色）。
-**解决方案**：
-全局查找并用正则或字符串替换所有 `*-955/` 类为标准的 `*-950/`，从而彻底激活所有这些细节的暗色模式阴影和底色。
-
-### 1.5 表格底部的批量操作按钮未暗化
-主表格底部的“初始化列表”、“导入数据”、“导出数据”三个按钮依然为亮白背景 (`bg-white border-slate-200 hover:bg-slate-50 text-slate-600`)，在暗色模式下极其晃眼，且 icon 颜色未暗化。
-**解决方案**：
-为这些按钮增加 `dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/80 dark:text-slate-300` 及对应的 SVG 图标暗色支持。
-
-
----
-
-## 2. 长图导出支持暗色模式
-
-在 `src/App.tsx` 的 `generateLongImage` 方法中：
-- 之前强制在渲染前剥离了 `document.documentElement` 的 `dark` 类，渲染后再行恢复：
-  ```typescript
-  const isCurrentlyDark = document.documentElement.classList.contains("dark");
-  if (isCurrentlyDark) {
-    document.documentElement.classList.remove("dark");
-  }
-  ```
-  这直接导致导出的长图一定是亮色风格。
-- 现在用户要求**长图导出支持暗色模式**。
-**解决方案**：
-- 彻底移除剥离/恢复 `dark` 的这几行代码，允许克隆节点自然继承当前页面的暗色/亮色状态。
-- 为 `html2canvas` 传入动态的 `backgroundColor`：
-  ```typescript
-  const isCurrentlyDark = document.documentElement.classList.contains("dark");
-  const exportBgColor = isCurrentlyDark ? "#020617" : "#f8fafc";
-  ```
-  其中 `#020617` 是 `bg-slate-950` 的十六进制颜色，这能保证在暗色模式下导出的图拥有完美的黑底底座。
+### 2.4 无声体型组 (Pure Size) 配对公式
+包含牌子：`普通`、`单大块头`、`单小不点`。
+- **单大块头 + 普通**：
+  - 若普通一方接近大块头临界 -> `概率大块头`
+  - 否则 -> `普通`
+- **单小不点 + 普通**：
+  - 若普通一方接近小不点临界 -> `概率小不点`
+  - 否则 -> `普通`
+- **普通 + 普通**：
+  - 若双方都接近大块头临界 -> `概率大块头`
+  - 若双方都接近小不点临界 -> `概率小不点`
+  - 否则 -> `普通`（已被 `father.brand === mother.brand` 处理为 `普通`）。
 
 ---
 
-## 3. 默认开启暗色模式
-
-在 `src/App.tsx` 中，`theme` 的 useState 初始化：
-```typescript
-const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-  const stored = localStorage.getItem('theme');
-  if (stored === 'light' || stored === 'dark') return stored;
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
-  }
-  return 'dark';
-});
-```
-**解决方案**：
-为了让应用在无缓存和无 prefers 状态下默认处于暗色模式，将兜底的 `return 'light'` 修改为 `return 'dark'`。
-由于 `localStorage.getItem` 依然有效，用户可以自由切换回亮色模式并持久化，这能提供最高灵活性且不破坏首屏加载逻辑。
-
----
-
-## 4. 针对“小甲虫 + 火神 + 喵喵”已有的搭配计算与答疑
-
-### 4.1 7宠极简方案（需补充4只）的唯一性
-- **已有3只覆盖的蛋组 (6个)**：
-  - 小甲虫（天空组 + 昆虫组）
-  - 火神（巨灵组 + 魔力组）
-  - 喵喵（动物组 + 拟人组）
-- **剩余需覆盖蛋组 (8个)**：两栖组、大地组、妖精组、机械组、植物组、软体组、海洋组、龙组。
-- **数学定理**：要用4只双蛋组精灵完全覆盖8个不同的蛋组，这4只精灵的蛋组不能与已有重叠，且互相之间也不能重合（必须是严格的无交集划分）。
-- **游戏数据限制**：由于《洛克王国：世界》精灵库中，包含龙组且不涉及已有蛋组的双蛋组精灵只有“海洋+龙”的**豆丁鱼**；包含机械组且不涉及已有蛋组的双蛋组精灵只有“妖精+机械”的**小箱怪**。这强行锁死了这两对。
-- **唯一搭配对**：
-  1. **波波螺** (等价备选: 石肤蜥, 消波螺, 石刺蜥) -> 负责【两栖组 + 大地组】
-  2. **小箱怪** (等价备选: 迷迷箱怪) -> 负责【妖精组 + 机械组】
-  3. **伊贝儿** (等价备选: 伊贝粉粉) -> 负责【植物组 + 软体组】
-  4. **豆丁鱼** (等价备选: 快鳍鱼, 龙鱼) -> 负责【海洋组 + 龙组】
-
-### 4.2 8宠冗余方案（包含已有的果冻，需额外补充4只）的灵活性
-若将用户已有的【果冻 (魔力+海洋)】加入已有阵容，总宠物数来到8只。由于允许了蛋组重合（天空组、巨灵组或海洋组的重叠），诞生了**避开难抓宠物（如豆丁鱼）**的全新替代路线：
-
-- **8宠替换路线 A (避开豆丁鱼，用小翼龙)**：
-  - **已有**：小甲虫、火神、喵喵、果冻
-  - **新增**：
-    1. **波波螺** (等价: 石肤蜥, 消波螺, 石刺蜥) -> 【两栖 + 大地】
-    2. **小箱怪** (等价: 迷迷箱怪) -> 【妖精 + 机械】
-    3. **伊贝儿** (等价: 伊贝粉粉) -> 【植物 + 软体】
-    4. **小翼龙** (等价: 翼龙) -> 【天空 + 龙】 (利用天空组重合，补齐龙组)
-
-- **8宠替换路线 B (避开豆丁鱼，用大头骨龙)**：
-  - **已有**：小甲虫、火神、喵喵、果冻
-  - **新增**：
-    1. **波波螺** (等价: 石肤蜥, 消波螺, 石刺蜥) -> 【两栖 + 大地】
-    2. **小箱怪** (等价: 迷迷箱怪) -> 【妖精 + 机械】
-    3. **伊贝儿** (等价: 伊贝粉粉) -> 【植物 + 软体】
-    4. **大头骨龙** (等价: 寂灭骨龙) -> 【巨灵 + 龙】 (利用巨灵组重合，补齐龙组)
-
-### 4.3 伊贝儿是否能被替换？（及 9 宠无伊贝儿方案）
-- **7宠/8宠方案下的绝对必选性**：
-  在7只或8只精灵完美覆盖全14个蛋组的方案中，**伊贝儿（及它的进化伊贝粉粉）是绝对无法被替换的**（可选方案数为 0）。因为整个游戏目前只有伊贝儿这一支进化链能无缝对接“植物组 + 软体组”，一旦不用它，8个坑位在覆盖7个未满蛋组时必定因为死锁导致至少一个蛋组断档。
-- **9宠方案下的避开路线**：
-  若玩家将繁育池扩大至 9 只宠物（锁定已有的 4 只小甲虫、火神、喵喵、果冻，再新补充 5 只），则共有 339 种方案可以**彻底避开伊贝儿**。
-  - **典型避开方案**：
-    1. **花怨鳗** / 鳗尾兽 （两栖组 + 海洋组）
-    2. **矿晶虫** / 晶石蜗 （大地组 + 软体组） —— *覆盖软体组*
-    3. **小箱怪** / 迷迷箱怪 （妖精组 + 机械组）
-    4. **格兰种子** / 幽影树 / 格兰花 （妖精组 + 植物组） —— *覆盖植物组*
-    5. **豆丁鱼** / 快鳍鱼 （海洋组 + 龙组）
-
-### 4.4 去掉“火神”，在已有“果冻 + 喵喵 + 小甲虫”时的极简7宠方案
-- **已有3只覆盖的蛋组 (6个)**：
-  - 小甲虫（天空组 + 昆虫组）
-  - 喵喵（动物组 + 拟人组）
-  - 果冻（魔力组 + 海洋组）
-- **剩余需覆盖蛋组 (8个)**：巨灵组、两栖组、大地组、妖精组、机械组、植物组、软体组、龙组。
-- **数学与游戏设定下的唯一解**：
-  由于果冻接管了火神的【魔力组】并覆盖了【海洋组】，剩余的“巨灵组”和之前由豆丁鱼负责的“龙组”在数学上融合为了【巨灵组 + 龙组】对。这正好能被游戏里的 **大头骨龙** 完美填补。
-  由此，诞生了**全新的 7 宠完美无重叠覆盖方案**（只需再补充4只）：
-  1. **波波螺** (等价备选: 石肤蜥, 消波螺, 石刺蜥) -> 负责【两栖组 + 大地组】
-  2. **小箱怪** (等价备选: 迷迷箱怪) -> 负责【妖精组 + 机械组】
-  3. **大头骨龙** (等价备选: 寂灭骨龙) -> 负责【巨灵组 + 龙组】 —— *代替了火神与豆丁鱼*
-  4. **伊贝儿** (等价备选: 伊贝粉粉) -> 负责【植物组 + 软体组】
-
-### 4.5 已有“小甲虫 + 喵喵 + 果冻 + 格兰球 + 小箱怪”时的最佳3只补充方案
-- **已有5只覆盖的蛋组 (9个)**：天空、昆虫、动物、拟人、魔力、海洋、妖精、植物、机械组。
-- **剩余需覆盖蛋组 (5个)**：巨灵组、两栖组、大地组、软体组、龙组。
-- **黄金必选精灵**：**大头骨龙**（巨灵+龙）。它是同时覆盖龙组和巨灵组的唯一交集，属于此方案下的必选项。
-- **最佳的 3 只补充搭配 (共 8 宠，10种可行解)**：
-  - **方案一 (首推：避开伊贝儿，利用大地组联通)**：
-    1. **大头骨龙** (巨灵组 + 龙组) —— 必选
-    2. **波波螺** (两栖组 + 大地组，等价: 石肤蜥, 消波螺)
-    3. **矿晶虫** (大地组 + 软体组，等价: 晶石蜗) —— *用它来负责软体，完全不用伊贝儿*
-  - **方案二 (避开伊贝儿，利用海洋水生)**：
-    1. **大头骨龙** (巨灵组 + 龙组)
-    2. **波波螺** (两栖组 + 大地组)
-    3. **布鲁斯** (海洋组 + 软体组，等价: 墨鱿士, 翡翠水母)
-  - **方案三 (传统伊贝路线)**：
-    1. **大头骨龙** (巨灵组 + 龙组)
-    2. **波波螺** (两栖组 + 大地组)
-    3. **伊贝儿** (植物组 + 软体组)
-
-
-
+## 3. 概率牌子颜色规范 (Theme Integration)
+当配对显示这三种概率子代时，我们需要在 `getBrandStyle` 里面加入其 CSS 样式：
+- **概率小粗**：浅紫色底加紫色虚线边框（`bg-purple-50 dark:bg-purple-950 border-purple-400 dark:border-purple-900 text-purple-800 dark:text-purple-300 font-extrabold border-dashed`）。
+- **概率小婉**：浅天蓝色底加天蓝虚线边框（`bg-sky-50 dark:bg-sky-950 border-sky-400 dark:border-sky-900 text-sky-800 dark:text-sky-300 font-extrabold border-dashed`）。
+- **概率小不点**：浅青色底加青色虚线边框（`bg-cyan-50 dark:bg-cyan-950 border-cyan-400 dark:border-cyan-900 text-cyan-800 dark:text-cyan-300 font-extrabold border-dashed`）。

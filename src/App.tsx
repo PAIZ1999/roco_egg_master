@@ -1219,66 +1219,247 @@ export default function App() {
       return hVal >= t.maxHeight && wVal < t.giantWeightLine && wVal >= t.giantWeightLine * 0.90;
     };
 
+    // Helper: Determine if a pet is close to the tiny weight threshold (body length is OK, but weight is slightly redundant within 10%)
+    const isNearTinyLimit = (pet: ParentPet) => {
+      const t = getPetSizeThresholds(pet.sprite);
+      if (!t || !pet.height || !pet.weight) return false;
+      const hVal = parseFloat(pet.height);
+      const wVal = parseFloat(pet.weight);
+      if (isNaN(hVal) || isNaN(wVal)) return false;
+      return hVal <= t.minHeight && wVal > t.tinyWeightLine && wVal <= t.tinyWeightLine * 1.10;
+    };
+
     for (const father of checkedFathers) {
       for (const mother of checkedMothers) {
         const matchingGroups = father.groups.filter(g => mother.groups.includes(g));
-        if (matchingGroups.length === 0) continue;
+        if (matchingGroups.length === 0) continue;let brand = "";
 
-        let brand = "";
-        const isFatherCoarse = father.brand === "大粗" || father.brand === "单粗嗓门";
-        const isMotherCoarse = mother.brand === "大粗" || mother.brand === "单粗嗓门";
-        const isFatherSoft = father.brand === "大婉" || father.brand === "单婉转声";
-        const isMotherSoft = mother.brand === "大婉" || mother.brand === "单婉转声";
 
-        if (isFatherCoarse && isMotherCoarse) {
-          // 粗嗓门组：大粗/单粗嗓门
-          // 如果双方都是大粗且未判定为接近临界值，子代是大粗
-          if (father.brand === "大粗" && mother.brand === "大粗" && !isNearGiantLimit(father) && !isNearGiantLimit(mother)) {
-            brand = "大粗";
-          } else {
-            // 一方为单粗嗓门，或者有任意一方接近临界值。有接近临界值则生出概率大粗，否则是单粗嗓门
-            if (isNearGiantLimit(father) || isNearGiantLimit(mother)) {
-              brand = "概率大粗";
-            } else {
-              brand = "单粗嗓门";
-            }
-          }
-        } else if (isFatherSoft && isMotherSoft) {
-          // 婉转声组：大婉/单婉转声
-          // 如果双方都是大婉且未判定为接近临界值，子代是大婉
-          if (father.brand === "大婉" && mother.brand === "大婉" && !isNearGiantLimit(father) && !isNearGiantLimit(mother)) {
-            brand = "大婉";
-          } else {
-            // 一方为单婉转声，或者有任意一方接近临界值。有接近临界值则生出概率大婉，否则是单婉转声
-            if (isNearGiantLimit(father) || isNearGiantLimit(mother)) {
-              brand = "概率大婉";
-            } else {
-              brand = "单婉转声";
-            }
-          }
-        } else if (
-          (father.brand === "普通" && isNearGiantLimit(father) && mother.brand === "单大块头") ||
-          (mother.brand === "普通" && isNearGiantLimit(mother) && father.brand === "单大块头")
-        ) {
-          // 父母有一方是接近大块头临界值的普通精灵，另一方是单大块头 -> 概率大块头
-          brand = "概率大块头";
-        } else if (
-          father.brand === "普通" && isNearGiantLimit(father) &&
-          mother.brand === "普通" && isNearGiantLimit(mother)
-        ) {
-          // 父母双方都是接近大块头临界值的普通精灵 -> 概率大块头
-          brand = "概率大块头";
-        } else if (
-          (father.brand === "普通" && (mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
-          (mother.brand === "普通" && (father.brand === "单粗嗓门" || father.brand === "单婉转声"))
-        ) {
-          // 普通 + 单声音 = 普通
-          brand = "普通";
-        } else if (father.brand === mother.brand) {
-          brand = father.brand;
-        } else {
-          continue;
-        }
+                const isFatherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(father.brand);
+
+
+                const isMotherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(mother.brand);
+
+
+                const isFatherSoft = ["大婉", "小婉", "单婉转声"].includes(father.brand);
+
+
+                const isMotherSoft = ["大婉", "小婉", "单婉转声"].includes(mother.brand);
+
+
+
+                const isCoarseIncompatible = (father.brand === "大粗" && mother.brand === "小粗") || (father.brand === "小粗" && mother.brand === "大粗");
+
+
+                const isSoftIncompatible = (father.brand === "大婉" && mother.brand === "小婉") || (father.brand === "小婉" && mother.brand === "大婉");
+
+
+
+                if (isFatherCoarse && isMotherCoarse && !isCoarseIncompatible) {
+
+
+                  // 粗嗓门组：大粗/小粗/单粗嗓门
+
+
+                  if (father.brand === "大粗" && mother.brand === "大粗") {
+
+
+                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "大粗";
+
+
+                  } else if (father.brand === "小粗" && mother.brand === "小粗") {
+
+
+                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "小粗";
+
+
+                  } else if (
+
+
+                    (father.brand === "大粗" && mother.brand === "单粗嗓门") ||
+
+
+                    (mother.brand === "大粗" && father.brand === "单粗嗓门")
+
+
+                  ) {
+
+
+                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "单粗嗓门";
+
+
+                  } else if (
+
+
+                    (father.brand === "小粗" && mother.brand === "单粗嗓门") ||
+
+
+                    (mother.brand === "小粗" && father.brand === "单粗嗓门")
+
+
+                  ) {
+
+
+                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "单粗嗓门";
+
+
+                  } else {
+
+
+                    brand = "单粗嗓门";
+
+
+                  }
+
+
+                } else if (isFatherSoft && isMotherSoft && !isSoftIncompatible) {
+
+
+                  // 婉转声组：大婉/小婉/单婉转声
+
+
+                  if (father.brand === "大婉" && mother.brand === "大婉") {
+
+
+                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "大婉";
+
+
+                  } else if (father.brand === "小婉" && mother.brand === "小婉") {
+
+
+                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "小婉";
+
+
+                  } else if (
+
+
+                    (father.brand === "大婉" && mother.brand === "单婉转声") ||
+
+
+                    (mother.brand === "大婉" && father.brand === "单婉转声")
+
+
+                  ) {
+
+
+                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "单婉转声";
+
+
+                  } else if (
+
+
+                    (father.brand === "小婉" && mother.brand === "单婉转声") ||
+
+
+                    (mother.brand === "小婉" && father.brand === "单婉转声")
+
+
+                  ) {
+
+
+                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "单婉转声";
+
+
+                  } else {
+
+
+                    brand = "单婉转声";
+
+
+                  }
+
+
+                } else if (
+
+
+                  (father.brand === "普通" && isNearGiantLimit(father) && mother.brand === "单大块头") ||
+
+
+                  (mother.brand === "普通" && isNearGiantLimit(mother) && father.brand === "单大块头")
+
+
+                ) {
+
+
+                  brand = "概率大块头";
+
+
+                } else if (
+
+
+                  (father.brand === "普通" && isNearTinyLimit(father) && mother.brand === "单小不点") ||
+
+
+                  (mother.brand === "普通" && isNearTinyLimit(mother) && father.brand === "单小不点")
+
+
+                ) {
+
+
+                  brand = "概率小不点";
+
+
+                } else if (
+
+
+                  father.brand === "普通" && isNearGiantLimit(father) &&
+
+
+                  mother.brand === "普通" && isNearGiantLimit(mother)
+
+
+                ) {
+
+
+                  brand = "概率大块头";
+
+
+                } else if (
+
+
+                  father.brand === "普通" && isNearTinyLimit(father) &&
+
+
+                  mother.brand === "普通" && isNearTinyLimit(mother)
+
+
+                ) {
+
+
+                  brand = "概率小不点";
+
+
+                } else if (
+
+
+                  (father.brand === "普通" && (mother.brand === "单大块头" || mother.brand === "单小不点" || mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
+
+
+                  (mother.brand === "普通" && (father.brand === "单大块头" || father.brand === "单小不点" || father.brand === "单粗嗓门" || father.brand === "单婉转声"))
+
+
+                ) {
+
+
+                  // 普通 + 单XX = 普通
+
+
+                  brand = "普通";
+
+
+                } else if (father.brand === mother.brand) {
+
+
+                  brand = father.brand;
+
+
+                } else {
+
+
+                  continue;
+
+
+                }
 
         results.push({
           father,
@@ -1321,7 +1502,7 @@ export default function App() {
         fatherStats: [...pair.father.stats],
         motherStats: [...pair.mother.stats],
         groups: [...groups],
-        brand: pair.brand === "概率大块头" ? "普通" : pair.brand,
+        brand: (pair.brand === "概率大块头" || pair.brand === "概率小不点") ? "普通" : pair.brand,
         status: "正在孵，可预约",
         isLimit: "无极限蛋",
         is3V: isStatsMatch ? "3V" : "否",

@@ -415,6 +415,12 @@ export const getBrandStyle = (brand: string): string => {
       return "bg-rose-50 dark:bg-rose-950 border-rose-400 dark:border-rose-900 text-rose-800 dark:text-rose-300 font-extrabold border-dashed";
     case "概率大块头":
       return "bg-slate-50 dark:bg-slate-900 border-slate-400 dark:border-slate-700 text-slate-800 dark:text-slate-300 font-extrabold border-dashed";
+    case "概率小粗":
+      return "bg-purple-50 dark:bg-purple-950 border-purple-400 dark:border-purple-900 text-purple-800 dark:text-purple-300 font-extrabold border-dashed";
+    case "概率小婉":
+      return "bg-sky-50 dark:bg-sky-950 border-sky-400 dark:border-sky-900 text-sky-800 dark:text-sky-300 font-extrabold border-dashed";
+    case "概率小不点":
+      return "bg-cyan-50 dark:bg-cyan-950 border-cyan-400 dark:border-cyan-900 text-cyan-800 dark:text-cyan-300 font-extrabold border-dashed";
     default:
       return "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-medium";
   }
