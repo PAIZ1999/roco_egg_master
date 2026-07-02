@@ -89,6 +89,9 @@ interface SortableCardProps {
   handleUpdateHideStats: (id: string, hide: boolean) => void;
   handleUpdateEggCount: (id: string, count: string) => void;
   onProduceEgg?: (pet: EggPet) => void;
+  isSelected?: boolean;
+  onSelect?: () => void;
+  onHover?: (hovered: boolean) => void;
 }
 
 export const SortableCard = React.memo(function SortableCard({
@@ -108,7 +111,10 @@ export const SortableCard = React.memo(function SortableCard({
   handleUpdateLimit,
   handleUpdateHideStats,
   handleUpdateEggCount,
-  onProduceEgg
+  onProduceEgg,
+  isSelected,
+  onSelect,
+  onHover
 }: SortableCardProps) {
   const {
     attributes,
@@ -185,8 +191,14 @@ export const SortableCard = React.memo(function SortableCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card ${isDragging ? "shadow-lg ring-2 ring-indigo-200 dark:ring-indigo-950 bg-slate-50/90 dark:bg-slate-900/90" : ""
-        }`}
+      onClick={onSelect}
+      onMouseEnter={() => onHover && onHover(true)}
+      onMouseLeave={() => onHover && onHover(false)}
+      className={`bg-white dark:bg-slate-900 rounded-xl border transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 relative overflow-visible group/card nest-card ${
+        isSelected
+          ? "ring-2 ring-indigo-500/80 dark:ring-indigo-400/80 shadow-[0_0_15px_rgba(99,102,241,0.4)] border-indigo-500/80 dark:border-indigo-400/80"
+          : "border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md"
+      } ${isDragging ? "shadow-lg ring-2 ring-indigo-200 dark:ring-indigo-950 bg-slate-50/90 dark:bg-slate-900/90" : ""}`}
     >
       {/* Left Column: Avatar & Meta */}
       <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
@@ -202,7 +214,7 @@ export const SortableCard = React.memo(function SortableCard({
           </div>
 
           <button
-            onClick={() => handleDeletePet(pet.id as string)}
+            onClick={(e) => { e.stopPropagation(); handleDeletePet(pet.id as string); }}
             className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/35 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 dark:hover:border-rose-900/30 action-buttons"
             title="删除该蛋窝"
           >

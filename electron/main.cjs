@@ -68,37 +68,26 @@ function getDataFilePath() {
     return path.join(customSaveDir, 'roco_egg_data.json');
   }
 
-  // 开发模式下，存在项目根目录 of data 文件夹中
+  // 开发模式下，存在项目根目录下
   if (!app.isPackaged) {
-    const devDataDir = path.join(app.getAppPath(), 'data');
-    if (!fs.existsSync(devDataDir)) {
-      fs.mkdirSync(devDataDir, { recursive: true });
-    }
-    return path.join(devDataDir, 'roco_egg_data.json');
+    return path.join(app.getAppPath(), 'roco_egg_data.json');
   }
 
   // 生产环境下（打包后的 exe 运行时）
-  // 1. 优先使用 exe 同级目录下的 data 目录
+  // 1. 优先使用 exe 同级目录
   const exeDir = path.dirname(process.execPath);
-  const localDataDir = path.join(exeDir, 'data');
-  const localFilePath = path.join(localDataDir, 'roco_egg_data.json');
+  const localFilePath = path.join(exeDir, 'roco_egg_data.json');
 
   try {
     // 写入权限测试
-    if (!fs.existsSync(localDataDir)) {
-      fs.mkdirSync(localDataDir, { recursive: true });
-    }
-    const testFile = path.join(localDataDir, '.write-test');
+    const testFile = path.join(exeDir, '.write-test');
     fs.writeFileSync(testFile, 'test');
     fs.unlinkSync(testFile);
     return localFilePath;
   } catch (err) {
     console.error('exe同级目录不可写，降级使用用户 AppData 目录:', err);
     // 2. 权限不足时，降级使用 AppData 目录
-    const appDataDir = path.join(app.getPath('userData'), 'data');
-    if (!fs.existsSync(appDataDir)) {
-      fs.mkdirSync(appDataDir, { recursive: true });
-    }
+    const appDataDir = path.join(app.getPath('userData'));
     return path.join(appDataDir, 'roco_egg_data.json');
   }
 }

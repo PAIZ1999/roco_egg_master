@@ -87,6 +87,9 @@ interface EggCardProps {
   handleUpdateEggFatherStat: (id: string, statIdx: number, val: string) => void;
   handleUpdateEggMotherStat: (id: string, statIdx: number, val: string) => void;
   handleUpdateEggProduceTime: (id: string, produceTime: string) => void;
+  isSelected?: boolean;
+  onSelect?: () => void;
+  onHover?: (hovered: boolean) => void;
 }
 
 export const EggCard = React.memo(function EggCard({
@@ -100,7 +103,10 @@ export const EggCard = React.memo(function EggCard({
   handleUpdateEggMotherNature,
   handleUpdateEggFatherStat,
   handleUpdateEggMotherStat,
-  handleUpdateEggProduceTime
+  handleUpdateEggProduceTime,
+  isSelected,
+  onSelect,
+  onHover
 }: EggCardProps) {
   const petDetails = getPetDetails(egg.sprite);
   const spriteName = petDetails ? petDetails.name : egg.sprite;
@@ -293,7 +299,14 @@ export const EggCard = React.memo(function EggCard({
     <div
       ref={setNodeRef}
       style={style}
-      className="rounded-xl border hover:shadow-md transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 shadow-sm relative overflow-visible group/card"
+      onClick={onSelect}
+      onMouseEnter={() => onHover && onHover(true)}
+      onMouseLeave={() => onHover && onHover(false)}
+      className={`rounded-xl border transition-all flex flex-col sm:grid sm:grid-cols-12 gap-2.5 p-3 bg-white dark:bg-slate-900 relative overflow-visible group/card egg-card ${
+        isSelected
+          ? "ring-2 ring-indigo-500/80 dark:ring-indigo-400/80 shadow-[0_0_15px_rgba(99,102,241,0.4)] border-indigo-500/80 dark:border-indigo-400/80"
+          : "border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md"
+      }`}
     >
       {/* Left Column: Avatar & Standard info */}
       <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
@@ -309,7 +322,7 @@ export const EggCard = React.memo(function EggCard({
             <GripVertical className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
           </div>
           <button
-            onClick={() => handleDeleteEgg(egg.id)}
+            onClick={(e) => { e.stopPropagation(); handleDeleteEgg(egg.id); }}
             className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 p-1 sm:p-0.5 rounded transition-all cursor-pointer border border-transparent hover:border-rose-100 dark:hover:border-rose-900/30"
             title="删除精灵蛋"
           >

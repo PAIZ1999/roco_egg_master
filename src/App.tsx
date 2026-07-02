@@ -423,6 +423,11 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [localSavePath, setLocalSavePath] = useState<string>("");
 
+  // 复制卡片数据功能相关的状态
+  const [selectedCard, setSelectedCard] = useState<{ id: string; type: "nest" | "parent" | "egg" } | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<{ id: string; type: "nest" | "parent" | "egg" } | null>(null);
+  const copiedCardRef = useRef<{ type: "nest" | "parent" | "egg"; data: any } | null>(null);
+
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
     setToast({ message, type });
   };
@@ -713,6 +718,277 @@ export default function App() {
     showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, 
     isLoaded
   ]);
+
+  // 跨类型卡片数据映射逻辑
+  const mapCardData = (sourceType: "nest" | "parent" | "egg", targetType: "nest" | "parent" | "egg", sourceData: any, targetGender?: "♂" | "♀") => {
+    if (sourceType === targetType) {
+      // 相同类型，完全克隆（保留原卡片的 id）
+      return { ...sourceData };
+    }
+
+    if (sourceType === "nest") {
+      // 蛋窝 EggPet -> 父母本 ParentPet
+      if (targetType === "parent") {
+        const gender = targetGender || "♀";
+        const details = getPetDetails(sourceData.sprite);
+        return {
+          sprite: gender === "♂" ? (sourceData.fatherName || sourceData.sprite) : (sourceData.motherName || sourceData.sprite),
+          nature: gender === "♂" ? (sourceData.fatherNatures?.[0] || "") : (sourceData.motherNatures?.[0] || ""),
+          stats: gender === "♂" ? [...(sourceData.fatherStats || ["生命", "物攻", "速度"])] : [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
+          brand: sourceData.brand,
+          groups: details ? [...details.groups] : [...sourceData.groups],
+          height: "",
+          weight: ""
+        };
+      }
+      // 蛋窝 EggPet -> 精灵蛋 EggData
+      if (targetType === "egg") {
+        const lowestName = getLowestStageName(sourceData.sprite);
+        const now = new Date();
+        const offset = now.getTimezoneOffset() * 60000;
+        const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
+        return {
+          sprite: lowestName,
+          fatherNature: sourceData.fatherNatures?.[0] || "",
+          motherNature: sourceData.motherNatures?.[0] || "",
+          fatherStats: [...(sourceData.fatherStats || ["生命", "物攻", "速度"])],
+          motherStats: [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
+          brand: sourceData.brand,
+          eggSize: "",
+          eggWeight: "",
+          produceTime: localISODate
+        };
+      }
+    }
+
+    if (sourceType === "parent") {
+      // 父母本 ParentPet -> 蛋窝 EggPet
+      if (targetType === "nest") {
+        const details = getPetDetails(sourceData.sprite);
+        const defaultStats = ["生命", "物攻", "速度"];
+        const isFather = sourceData.gender === "♂";
+        return {
+          sprite: isFather ? "" : sourceData.sprite,
+          fatherName: isFather ? sourceData.sprite : "",
+          motherName: isFather ? "" : sourceData.sprite,
+          fatherNatures: isFather ? [sourceData.nature] : [""],
+          motherNatures: isFather ? [""] : [sourceData.nature],
+          fatherStats: isFather ? [...sourceData.stats] : defaultStats,
+          motherStats: isFather ? defaultStats : [...sourceData.stats],
+          groups: details ? [...details.groups] : [],
+          brand: sourceData.brand,
+          status: "有现蛋",
+          isLimit: "无极限蛋",
+          is3V: "否",
+          hideStats: false,
+          eggCount: "1"
+        };
+      }
+      // 父母本 ParentPet -> 精灵蛋 EggData
+      if (targetType === "egg") {
+        const isFather = sourceData.gender === "♂";
+        const lowestName = isFather ? "" : getLowestStageName(sourceData.sprite);
+        const now = new Date();
+        const offset = now.getTimezoneOffset() * 60000;
+        const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
+        return {
+          sprite: lowestName,
+          fatherNature: isFather ? sourceData.nature : "",
+          motherNature: isFather ? "" : sourceData.nature,
+          fatherStats: isFather ? [...sourceData.stats] : ["无", "无", "无"],
+          motherStats: isFather ? ["无", "无", "无"] : [...sourceData.stats],
+          brand: sourceData.brand,
+          eggSize: "",
+          eggWeight: "",
+          produceTime: localISODate
+        };
+      }
+    }
+
+    if (sourceType === "egg") {
+      // 精灵蛋 EggData -> 蛋窝 EggPet
+      if (targetType === "nest") {
+        const details = getPetDetails(sourceData.sprite);
+        return {
+          sprite: sourceData.sprite,
+          fatherName: "",
+          motherName: sourceData.sprite,
+          fatherNatures: [sourceData.fatherNature || ""],
+          motherNatures: [sourceData.motherNature || ""],
+          fatherStats: [...(sourceData.fatherStats || ["生命", "物攻", "速度"])],
+          motherStats: [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
+          groups: details ? [...details.groups] : [],
+          brand: sourceData.brand,
+          status: "有现蛋",
+          isLimit: "无极限蛋",
+          is3V: "否",
+          hideStats: false,
+          eggCount: "1"
+        };
+      }
+      // 精灵蛋 EggData -> 父母本 ParentPet
+      if (targetType === "parent") {
+        const gender = targetGender || "♀";
+        const details = getPetDetails(sourceData.sprite);
+        return {
+          sprite: sourceData.sprite,
+          nature: gender === "♂" ? sourceData.fatherNature : sourceData.motherNature,
+          stats: gender === "♂" ? [...(sourceData.fatherStats || ["生命", "物攻", "速度"])] : [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
+          brand: sourceData.brand,
+          groups: details ? [...details.groups] : [],
+          height: "",
+          weight: ""
+        };
+      }
+    }
+
+    return null;
+  };
+
+  // 全局键盘复制粘贴事件监听
+  useEffect(() => {
+    const handleKeyDown = async (e: KeyboardEvent) => {
+      // 1. 判断是否处于输入框中
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === "INPUT" ||
+          activeEl.tagName === "TEXTAREA" ||
+          activeEl.tagName === "SELECT" ||
+          activeEl.getAttribute("contenteditable") === "true")
+      ) {
+        return; // 放行，保留原生输入框文本复制粘贴行为
+      }
+
+      // 2. Ctrl + C 复制卡片数据
+      if (e.ctrlKey && e.key.toLowerCase() === "c") {
+        if (!selectedCard) return;
+
+        let dataToCopy: any = null;
+        if (selectedCard.type === "nest") {
+          dataToCopy = pets.find(p => p.id === selectedCard.id);
+        } else if (selectedCard.type === "parent") {
+          dataToCopy = parents.find(p => p.id === selectedCard.id);
+        } else if (selectedCard.type === "egg") {
+          dataToCopy = eggs.find(eg => eg.id === selectedCard.id);
+        }
+
+        if (dataToCopy) {
+          const serialized = {
+            roco_egg_copypaste: true,
+            type: selectedCard.type,
+            data: dataToCopy
+          };
+          copiedCardRef.current = serialized;
+          try {
+            await navigator.clipboard.writeText(JSON.stringify(serialized));
+          } catch (err) {
+            console.warn("系统剪贴板写入失败，已使用内存保底：", err);
+          }
+          showToast(`已复制当前卡片数据！`, "success");
+        }
+      }
+
+      // 3. Ctrl + V 粘贴卡片数据
+      if (e.ctrlKey && e.key.toLowerCase() === "v") {
+        let copiedPayload: any = copiedCardRef.current;
+
+        // 尝试从系统剪贴板读取
+        try {
+          const clipText = await navigator.clipboard.readText();
+          if (clipText) {
+            const parsed = JSON.parse(clipText);
+            if (parsed && parsed.roco_egg_copypaste) {
+              copiedPayload = parsed;
+            }
+          }
+        } catch (err) {
+          // 捕获异常，回退使用内存保底
+        }
+
+        if (!copiedPayload || !copiedPayload.roco_egg_copypaste) {
+          return; // 无有效的复制数据
+        }
+
+        const { type: sourceType, data: sourceData } = copiedPayload;
+
+        // 判定粘贴目标
+        let targetCard = hoveredCard;
+        if (!targetCard && selectedCard) {
+          targetCard = selectedCard;
+        }
+
+        if (targetCard) {
+          // 情况 A & B：覆盖已有目标卡片
+          if (targetCard.type === "nest") {
+            const mapped = mapCardData(sourceType, "nest", sourceData);
+            if (mapped) {
+              setPets(prev => prev.map(p => p.id === targetCard!.id ? { ...p, ...mapped } : p));
+              showToast("数据已粘贴覆盖目标蛋窝！", "success");
+            }
+          } else if (targetCard.type === "parent") {
+            // 需要获取目标卡片的性别
+            const targetParent = parents.find(p => p.id === targetCard!.id);
+            const gender = targetParent ? targetParent.gender : "♀";
+            const mapped = mapCardData(sourceType, "parent", sourceData, gender);
+            if (mapped) {
+              setParents(prev => prev.map(p => p.id === targetCard!.id ? { ...p, ...mapped } : p));
+              showToast("数据已粘贴覆盖目标仓库！", "success");
+            }
+          } else if (targetCard.type === "egg") {
+            const mapped = mapCardData(sourceType, "egg", sourceData);
+            if (mapped) {
+              setEggs(prev => prev.map(eg => eg.id === targetCard!.id ? { ...eg, ...mapped } : eg));
+              showToast("数据已粘贴覆盖目标精灵蛋！", "success");
+            }
+          }
+        } else {
+          // 情况 C：没有 Hover 或点击的目标卡片作为目标，在当前活动 Tab 自动新建卡片
+          if (activeTab === "nest") {
+            const mapped = mapCardData(sourceType, "nest", sourceData);
+            if (mapped) {
+              const newPet = {
+                ...mapped,
+                id: `pet-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`
+              };
+              setPets(prev => [...prev, newPet]);
+              showToast("已自动新建蛋窝并粘贴数据！", "success");
+            }
+          } else if (activeTab === "parents") {
+            // 判断性别
+            let gender: "♂" | "♀" = "♀";
+            if (sourceType === "parent" && sourceData.gender) {
+              gender = sourceData.gender;
+            }
+            const mapped = mapCardData(sourceType, "parent", sourceData, gender);
+            if (mapped) {
+              const newParent = {
+                ...mapped,
+                id: `parent-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+                gender,
+                checked: false
+              };
+              setParents(prev => [...prev, newParent]);
+              showToast(`已自动新建${gender === "♂" ? "父本" : "母本"}卡片并粘贴数据！`, "success");
+            }
+          } else if (activeTab === "eggs") {
+            const mapped = mapCardData(sourceType, "egg", sourceData);
+            if (mapped) {
+              const newEgg = {
+                ...mapped,
+                id: `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`
+              };
+              setEggs(prev => [newEgg, ...prev]);
+              showToast("已自动新建精灵蛋并粘贴数据！", "success");
+            }
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedCard, hoveredCard, pets, parents, eggs, activeTab]);
 
   // Statistics calculation
   const totalPets = pets.length;
@@ -2558,7 +2834,15 @@ export default function App() {
   });
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
+    <div
+      className="bg-slate-50 dark:bg-slate-950 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white"
+      onClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest(".nest-card, .parent-card, .egg-card, .drag-grip-handle, .action-buttons, .select-action-buttons, .stat-icon-select-container")) {
+          setSelectedCard(null);
+        }
+      }}
+    >
       <div
         id="export-container"
         className="max-w-[1400px] mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden"
@@ -3038,6 +3322,9 @@ export default function App() {
                     handleUpdateHideStats={handleUpdateHideStats}
                     handleUpdateEggCount={handleUpdateEggCount}
                     onProduceEgg={handleProduceEgg}
+                    isSelected={selectedCard?.id === pet.id && selectedCard?.type === "nest"}
+                    onSelect={() => setSelectedCard({ id: pet.id as string, type: "nest" })}
+                    onHover={(hovered) => setHoveredCard(hovered ? { id: pet.id as string, type: "nest" } : null)}
                   />
                 ))}
               </div>
@@ -3697,6 +3984,9 @@ export default function App() {
                       handleUpdateEggFatherStat={handleUpdateEggFatherStat}
                       handleUpdateEggMotherStat={handleUpdateEggMotherStat}
                       handleUpdateEggProduceTime={handleUpdateEggProduceTime}
+                      isSelected={selectedCard?.id === egg.id && selectedCard?.type === "egg"}
+                      onSelect={() => setSelectedCard({ id: egg.id, type: "egg" })}
+                      onHover={(hovered) => setHoveredCard(hovered ? { id: egg.id, type: "egg" } : null)}
                     />
                   ))}
                 </div>
@@ -3932,6 +4222,9 @@ export default function App() {
                           handleUpdateParentNature={handleUpdateParentNature}
                           handleUpdateParentStat={handleUpdateParentStat}
                           handleUpdateParentChecked={handleUpdateParentChecked}
+                          isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
+                          onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
+                          onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
                         />
                       ))}
                     </SortableContext>
@@ -4052,6 +4345,9 @@ export default function App() {
                           handleUpdateParentNature={handleUpdateParentNature}
                           handleUpdateParentStat={handleUpdateParentStat}
                           handleUpdateParentChecked={handleUpdateParentChecked}
+                          isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
+                          onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
+                          onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
                         />
                       ))}
                     </SortableContext>
