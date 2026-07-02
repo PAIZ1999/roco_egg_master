@@ -721,39 +721,48 @@ export default function App() {
 
   // 跨类型卡片数据映射逻辑
   const mapCardData = (sourceType: "nest" | "parent" | "egg", targetType: "nest" | "parent" | "egg", sourceData: any, targetGender?: "♂" | "♀") => {
+    // 1. 深度克隆数据源，斩断引用共享
+    const dataCopy = JSON.parse(JSON.stringify(sourceData));
+    
+    // 2. 必须移除原卡片的 id，避免覆盖目标卡片的 ID 或产生重复的 ID 冲突
+    delete dataCopy.id;
+
     if (sourceType === targetType) {
-      // 相同类型，完全克隆（保留原卡片的 id）
-      return { ...sourceData };
+      // 相同类型，返回除去 id 的克隆对象（如果目标是父母本，额外修正其性别 gender 字段）
+      if (targetType === "parent" && targetGender) {
+        dataCopy.gender = targetGender;
+      }
+      return dataCopy;
     }
 
     if (sourceType === "nest") {
       // 蛋窝 EggPet -> 父母本 ParentPet
       if (targetType === "parent") {
         const gender = targetGender || "♀";
-        const details = getPetDetails(sourceData.sprite);
+        const details = getPetDetails(dataCopy.sprite);
         return {
-          sprite: gender === "♂" ? (sourceData.fatherName || sourceData.sprite) : (sourceData.motherName || sourceData.sprite),
-          nature: gender === "♂" ? (sourceData.fatherNatures?.[0] || "") : (sourceData.motherNatures?.[0] || ""),
-          stats: gender === "♂" ? [...(sourceData.fatherStats || ["生命", "物攻", "速度"])] : [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
-          brand: sourceData.brand,
-          groups: details ? [...details.groups] : [...sourceData.groups],
+          sprite: gender === "♂" ? (dataCopy.fatherName || dataCopy.sprite) : (dataCopy.motherName || dataCopy.sprite),
+          nature: gender === "♂" ? (dataCopy.fatherNatures?.[0] || "") : (dataCopy.motherNatures?.[0] || ""),
+          stats: gender === "♂" ? [...(dataCopy.fatherStats || ["生命", "物攻", "速度"])] : [...(dataCopy.motherStats || ["生命", "物攻", "速度"])],
+          brand: dataCopy.brand,
+          groups: details ? [...details.groups] : [...dataCopy.groups],
           height: "",
           weight: ""
         };
       }
       // 蛋窝 EggPet -> 精灵蛋 EggData
       if (targetType === "egg") {
-        const lowestName = getLowestStageName(sourceData.sprite);
+        const lowestName = getLowestStageName(dataCopy.sprite);
         const now = new Date();
         const offset = now.getTimezoneOffset() * 60000;
         const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
         return {
           sprite: lowestName,
-          fatherNature: sourceData.fatherNatures?.[0] || "",
-          motherNature: sourceData.motherNatures?.[0] || "",
-          fatherStats: [...(sourceData.fatherStats || ["生命", "物攻", "速度"])],
-          motherStats: [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
-          brand: sourceData.brand,
+          fatherNature: dataCopy.fatherNatures?.[0] || "",
+          motherNature: dataCopy.motherNatures?.[0] || "",
+          fatherStats: [...(dataCopy.fatherStats || ["生命", "物攻", "速度"])],
+          motherStats: [...(dataCopy.motherStats || ["生命", "物攻", "速度"])],
+          brand: dataCopy.brand,
           eggSize: "",
           eggWeight: "",
           produceTime: localISODate
@@ -764,19 +773,19 @@ export default function App() {
     if (sourceType === "parent") {
       // 父母本 ParentPet -> 蛋窝 EggPet
       if (targetType === "nest") {
-        const details = getPetDetails(sourceData.sprite);
+        const details = getPetDetails(dataCopy.sprite);
         const defaultStats = ["生命", "物攻", "速度"];
-        const isFather = sourceData.gender === "♂";
+        const isFather = dataCopy.gender === "♂";
         return {
-          sprite: isFather ? "" : sourceData.sprite,
-          fatherName: isFather ? sourceData.sprite : "",
-          motherName: isFather ? "" : sourceData.sprite,
-          fatherNatures: isFather ? [sourceData.nature] : [""],
-          motherNatures: isFather ? [""] : [sourceData.nature],
-          fatherStats: isFather ? [...sourceData.stats] : defaultStats,
-          motherStats: isFather ? defaultStats : [...sourceData.stats],
+          sprite: isFather ? "" : dataCopy.sprite,
+          fatherName: isFather ? dataCopy.sprite : "",
+          motherName: isFather ? "" : dataCopy.sprite,
+          fatherNatures: isFather ? [dataCopy.nature] : [""],
+          motherNatures: isFather ? [""] : [dataCopy.nature],
+          fatherStats: isFather ? [...dataCopy.stats] : defaultStats,
+          motherStats: isFather ? defaultStats : [...dataCopy.stats],
           groups: details ? [...details.groups] : [],
-          brand: sourceData.brand,
+          brand: dataCopy.brand,
           status: "有现蛋",
           isLimit: "无极限蛋",
           is3V: "否",
@@ -786,18 +795,18 @@ export default function App() {
       }
       // 父母本 ParentPet -> 精灵蛋 EggData
       if (targetType === "egg") {
-        const isFather = sourceData.gender === "♂";
-        const lowestName = isFather ? "" : getLowestStageName(sourceData.sprite);
+        const isFather = dataCopy.gender === "♂";
+        const lowestName = isFather ? "" : getLowestStageName(dataCopy.sprite);
         const now = new Date();
         const offset = now.getTimezoneOffset() * 60000;
         const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
         return {
           sprite: lowestName,
-          fatherNature: isFather ? sourceData.nature : "",
-          motherNature: isFather ? "" : sourceData.nature,
-          fatherStats: isFather ? [...sourceData.stats] : ["无", "无", "无"],
-          motherStats: isFather ? ["无", "无", "无"] : [...sourceData.stats],
-          brand: sourceData.brand,
+          fatherNature: isFather ? dataCopy.nature : "",
+          motherNature: isFather ? "" : dataCopy.nature,
+          fatherStats: isFather ? [...dataCopy.stats] : ["无", "无", "无"],
+          motherStats: isFather ? ["无", "无", "无"] : [...dataCopy.stats],
+          brand: dataCopy.brand,
           eggSize: "",
           eggWeight: "",
           produceTime: localISODate
@@ -808,17 +817,17 @@ export default function App() {
     if (sourceType === "egg") {
       // 精灵蛋 EggData -> 蛋窝 EggPet
       if (targetType === "nest") {
-        const details = getPetDetails(sourceData.sprite);
+        const details = getPetDetails(dataCopy.sprite);
         return {
-          sprite: sourceData.sprite,
+          sprite: dataCopy.sprite,
           fatherName: "",
-          motherName: sourceData.sprite,
-          fatherNatures: [sourceData.fatherNature || ""],
-          motherNatures: [sourceData.motherNature || ""],
-          fatherStats: [...(sourceData.fatherStats || ["生命", "物攻", "速度"])],
-          motherStats: [...(sourceData.motherStats || ["生命", "物攻", "速度"])],
+          motherName: dataCopy.sprite,
+          fatherNatures: [dataCopy.fatherNature || ""],
+          motherNatures: [dataCopy.motherNature || ""],
+          fatherStats: [...(dataCopy.fatherStats || ["生命", "物攻", "速度"])],
+          motherStats: [...(dataCopy.motherStats || ["生命", "物攻", "速度"])],
           groups: details ? [...details.groups] : [],
-          brand: sourceData.brand,
+          brand: dataCopy.brand,
           status: "有现蛋",
           isLimit: "无极限蛋",
           is3V: "否",
