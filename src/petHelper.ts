@@ -1,6 +1,5 @@
 import petsData from "../洛克精灵数据/pets_data.json";
 import spriteFiles from "./sprite_files.json";
-import petTypes from "./pet_types.json";
 import { EggData } from "./types";
 
 // 深拷贝以纠正原始 JSON 中错误录入的小数点放大及蛋组信息 (如月亮砣 ID 238)
@@ -71,7 +70,7 @@ cleanedPetsData.forEach((pet: any) => {
     }
 
     const groups = cleanEggGroups(form.egg_groups || []);
-    const types = (petTypes as Record<string, string[]>)[name] || (petTypes as Record<string, string[]>)[getBasePetName(name)] || [];
+    const types = form.types || [];
 
     if (!petDataMap[name]) {
       petDataMap[name] = {
