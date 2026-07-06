@@ -637,86 +637,127 @@ export default function App() {
     loadLocalData();
   }, []);
 
-  // Sync to localStorage and local file with visible auto-save status feedback
+  // 1. 用 Ref 追踪最新的保存数据状态，避免防抖闭包获取到旧状态
+  const autoSaveDataRef = useRef({
+    pets, trades, parents, eggs,
+    accounts, activeAccountId, accountDataMap,
+    showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize,
+    isLoaded
+  });
+
+  useEffect(() => {
+    autoSaveDataRef.current = {
+      pets, trades, parents, eggs,
+      accounts, activeAccountId, accountDataMap,
+      showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize,
+      isLoaded
+    };
+  }, [
+    pets, trades, parents, eggs,
+    accounts, activeAccountId, accountDataMap,
+    showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize,
+    isLoaded
+  ]);
+
+  // 2. 声明一个保存执行器函数，可以在防抖定时器到期时执行，也可以在 beforeunload 触发时立即执行
+  const executeSave = useCallback(() => {
+    const state = autoSaveDataRef.current;
+    if (!state.isLoaded || !state.activeAccountId) return;
+
+    // 强校验：如果当前 activeAccountId 在 accounts 列表中已不存在，说明该账号已经被删除，绝对不保存！
+    if (!state.accounts.some(a => a.id === state.activeAccountId)) {
+      return;
+    }
+
+    const mergedDataMap = {
+      ...state.accountDataMap,
+      [state.activeAccountId]: { pets: state.pets, trades: state.trades, parents: state.parents, eggs: state.eggs }
+    };
+
+    localStorage.setItem("roco_accounts_v1", JSON.stringify(state.accounts));
+    localStorage.setItem("roco_active_account_id_v1", state.activeAccountId);
+    localStorage.setItem("roco_account_data_map_v1", JSON.stringify(mergedDataMap));
+    
+    // 同时也保留单账号缓存以备不时之需（兼容老代码可能的加载）
+    localStorage.setItem("roco_egg_data_v2", JSON.stringify(state.pets));
+    localStorage.setItem("roco_egg_trades_v1", JSON.stringify(state.trades));
+    localStorage.setItem("roco_egg_parents_v1", JSON.stringify(state.parents));
+    localStorage.setItem("roco_egg_eggs_v1", JSON.stringify(state.eggs));
+
+    localStorage.setItem("roco_watermark_panel_open", String(state.showWatermarkPanel));
+    localStorage.setItem("roco_watermark_enabled", String(state.enableWatermark));
+    localStorage.setItem("roco_watermark_text", state.watermarkText);
+    localStorage.setItem("roco_watermark_opacity", String(state.watermarkOpacity));
+    localStorage.setItem("roco_watermark_density", state.watermarkDensity);
+    localStorage.setItem("roco_watermark_size", String(state.watermarkSize));
+
+    if (window.electronAPI) {
+      window.electronAPI.saveData({
+        accounts: state.accounts,
+        activeAccountId: state.activeAccountId,
+        accountDataMap: mergedDataMap,
+        settings: {
+          showWatermarkPanel: state.showWatermarkPanel,
+          enableWatermark: state.enableWatermark,
+          watermarkText: state.watermarkText,
+          watermarkOpacity: state.watermarkOpacity,
+          watermarkDensity: state.watermarkDensity,
+          watermarkSize: state.watermarkSize
+        }
+      }).then((res) => {
+        if (res && res.success) {
+          setLocalSavePath(res.path);
+        }
+      }).catch((e) => {
+        console.error("自动保存到本地文件失败:", e);
+      });
+    }
+
+    const now = new Date();
+    const timeStr = now.toTimeString().split(" ")[0];
+    setLastSaved(timeStr);
+  }, []);
+
+  // 3. 用 useEffect 来实现防抖自动保存
   useEffect(() => {
     if (!isLoaded || !activeAccountId) return;
 
-    // 1. 账号切换拦截：如果 activeAccountId 改变，说明正在切换账号。
+    // 账号切换拦截：如果 activeAccountId 改变，说明正在切换账号。
     // 这时我们仅同步 ref 值并退出，不做保存，避免将旧账号的数据覆写到新账号上！
     if (lastActiveAccountIdRef.current !== activeAccountId) {
       lastActiveAccountIdRef.current = activeAccountId;
       return;
     }
 
-    // 2. 强校验：如果当前 activeAccountId 在 accounts 列表中已不存在，说明该账号已经被删除，绝对不保存！
-    if (!accounts.some(a => a.id === activeAccountId)) {
-      return;
-    }
-
     setIsSaving(true);
-    
-    const mergedDataMap = {
-      ...accountDataMap,
-      [activeAccountId]: { pets, trades, parents, eggs }
-    };
 
-    localStorage.setItem("roco_accounts_v1", JSON.stringify(accounts));
-    localStorage.setItem("roco_active_account_id_v1", activeAccountId);
-    localStorage.setItem("roco_account_data_map_v1", JSON.stringify(mergedDataMap));
-    
-    // 同时也保留单账号缓存以备不时之需（兼容老代码可能的加载）
-    localStorage.setItem("roco_egg_data_v2", JSON.stringify(pets));
-    localStorage.setItem("roco_egg_trades_v1", JSON.stringify(trades));
-    localStorage.setItem("roco_egg_parents_v1", JSON.stringify(parents));
-    localStorage.setItem("roco_egg_eggs_v1", JSON.stringify(eggs));
+    // 500ms 后物理执行保存
+    const saveTimer = setTimeout(() => {
+      executeSave();
+      
+      // 保存完成 600ms 后，把 "正在保存" 的动画灭灯
+      const statusTimer = setTimeout(() => {
+        setIsSaving(false);
+      }, 600);
+      return () => clearTimeout(statusTimer);
+    }, 500);
 
-    localStorage.setItem("roco_watermark_panel_open", String(showWatermarkPanel));
-    localStorage.setItem("roco_watermark_enabled", String(enableWatermark));
-    localStorage.setItem("roco_watermark_text", watermarkText);
-    localStorage.setItem("roco_watermark_opacity", String(watermarkOpacity));
-    localStorage.setItem("roco_watermark_density", watermarkDensity);
-    localStorage.setItem("roco_watermark_size", String(watermarkSize));
-
-    if (window.electronAPI) {
-      const saveDataAsync = async () => {
-        try {
-          const res = await window.electronAPI.saveData({
-            accounts,
-            activeAccountId,
-            accountDataMap: mergedDataMap,
-            settings: {
-              showWatermarkPanel,
-              enableWatermark,
-              watermarkText,
-              watermarkOpacity,
-              watermarkDensity,
-              watermarkSize
-            }
-          });
-          if (res && res.success) {
-            setLocalSavePath(res.path);
-          }
-        } catch (e) {
-          console.error("自动保存到本地文件失败:", e);
-        }
-      };
-      saveDataAsync();
-    }
-
-    const now = new Date();
-    const timeStr = now.toTimeString().split(" ")[0];
-    setLastSaved(timeStr);
-
-    const timer = setTimeout(() => {
-      setIsSaving(false);
-    }, 600);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(saveTimer);
   }, [
     pets, trades, parents, eggs, 
     accounts, activeAccountId, accountDataMap,
     showWatermarkPanel, enableWatermark, watermarkText, watermarkOpacity, watermarkDensity, watermarkSize, 
-    isLoaded
+    isLoaded, executeSave
   ]);
+
+  // 4. 监听 beforeunload 确保页面关闭前一定进行同步物理存盘
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      executeSave();
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [executeSave]);
 
   // 跨类型卡片数据映射逻辑
   const mapCardData = (sourceType: "nest" | "parent" | "egg", targetType: "nest" | "parent" | "egg", sourceData: any, targetGender?: "♂" | "♀") => {
