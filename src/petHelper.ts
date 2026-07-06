@@ -1,8 +1,20 @@
-import eggPetList from "../images/洛克王国_蛋组精灵表.json";
+import petsData from "../洛克精灵数据/pets_data.json";
 import spriteFiles from "./sprite_files.json";
-import allGuideData from "../images/全图鉴.json";
-import petEggConf from "../images/蛋数据/PET_EGG_CONF.json";
+import petTypes from "./pet_types.json";
 import { EggData } from "./types";
+
+// 深拷贝以纠正原始 JSON 中错误录入的小数点放大及蛋组信息 (如月亮砣 ID 238)
+const cleanedPetsData = JSON.parse(JSON.stringify(petsData));
+const ylt = cleanedPetsData.find((p: any) => p.id === 238 || p.name === "月亮砣");
+if (ylt && ylt.egg_data) {
+  ylt.egg_data.egg_groups = ["海洋组"];
+  if (ylt.egg_data.weight_max > 1000) {
+    ylt.egg_data.weight_max = ylt.egg_data.weight_max / 10000;
+  }
+  if (ylt.egg_data.giant_weight_line > 1000) {
+    ylt.egg_data.giant_weight_line = ylt.egg_data.giant_weight_line / 10000;
+  }
+}
 
 
 export interface PetData {
@@ -24,86 +36,63 @@ export interface PetDetails {
 
 const petDataMap: Record<string, PetDetails> = {};
 
-// 预处理进化链分组，以便推导分支进化和最大 stage 宠物
-const familyGroups: Record<string, any[]> = {};
-eggPetList.forEach((item: any) => {
-  const chain = item.family_chain || "";
-  if (!chain) return;
-  if (!familyGroups[chain]) {
-    familyGroups[chain] = [];
-  }
-  familyGroups[chain].push(item);
-});
+// 预定义平行最高进化阶段（分支进化）
+const PARALLEL_MAX_STAGES = ["翠顶夫人", "黑羽夫人", "秩序鱿墨", "混乱鱿彩"];
 
-const chainMaxStageMap: Record<string, string[]> = {};
-const chainMaxStageValueMap: Record<string, number> = {};
+// 全局的 chainMaxStageMap 映射
+export const chainMaxStageMap: Record<string, string[]> = {
+  "乖乖鹄 → 蓝珠天鹅 → 翠顶夫人 → 黑羽夫人": ["翠顶夫人", "黑羽夫人"],
+  "墨鱿士 → 混乱鱿彩 → 秩序鱿墨": ["混乱鱿彩", "秩序鱿墨"]
+};
 
-Object.entries(familyGroups).forEach(([chain, pets]) => {
-  let maxStage = 0;
-  pets.forEach(p => {
-    if (p.stage > maxStage) {
-      maxStage = p.stage;
+// 清洗蛋组里的脏数据，如月亮砣包含“海洋组身高：...”
+const cleanEggGroups = (groups: string[]): string[] => {
+  return groups.map(g => g.includes("海洋组") ? "海洋组" : g);
+};
+
+// 预处理 cleanedPetsData，提取所有的 forms 并初始化 petDataMap
+cleanedPetsData.forEach((pet: any) => {
+  const chainStr = pet.evolution_chain.join(" → ");
+  const lastInChain = pet.evolution_chain[pet.evolution_chain.length - 1];
+
+  pet.forms.forEach((form: any) => {
+    const name = form.name;
+    if (!name) return;
+
+    // 推导 maxStageName
+    let maxStageName = name;
+    if (PARALLEL_MAX_STAGES.includes(name)) {
+      maxStageName = name;
+    } else if (name === lastInChain) {
+      maxStageName = name;
+    } else {
+      // 默认升级为进化链中排在最后的那个高阶宠物
+      maxStageName = lastInChain || name;
     }
-  });
-  
-  const maxStageNames: string[] = [];
-  pets.forEach(p => {
-    if (p.stage === maxStage && p.display_name) {
-      if (!maxStageNames.includes(p.display_name)) {
-        maxStageNames.push(p.display_name);
-      }
-    }
-  });
-  
-  chainMaxStageMap[chain] = maxStageNames;
-  chainMaxStageValueMap[chain] = maxStage;
-});
 
-eggPetList.forEach((item: any) => {
-  const name = item.display_name;
-  if (!name) return;
+    const groups = cleanEggGroups(form.egg_groups || []);
+    const types = (petTypes as Record<string, string[]>)[name] || (petTypes as Record<string, string[]>)[getBasePetName(name)] || [];
 
-  const groups = item.egg_group_names 
-    ? item.egg_group_names.split(",").map((g: string) => g.trim()).filter(Boolean) 
-    : [];
-  const types = item.type_name 
-    ? item.type_name.split(",").map((t: string) => t.replace("元素精灵", "").trim()).filter(Boolean) 
-    : [];
-  const chain = item.family_chain || "";
-  
-  const maxStagePets = chainMaxStageMap[chain] || [];
-  const maxStageVal = chainMaxStageValueMap[chain] || 0;
-  
-  let maxStageName = name;
-  if (item.stage < maxStageVal) {
-    // 低阶宠物：默认升级为进化链中排在最后的那个最高阶宠物
-    const chainParts = chain.split(" → ").map(p => p.trim());
-    const availableMaxPetsInChain = chainParts.filter(p => maxStagePets.includes(p));
-    maxStageName = availableMaxPetsInChain[availableMaxPetsInChain.length - 1] || maxStagePets[0] || name;
-  } else {
-    // 已是最高阶形态本身，不需要升级
-    maxStageName = name;
-  }
-
-  if (!petDataMap[name]) {
-    petDataMap[name] = {
-      name,
-      groups: [],
-      types: [],
-      familyChain: chain,
-      maxStageName
-    };
-  }
-
-  // Merge unique groups and types
-  groups.forEach((g: string) => {
-    if (!petDataMap[name].groups.includes(g)) {
-      petDataMap[name].groups.push(g);
-    }
-  });
-  types.forEach((t: string) => {
-    if (!petDataMap[name].types.includes(t)) {
-      petDataMap[name].types.push(t);
+    if (!petDataMap[name]) {
+      petDataMap[name] = {
+        name,
+        groups,
+        types,
+        familyChain: chainStr,
+        maxStageName
+      };
+    } else {
+      // 合并唯一组和系别
+      groups.forEach((g: string) => {
+        if (!petDataMap[name].groups.includes(g)) {
+          petDataMap[name].groups.push(g);
+        }
+      });
+      types.forEach((t: string) => {
+        if (!petDataMap[name].types.includes(t)) {
+          petDataMap[name].types.push(t);
+        }
+      });
     }
   });
 });
@@ -134,35 +123,27 @@ export const getPetDetails = (name: string): PetDetails | null => {
  */
 export const getPetGuideSize = (spriteName: string): { height: string; weight: string } | null => {
   if (!spriteName) return null;
-  const parts = spriteName.split("_");
-  const baseName = parts[0];
-  const formName = parts[1];
+  const baseName = getBasePetName(spriteName);
 
-  const spirits = (allGuideData as any).spirits || [];
-
-  // 1. 若有特定形态后缀，优先尝试精确匹配基础名和形态名
-  if (formName) {
-    const matched = spirits.find(
-      (s: any) => s.name === baseName && s.region_form === formName
-    );
-    if (matched) {
-      return {
-        height: matched.height || "",
-        weight: matched.weight || "",
-      };
-    }
+  let matchedForm: any = null;
+  for (const pet of cleanedPetsData) {
+    matchedForm = pet.forms.find((f: any) => f.name === baseName);
+    if (matchedForm) break;
   }
 
-  // 2. 兜底匹配：只查找基础名对应的第一个精灵条目
-  const matchedBase = spirits.find((s: any) => s.name === baseName);
-  if (matchedBase) {
-    return {
-      height: matchedBase.height || "",
-      weight: matchedBase.weight || "",
-    };
-  }
+  if (!matchedForm) return null;
 
-  return null;
+  const heightStr = matchedForm.height_min === matchedForm.height_max
+    ? `${matchedForm.height_min}`
+    : `${matchedForm.height_min}~${matchedForm.height_max}`;
+  const weightStr = matchedForm.weight_min === matchedForm.weight_max
+    ? `${matchedForm.weight_min}`
+    : `${matchedForm.weight_min}~${matchedForm.weight_max}`;
+
+  return {
+    height: heightStr,
+    weight: weightStr
+  };
 };
 
 export interface SizeThresholds {
@@ -178,46 +159,25 @@ export interface SizeThresholds {
  * 计算精灵身高体重的临界值和大块头/小不点及格线
  */
 export const getPetSizeThresholds = (spriteName: string): SizeThresholds | null => {
-  const guideSize = getPetGuideSize(spriteName);
-  if (!guideSize || !guideSize.height || !guideSize.weight) return null;
+  if (!spriteName) return null;
+  const baseName = getBasePetName(spriteName);
 
-  try {
-    const parseRange = (rangeStr: string): { min: number; max: number } => {
-      const parts = rangeStr.split("~").map(p => parseFloat(p.trim()));
-      if (parts.length === 2) {
-        return { min: parts[0], max: parts[1] };
-      } else if (parts.length === 1 && !isNaN(parts[0])) {
-        return { min: parts[0], max: parts[0] };
-      }
-      return { min: 0, max: 0 };
-    };
-
-    const hRange = parseRange(guideSize.height);
-    const wRange = parseRange(guideSize.weight);
-
-    if (hRange.min === 0 && hRange.max === 0) return null;
-    if (wRange.min === 0 && wRange.max === 0) return null;
-
-    // 大块头及格线: 最高重量 + (最低重量 - 最高重量) * 0.02
-    // 相当于: maxWeight - (maxWeight - minWeight) * 0.02
-    const giantWeightLine = wRange.max - (wRange.max - wRange.min) * 0.02;
-    
-    // 小不点及格线: 最轻重量 - (最轻重量 - 最重重量) * 0.05
-    // 相当于: minWeight + (maxWeight - minWeight) * 0.05
-    const tinyWeightLine = wRange.min + (wRange.max - wRange.min) * 0.05;
-
-    return {
-      minHeight: hRange.min,
-      maxHeight: hRange.max,
-      minWeight: wRange.min,
-      maxWeight: wRange.max,
-      giantWeightLine: Math.round(giantWeightLine * 10000) / 10000,
-      tinyWeightLine: Math.round(tinyWeightLine * 10000) / 10000
-    };
-  } catch (e) {
-    console.error("Error calculating thresholds for", spriteName, e);
-    return null;
+  let matchedForm: any = null;
+  for (const pet of cleanedPetsData) {
+    matchedForm = pet.forms.find((f: any) => f.name === baseName);
+    if (matchedForm) break;
   }
+
+  if (!matchedForm) return null;
+
+  return {
+    minHeight: matchedForm.height_min,
+    maxHeight: matchedForm.height_max,
+    minWeight: matchedForm.weight_min,
+    maxWeight: matchedForm.weight_max,
+    giantWeightLine: matchedForm.giant_weight_line,
+    tinyWeightLine: matchedForm.tiny_weight_line
+  };
 };
 
 
@@ -277,8 +237,9 @@ export const getAvailableSprites = (petName: string): string[] => {
  */
 export const getSpriteFileName = (petName: string): string | null => {
   if (!petName) return null;
+  const baseName = getBasePetName(petName);
   
-  // 1. Try exact match first (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
+  // 1. Try exact match (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
   const exactMatch = petName + ".png";
   if (spriteFiles.includes(exactMatch)) {
     return exactMatch;
@@ -291,7 +252,6 @@ export const getSpriteFileName = (petName: string): string | null => {
   }
   
   // 3. Try base name exact match
-  const baseName = getBasePetName(petName);
   const baseExactMatch = baseName + ".png";
   if (spriteFiles.includes(baseExactMatch)) {
     return baseExactMatch;
@@ -457,52 +417,49 @@ export const getEggConfig = (petName: string): EggConfig | null => {
   if (!petName) return null;
   const baseName = getBasePetName(petName);
   
-  // Find in PET_EGG_CONF
-  const eggConf = (petEggConf as any[]).find(item => item.name === baseName);
-  if (eggConf) {
-    return eggConf as EggConfig;
-  }
-  return null;
+  const matchedPet = cleanedPetsData.find((p: any) => p.name === baseName || p.evolution_chain.includes(baseName));
+  if (!matchedPet || !matchedPet.egg_data) return null;
+
+  const egg = matchedPet.egg_data;
+  return {
+    pet_id: matchedPet.id,
+    name: matchedPet.name,
+    weight_low: egg.weight_min * 1000,
+    weight_high: egg.weight_max * 1000,
+    height_low: egg.height_min * 100, // 还原为厘米
+    height_high: egg.height_max * 100,
+    hatch_data: 0
+  };
 };
 
 export interface EggSizeThresholds {
-  minHeight: number; // in meters (height_low / 100)
-  maxHeight: number; // in meters (height_high / 100)
-  minWeight: number; // in kg (weight_low / 1000)
-  maxWeight: number; // in kg (weight_high / 1000)
-  giantWeightLine: number; // maxWeight - (maxWeight - minWeight) * 0.02
-  tinyWeightLine: number; // minWeight + (maxWeight - minWeight) * 0.05
+  minHeight: number; // in meters
+  maxHeight: number; // in meters
+  minWeight: number; // in kg
+  maxWeight: number; // in kg
+  giantWeightLine: number;
+  tinyWeightLine: number;
 }
 
 /**
  * 计算精灵蛋身高体重的临界值和大块头/小不点及格线
- * 高度单位为 mm -> 除以 100 转换为 m；重量单位为 g -> 除以 1000 转换为 kg。
  */
 export const getEggSizeThresholds = (petName: string): EggSizeThresholds | null => {
-  const eggConf = getEggConfig(petName);
-  if (!eggConf) return null;
+  if (!petName) return null;
+  const baseName = getBasePetName(petName);
 
-  try {
-    const minHeight = eggConf.height_low / 100;
-    const maxHeight = eggConf.height_high / 100;
-    const minWeight = eggConf.weight_low / 1000;
-    const maxWeight = eggConf.weight_high / 1000;
+  const matchedPet = cleanedPetsData.find((p: any) => p.name === baseName || p.evolution_chain.includes(baseName));
+  if (!matchedPet || !matchedPet.egg_data) return null;
 
-    const giantWeightLine = maxWeight - (maxWeight - minWeight) * 0.02;
-    const tinyWeightLine = minWeight + (maxWeight - minWeight) * 0.05;
-
-    return {
-      minHeight,
-      maxHeight,
-      minWeight,
-      maxWeight,
-      giantWeightLine: Math.round(giantWeightLine * 10000) / 10000,
-      tinyWeightLine: Math.round(tinyWeightLine * 10000) / 10000
-    };
-  } catch (e) {
-    console.error("Error calculating egg thresholds for", petName, e);
-    return null;
-  }
+  const egg = matchedPet.egg_data;
+  return {
+    minHeight: egg.height_min,
+    maxHeight: egg.height_max,
+    minWeight: egg.weight_min,
+    maxWeight: egg.weight_max,
+    giantWeightLine: egg.giant_weight_line,
+    tinyWeightLine: egg.tiny_weight_line
+  };
 };
 
 export const formatHatchTime = (seconds: number): string => {

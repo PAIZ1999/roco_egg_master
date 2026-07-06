@@ -140,6 +140,13 @@
           - **精灵蛋 -> 父母本**：若粘贴至父本，复制 `fatherNature` 和 `fatherStats` 到 `nature` 与 `stats`；若粘贴至母本，复制蛋名 `sprite`、`motherNature` 和 `motherStats`；若 parents 处直接粘贴新建，则默认以母本新建。
           - **精灵蛋与蛋窝的转换**：蛋窝转精灵蛋时，精灵名字自动转换成进化链最低阶形态（使用 `getLowestStageName`）。
 
+      - **数据源统一与自动纠偏机制 (2026-07-06 升级)**:
+        - **废弃旧数据源**：彻底去除了对旧的 `洛克王国_蛋组精灵表.json`、`全图鉴.json` 以及 `PET_EGG_CONF.json` 数据源文件的引用。
+        - **新数据源整合**：改为使用 `/洛克精灵数据/pets_data.json` 统一管理精灵形态、进化链以及蛋的基础极值，配合由脚本提炼的 `src/pet_types.json` 保证系别属性 Badge 图标正常渲染。
+        - **浮点物理化计算**：舍弃了以往对身高体重 `~` 解析与除以 100/1000 换算的杂乱逻辑，直接读取新 JSON 的浮点数物理大小和极值（giant/tiny weight line）。
+        - **内存级数据纠偏与清洗**：在 `petHelper.ts` 预处理阶段，系统自动深拷贝并修正了月亮砣 (ID 238) 的错位数据（过滤脏蛋组，并将错误放大了一万倍的 `weight_max` 16000 纠正为 `1.6kg`，`giant_weight_line` 15869 纠正为 `1.5869kg`），使得前台及格计算和极值渲染完全对齐。
+        - **图片资源防污染**：带 `id-` 前缀的图片由于是数据源图，不进入 `images/sprites/` 头像库，头像依然使用干净的无前缀名称进行物理名和前缀匹配（映射在 `sprite_files.json`）。
+
 2. **主进程 (Electron - CommonJS)**:
    - 文件入口设在 `electron/main.cjs`。由于根目录配置了 `"type": "module"`，Electron 的 CommonJS 代码必须显式命名为 `.cjs` 以确保兼容性。
    - 通过 `preload.cjs` 暴露出安全的 IPC 接口：`loadData()`、`saveData(data)`、`getDataPath()`。

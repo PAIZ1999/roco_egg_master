@@ -53,7 +53,6 @@ import {
   Account,
   AccountData
 } from "./types";
-import petEggConf from "../images/蛋数据/PET_EGG_CONF.json";
 import { EggCard } from "./components/EggCard";
 import { EggData } from "./types";
 import { getEggConfig, getEggSizeThresholds, formatHatchTime, getEggStatusType, isEgg3V, getLowestStageName } from "./petHelper";
