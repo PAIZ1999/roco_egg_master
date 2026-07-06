@@ -21,9 +21,10 @@
 
 ## Decisions Made
 - [决策]: 使用 python 脚本在 `洛克精灵数据/pets_data.json` 物理文件上直接写入 `"types"` 属性，使数据包自包含。
+- [决策]: 将 `pets_data.json` 搬迁至 `src/pets_data.json` 目录下以保证依赖内聚，同时调整 `tsconfig.json` 的 `include`/`exclude` 隔离非打包的 `scratch/` 脚本。
 
 ## Errors Encountered
 - 无
 
 ## Status
-**Completed** - 所有阶段已全部完成。
+**Completed** - 所有阶段已全部完成，已把 pets_data.json 移存至 src 目录下并顺利重构运行。

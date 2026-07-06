@@ -1,4 +1,4 @@
-import petsData from "../洛克精灵数据/pets_data.json";
+import petsData from "./pets_data.json";
 import spriteFiles from "./sprite_files.json";
 import { EggData } from "./types";
 
