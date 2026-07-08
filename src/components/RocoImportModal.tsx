@@ -212,7 +212,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   existingParents,
   onImport
 }) => {
-  const [activeTab, setActiveTab] = useState<"sqlite" | "api" | "paste">("api");
+  const [activeTab, setActiveTab] = useState<"sqlite" | "paste">("sqlite");
   const [apiUrl, setApiUrl] = useState("http://127.0.0.1:4939/api/pets");
   const [jsonText, setJsonText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -280,15 +280,15 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
           if (available) {
             setActiveTab("sqlite");
           } else {
-            setActiveTab("api");
+            setActiveTab("sqlite");
           }
         }).catch(() => {
-          setActiveTab("api");
+          setActiveTab("sqlite");
         }).finally(() => {
           setIsLoading(false);
         });
       } else {
-        setActiveTab("api");
+        setActiveTab("sqlite");
       }
     }
   }, [isOpen]);
@@ -803,16 +803,6 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
               </button>
             )}
             <button
-              onClick={() => { setActiveTab("api"); setErrorMsg(""); setSuccessMsg(""); }}
-              className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
-                activeTab === "api"
-                  ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-              }`}
-            >
-              网页接口同步
-            </button>
-            <button
               onClick={() => { setActiveTab("paste"); setErrorMsg(""); setSuccessMsg(""); }}
               className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
                 activeTab === "paste"
@@ -863,32 +853,6 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                     重新检测本地数据
                   </button>
                 )}
-              </div>
-            )}
-
-            {activeTab === "api" && (
-              <div className="flex items-center gap-2 w-full">
-                <div className="relative flex-1 flex items-center">
-                  <span className="absolute left-3 flex h-2.5 w-2.5">
-                    <span className={`${getStatusLightClass()} absolute inline-flex h-full w-full rounded-full opacity-75`}></span>
-                    <span className={`${getStatusLightClass().replace('animate-ping', '')} relative inline-flex rounded-full h-2.5 w-2.5`}></span>
-                  </span>
-                  <input
-                    type="text"
-                    value={apiUrl}
-                    onChange={(e) => setApiUrl(e.target.value)}
-                    placeholder="输入助手 API 地址..."
-                    className="w-full text-xs font-bold pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-800 dark:text-slate-100"
-                  />
-                </div>
-                <button
-                  onClick={handleApiFetch}
-                  disabled={isLoading}
-                  className="bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white font-bold text-xs px-3.5 py-1.8 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
-                  同步精灵
-                </button>
               </div>
             )}
 
