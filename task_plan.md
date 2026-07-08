@@ -1,32 +1,33 @@
-# Task Plan: 洛克王国孵蛋数据大容量导入与展示性能优化
+# Task Plan: 优化表格视觉效果 (参考图二)
 
 ## Goal
-优化游戏数据导入模块，消除一次性解析/查重上千条精灵时导致的主线程假死白屏问题，并对蛋窝中心、父母本仓储进行分页渲染改造，彻底根治大容量数据下的软件卡顿与白屏 Bug，实现极致流畅的操作体验。
+重构并美化精灵蛋窝主表格的视觉效果。消除繁杂的纵向网格线、精简性格全称为简称、隐藏多余的性别符号、将状态和牌子 select 框胶囊 Badge 化，并为现蛋数量配置智能高亮容器，使其整体设计达到媲美图二的高级美感。
 
 ## MCP Status
 - [x] memory 检索完成
-- [ ] sequential-thinking 分析完成
-- [ ] memory 知识存储完成
+- [x] context7/deepwiki 查询完成
+- [x] sequential-thinking 分析完成
+- [x] memory 知识存储完成
 
 ## Phases
-- [/] Phase 1: 规划与准备（算法分析、性能排查与优化方案设计） [进行中]
-- [ ] Phase 2: RocoImportModal.tsx 性能优化（O(1) 哈希去重算法、弹窗内表格分页展示）
-- [ ] Phase 3: 父母本仓储库分页改造（父本和母本管理列表独立分页及筛选重置联动）
-- [ ] Phase 4: 我的精灵蛋窝中心分页改造（蛋窝 SortableCard 网格分页及筛选重置联动）
-- [ ] Phase 5: 打包构建与多维度极限性能测试验证
+- [x] Phase 1: 规划与准备
+- [x] Phase 2: 信息调研与代码设计 (对比图一与图二的视觉差异，梳理修改样式)
+- [x] Phase 3: 核心执行 (修改 `src/App.tsx` 中的 Table 结构与 CSS 类)
+- [x] Phase 4: 测试与验证 (验证亮暗色模式、页面对齐及长图导出效果)
+- [x] Phase 5: 最终交付与总结
 
 ## Key Questions
-1. 父母本与蛋窝分页的单页容量大小：
-   - 父母本左右分栏渲染，建议 `PARENT_PAGE_SIZE = 10`，兼顾内容饱满度和大屏滚动友好度。
-   - 蛋窝中心采用 3 列网格，建议 `NEST_PAGE_SIZE = 9` (3x3)，保证每一页完美对称无缺口。
-   - 导入弹窗内精灵列表为行紧凑表格，建议 `IMPORT_PAGE_SIZE = 50`。
+1. 在表格模式下，性格和三维如果不同时，如何以最雅致的方式显示？
+   - 答：放弃大面积的高饱和度红蓝粉，转而使用细小的灰色 ♂ 和 ♀ 符号引导简称，文字颜色统一使用中性黑/深灰。
+2. 牌子和状态在表格里是 select 选择框，如何兼顾“可修改的下拉交互”和“Badged 胶囊化”？
+   - 答：保留原生 select 以维持快捷修改能力，但移除其边框、背景及默认外观，在 class 中添加 `border-0 rounded-full py-1 shadow-3xs` 配合已有的背景样式，使其呈现静态胶囊 Badge 效果，在 hover 和 focus 时应用精美的环形高亮。
 
 ## Decisions Made
-- [决策]: **O(1) 去重哈希表设计**：在 RocoImportModal 中，不再针对每一只导入的精灵在 existingParents 数组中反复做 `.some()` + `JSON.stringify()`，而是提前将现有父母本数据编译为一个 `Set<string>`，使查重复杂度由 $O(N \times M)$ 降为 $O(N + M)$，完全消除数据量大时的解析卡死。
-- [决策]: **全分页控制机制**：避免一次性渲染成百上千个包含拖动、下拉 autocomplete 的 React 节点。在蛋窝、父本、母本三大高载荷组件内均加入独立分页，并将 `@dnd-kit/sortable` 限制在单页内排序。
+- [决策]: 蛋窝状态和牌子依然使用 select 元素，但通过 CSS `border-0 rounded-full text-center cursor-pointer` 样式包装。
+  - [理由]: 保持了用户直接在表格内点击即修改的流畅交互，同时在视觉上 100% 模拟了现代圆角 Badge 标签，完美兼容普通状态和长图导出。
 
 ## Errors Encountered
-- 暂无
+- 无
 
 ## Status
-**Currently in Phase 1** - 已完成代码瓶颈定位，正在编写任务计划并准备进行去重和渲染分页开发。
+**Currently in Phase 5** - 交付完成。

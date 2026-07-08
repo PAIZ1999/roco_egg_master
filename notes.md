@@ -1,67 +1,70 @@
-# Research Notes: 洛克世界盒子嗅探解密与 parents 联动导入
+# Notes: 表格视觉效果优化研究笔记
 
-## 模型信息
-- 模型名称：Gemini 3.5 Flash (High)
-- 模型大小：中等偏上 (Medium-High)
-- 模型类型：多模态大语言模型
-- 修订版本：v6.0-20260707
+## 1. 图一与图二的对比及优化要点
 
----
+| 元素 | 图一状况 (需优化) | 图二效果 (目标) | 实施策略 |
+| :--- | :--- | :--- | :--- |
+| **网格线** | 密集的纵横分割线 | 仅水平底线，无纵向线 | 移除 header 和 tbody 单元格的所有 `border-r` |
+| **斑马纹** | 无交替色，全是白色 | 浅灰/蓝交替背景 | 奇数白，偶数 `bg-slate-50/60 dark:bg-slate-900/30` |
+| **3V高亮** | 未突出高亮行 | 优雅的浅蓝/浅青高亮背景 | 3V行应用 `bg-emerald-50/40 dark:bg-emerald-950/10` |
+| **性格展示** | 性格全称 + 蓝粉性别，繁杂 | 性格简称，去性别符(若相同) | 提取简称。不同时使用灰色 `♂` `♀` 分行展示 |
+| **三维展示** | 明亮蓝粉 `♂` `♀` + 换行 | 相同则单行中性，不同分两行 | 相同显示单行中性；不同用淡雅 ♂/♀ 引导展示 |
+| **下拉选择** | 方正 select 框，生硬 | 胶囊状 Badge 下拉标签 | `appearance-none border-0 rounded-full text-center py-1` |
+| **现蛋数量** | 大边框数字框 + 微调箭头 | 浅黄/灰 Badge，微调融入 | 有现蛋用 `bg-amber-50`，无现蛋用 `0` 占位 Badge |
 
-## 1. 洛克王国协议解密逻辑记录
+## 2. 核心 CSS 与 HTML 结构修改设计
 
-通过对腾讯 TSF4G (TGCP) 协议和解密指南的深度研究，该助手的数据捕获流程如下：
-* **包头格式**：洛克王国的协议帧头拥有 21 字节的 BE21 私有格式，前两字节 Magic 为 `0x33 0x66` (即 ASCII 字符 `'3'` 与 `'f'`)。
-* **会话密钥捕获**：在握手阶段，捕获服务端返回的命令字 `0x1002` (`TGCP_CMD_ACK`) 包。在它的头部扩展数据 `header_extra` 中，提取偏移 `2` 开始的 16 字节，该数据即为本次游戏会话的 **AES-128 密钥**。
-* **精灵数据解密**：在游戏内打开仓库/背包时，会触发命令字 `0x4013` (`TGCP_CMD_DATA`)。提取其 Body 部分，**前 16 字节作为解密 IV**，第 16 字节往后为密文。使用 AES-128-CBC 算法和之前提取的密钥解密，然后按照 PKCS7 标准去除尾部填充。
-* **反序列化**：解密明文是 Protobuf 字节流。通过编译好的 `.proto` 接口描述符文件进行反序列化，即可输出包含宠物 ID、性格、体型、性别和个体值的高清 JSON 数据。
+### A. 下拉选择胶囊化 (牌子与状态)
+将原本 select 的 class 进行如下升级：
+```typescript
+// 牌子
+className={`appearance-none text-[10.5px] font-bold text-center border-0 rounded-full py-1 px-2.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-all shadow-3xs ${getBrandStyle(pet.brand)}`}
 
----
+// 状态
+className={`appearance-none text-[10.5px] font-bold text-center border-0 rounded-full py-1 px-3 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-all shadow-3xs ${getStatusStyle(pet.status)}`}
+```
 
-## 2. 联动导入逻辑细节
+### B. 现蛋数量容器设计
+如果 `pet.status === "有现蛋"`，渲染带背景的圆角 Badge 输入框；否则只显示一个轻巧的灰色 Badge：
+```typescript
+{pet.status === "有现蛋" ? (
+  <div className="flex items-center justify-center gap-1 bg-amber-50/80 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 font-extrabold border border-amber-200/50 dark:border-amber-900/40 rounded-full pl-2.5 pr-1.5 py-0.5 w-[72px] mx-auto shadow-3xs group/egg">
+    <input
+      type="number"
+      min="0"
+      value={pet.eggCount || "0"}
+      onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
+      className="w-7 bg-transparent text-center text-xs font-black border-0 p-0 focus:ring-0 focus:outline-none text-amber-800 dark:text-amber-200"
+    />
+    <div className="flex flex-col gap-0.5 shrink-0 select-none text-[8px] font-bold text-amber-500/70 hover:text-amber-700">
+      <button
+        onClick={() => handleUpdateEggCount(pet.id as string, String(Number(pet.eggCount || 0) + 1))}
+        className="hover:text-amber-600 cursor-pointer"
+      >
+        ▲
+      </button>
+      <button
+        onClick={() => handleUpdateEggCount(pet.id as string, String(Math.max(0, Number(pet.eggCount || 0) - 1)))}
+        className="hover:text-amber-600 cursor-pointer"
+      >
+        ▼
+      </button>
+    </div>
+  </div>
+) : (
+  <div className="bg-slate-50/60 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600 font-bold border border-slate-100 dark:border-slate-800/40 rounded-full py-0.5 w-[72px] text-center mx-auto text-xs select-none">
+    0
+  </div>
+)}
+```
 
-由于在 Electron 内核中不宜直接编译原生网卡驱动 C++ 组件以避免安装分发崩溃，最稳健的做法是直接与用户后台运行的 `rocom-helper` 进行数据对接：
-
-* **API 同步**：
-  - `rocom-helper` 默认在本地 `4939` 端口启动 Web 服务，并向前端页面提供宠物 JSON 数据（接口例如 `/api/pets` 等）。
-  - 在 Electron 主进程通过 Node.js 原生 `http` 发起 GET 代理，绕过浏览器的跨域安全性（CORS）限制。
-  - 用户可自选端口。
-
-* **JSON 复制粘贴**：
-  - 作为 100% 成功率的兜底。允许用户直接复制 API 响应，并粘贴至文本区域进行即时解析。
-
-* **字段智能映射规则**：
-  - **性别**：
-    `male` / `1` / `公` -> `"♂"`
-    `female` / `2` / `母` -> `"♀"`
-  - **性格**：调用 `cleanNature` 清洗，剔除无加成的平衡性格。
-  - **三围 (Stats)**：
-    分析六围个体值。若某项数值等于最大值 31（V），则提取其属性名（如“生命”、“物攻”、“速度”）并组装为 `stats` 数组（例如 `["生命", "物攻", "速度"]` 属于 3V）。
-  - **体型牌 (Brand)**：
-    若 JSON 带有品牌则直接对齐；否则提取宠物身高体重，传入本项目的 `getPetSizeThresholds(spriteName)` 自动计算是否达标并赋予牌子（大粗、大婉、小粗、小婉等）。
-  - **进化链还原**：
-    使用已有的 `getBasePetName` 剥离地区/特殊形态后缀（如下划线后的名称），但保持后缀用于展示。
-  - **导入去重**：
-    与 `parents` 中现存数据进行比较，若“宠物名 + 性格 + 牌子 + 三围 + 性别”一致，则自动跳过。
-
----
-
-## 3. 大容量数据导入与渲染性能优化
-
-针对用户提出的“一次性导入过多数据偶尔白屏，且导入过多数据后卡顿”的问题，我们从 **算法优化** 和 **渲染优化** 两方面进行改进：
-
-### 3.1 查重去重性能瓶颈与 $O(1)$ 哈希优化
-* **问题瓶颈**：在旧逻辑中，针对每一个从游戏盒子读出的精灵，都会通过 `existingParents.some(...)` 在已有的父母本列表中进行全局线性搜索，并且在匹配三围时反复使用 `JSON.stringify(p.stats.sort())`。若导入 3000 只精灵且在库中已有 500 只父母本，这会执行近 **1,500,000 次** `JSON.stringify`，这在 JS 单线程中直接导致几秒甚至十几秒的阻塞（假死白屏）。
-* **优化策略**：
-  - 在大循环外，提前将 `existingParents` 的特征构建为唯一的字符串特征 Set（哈希表），形如 `Set<"喵喵|♀|固执|普通|生命,速度">`。
-  - 在遍历解析新精灵时，直接通过 `existingSet.has(key)` 在 $O(1)$ 时间复杂度下完成去重检测。
-  - 单次查重时间由 $O(M)$ 降为 $O(1)$，总复杂度从 $O(N \times M)$ 骤降为 $O(N + M)$，彻底消除 CPU 密集导致的挂起假死。
-
-### 3.2 渲染瓶颈与多组件分页（Pagination）改造
-* **问题瓶颈**：React 渲染几百张甚至上千张包含 `dnd-kit` 拖拽监听、Autocomplete 组件、头像资源和系别 Badges 的卡片，会导致 DOM 树急剧膨胀，任何小更新或拖动都会触发严重的重绘计算，导致极其严重的打字和操作卡顿。
-* **优化策略**：
-  - **导入预览弹窗分页**：在 `RocoImportModal.tsx` 中引入弹窗内分页（页大小为 50），避免一次性把 2000 个精灵展示在 Modal 弹窗表格里。
-  - **父母本仓储分页**：在 `App.tsx` 的父本仓储和母本仓储各自引入独立分页状态，每页展示 10 只（`PARENT_PAGE_SIZE = 10`），降低 DOM 节点的堆积。
-  - **蛋窝网格分页**：在“我的精灵蛋窝中心”引入网格分页，每页展示 9 只（`NEST_PAGE_SIZE = 9`，支持 3x3 完美排版）。
-  - **筛选联动重置**：当在各区域输入过滤检索字符、改变下拉筛选时，自动将对应区域的当前页码重置为 1，且在删除卡片或批量操作导致页面缩小时自动归拢，确保数据连续完整。
-
+### C. 垃圾桶按钮精细化
+```typescript
+<button
+  onClick={() => handleDeletePet(pet.id as string)}
+  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50/50 dark:hover:bg-rose-950/30 p-1.5 rounded-lg transition-colors cursor-pointer"
+  title="删除该蛋窝"
+>
+  <Trash2 className="w-3.5 h-3.5" />
+</button>
+```
