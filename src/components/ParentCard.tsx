@@ -288,6 +288,17 @@ export const ParentCard = React.memo(function ParentCard({
           : "bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 shadow-sm"
       }`}
     >
+      {/* 游戏内仓库位置定位 Badge */}
+      {parent.position && parent.position !== "-" && (
+        <div 
+          className="absolute top-2 right-14 bg-indigo-50/95 dark:bg-indigo-950/60 backdrop-blur-xs text-indigo-650 dark:text-indigo-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-indigo-155/80 dark:border-indigo-900/45 flex items-center gap-0.5 shadow-3xs select-none z-10"
+          title="游戏内仓库位置"
+        >
+          <span className="scale-90">📍</span>
+          <span>{parent.position.replace('\n', ' ')}</span>
+        </div>
+      )}
+
       {/* Left Column: Avatar, Checkbox, Delete */}
       <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
         

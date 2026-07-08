@@ -195,6 +195,7 @@ interface ParsedPet {
   isNearGiant?: boolean;
   isNearTiny?: boolean;
   isNearVoice?: boolean;
+  position?: string;
 }
 
 interface RocoImportModalProps {
@@ -453,13 +454,31 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const stats: string[] = ["无", "无", "无"];
       const foundVs: string[] = [];
 
-      // 7.1 支持魔方 Next 协议 attribute_info 结构体解析 (talent >= 30 或是 talent_add_value === 10)
+      // 7.1 支持魔方 Next 协议 attribute_info 结构体解析 (优先以 talent_add_value > 0 努力加点判定)
       if (item.attribute_info && typeof item.attribute_info === "object") {
+        const hasEfforts = Object.values(item.attribute_info).some((attrObj: any) => 
+          attrObj && attrObj.talent_add_value !== undefined && attrObj.talent_add_value > 0
+        );
+
         Object.entries(item.attribute_info).forEach(([k, attrObj]: [string, any]) => {
-          if (attrObj && (attrObj.talent >= 30 || attrObj.talent_add_value === 10)) {
+          if (attrObj) {
             const mappedName = STAT_KEY_MAP[k];
-            if (mappedName && !foundVs.includes(mappedName)) {
-              foundVs.push(mappedName);
+            if (mappedName) {
+              if (hasEfforts) {
+                // 如果存在努力加点，只提取加了点的属性作为三围
+                if (attrObj.talent_add_value !== undefined && attrObj.talent_add_value > 0) {
+                  if (!foundVs.includes(mappedName)) {
+                    foundVs.push(mappedName);
+                  }
+                }
+              } else {
+                // 否则（未加点胚子），用个体值大等于 30 兜底
+                if (attrObj.talent >= 30 || attrObj.talent_add_value === 10) {
+                  if (!foundVs.includes(mappedName)) {
+                    foundVs.push(mappedName);
+                  }
+                }
+              }
             }
           }
         });
@@ -515,7 +534,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         voice,
         isNearGiant,
         isNearTiny,
-        isNearVoice
+        isNearVoice,
+        position: item.position || "-"
       };
     } catch (e) {
       console.error("解析单只宠物失败:", e, item);
@@ -724,7 +744,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         stats: p.stats,
         groups: p.groups,
         checked: false,
-        voice: p.voice
+        voice: p.voice,
+        position: p.position
       };
     });
 
@@ -1025,15 +1046,16 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                       <th className="w-12 py-3 px-4 text-center">选择</th>
                       <th className="w-32 py-3 px-2">精灵</th>
                       <th className="w-16 py-3 px-2 text-center">性别</th>
-                      <th className="w-48 py-3 px-2">性格</th>
-                      <th className="w-36 py-3 px-2 text-center">体型声音牌</th>
+                      <th className="w-44 py-3 px-2">性格</th>
+                      <th className="w-32 py-3 px-2 text-center">体型声音牌</th>
+                      <th className="w-24 py-3 px-2 text-center">位置</th>
                       <th className="w-24 py-3 px-2 text-center">状态</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {filteredPets.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="py-12 text-center text-xs text-slate-400 dark:text-slate-500">
+                        <td colSpan={7} className="py-12 text-center text-xs text-slate-400 dark:text-slate-500">
                           没有找到符合筛选条件的精灵数据
                         </td>
                       </tr>
@@ -1124,6 +1146,20 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                                   </span>
                                 )}
                               </div>
+                            </td>
+
+                            {/* Position */}
+                            <td className="py-2.5 px-2 text-center text-slate-650 dark:text-slate-400 select-none">
+                              {pet.position && pet.position !== "-" ? (
+                                <div className="flex flex-col gap-0.5 font-bold leading-tight text-[10px]">
+                                  <span className="text-indigo-600 dark:text-indigo-400">{pet.position.split('\n')[0]}</span>
+                                  {pet.position.split('\n')[1] && (
+                                    <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium">{pet.position.split('\n')[1]}</span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="text-slate-400 dark:text-slate-600 font-medium">-</span>
+                              )}
                             </td>
 
                             {/* Duplicate status badge */}

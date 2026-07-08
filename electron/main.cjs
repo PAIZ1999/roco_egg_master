@@ -165,6 +165,161 @@ ipcMain.handle('select-save-path', async (event, currentData) => {
   };
 });
 
+ipcMain.handle('http-get', async (event, url) => {
+  return new Promise((resolve) => {
+    if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) {
+      resolve({ success: false, error: '无效的协议，必须以 http:// 或 https:// 开头' });
+      return;
+    }
+    const client = url.startsWith('https') ? require('https') : require('http');
+    client.get(url, (res) => {
+      let data = '';
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+      res.on('end', () => {
+        try {
+          resolve({ success: true, data: JSON.parse(data) });
+        } catch (e) {
+          resolve({ success: false, error: 'JSON解析失败: ' + e.message, raw: data });
+        }
+      });
+    }).on('error', (err) => {
+      resolve({ success: false, error: '网络请求失败: ' + err.message });
+    });
+  });
+});
+
+// 纯 JS 执行 Python 代码直连读取 SQLite
+function runPythonCommand(pyScript) {
+  return new Promise((resolve) => {
+    const { spawn } = require('child_process');
+    const child = spawn('python', ['-c', pyScript]);
+    
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (data) => { stdout += data; });
+    child.stderr.on('data', (data) => { stderr += data; });
+    
+    child.on('error', (err) => {
+      resolve({ success: false, error: '未检测到 Python 运行环境: ' + err.message });
+    });
+    
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve({ success: true, stdout });
+      } else {
+        resolve({ success: false, error: stderr.trim() || `Exit code ${code}` });
+      }
+    });
+  });
+}
+
+ipcMain.handle('get-roco-users', async () => {
+  const pyScript = `
+import sqlite3, os, json
+db_path = os.path.expandvars(r"%APPDATA%\\roco_helper\\roco_helper.sqlite")
+if not os.path.exists(db_path):
+    print(json.dumps({"success": False, "error": "Database file not found"}))
+    exit(0)
+try:
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='users';")
+    if not cur.fetchone():
+        print(json.dumps({"success": False, "error": "Users table not found"}))
+        exit(0)
+    cur.execute("SELECT uid, name FROM users;")
+    rows = cur.fetchall()
+    res = [{"uid": r[0], "name": r[1]} for r in rows]
+    print(json.dumps({"success": True, "data": res}))
+except Exception as e:
+    print(json.dumps({"success": False, "error": str(e)}))
+`.trim();
+
+  const result = await runPythonCommand(pyScript);
+  if (result.success) {
+    try {
+      return JSON.parse(result.stdout);
+    } catch (e) {
+      return { success: false, error: 'JSON解析失败: ' + e.message, raw: result.stdout };
+    }
+  } else {
+    return { success: false, error: result.error };
+  }
+});
+
+ipcMain.handle('get-roco-pets', async (event, uid) => {
+  if (!uid || isNaN(Number(uid))) {
+    return { success: false, error: '无效的角色 UID' };
+  }
+  const cleanUid = String(parseInt(uid));
+  const pyScript = `
+import sqlite3, os, json
+db_path = os.path.expandvars(r"%APPDATA%\\roco_helper\\roco_helper.sqlite")
+if not os.path.exists(db_path):
+    print(json.dumps({"success": False, "error": "Database file not found"}))
+    exit(0)
+try:
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    
+    # 1. 建立宠物在盒子里的位置映射 (ID -> position)
+    box_table = "box_" + "${cleanUid}"
+    pet_positions = {}
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (box_table,))
+    if cur.fetchone():
+        cur.execute(f"SELECT id, data FROM {box_table};")
+        box_rows = cur.fetchall()
+        for b_id, b_data_str in box_rows:
+            try:
+                b_data = json.loads(b_data_str)
+                if isinstance(b_data, list):
+                    for grid_idx, p_id in enumerate(b_data):
+                        if p_id and p_id > 0:
+                            row = (grid_idx // 5) + 1
+                            col = (grid_idx % 5) + 1
+                            pet_positions[p_id] = f"{b_id + 1}盒\\n{row}行{col}列"
+            except:
+                pass
+
+    # 2. 获取宠物数据
+    table_name = "pet_info_" + "${cleanUid}"
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (table_name,))
+    if not cur.fetchone():
+        print(json.dumps({"success": False, "error": "Table not found: " + table_name}))
+        exit(0)
+    cur.execute(f"SELECT id, data FROM {table_name};")
+    rows = cur.fetchall()
+    res = []
+    for r in rows:
+        try:
+            pet_id = r[0]
+            pet_data = json.loads(r[1])
+            # 填入位置信息
+            pet_data["position"] = pet_positions.get(pet_id, "-")
+            res.append({"id": pet_id, "data": pet_data})
+        except:
+            pass
+    print(json.dumps({"success": True, "data": res}))
+except Exception as e:
+    print(json.dumps({"success": False, "error": str(e)}))
+`.trim();
+
+  const result = await runPythonCommand(pyScript);
+  if (result.success) {
+    try {
+      return JSON.parse(result.stdout);
+    } catch (e) {
+      return { success: false, error: 'JSON解析失败: ' + e.message, raw: result.stdout };
+    }
+  } else {
+    return { success: false, error: result.error };
+  }
+});
+
+
 app.whenReady().then(() => {
   loadConfig();
   createWindow();

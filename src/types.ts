@@ -38,6 +38,7 @@ export interface ParentPet {
   groups: string[];
   checked?: boolean;
   voice?: number | null;
+  position?: string;
 }
 
 export interface EggData {
