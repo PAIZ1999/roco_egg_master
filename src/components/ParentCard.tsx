@@ -483,7 +483,7 @@ export const ParentCard = React.memo(function ParentCard({
           {/* Height (Ruler) */}
           <div className="flex items-center justify-between gap-3">
             <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">身高</span>
-            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
               <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <Ruler className="w-3.5 h-3.5" />
               </div>
@@ -501,7 +501,7 @@ export const ParentCard = React.memo(function ParentCard({
           {/* Weight (Weight/Scale) */}
           <div className="flex items-center justify-between gap-3">
             <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">体重</span>
-            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
               <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <Weight className="w-3.5 h-3.5" />
               </div>
@@ -519,7 +519,7 @@ export const ParentCard = React.memo(function ParentCard({
           {/* Voice (🎤 Input) */}
           <div className="flex items-center justify-between gap-3">
             <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">声音值</span>
-            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
               <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <span className="text-[10px]">🎤</span>
               </div>
