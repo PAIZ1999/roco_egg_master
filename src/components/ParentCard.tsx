@@ -288,17 +288,6 @@ export const ParentCard = React.memo(function ParentCard({
           : "bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 shadow-sm"
       }`}
     >
-      {/* 游戏内仓库位置定位 Badge */}
-      {parent.position && parent.position !== "-" && (
-        <div 
-          className="absolute top-2 right-14 bg-indigo-50/95 dark:bg-indigo-950/60 backdrop-blur-xs text-indigo-650 dark:text-indigo-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-indigo-155/80 dark:border-indigo-900/45 flex items-center gap-0.5 shadow-3xs select-none z-10"
-          title="游戏内仓库位置"
-        >
-          <span className="scale-90">📍</span>
-          <span>{parent.position.replace('\n', ' ')}</span>
-        </div>
-      )}
-
       {/* Left Column: Avatar, Checkbox, Delete */}
       <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
         
@@ -490,45 +479,45 @@ export const ParentCard = React.memo(function ParentCard({
 
           {/* Height (Ruler) */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">身高</span>
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">身高</span>
             <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
-                <Ruler className="w-3 h-3" />
+              <div className="pl-1 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
+                <Ruler className="w-3.5 h-3.5" />
               </div>
               <input
                 type="text"
                 value={parent.height}
                 onChange={(e) => handleUpdateParentHeight(parent.id, e.target.value)}
                 placeholder="数字..."
-                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
-              <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">m</span>
+              <span className="text-[9px] font-bold text-slate-400 pr-1 pl-0.5 pointer-events-none select-none shrink-0">m</span>
             </div>
           </div>
 
           {/* Weight (Weight/Scale) */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">体重</span>
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">体重</span>
             <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
-                <Weight className="w-3 h-3" />
+              <div className="pl-1 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
+                <Weight className="w-3.5 h-3.5" />
               </div>
               <input
                 type="text"
                 value={parent.weight}
                 onChange={(e) => handleUpdateParentWeight(parent.id, e.target.value)}
                 placeholder="数字..."
-                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
-              <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">kg</span>
+              <span className="text-[9px] font-bold text-slate-400 pr-1 pl-0.5 pointer-events-none select-none shrink-0">kg</span>
             </div>
           </div>
 
           {/* Voice (🎤 Input) */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">声音值</span>
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">声音值</span>
             <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
+              <div className="pl-1.5 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <span className="text-[10px]">🎤</span>
               </div>
               <input
@@ -544,7 +533,7 @@ export const ParentCard = React.memo(function ParentCard({
                   }
                 }}
                 placeholder="数字..."
-                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -603,6 +592,18 @@ export const ParentCard = React.memo(function ParentCard({
                 </span>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* 📍 游戏内仓库位置定位 Badge */}
+        {parent.position && parent.position !== "-" && (
+          <div className="flex items-center justify-between gap-1.5 bg-indigo-50/60 dark:bg-indigo-950/20 p-1.5 rounded-lg border border-indigo-100/40 dark:border-indigo-900/30 shrink-0 select-none">
+            <span className="text-[10px] font-bold text-indigo-750 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
+              <span>📍</span>游戏位置
+            </span>
+            <span className="text-[10px] font-extrabold text-indigo-650 dark:text-indigo-350 pr-1.5">
+              {parent.position.replace('\n', ' ')}
+            </span>
           </div>
         )}
       </div>
