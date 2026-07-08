@@ -4150,7 +4150,7 @@ export default function App() {
               title="从洛克王国世界助手导入精灵盒子数据"
             >
               <Download className="w-4 h-4" />
-              从盒子导入
+              从游戏数据导入
             </button>
             <button
               onClick={() => handleReset("parents")}
