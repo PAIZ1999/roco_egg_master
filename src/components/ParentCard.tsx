@@ -184,7 +184,8 @@ export const ParentCard = React.memo(function ParentCard({
     }
 
     // 2. 声音状态判定
-    if (parent.voice !== undefined && parent.voice !== null) {
+    const hasVoiceBrand = ["大粗", "大婉", "小粗", "小婉", "单粗嗓门", "单婉转声"].includes(parent.brand);
+    if (!hasVoiceBrand && parent.voice !== undefined && parent.voice !== null) {
       const v = parent.voice;
       if (v <= -96) {
         badges.push(
@@ -458,66 +459,68 @@ export const ParentCard = React.memo(function ParentCard({
       <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-0">
         
         {/* Core Profile: Brand, Height, Weight, Voice */}
-        <div className="grid grid-cols-3 gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
+        <div className="flex flex-col gap-2 bg-slate-50/70 dark:bg-slate-900/40 p-2 rounded-lg border border-slate-100/60 dark:border-slate-800">
           {/* Brand */}
-          <div className="col-span-3 flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">牌子</span>
-            <select
-              value={parent.brand}
-              onChange={(e) => handleUpdateParentBrand(parent.id, e.target.value)}
-              className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors ${getBrandStyle(
-                parent.brand
-              )}`}
-            >
-              {BRAND_OPTIONS.map((opt) => (
-                <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">
-                  {opt}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">牌子</span>
+            <div className="flex-1 relative">
+              <select
+                value={parent.brand}
+                onChange={(e) => handleUpdateParentBrand(parent.id, e.target.value)}
+                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors ${getBrandStyle(
+                  parent.brand
+                )}`}
+              >
+                {BRAND_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Height (Ruler) */}
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">身高</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">身高</span>
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <Ruler className="w-3.5 h-3.5" />
               </div>
               <input
                 type="text"
                 value={parent.height}
                 onChange={(e) => handleUpdateParentHeight(parent.id, e.target.value)}
-                placeholder="数字..."
-                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                placeholder="输入身高..."
+                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
-              <span className="text-[9px] font-bold text-slate-400 pr-1 pl-0.5 pointer-events-none select-none shrink-0">m</span>
+              <span className="text-[10px] font-bold text-slate-400 pr-2.5 pointer-events-none select-none shrink-0">m</span>
             </div>
           </div>
 
           {/* Weight (Weight/Scale) */}
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">体重</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">体重</span>
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <Weight className="w-3.5 h-3.5" />
               </div>
               <input
                 type="text"
                 value={parent.weight}
                 onChange={(e) => handleUpdateParentWeight(parent.id, e.target.value)}
-                placeholder="数字..."
-                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                placeholder="输入体重..."
+                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
-              <span className="text-[9px] font-bold text-slate-400 pr-1 pl-0.5 pointer-events-none select-none shrink-0">kg</span>
+              <span className="text-[10px] font-bold text-slate-400 pr-2.5 pointer-events-none select-none shrink-0">kg</span>
             </div>
           </div>
 
           {/* Voice (🎤 Input) */}
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-350 select-none">声音值</span>
-            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-1.5 pr-0.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">声音值</span>
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
                 <span className="text-[10px]">🎤</span>
               </div>
               <input
@@ -532,8 +535,8 @@ export const ParentCard = React.memo(function ParentCard({
                     handleUpdateParentVoice(parent.id, isNaN(numVal) ? null : numVal);
                   }
                 }}
-                placeholder="数字..."
-                className="w-full min-w-0 text-xs font-bold text-center text-slate-800 dark:text-slate-100 bg-transparent py-0.5 px-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                placeholder="输入声音值..."
+                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
           </div>
