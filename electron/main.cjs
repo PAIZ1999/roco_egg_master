@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { exec } = require('child_process');
 
 let mainWindow;
 let customSaveDir = null;
@@ -32,6 +33,60 @@ function saveCustomPath(dir) {
   } catch (e) {
     console.error('写入配置文件失败:', e);
   }
+}
+
+// 自动在后台隐藏启动 roco_helper-v3.2.2.exe 进程
+function startRocoHelper() {
+  const pathsToTry = [
+    path.join(app.getAppPath(), 'roco_helper-v3.2.2.exe'),
+    path.join(app.getAppPath(), '..', 'roco_helper-v3.2.2.exe'),
+    path.join(path.dirname(process.execPath), 'roco_helper-v3.2.2.exe'),
+    path.join(process.cwd(), 'roco_helper-v3.2.2.exe')
+  ];
+
+  let helperPath = null;
+  for (const p of pathsToTry) {
+    if (fs.existsSync(p)) {
+      helperPath = p;
+      break;
+    }
+  }
+
+  if (!helperPath) {
+    console.log('未找到 roco_helper-v3.2.2.exe，跳过后台自动启动');
+    return;
+  }
+
+  console.log('找到 roco_helper-v3.2.2.exe，路径为:', helperPath);
+
+  // 检查是否已经在运行，防止重复开启
+  exec('tasklist /FI "IMAGENAME eq roco_helper-v3.2.2.exe"', (err, stdout) => {
+    if (stdout && stdout.includes('roco_helper-v3.2.2.exe')) {
+      console.log('roco_helper-v3.2.2.exe 已经在运行中，无需重新启动');
+      return;
+    }
+
+    // Windows 平台使用 powershell 隐藏窗口启动
+    const psCommand = `Start-Process -FilePath "${helperPath}" -WindowStyle Hidden`;
+    exec(`powershell -NoProfile -ExecutionPolicy Bypass -Command "${psCommand}"`, (error) => {
+      if (error) {
+        console.error('后台启动 roco_helper 失败:', error);
+      } else {
+        console.log('已在后台静默隐藏启动 roco_helper-v3.2.2.exe');
+      }
+    });
+  });
+}
+
+// 退出时强制清理 roco_helper-v3.2.2.exe 进程
+function stopRocoHelper() {
+  exec('taskkill /F /IM roco_helper-v3.2.2.exe', (err) => {
+    if (err) {
+      console.log('清理后台 roco_helper 失败或当前无对应运行实例');
+    } else {
+      console.log('已成功在后台清理结束 roco_helper-v3.2.2.exe 进程');
+    }
+  });
 }
 
 function createWindow() {
@@ -322,6 +377,7 @@ except Exception as e:
 
 app.whenReady().then(() => {
   loadConfig();
+  startRocoHelper(); // 启动时在后台静默隐藏拉起 roco_helper-v3.2.2.exe
   createWindow();
 
   app.on('activate', () => {
@@ -329,6 +385,10 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+});
+
+app.on('will-quit', () => {
+  stopRocoHelper(); // 退出时自动清理杀死后台的 roco_helper-v3.2.2.exe 进程
 });
 
 app.on('window-all-closed', () => {
