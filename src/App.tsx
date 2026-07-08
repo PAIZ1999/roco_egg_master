@@ -3514,13 +3514,13 @@ export default function App() {
               <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
                 <thead>
                   <tr className="bg-indigo-600 dark:bg-indigo-950/80 text-white select-none">
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[50px]">#</th>
-                    <th className="px-4 py-3 text-left text-xs font-extrabold tracking-wider min-w-[150px]">精灵</th>
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px]">性格</th>
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider min-w-[150px]">蛋组</th>
-                    <th className="px-4 py-3 text-center text-xs font-extrabold tracking-wider min-w-[200px]">三维</th>
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px]">牌子</th>
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[110px]">蛋窝状态</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[50px] border-r border-indigo-500/50 dark:border-slate-800/60">#</th>
+                    <th className="px-4 py-3 text-left text-xs font-extrabold tracking-wider min-w-[150px] border-r border-indigo-500/50 dark:border-slate-800/60">精灵</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px] border-r border-indigo-500/50 dark:border-slate-800/60">性格</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider min-w-[150px] border-r border-indigo-500/50 dark:border-slate-800/60">蛋组</th>
+                    <th className="px-4 py-3 text-center text-xs font-extrabold tracking-wider min-w-[200px] border-r border-indigo-500/50 dark:border-slate-800/60">三维</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px] border-r border-indigo-500/50 dark:border-slate-800/60">牌子</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[110px] border-r border-indigo-500/50 dark:border-slate-800/60">蛋窝状态</th>
                     <th
                       onClick={() => {
                         if (nestSortField !== "eggCount") {
@@ -3532,7 +3532,7 @@ export default function App() {
                           setNestSortField(null);
                         }
                       }}
-                      className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px] cursor-pointer hover:bg-indigo-700 select-none transition-colors"
+                      className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px] cursor-pointer hover:bg-indigo-700 select-none transition-colors border-r border-indigo-500/50 dark:border-slate-800/60"
                       title="点击切换现蛋排序：降序 -> 升序 -> 默认"
                     >
                       <div className="flex items-center justify-center gap-1">
@@ -3581,10 +3581,10 @@ export default function App() {
                           key={pet.id}
                           className="hover:bg-indigo-50/15 dark:hover:bg-slate-800/40 transition-colors"
                         >
-                          <td className="px-3 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 font-mono align-middle">
+                          <td className="px-3 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 font-mono align-middle border-r border-slate-100 dark:border-slate-800">
                             {rowNum}
                           </td>
-                          <td className="px-4 py-2.5 align-middle">
+                          <td className="px-4 py-2.5 align-middle border-r border-slate-100 dark:border-slate-800">
                             <div className="flex items-center gap-2.5 text-left">
                               <div className="w-8 h-8 rounded bg-slate-50 dark:bg-slate-950/40 border border-slate-200/65 dark:border-slate-800 flex items-center justify-center relative overflow-hidden shrink-0">
                                 {spriteUrl ? (
@@ -3601,17 +3601,17 @@ export default function App() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-3 py-3 text-center align-middle">
+                          <td className="px-3 py-3 text-center align-middle border-r border-slate-100 dark:border-slate-800">
                             {naturesEqual ? (
                               <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{fNat}</span>
                             ) : (
-                              <div className="flex flex-col text-[10px] leading-tight text-center">
+                              <div className="inline-flex flex-col text-left text-[10px] leading-tight mx-auto">
                                 <span className="text-blue-600 dark:text-blue-400 font-bold">♂ {fNat}</span>
-                                <span className="text-pink-600 dark:text-pink-400 font-bold">♀ {mNat}</span>
+                                <span className="text-pink-655 dark:text-pink-400 font-bold">♀ {mNat}</span>
                               </div>
                             )}
                           </td>
-                          <td className="px-3 py-3 text-center align-middle">
+                          <td className="px-3 py-3 text-center align-middle border-r border-slate-100 dark:border-slate-800">
                             <div className="flex flex-wrap gap-1 justify-center">
                               {pet.groups.map(grp => (
                                 <span
@@ -3623,7 +3623,7 @@ export default function App() {
                               ))}
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-center align-middle">
+                          <td className="px-4 py-3 text-center align-middle border-r border-slate-100 dark:border-slate-800">
                             {pet.hideStats ? (
                               <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500">已隐藏</span>
                             ) : statsEqual ? (
