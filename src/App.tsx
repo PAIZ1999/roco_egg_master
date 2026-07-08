@@ -75,6 +75,7 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableCard } from "./components/SortableCard";
 import { ParentCard } from "./components/ParentCard";
+import { RocoImportModal } from "./components/RocoImportModal";
 import { Autocomplete } from "./components/Autocomplete";
 import { WarehouseStatsTable } from "./components/WarehouseStatsTable";
 import {
@@ -304,6 +305,7 @@ export default function App() {
   const [eggFormWeight, setEggFormWeight] = useState("");
   const [eggFormProduceTime, setEggFormProduceTime] = useState("");
   const [excludedPairKeys, setExcludedPairKeys] = useState<Set<string>>(new Set());
+  const [showRocoImportModal, setShowRocoImportModal] = useState(false);
   // 配对中心筛选状态
   const [pairingFilterName, setPairingFilterName] = useState("");
   const [pairingFilterGroup, setPairingFilterGroup] = useState("");
@@ -1442,6 +1444,10 @@ export default function App() {
 
   const handleUpdateParentChecked = useCallback((id: string, checked: boolean) => {
     handleUpdateParentField(id, "checked", checked);
+  }, [handleUpdateParentField]);
+
+  const handleUpdateParentVoice = useCallback((id: string, voice: number | null) => {
+    handleUpdateParentField(id, "voice", voice);
   }, [handleUpdateParentField]);
 
   const handleUpdateParentStat = useCallback((id: string, statIndex: number, value: string) => {
@@ -4139,6 +4145,14 @@ export default function App() {
               <span>母本 (♀): {visibleMothers.length}/{parents.filter(p => p.gender === "♀").length} 只</span>
             </div>
             <button
+              onClick={() => setShowRocoImportModal(true)}
+              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+              title="从洛克王国世界助手导入精灵盒子数据"
+            >
+              <Download className="w-4 h-4" />
+              从盒子导入
+            </button>
+            <button
               onClick={() => handleReset("parents")}
               className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
               title="清空当前所有父母本登记数据"
@@ -4271,6 +4285,7 @@ export default function App() {
                           handleUpdateParentNature={handleUpdateParentNature}
                           handleUpdateParentStat={handleUpdateParentStat}
                           handleUpdateParentChecked={handleUpdateParentChecked}
+                          handleUpdateParentVoice={handleUpdateParentVoice}
                           isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
                           onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
                           onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
@@ -4394,6 +4409,7 @@ export default function App() {
                           handleUpdateParentNature={handleUpdateParentNature}
                           handleUpdateParentStat={handleUpdateParentStat}
                           handleUpdateParentChecked={handleUpdateParentChecked}
+                          handleUpdateParentVoice={handleUpdateParentVoice}
                           isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
                           onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
                           onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
@@ -5816,6 +5832,18 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* 洛克世界盒子导入弹窗 */}
+      <RocoImportModal
+        isOpen={showRocoImportModal}
+        onClose={() => setShowRocoImportModal(false)}
+        existingParents={parents}
+        onImport={(newParents) => {
+          setParents(prev => [...prev, ...newParents]);
+          setShowRocoImportModal(false);
+          showToast(`成功导入 ${newParents.length} 只精灵到父母本仓储！`, "success");
+        }}
+      />
     </div>
     </div>
   );

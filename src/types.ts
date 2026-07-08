@@ -37,6 +37,7 @@ export interface ParentPet {
   stats: string[];
   groups: string[];
   checked?: boolean;
+  voice?: number | null;
 }
 
 export interface EggData {
@@ -198,6 +199,9 @@ declare global {
       saveData: (data: any) => Promise<{ success: boolean; path: string; error?: string }>;
       getDataPath: () => Promise<string>;
       selectSavePath: (currentData: any) => Promise<{ path: string; data: any } | null>;
+      httpGet?: (url: string) => Promise<{ success: boolean; data?: any; error?: string; raw?: string }>;
+      getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: number; name: string }>; error?: string }>;
+      getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: number; data: any }>; error?: string }>;
     };
   }
 }

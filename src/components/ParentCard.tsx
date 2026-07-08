@@ -76,6 +76,7 @@ interface ParentCardProps {
   handleUpdateParentNature: (id: string, nature: string) => void;
   handleUpdateParentStat: (id: string, statIndex: number, value: string) => void;
   handleUpdateParentChecked: (id: string, checked: boolean) => void;
+  handleUpdateParentVoice: (id: string, voice: number | null) => void;
   isSelected?: boolean;
   onSelect?: () => void;
   onHover?: (hovered: boolean) => void;
@@ -91,6 +92,7 @@ export const ParentCard = React.memo(function ParentCard({
   handleUpdateParentNature,
   handleUpdateParentStat,
   handleUpdateParentChecked,
+  handleUpdateParentVoice,
   isSelected,
   onSelect,
   onHover
@@ -111,86 +113,112 @@ export const ParentCard = React.memo(function ParentCard({
 
     const isGiantBrand = ["大粗", "大婉", "单大块头"].includes(parent.brand);
     const isTinyBrand = ["小粗", "小婉", "单小不点"].includes(parent.brand);
+    
+    const badges: React.ReactNode[] = [];
 
+    // 1. 体型状态判定
     if (isGiantBrand) {
       if (hVal >= thresholds.maxHeight && wVal >= thresholds.maxWeight) {
-        return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300 border border-rose-200/60 dark:border-rose-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+        badges.push(
+          <span key="limit-giant" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300 border border-rose-200/60 dark:border-rose-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
             <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
             极限大
           </span>
         );
       }
-      return null;
-    }
-
-    if (isTinyBrand) {
+    } else if (isTinyBrand) {
       if (hVal <= thresholds.minHeight && wVal <= thresholds.minWeight) {
-        return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-indigo-50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+        badges.push(
+          <span key="limit-tiny" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-indigo-50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
             极限小
           </span>
         );
       }
-      return null;
-    }
-
-    // 到了这里，肯定是非体型牌（如普通、单粗嗓门、单婉转声等）
-    // 1. 如果达标了，显示达标徽章
-    if (hVal >= thresholds.maxHeight && wVal >= thresholds.giantWeightLine) {
-      return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          大块头 (达标)
-        </span>
-      );
-    }
-
-    if (hVal <= thresholds.minHeight && wVal <= thresholds.tinyWeightLine) {
-      return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 dark:bg-sky-950/20 text-sky-700 dark:text-sky-300 border border-sky-200/60 dark:border-sky-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
-          小不点 (达标)
-        </span>
-      );
-    }
-
-    // 2. 如果并非体型牌，计算与临界值的差值并显示在 10% 以内的临界情况
-    const x = Math.abs(thresholds.giantWeightLine - wVal);
-    const y = Math.abs(thresholds.tinyWeightLine - wVal);
-
-    if (x <= y) {
-      // 距离大块头更近
-      const maxDiff = thresholds.giantWeightLine * 0.10;
-      if (wVal < thresholds.giantWeightLine && x <= maxDiff) {
-        return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-950/10 text-amber-755 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
-            <span className="relative flex w-1.5 h-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
-            </span>
-            差大块头临界值 {x.toFixed(3)}kg
-          </span>
-        );
-      }
     } else {
-      // 距离小不点（小块头）更近
-      const maxDiff = thresholds.tinyWeightLine * 0.10;
-      if (wVal > thresholds.tinyWeightLine && y <= maxDiff) {
-        return (
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-950/15 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/35 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
-            <span className="relative flex w-1.5 h-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
-            </span>
-            差小块头临界值 {y.toFixed(3)}kg
+      if (hVal >= thresholds.maxHeight && wVal >= thresholds.giantWeightLine) {
+        badges.push(
+          <span key="giant-ok" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            大块头 (达标)
+          </span>
+        );
+      } else if (hVal <= thresholds.minHeight && wVal <= thresholds.tinyWeightLine) {
+        badges.push(
+          <span key="tiny-ok" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 dark:bg-sky-950/20 text-sky-700 dark:text-sky-300 border border-sky-200/60 dark:border-sky-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+            小不点 (达标)
+          </span>
+        );
+      } else {
+        const x = Math.abs(thresholds.giantWeightLine - wVal);
+        const y = Math.abs(thresholds.tinyWeightLine - wVal);
+        if (x <= y) {
+          const maxDiff = thresholds.giantWeightLine * 0.10;
+          if (wVal < thresholds.giantWeightLine && x <= maxDiff) {
+            badges.push(
+              <span key="near-giant" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-950/10 text-amber-755 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+                <span className="relative flex w-1.5 h-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                </span>
+                差大块头 {x.toFixed(3)}kg
+              </span>
+            );
+          }
+        } else {
+          const maxDiff = thresholds.tinyWeightLine * 0.10;
+          if (wVal > thresholds.tinyWeightLine && y <= maxDiff) {
+            badges.push(
+              <span key="near-tiny" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-950/15 text-purple-700 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/35 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2s" }}>
+                <span className="relative flex w-1.5 h-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-purple-500"></span>
+                </span>
+                差小块头 {y.toFixed(3)}kg
+              </span>
+            );
+          }
+        }
+      }
+    }
+
+    // 2. 声音状态判定
+    if (parent.voice !== undefined && parent.voice !== null) {
+      const v = parent.voice;
+      if (v <= -96) {
+        badges.push(
+          <span key="voice-coarse" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            🎤 粗嗓门 ({v})
+          </span>
+        );
+      } else if (v >= 96) {
+        badges.push(
+          <span key="voice-sweet" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-950/20 text-purple-650 dark:text-purple-300 border border-purple-200/60 dark:border-purple-900/30 shadow-3xs select-none mt-1 shrink-0 whitespace-nowrap">
+            🎤 婉转声 ({v})
+          </span>
+        );
+      } else if (v <= -90 && v >= -95) {
+        badges.push(
+          <span key="near-coarse" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-50 dark:bg-amber-950/10 text-amber-700 dark:text-amber-350 border border-amber-250/50 dark:border-amber-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2.5s" }}>
+            🎤 临近粗嗓 ({v})
+          </span>
+        );
+      } else if (v >= 90 && v <= 95) {
+        badges.push(
+          <span key="near-sweet" className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-purple-50 dark:bg-purple-950/10 text-purple-700 dark:text-purple-350 border border-purple-250/50 dark:border-purple-900/30 shadow-3xs select-none mt-1 shrink-0 animate-pulse whitespace-nowrap" style={{ animationDuration: "2.5s" }}>
+            🎤 临近婉转 ({v})
           </span>
         );
       }
     }
 
-    return null;
+    if (badges.length === 0) return null;
+    return (
+      <div className="flex flex-col gap-1 w-full shrink-0 items-start sm:items-center">
+        {badges}
+      </div>
+    );
   };
 
   const renderStatSelect = (sIdx: number, currentValue: string) => {
@@ -429,10 +457,10 @@ export const ParentCard = React.memo(function ParentCard({
       {/* Right Column: Settings */}
       <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-0">
         
-        {/* Core Profile: Brand, Height, Weight */}
-        <div className="grid grid-cols-2 gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
+        {/* Core Profile: Brand, Height, Weight, Voice */}
+        <div className="grid grid-cols-3 gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
           {/* Brand */}
-          <div className="col-span-2 flex flex-col gap-0.5">
+          <div className="col-span-3 flex flex-col gap-0.5">
             <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">牌子</span>
             <select
               value={parent.brand}
@@ -482,6 +510,31 @@ export const ParentCard = React.memo(function ParentCard({
                 className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
               <span className="text-[10px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none">kg</span>
+            </div>
+          </div>
+
+          {/* Voice (🎤 Input) */}
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 select-none">声音值</span>
+            <div className="relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:bg-white dark:focus-within:bg-slate-900 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none">
+                <span className="text-[10px]">🎤</span>
+              </div>
+              <input
+                type="text"
+                value={parent.voice !== undefined && parent.voice !== null ? parent.voice : ""}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    handleUpdateParentVoice(parent.id, null);
+                  } else {
+                    const numVal = parseInt(val);
+                    handleUpdateParentVoice(parent.id, isNaN(numVal) ? null : numVal);
+                  }
+                }}
+                placeholder="数字..."
+                className="w-full text-xs font-bold text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
+              />
             </div>
           </div>
         </div>
