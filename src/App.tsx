@@ -34,7 +34,8 @@ import {
   ChevronLeft,
   ChevronRight,
   GripVertical,
-  Calendar
+  Calendar,
+  Table
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -296,8 +297,14 @@ export default function App() {
   const [fatherCurrentPage, setFatherCurrentPage] = useState(1);
   const [motherCurrentPage, setMotherCurrentPage] = useState(1);
   const [nestCurrentPage, setNestCurrentPage] = useState(1);
-  const PARENT_PAGE_SIZE = 10;
-  const NEST_PAGE_SIZE = 9;
+  const [nestViewMode, setNestViewMode] = useState<"card" | "table">(() => {
+    const saved = localStorage.getItem("roco_egg_nest_view_mode");
+    return (saved === "table" || saved === "card") ? saved : "card";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("roco_egg_nest_view_mode", nestViewMode);
+  }, [nestViewMode]);
 
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
@@ -3411,51 +3418,259 @@ export default function App() {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">管理与培育您的极品精灵蛋与蛋窝状态</p>
             </div>
           </div>
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800 px-2.5 py-1 rounded-full border border-slate-200/40 dark:border-slate-700">
-            当前有 {filteredPets.length} 个蛋窝
-          </span>
+          <div className="flex items-center gap-2 select-none shrink-0 action-buttons">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800 px-2.5 py-1.5 rounded-full border border-slate-200/40 dark:border-slate-700">
+              当前有 {filteredPets.length} 个蛋窝
+            </span>
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700">
+              <button
+                onClick={() => setNestViewMode("card")}
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  nestViewMode === "card"
+                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`}
+                title="卡片网格模式"
+              >
+                <LayoutGrid className="w-3 h-3" />
+                卡片
+              </button>
+              <button
+                onClick={() => setNestViewMode("table")}
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  nestViewMode === "table"
+                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`}
+                title="数据表格模式"
+              >
+                <Table className="w-3 h-3" />
+                表格
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Main Editable Card Grid Container */}
         <div className="p-4 bg-slate-50/50 dark:bg-slate-950">
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={paginatedNests.map(p => p.id as string)}
-              strategy={rectSortingStrategy}
+          {nestViewMode === "card" ? (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
-                {paginatedNests.map((pet) => (
-                  <SortableCard
-                    key={pet.id}
-                    pet={pet}
-                    handleDeletePet={handleDeletePet}
-                    handleUpdateSprite={handleUpdateSprite}
-                    handleUpdateParentName={handleUpdateParentName}
-                    handleUpdateNature={handleUpdateNature}
-                    handleRemoveNature={handleRemoveNature}
-                    handleAddNature={handleAddNature}
-                    handleUpdateStat={handleUpdateStat}
-                    handleUpdateGroup={handleUpdateGroup}
-                    handleRemoveGroup={handleRemoveGroup}
-                    handleAddGroup={handleAddGroup}
-                    handleUpdateBrand={handleUpdateBrand}
-                    handleUpdateStatus={handleUpdateStatus}
-                    handleUpdateLimit={handleUpdateLimit}
-                    handleUpdateHideStats={handleUpdateHideStats}
-                    handleUpdateEggCount={handleUpdateEggCount}
-                    onProduceEgg={handleProduceEgg}
-                    isSelected={selectedCard?.id === pet.id && selectedCard?.type === "nest"}
-                    onSelect={() => setSelectedCard({ id: pet.id as string, type: "nest" })}
-                    onHover={(hovered) => setHoveredCard(hovered ? { id: pet.id as string, type: "nest" } : null)}
-                  />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+              <SortableContext
+                items={paginatedNests.map(p => p.id as string)}
+                strategy={rectSortingStrategy}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+                  {paginatedNests.map((pet) => (
+                    <SortableCard
+                      key={pet.id}
+                      pet={pet}
+                      handleDeletePet={handleDeletePet}
+                      handleUpdateSprite={handleUpdateSprite}
+                      handleUpdateParentName={handleUpdateParentName}
+                      handleUpdateNature={handleUpdateNature}
+                      handleRemoveNature={handleRemoveNature}
+                      handleAddNature={handleAddNature}
+                      handleUpdateStat={handleUpdateStat}
+                      handleUpdateGroup={handleUpdateGroup}
+                      handleRemoveGroup={handleRemoveGroup}
+                      handleAddGroup={handleAddGroup}
+                      handleUpdateBrand={handleUpdateBrand}
+                      handleUpdateStatus={handleUpdateStatus}
+                      handleUpdateLimit={handleUpdateLimit}
+                      handleUpdateHideStats={handleUpdateHideStats}
+                      handleUpdateEggCount={handleUpdateEggCount}
+                      onProduceEgg={handleProduceEgg}
+                      isSelected={selectedCard?.id === pet.id && selectedCard?.type === "nest"}
+                      onSelect={() => setSelectedCard({ id: pet.id as string, type: "nest" })}
+                      onHover={(hovered) => setHoveredCard(hovered ? { id: pet.id as string, type: "nest" } : null)}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          ) : (
+            <div className="overflow-x-auto w-full rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+              <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+                <thead>
+                  <tr className="bg-indigo-600 dark:bg-indigo-950/80 text-white select-none">
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[50px]">#</th>
+                    <th className="px-4 py-3 text-left text-xs font-extrabold tracking-wider min-w-[150px]">精灵</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px]">性格</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider min-w-[150px]">蛋组</th>
+                    <th className="px-4 py-3 text-center text-xs font-extrabold tracking-wider min-w-[200px]">三维</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px]">牌子</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[110px]">蛋窝状态</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px]">现蛋</th>
+                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[60px] action-buttons">操作</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
+                  {paginatedNests.length === 0 ? (
+                    <tr>
+                      <td colSpan={9} className="py-12 text-center text-xs text-slate-400 dark:text-slate-500 font-bold">
+                        没有找到符合筛选条件的蛋窝数据
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedNests.map((pet, idx) => {
+                      const petDetails = getPetDetails(pet.sprite);
+                      const spriteName = petDetails ? petDetails.name : pet.sprite;
+                      const spriteFile = getSpriteFileName(pet.sprite);
+                      const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+                      const types = petDetails?.types || [];
+
+                      const rowNum = (nestCurrentPage - 1) * NEST_PAGE_SIZE + idx + 1;
+
+                      const fNats = pet.fatherNatures || [];
+                      const mNats = pet.motherNatures || [];
+                      const fNat = fNats[0] || "未洗";
+                      const mNat = mNats[0] || "未洗";
+                      const naturesEqual = fNat === mNat;
+
+                      const fStats = pet.fatherStats || [];
+                      const mStats = pet.motherStats || [];
+                      const fStr = fStats.filter(s => s !== "无").join('、') || "无";
+                      const mStr = mStats.filter(s => s !== "无").join('、') || "无";
+                      const statsEqual = fStr === mStr;
+
+                      return (
+                        <tr
+                          key={pet.id}
+                          className="hover:bg-indigo-50/15 dark:hover:bg-slate-800/40 transition-colors"
+                        >
+                          <td className="px-3 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 font-mono align-middle">
+                            {rowNum}
+                          </td>
+                          <td className="px-4 py-2.5 align-middle">
+                            <div className="flex items-center gap-2.5 text-left">
+                              <div className="w-8 h-8 rounded bg-slate-50 dark:bg-slate-950/40 border border-slate-200/65 dark:border-slate-800 flex items-center justify-center relative overflow-hidden shrink-0">
+                                {spriteUrl ? (
+                                  <img src={spriteUrl} alt={spriteName} className="w-[85%] h-[85%] object-contain" />
+                                ) : (
+                                  <Egg className="w-4 h-4 text-slate-300" />
+                                )}
+                              </div>
+                              <div className="flex flex-col leading-tight min-w-0">
+                                <span className="text-xs font-extrabold text-slate-800 dark:text-slate-200 truncate">{spriteName}</span>
+                                {types.length > 0 && (
+                                  <span className="text-[9px] font-bold text-slate-500 mt-0.5">{types.join('/')}</span>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle">
+                            {naturesEqual ? (
+                              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{fNat}</span>
+                            ) : (
+                              <div className="flex flex-col text-[10px] leading-tight text-center">
+                                <span className="text-blue-600 dark:text-blue-400 font-bold">♂ {fNat}</span>
+                                <span className="text-pink-600 dark:text-pink-400 font-bold">♀ {mNat}</span>
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle">
+                            <div className="flex flex-wrap gap-1 justify-center">
+                              {pet.groups.map(grp => (
+                                <span
+                                  key={grp}
+                                  className={`inline-block text-[10px] font-bold border rounded-full px-2 py-0.5 ${getEggGroupStyle(grp)}`}
+                                >
+                                  {grp}
+                                </span>
+                              ))}
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 text-center align-middle">
+                            {pet.hideStats ? (
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500">已隐藏</span>
+                            ) : statsEqual ? (
+                              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{fStr}</span>
+                            ) : (
+                              <div className="flex flex-col text-[10px] leading-tight text-left max-w-[150px] mx-auto">
+                                <span className="text-blue-600 dark:text-blue-400 font-bold">♂ {fStr}</span>
+                                <span className="text-pink-600 dark:text-pink-400 font-bold">♀ {mStr}</span>
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle">
+                            <div className="relative inline-block w-full max-w-[75px]">
+                              <select
+                                value={pet.brand}
+                                onChange={(e) => handleUpdateBrand(pet.id as string, e.target.value)}
+                                className={`appearance-none text-[10px] font-extrabold text-center border rounded py-0.5 px-1.5 w-full cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors ${getBrandStyle(pet.brand)}`}
+                              >
+                                {BRAND_OPTIONS.map((opt) => (
+                                  <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle">
+                            <div className="relative inline-block w-full max-w-[95px]">
+                              <select
+                                value={pet.status}
+                                onChange={(e) => handleUpdateStatus(pet.id as string, e.target.value)}
+                                className={`appearance-none text-[10px] font-bold text-center border rounded py-0.5 px-1.5 w-full cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors ${getStatusStyle(pet.status)}`}
+                              >
+                                {NEST_STATUS_OPTIONS.map((opt) => (
+                                  <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200 font-semibold py-1">
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle">
+                            <div className="flex items-center justify-center gap-1">
+                              <input
+                                type="number"
+                                min="0"
+                                value={pet.eggCount || "0"}
+                                onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
+                                disabled={pet.status !== "有现蛋"}
+                                className="w-10 text-center text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-40"
+                              />
+                              {pet.status === "有现蛋" && (
+                                <div className="flex flex-col gap-0.5 shrink-0 select-none text-[9px] font-bold text-slate-500">
+                                  <button
+                                    onClick={() => handleUpdateEggCount(pet.id as string, String(Number(pet.eggCount || 0) + 1))}
+                                    className="hover:text-indigo-650 cursor-pointer"
+                                  >
+                                    ▲
+                                  </button>
+                                  <button
+                                    onClick={() => handleUpdateEggCount(pet.id as string, String(Math.max(0, Number(pet.eggCount || 0) - 1)))}
+                                    className="hover:text-indigo-650 cursor-pointer"
+                                  >
+                                    ▼
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 text-center align-middle action-buttons">
+                            <button
+                              onClick={() => handleDeletePet(pet.id as string)}
+                              className="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded transition-colors cursor-pointer"
+                              title="删除该蛋窝"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/* 蛋窝中心分页控制器 */}
           {totalNestPages > 1 && (
