@@ -1,44 +1,102 @@
-# Notes: 智能配对中心母本合并与双亲同性格筛选研究
+# Notes: Python & Npcap 检测与引导安装技术研究
 
-## 1. 筛选双亲同性格方案
-在配对中心筛选栏增加“双亲同性格”开关：
-- 状态声明：`const [pairingFilterSameNature, setPairingFilterSameNature] = useState(false);`
-- 过滤机制：在过滤 `allPairings` 生成 `filteredPairings` 时：
-  ```typescript
-  const sameNatureMatch = !pairingFilterSameNature || (
-    pair.father.nature && pair.mother.nature &&
-    pair.father.nature === pair.mother.nature
-  );
+## 1. 检测 Python 3 是否已安装且加入 PATH
+在 Windows 下，最稳妥的方法是通过执行 `python --version` 命令或 `python -c "import sys; print(sys.version_info.major)"`。
+* **执行命令**：可以使用 Node.js 的 `exec`：
+  ```javascript
+  const { exec } = require('child_process');
+  exec('python --version', (err, stdout, stderr) => {
+    if (err) {
+      // 找不到 Python 或者执行报错，判定为未安装
+    } else {
+      // 检查版本是否为 3.x
+      const versionStr = (stdout || stderr).trim(); // 有些版本输出在 stderr
+      if (versionStr.startsWith('Python 3')) {
+        // Python 3 已安装
+      }
+    }
+  });
   ```
-  排除空性格，仅当父母本性格完全一致且非空时判定为同性格。
 
-## 2. 合并母本卡片多方案评估
+## 2. 检测 Npcap 驱动是否已安装
+Npcap 驱动安装后，会在系统服务中注册 `npcap` 驱动，同时会在 Windows 系统目录下部署 `wpcap.dll`。
+* **方法 A：查询 Windows 服务列表**
+  执行 `sc query npcap`。
+  * 如果已安装且正在运行（或者已被注册），命令返回码为 `0` 并且输出包含 `npcap` 相关字样。
+  * 如果未安装，会返回错误代码。
+* **方法 B：文件路径检查**
+  Npcap 通常把 `wpcap.dll` 放置在 `%SystemRoot%\System32\wpcap.dll`。
+  另外，Npcap 自身的注册表路径为：`HKLM\Software\Npcap`。
+* **联合判定逻辑**：
+  ```javascript
+  const fs = require('fs');
+  const path = require('path');
+  
+  function isNpcapInstalled() {
+    return new Promise((resolve) => {
+      // 1. 服务检查
+      exec('sc query npcap', (err, stdout) => {
+        if (!err && stdout.includes('SERVICE_NAME: npcap')) {
+          return resolve(true);
+        }
+        // 2. DLL 文件检查兜底
+        const winDir = process.env.SystemRoot || 'C:\\Windows';
+        const dllPath = path.join(winDir, 'System32', 'wpcap.dll');
+        const npcapDir = path.join(winDir, 'System32', 'Npcap');
+        if (fs.existsSync(dllPath) || fs.existsSync(npcapDir)) {
+          return resolve(true);
+        }
+        resolve(false);
+      });
+    });
+  }
+  ```
 
-对于“合并相同的母本在同一个卡片，且可切换父本”，我们对比以下两种设计方案：
+## 3. 定位安装包路径
+安装包应当随着主 `.exe` 一起打包分发。在便携版单文件环境下，`app.getAppPath()` 可能会指向临时解压目录，为了能在与真正的桌面快捷方式（便携版 EXE）相同的目录下寻找文件，我们需要提取 `process.env.PORTABLE_EXECUTABLE_DIR` 环境变量。
+* **搜寻函数**：
+  ```javascript
+  function findInstaller(fileName) {
+    const pathsToTry = [
+      ...(process.env.PORTABLE_EXECUTABLE_DIR ? [path.join(process.env.PORTABLE_EXECUTABLE_DIR, fileName)] : []),
+      path.join(path.dirname(process.execPath), fileName),
+      path.join(app.getAppPath(), 'dist-electron', fileName),
+      path.join(process.cwd(), fileName),
+      path.join(process.cwd(), 'dist-electron', fileName)
+    ];
+    for (const p of pathsToTry) {
+      if (fs.existsSync(p)) {
+        return p;
+      }
+    }
+    return null;
+  }
+  ```
 
-### 方案 A：按母本卡片实例 ID (`pair.mother.id`) 合并 (推荐)
-- **实现原理**：在过滤得到 `filteredPairings` 后，使用 `pair.mother.id` 作为 Key 将配对分组。同一个母本实例卡片（例如存放在“仓库一号”的母本 A）的所有可配对父本被聚合在它内部。
-- **优缺点分析**：
-  - 优点：**数据隔离度高，符合实体卡片逻辑**。如果玩家仓储里有两只相同的母本精灵（例如两只固执的“冬羽雀”且在不同位置），在 parents 仓储里有两条记录。把它们保留为两个独立的母本卡片，方便玩家区分不同属性的母本和存放位置。
-  - 优点：可以直接复用 `mother` 自身的属性和 `currentPair` 勾选状态（使用 `father.id` 和 `mother.id` 作为复合键）。
-  - 缺点：如果玩家有多只同名母本精灵，会有多个母本卡片，但由于卡片代表实体，这完全正确。
+## 4. 静默执行 Python 安装
+Python 安装程序命令行参数：
+* `/quiet`：静默运行，无 UI。
+* `InstallAllUsers=1`：为所有用户安装。
+* `PrependPath=1`：将 Python 添加至环境变量 PATH，省去用户配置麻烦。
+* **执行命令**：
+  ```javascript
+  const installerPath = findInstaller('python-3.12.10-amd64.exe');
+  exec(`"${installerPath}" /quiet InstallAllUsers=1 PrependPath=1`, (err) => {
+     if (err) {
+       // 静默安装失败，可能是被杀毒软件拦截
+     } else {
+       // 安装成功
+     }
+  });
+  ```
+为了体验更佳，我们在静默安装前应使用 `dialog.showMessageBox` 让用户确认，并在安装过程中显示一个弹窗说明。
 
-### 方案 B：按母本精灵名称 (`pair.mother.sprite`) 合并
-- **实现原理**：使用母本的宠物名称（`pair.mother.sprite`，如“冬羽雀”）作为 Key 进行合并，这样界面上一个品种的母本只占一个卡片，所有同品种母本和所有可配对的父本都合并到一起。
-- **优缺点分析**：
-  - 优点：界面上极其干净，每种宠物只占一行。
-  - 缺点：**破坏了仓储管理的实体概念**。父母本仓储里是包含个体差异（如不同的性格、三围、身高、体重、存放位置）的。如果两只不同的同品种母本被强行塞进同一个卡片，玩家就无法选择当前是在用哪个母本和哪个父本配对，也无法针对独立的母本卡片进行选中/删除或导入操作，这会导致数据紊乱。
-  - 缺点：多只母本与多只父本的笛卡尔积切换逻辑会变得极其复杂（需要双重切换），玩家体验反而下降。
-
-**决策**：**采用方案 A**。按母本卡片实例（即 `pair.mother.id`）进行合并，这既简化了配对中心界面，又完美保留了实体卡片的数据准确度。
-
-## 3. 父本切换状态管理
-在卡片中提供切换箭头以在可配对父本间进行切换：
-- 状态变量：`const [activeFatherIndices, setActiveFatherIndices] = useState<Record<string, number>>({});`
-- 越界保护：当筛选条件改变导致某个母本可配对的父本数量减少时，使用 `Math.min(index, length - 1)` 来保证索引永远安全，避免 JavaScript 越界运行报错或页面崩溃。
-- 当筛选“双亲同性格”时，由于过滤直接作用在配对前，因此该母本的可切换父本列表只包含性格相同的父本，点击箭头仅在符合同性格条件的父本间循环。
-
-## 4. UI 界面美化
-- 在父本头像左侧和右侧渲染 Lucide 图标 `<ChevronLeft />` 与 `<ChevronRight />`。
-- 在父本信息栏中，若有多个父本，渲染 `候选 1/X` 的微徽章，给玩家直观的切换指示。
-- 在筛选栏中，以圆角胶囊组件的风格，加入“双亲同性格”的开关，完美融入现有系统。
+## 5. 执行 Npcap 安装
+由于 Npcap 免费版不支持 `/S` 静默安装参数，我们只能以普通模式启动：
+```javascript
+const installerPath = findInstaller('npcap-1.88.exe');
+// 使用 shell.openPath 或直接 spawn 运行
+const { shell } = require('electron');
+shell.openPath(installerPath);
+```
+在拉起 Npcap 安装程序前，弹窗提示用户：“在接下来的 Npcap 安装过程中，请务必勾选‘Install Npcap in WinPcap API-compatible Mode’兼容模式，否则直连抓包将无法工作。”

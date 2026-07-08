@@ -523,8 +523,288 @@ except Exception as e:
 });
 
 
-app.whenReady().then(() => {
+// ==========================================
+// 环境依赖自动探测与引导安装系统
+// ==========================================
+
+// 在各可能路径中搜寻对应的离线安装包
+function findInstaller(fileName) {
+  const pathsToTry = [
+    ...(process.env.PORTABLE_EXECUTABLE_DIR ? [path.join(process.env.PORTABLE_EXECUTABLE_DIR, fileName)] : []),
+    path.join(path.dirname(process.execPath), fileName),
+    path.join(app.getAppPath(), 'dist-electron', fileName),
+    path.join(process.cwd(), fileName),
+    path.join(process.cwd(), 'dist-electron', fileName)
+  ];
+  for (const p of pathsToTry) {
+    if (fs.existsSync(p)) {
+      return p;
+    }
+  }
+  return null;
+}
+
+// 探测本地 Python 3 是否已就绪
+function checkPython() {
+  return new Promise((resolve) => {
+    exec('python --version', (err, stdout, stderr) => {
+      if (err) {
+        return resolve(false);
+      }
+      const output = (stdout + stderr).trim();
+      if (output.startsWith('Python 3')) {
+        return resolve(true);
+      }
+      resolve(false);
+    });
+  });
+}
+
+// 动态检索系统常用安装路径，并将新安装的 Python 临时刷新至当前进程的 PATH 中
+function refreshProcessPathForPython() {
+  const commonDirs = [
+    'C:\\Program Files',
+    path.join(process.env.LOCALAPPDATA || '', 'Programs\\Python')
+  ];
+
+  const foundPaths = [];
+  for (const baseDir of commonDirs) {
+    if (fs.existsSync(baseDir)) {
+      try {
+        const files = fs.readdirSync(baseDir);
+        for (const file of files) {
+          if (file.toLowerCase().startsWith('python')) {
+            const fullPath = path.join(baseDir, file);
+            const scriptsPath = path.join(fullPath, 'Scripts');
+            if (fs.existsSync(path.join(fullPath, 'python.exe'))) {
+              foundPaths.push(fullPath);
+            }
+            if (fs.existsSync(scriptsPath)) {
+              foundPaths.push(scriptsPath);
+            }
+          }
+        }
+      } catch (e) {
+        console.error('扫描 Python 目录失败:', e);
+      }
+    }
+  }
+
+  const existingPaths = (process.env.PATH || '').split(path.delimiter);
+  const newPaths = foundPaths.filter(fp => !existingPaths.includes(fp));
+  
+  if (newPaths.length > 0) {
+    process.env.PATH = [...newPaths, ...existingPaths].join(path.delimiter);
+    console.log('已动态刷新当前进程的 PATH 环境变量，加入新安装的 Python:', newPaths);
+  }
+}
+
+// 引导运行 Python 安装
+function installPython() {
+  return new Promise((resolve) => {
+    const installer = findInstaller('python-3.12.10-amd64.exe');
+    if (!installer) {
+      dialog.showErrorBox(
+        '未找到 Python 安装包',
+        '系统检测到您未安装 Python 3 环境，且在软件同级目录下未找到“python-3.12.10-amd64.exe”离线安装包。\n\n请手动前往官网 https://www.python.org/ 下载并安装（务必勾选 Add Python to PATH）。'
+      );
+      return resolve(false);
+    }
+
+    const choice = dialog.showMessageBoxSync({
+      type: 'question',
+      buttons: ['一键自动安装 (推荐)', '手动打开安装包', '取消安装'],
+      defaultId: 0,
+      title: '安装 Python 环境',
+      message: '系统检测到您未安装 Python 3 环境。\n\n建议选择“一键自动安装”，系统将在后台自动为您安装并配置环境变量（大约需要 1-2 分钟）。\n\n您是否同意安装？'
+    });
+
+    if (choice === 0) {
+      // 弹出提示框告知用户后台正在安装
+      dialog.showMessageBoxSync({
+        type: 'info',
+        buttons: ['我知道了'],
+        title: '正在安装 Python',
+        message: 'Python 环境正在后台安装中，期间请勿关闭软件。安装完成后本软件将自动继续启动。\n\n这可能需要 1~2 分钟，请点击确定耐心等待。'
+      });
+
+      // 静默安装参数：/quiet InstallAllUsers=1 PrependPath=1
+      exec(`"${installer}" /quiet InstallAllUsers=1 PrependPath=1`, (err) => {
+        if (err) {
+          dialog.showErrorBox('安装 Python 失败', `静默安装失败，可能是被杀毒软件拦截或取消了管理员授权。错误信息：\n${err.message}`);
+          return resolve(false);
+        }
+        
+        // 动态刷新进程 PATH
+        refreshProcessPathForPython();
+
+        // 再次检测
+        checkPython().then((ok) => {
+          if (ok) {
+            dialog.showMessageBoxSync({
+              type: 'info',
+              buttons: ['确定'],
+              title: '安装成功',
+              message: 'Python 3 环境已成功安装并配置完毕！'
+            });
+            resolve(true);
+          } else {
+            dialog.showErrorBox('安装验证失败', 'Python 安装程序已运行完毕，但系统依然无法检测到 Python 3 环境变量。\n\n请尝试重启电脑或手动将 Python 添加到系统 PATH 中。');
+            resolve(false);
+          }
+        });
+      });
+    } else if (choice === 1) {
+      const { shell } = require('electron');
+      shell.openPath(installer).then((err) => {
+        if (err) {
+          dialog.showErrorBox('启动安装程序失败', err);
+          return resolve(false);
+        }
+        
+        dialog.showMessageBoxSync({
+          type: 'info',
+          buttons: ['我已安装完成'],
+          title: '等待 Python 安装',
+          message: '请在弹出的 Python 安装程序中勾选“Add python.exe to PATH”并完成安装。\n\n完成安装后，请点击下方“我已安装完成”按钮。'
+        });
+
+        // 刷新环境变量并验证检测
+        refreshProcessPathForPython();
+        checkPython().then((ok) => {
+          if (ok) {
+            resolve(true);
+          } else {
+            dialog.showErrorBox('验证失败', '未检测到 Python 3，请确保您在安装时勾选了“Add python.exe to PATH”并成功完成了安装。');
+            resolve(false);
+          }
+        });
+      });
+    } else {
+      resolve(false);
+    }
+  });
+}
+
+// 探测本地 Npcap 驱动是否已就绪
+function checkNpcap() {
+  return new Promise((resolve) => {
+    // 1. 调用 sc query npcap 服务状态
+    exec('sc query npcap', (err, stdout, stderr) => {
+      if (!err && (stdout || '').includes('SERVICE_NAME: npcap')) {
+        return resolve(true);
+      }
+      
+      // 2. DLL 文件与文件夹检测兜底
+      const winDir = process.env.SystemRoot || 'C:\\Windows';
+      const dllPath = path.join(winDir, 'System32', 'wpcap.dll');
+      const npcapDir = path.join(winDir, 'System32', 'Npcap');
+      if (fs.existsSync(dllPath) || fs.existsSync(npcapDir)) {
+        return resolve(true);
+      }
+      
+      resolve(false);
+    });
+  });
+}
+
+// 引导运行 Npcap 安装
+function installNpcap() {
+  return new Promise((resolve) => {
+    const installer = findInstaller('npcap-1.88.exe');
+    if (!installer) {
+      dialog.showErrorBox(
+        '未找到 Npcap 安装包',
+        '系统检测到您未安装 Npcap 网卡驱动，且在软件同级目录下未找到“npcap-1.88.exe”离线安装包。\n\n请手动前往官网 https://npcap.com/ 下载并安装（安装时务必勾选兼容 WinPcap 模式）。'
+      );
+      return resolve(false);
+    }
+
+    dialog.showMessageBoxSync({
+      type: 'warning',
+      buttons: ['我知道了，启动安装'],
+      title: '准备安装 Npcap 驱动',
+      message: '系统检测到您未安装 Npcap 驱动。\n\n即将为您启动安装程序，请在随后的安装界面中务必勾选以下选项：\n\n👉  "Install Npcap in WinPcap API-compatible Mode"\n（兼容 WinPcap API 模式，通常在安装的第二页，这是嗅探数据的前置条件）。'
+    });
+
+    const { shell } = require('electron');
+    shell.openPath(installer).then((err) => {
+      if (err) {
+        dialog.showErrorBox('启动安装程序失败', err);
+        return resolve(false);
+      }
+
+      dialog.showMessageBoxSync({
+        type: 'info',
+        buttons: ['我已安装完成'],
+        title: '等待 Npcap 安装',
+        message: '请在弹出的 Npcap 安装程序中完成引导。\n\n安装完成后，请点击下方“我已安装完成”按钮。'
+      });
+
+      // 再次检测
+      checkNpcap().then((ok) => {
+        if (ok) {
+          resolve(true);
+        } else {
+          dialog.showErrorBox('验证失败', '未检测到已启用的 Npcap 驱动，请重新尝试安装并确认是否已安装成功。');
+          resolve(false);
+        }
+      });
+    });
+  });
+}
+
+// 核心引导调度，检测并确保各项环境就绪
+async function ensureDependencies() {
+  const pythonOk = await checkPython();
+  if (!pythonOk) {
+    const installed = await installPython();
+    if (!installed) {
+      const choice = dialog.showMessageBoxSync({
+        type: 'warning',
+        buttons: ['继续运行软件', '退出软件'],
+        defaultId: 0,
+        title: '缺少 Python 环境',
+        message: '未检测到 Python 3 运行环境。本软件的“本地数据库直连”功能将无法使用，但您仍可以使用“手动粘贴 JSON”功能。\n\n是否继续运行软件？'
+      });
+      if (choice === 1) {
+        app.quit();
+        return false;
+      }
+    }
+  }
+
+  const npcapOk = await checkNpcap();
+  if (!npcapOk) {
+    const installed = await installNpcap();
+    if (!installed) {
+      const choice = dialog.showMessageBoxSync({
+        type: 'warning',
+        buttons: ['继续运行软件', '退出软件'],
+        defaultId: 0,
+        title: '缺少 Npcap 驱动',
+        message: '未检测到 Npcap 驱动。本软件将无法自动监听和捕获游戏封包以更新本地数据库，但您仍可以使用“手动粘贴 JSON”功能。\n\n是否继续运行软件？'
+      });
+      if (choice === 1) {
+        app.quit();
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+
+app.whenReady().then(async () => {
   loadConfig();
+  
+  // 在启动主进程与助手之前，确保依赖检测流程完毕
+  const depsOk = await ensureDependencies();
+  if (!depsOk) {
+    return;
+  }
+
   startRocoHelper(); // 启动时在后台静默隐藏拉起 roco_helper-v3.2.2.exe
   createTray();      // 物理构造系统托盘
   createWindow();
