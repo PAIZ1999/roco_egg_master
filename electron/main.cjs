@@ -38,6 +38,12 @@ function saveCustomPath(dir) {
 // 自动在后台隐藏启动 roco_helper-v3.2.2.exe 进程
 function startRocoHelper() {
   const pathsToTry = [
+    // 0. 特殊处理：如果是 electron-builder 制造的 portable 便携版单文件，优先从其启动时环境变量获取原始同级/父级路径
+    ...(process.env.PORTABLE_EXECUTABLE_DIR ? [
+      path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'roco_helper-v3.2.2.exe'),
+      path.join(process.env.PORTABLE_EXECUTABLE_DIR, '..', 'roco_helper-v3.2.2.exe')
+    ] : []),
+
     // 1. AppPath 内层及外层
     path.join(app.getAppPath(), 'roco_helper-v3.2.2.exe'),
     path.join(app.getAppPath(), '..', 'roco_helper-v3.2.2.exe'),
