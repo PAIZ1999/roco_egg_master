@@ -241,38 +241,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   const [parsedPets, setParsedPets] = useState<ParsedPet[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // 监听过滤条件变化，重置导入分页码
-  useEffect(() => {
-    setImportCurrentPage(1);
-  }, [searchTerm, filterGender, filterNature, filterBrand, filterGroup, parsedPets]);
 
-  const totalImportPages = Math.ceil(filteredPets.length / IMPORT_PAGE_SIZE);
-  const visibleImportPets = filteredPets.slice(
-    (importCurrentPage - 1) * IMPORT_PAGE_SIZE,
-    importCurrentPage * IMPORT_PAGE_SIZE
-  );
-
-  const getImportPageNumbers = () => {
-    const pages = [];
-    if (totalImportPages <= 5) {
-      for (let i = 1; i <= totalImportPages; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (importCurrentPage > 3) {
-        pages.push("...");
-      }
-      const start = Math.max(2, importCurrentPage - 1);
-      const end = Math.min(totalImportPages - 1, importCurrentPage + 1);
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
-      if (importCurrentPage < totalImportPages - 2) {
-        pages.push("...");
-      }
-      pages.push(totalImportPages);
-    }
-    return pages;
-  };
   
   // 异步加载本地 SQLite 角色列表
   const loadSqliteUsers = async (): Promise<boolean> => {
@@ -329,6 +298,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       }
     }
   }, [isOpen]);
+
+  // 监听过滤条件变化，重置导入分页码 (必须放置在 if (!isOpen) 提前返回的上方，遵循 React Hook 规则，防止组件崩溃白屏)
+  useEffect(() => {
+    setImportCurrentPage(1);
+  }, [searchTerm, filterGender, filterNature, filterBrand, filterGroup, parsedPets]);
 
   if (!isOpen) return null;
 
@@ -586,7 +560,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     }
 
     // 提前构建去重特征 Set (优化百万次 N*M JSON.stringify 查重开销)
-    const existingSet = new Set(
+    const existingSet = new Set<string>(
       existingParents.map(p => {
         const sortedStats = [...p.stats].sort().join(',');
         return `${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`;
@@ -745,6 +719,34 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     }
     return true;
   });
+
+  const totalImportPages = Math.ceil(filteredPets.length / IMPORT_PAGE_SIZE);
+  const visibleImportPets = filteredPets.slice(
+    (importCurrentPage - 1) * IMPORT_PAGE_SIZE,
+    importCurrentPage * IMPORT_PAGE_SIZE
+  );
+
+  const getImportPageNumbers = () => {
+    const pages = [];
+    if (totalImportPages <= 5) {
+      for (let i = 1; i <= totalImportPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (importCurrentPage > 3) {
+        pages.push("...");
+      }
+      const start = Math.max(2, importCurrentPage - 1);
+      const end = Math.min(totalImportPages - 1, importCurrentPage + 1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (importCurrentPage < totalImportPages - 2) {
+        pages.push("...");
+      }
+      pages.push(totalImportPages);
+    }
+    return pages;
+  };
 
   // 全选/反选 (使用 Set 优化可见性过滤时间复杂度至 O(N))
   const handleToggleAll = (checked: boolean) => {
