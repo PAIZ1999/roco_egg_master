@@ -41,9 +41,9 @@ const STAT_KEY_MAP: Record<string, string> = {
   hp: "生命", health: "生命", HP: "生命",
   atk: "物攻", attack: "物攻", ATK: "物攻", physical_attack: "物攻",
   speed: "速度", spd: "速度", SPEED: "速度",
-  matk: "魔攻", magic_atk: "魔攻", magic_attack: "魔攻", MATK: "魔攻",
+  matk: "魔攻", magic_atk: "魔攻", magic_attack: "魔攻", MATK: "魔攻", special_attack: "魔攻",
   def: "物防", defense: "物防", DEF: "物防", physical_defense: "物防",
-  mdef: "魔防", magic_def: "魔防", magic_defense: "魔防", MDEF: "魔防"
+  mdef: "魔防", magic_def: "魔防", magic_defense: "魔防", MDEF: "魔防", special_defense: "魔防"
 };
 
 // Unicode Base64 宠物名称解码器
