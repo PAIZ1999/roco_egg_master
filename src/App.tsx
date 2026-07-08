@@ -35,7 +35,8 @@ import {
   ChevronRight,
   GripVertical,
   Calendar,
-  Table
+  Table,
+  Minus
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -91,7 +92,8 @@ import {
   getBasePetName,
   getSpriteFormDisplayName,
   getPetGuideSize,
-  getPetSizeThresholds
+  getPetSizeThresholds,
+  getStatBadgeStyle
 } from "./petHelper";
 import { getPinyinInitials } from "./pinyin";
 
