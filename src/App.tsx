@@ -349,6 +349,7 @@ export default function App() {
   const [pairingFilterBrand, setPairingFilterBrand] = useState("");
   const [pairingFilter3V, setPairingFilter3V] = useState(""); // "" | "3V" | "非3V"
   const [pairingFilterSameNature, setPairingFilterSameNature] = useState(false);
+  const [pairingFilterNature, setPairingFilterNature] = useState(""); // 性格过滤
   const [activeFatherIndices, setActiveFatherIndices] = useState<Record<string, number>>({});
 
   // Egg trade form states
@@ -5390,14 +5391,20 @@ export default function App() {
                   matchSprite(pair.eggSprite);
                 const groupMatch = !pairingFilterGroup || pair.matchingGroups.includes(pairingFilterGroup);
                 const brandMatch = !pairingFilterBrand || pair.brand === pairingFilterBrand;
-                const v3Match = !pairingFilter3V ||
-                  (pairingFilter3V === "3V" && isStatsMatch) ||
-                  (pairingFilter3V === "非3V" && !isStatsMatch);
-                const sameNatureMatch = !pairingFilterSameNature || (
-                  !!pair.father.nature && !!pair.mother.nature &&
-                  pair.father.nature === pair.mother.nature
-                );
-                return nameMatch && groupMatch && brandMatch && v3Match && sameNatureMatch;
+                const natureMatch = !pairingFilterNature ||
+                  (pair.father.nature && pair.father.nature.includes(pairingFilterNature)) ||
+                  (pair.mother.nature && pair.mother.nature.includes(pairingFilterNature));
+
+                let v3Match = true;
+                if (pairingFilter3V === "sameNature") {
+                  v3Match = !!pair.father.nature && !!pair.mother.nature && pair.father.nature === pair.mother.nature;
+                } else if (pairingFilter3V === "3V") {
+                  v3Match = isStatsMatch;
+                } else if (pairingFilter3V === "非3V") {
+                  v3Match = !isStatsMatch;
+                }
+
+                return nameMatch && groupMatch && brandMatch && v3Match && natureMatch;
               });
 
               // 按母本 ID 分组合并
@@ -5432,7 +5439,7 @@ export default function App() {
                 });
               }
 
-              const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterSameNature;
+              const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterNature;
 
               return (
                 <>
@@ -5458,7 +5465,7 @@ export default function App() {
                     <select
                       value={pairingFilterGroup}
                       onChange={e => setPairingFilterGroup(e.target.value)}
-                      className="text-xs text-slate-700 dark:text-slate-350 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-355 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
                       <option value="" className="dark:bg-slate-900">全部蛋组</option>
                       {allPairGroups.map(g => (
@@ -5478,26 +5485,28 @@ export default function App() {
                         <option key={b} value={b} className="dark:bg-slate-900">{b}</option>
                       ))}
                     </select>
-                    {/* 3V筛选 */}
+                    {/* 3V/性格合并筛选 */}
                     <select
                       value={pairingFilter3V}
                       onChange={e => setPairingFilter3V(e.target.value)}
                       className="text-xs text-slate-700 dark:text-slate-355 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
                       <option value="" className="dark:bg-slate-900">全部配对</option>
+                      <option value="sameNature" className="dark:bg-slate-900">双亲同性格</option>
                       <option value="3V" className="dark:bg-slate-900">仅3V配对</option>
                       <option value="非3V" className="dark:bg-slate-900">仅非3V配对</option>
                     </select>
-                    {/* 双亲同性格筛选 */}
-                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 h-8 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer select-none shrink-0 whitespace-nowrap">
-                      <input
-                        type="checkbox"
-                        checked={pairingFilterSameNature}
-                        onChange={e => setPairingFilterSameNature(e.target.checked)}
-                        className="rounded text-indigo-650 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 w-3.5 h-3.5 cursor-pointer"
-                      />
-                      <span>双亲同性格</span>
-                    </label>
+                    {/* 性格筛选 */}
+                    <select
+                      value={pairingFilterNature}
+                      onChange={e => setPairingFilterNature(e.target.value)}
+                      className="text-xs text-slate-700 dark:text-slate-350 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                    >
+                      <option value="" className="dark:bg-slate-900">全部性格</option>
+                      {NATURE_OPTIONS.map(nature => (
+                        <option key={nature} value={nature} className="dark:bg-slate-900">{nature}</option>
+                      ))}
+                    </select>
                     {/* 筛选结果计数 & 重置 */}
                     <div className="flex items-center gap-2 ml-auto shrink-0 whitespace-nowrap">
                       <span className="text-[11px] text-slate-400 dark:text-slate-550 font-medium">
@@ -5510,7 +5519,7 @@ export default function App() {
                             setPairingFilterGroup("");
                             setPairingFilterBrand("");
                             setPairingFilter3V("");
-                            setPairingFilterSameNature(false);
+                            setPairingFilterNature("");
                           }}
                           className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"
                         >
