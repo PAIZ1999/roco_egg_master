@@ -348,6 +348,8 @@ export default function App() {
   const [pairingFilterGroup, setPairingFilterGroup] = useState("");
   const [pairingFilterBrand, setPairingFilterBrand] = useState("");
   const [pairingFilter3V, setPairingFilter3V] = useState(""); // "" | "3V" | "非3V"
+  const [pairingFilterSameNature, setPairingFilterSameNature] = useState(false);
+  const [activeFatherIndices, setActiveFatherIndices] = useState<Record<string, number>>({});
 
   // Egg trade form states
   const [newTradeSprite, setNewTradeSprite] = useState("");
@@ -5330,7 +5332,7 @@ export default function App() {
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">🧬 智能繁育配对与一键导入中心</h3>
-                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                <p className="text-[10px] text-slate-400 dark:text-slate-550 mt-0.5">
                   同蛋组且同牌子的勾选宠物可进行繁育，子代精灵品种及形态随母本，三围相同自动判定3V
                 </p>
               </div>
@@ -5356,8 +5358,8 @@ export default function App() {
               if (allPairings.length === 0) {
                 return (
                   <div className="py-12 flex flex-col items-center justify-center text-center select-none">
-                    <Dna className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-3" />
-                    <p className="text-sm font-bold text-slate-400 dark:text-slate-300">暂无符合繁育条件的配对</p>
+                    <Dna className="w-10 h-10 text-slate-300 dark:text-slate-650 stroke-1 mb-3" />
+                    <p className="text-sm font-bold text-slate-400 dark:text-slate-350">暂无符合繁育条件的配对</p>
                     <p className="text-xs text-slate-400 dark:text-slate-550 mt-1.5 max-w-md">
                       请在上方勾选配组，且确保至少有一对父本和母本：(1) 精灵品种非空 (2) 属于同一个蛋组 (3) 牌子等级完全相同。
                     </p>
@@ -5391,10 +5393,46 @@ export default function App() {
                 const v3Match = !pairingFilter3V ||
                   (pairingFilter3V === "3V" && isStatsMatch) ||
                   (pairingFilter3V === "非3V" && !isStatsMatch);
-                return nameMatch && groupMatch && brandMatch && v3Match;
+                const sameNatureMatch = !pairingFilterSameNature || (
+                  !!pair.father.nature && !!pair.mother.nature &&
+                  pair.father.nature === pair.mother.nature
+                );
+                return nameMatch && groupMatch && brandMatch && v3Match && sameNatureMatch;
               });
 
-              const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V;
+              // 按母本 ID 分组合并
+              interface GroupedPairing {
+                mother: ParentPet;
+                pairings: Array<{
+                  father: ParentPet;
+                  brand: string;
+                  eggSprite: string;
+                  matchingGroups: string[];
+                }>;
+              }
+
+              const groupedPairings: GroupedPairing[] = [];
+              const motherMap = new Map<string, GroupedPairing>();
+
+              for (const pair of filteredPairings) {
+                const motherId = pair.mother.id;
+                if (!motherMap.has(motherId)) {
+                  const group: GroupedPairing = {
+                    mother: pair.mother,
+                    pairings: []
+                  };
+                  motherMap.set(motherId, group);
+                  groupedPairings.push(group);
+                }
+                motherMap.get(motherId)!.pairings.push({
+                  father: pair.father,
+                  brand: pair.brand,
+                  eggSprite: pair.eggSprite,
+                  matchingGroups: pair.matchingGroups
+                });
+              }
+
+              const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterSameNature;
 
               return (
                 <>
@@ -5420,7 +5458,7 @@ export default function App() {
                     <select
                       value={pairingFilterGroup}
                       onChange={e => setPairingFilterGroup(e.target.value)}
-                      className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-350 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
                       <option value="" className="dark:bg-slate-900">全部蛋组</option>
                       {allPairGroups.map(g => (
@@ -5444,15 +5482,25 @@ export default function App() {
                     <select
                       value={pairingFilter3V}
                       onChange={e => setPairingFilter3V(e.target.value)}
-                      className="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                      className="text-xs text-slate-700 dark:text-slate-355 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                     >
                       <option value="" className="dark:bg-slate-900">全部配对</option>
                       <option value="3V" className="dark:bg-slate-900">仅3V配对</option>
                       <option value="非3V" className="dark:bg-slate-900">仅非3V配对</option>
                     </select>
+                    {/* 双亲同性格筛选 */}
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 h-8 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer select-none shrink-0 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        checked={pairingFilterSameNature}
+                        onChange={e => setPairingFilterSameNature(e.target.checked)}
+                        className="rounded text-indigo-650 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 w-3.5 h-3.5 cursor-pointer"
+                      />
+                      <span>双亲同性格</span>
+                    </label>
                     {/* 筛选结果计数 & 重置 */}
                     <div className="flex items-center gap-2 ml-auto shrink-0 whitespace-nowrap">
-                      <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
+                      <span className="text-[11px] text-slate-400 dark:text-slate-550 font-medium">
                         {hasFilter ? `筛选结果: ${filteredPairings.length} / ${allPairings.length} 组` : `共 ${allPairings.length} 组配对`}
                       </span>
                       {hasFilter && (
@@ -5462,6 +5510,7 @@ export default function App() {
                             setPairingFilterGroup("");
                             setPairingFilterBrand("");
                             setPairingFilter3V("");
+                            setPairingFilterSameNature(false);
                           }}
                           className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"
                         >
@@ -5472,29 +5521,34 @@ export default function App() {
                   </div>
 
                   {/* 配对卡片列表 */}
-                  {filteredPairings.length === 0 ? (
+                  {groupedPairings.length === 0 ? (
                     <div className="py-10 flex flex-col items-center justify-center text-center select-none">
-                      <Search className="w-8 h-8 text-slate-300 dark:text-slate-600 stroke-1 mb-2" />
+                      <Search className="w-8 h-8 text-slate-300 dark:text-slate-650 stroke-1 mb-2" />
                       <p className="text-sm font-bold text-slate-400 dark:text-slate-300">没有符合筛选条件的配对</p>
                       <p className="text-xs text-slate-400 dark:text-slate-550 mt-1">请尝试调整或重置筛选条件</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1 custom-scrollbar">
-                      {filteredPairings.map((pair, idx) => {
-                        const fatherSpriteFile = getSpriteFileName(pair.father.sprite);
-                        const motherSpriteFile = getSpriteFileName(pair.mother.sprite);
-                        const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
-                          pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
+                      {groupedPairings.map((group) => {
+                        const pairingsForMother = group.pairings;
+                        const activeIdx = Math.min(activeFatherIndices[group.mother.id] || 0, pairingsForMother.length - 1);
+                        const safeIdx = activeIdx < 0 ? 0 : activeIdx;
+                        const currentPair = pairingsForMother[safeIdx];
 
-                        const pairKey = `${pair.father.id}-${pair.mother.id}`;
+                        const fatherSpriteFile = getSpriteFileName(currentPair.father.sprite);
+                        const motherSpriteFile = getSpriteFileName(group.mother.sprite);
+                        const isStatsMatch = currentPair.father.stats.length === group.mother.stats.length &&
+                          currentPair.father.stats.every((v, i) => v === group.mother.stats[i] && v !== "无");
+
+                        const pairKey = `${currentPair.father.id}-${group.mother.id}`;
                         const isSelected = !excludedPairKeys.has(pairKey);
 
-                        const thresholds = getPetSizeThresholds(pair.eggSprite);
-                        const guideSize = getPetGuideSize(pair.eggSprite);
+                        const thresholds = getPetSizeThresholds(currentPair.eggSprite);
+                        const guideSize = getPetGuideSize(currentPair.eggSprite);
 
                         return (
                           <div
-                            key={idx}
+                            key={group.mother.id}
                             onClick={() => {
                               setExcludedPairKeys(prev => {
                                 const next = new Set(prev);
@@ -5531,37 +5585,76 @@ export default function App() {
                             {/* 父母信息行 */}
                             <div className="flex items-center gap-2 sm:gap-3 mt-4">
                               {/* 父本 */}
-                              <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0">
-                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-sky-50/60 dark:bg-sky-950/20 rounded-lg sm:rounded-xl border border-sky-100 dark:border-sky-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
-                                  {fatherSpriteFile ? (
-                                    <img
-                                      src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
-                                      alt={pair.father.sprite}
-                                      className="w-8 h-8 sm:w-11 sm:h-11 object-contain"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    <div className="text-slate-350 dark:text-slate-600 text-sm sm:text-lg">♂</div>
-                                  )}
-                                  <span className="absolute bottom-0 right-0 text-[8px] sm:text-[9px] bg-sky-500 text-white leading-none px-0.5 py-0.2 sm:px-1 sm:py-0.5 rounded-tl-md font-bold">♂</span>
+                              <div className="flex items-center gap-1 sm:gap-1.5 flex-1 min-w-0">
+                                {pairingsForMother.length > 1 && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setActiveFatherIndices(prev => ({
+                                        ...prev,
+                                        [group.mother.id]: (safeIdx - 1 + pairingsForMother.length) % pairingsForMother.length
+                                      }));
+                                    }}
+                                    className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 cursor-pointer action-buttons shrink-0"
+                                    title="上一个父本"
+                                  >
+                                    <ChevronLeft className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                                
+                                <div className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
+                                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-sky-50/60 dark:bg-sky-950/20 rounded-lg sm:rounded-xl border border-sky-100 dark:border-sky-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
+                                    {fatherSpriteFile ? (
+                                      <img
+                                        src={getImagePath(`images/sprites/${fatherSpriteFile}`)}
+                                        alt={currentPair.father.sprite}
+                                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="text-slate-350 dark:text-slate-655 text-xs sm:text-sm font-bold">♂</div>
+                                    )}
+                                    <span className="absolute bottom-0 right-0 text-[8px] bg-sky-500 text-white leading-none px-0.5 py-0.2 sm:px-1 rounded-tl-md font-bold">♂</span>
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate flex items-center gap-1" title={currentPair.father.sprite}>
+                                      {currentPair.father.sprite}
+                                    </div>
+                                    <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5 flex items-center gap-1.5">
+                                      <span>{currentPair.father.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}</span>
+                                      {pairingsForMother.length > 1 && (
+                                        <span className="text-[9px] font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/40 px-1 py-0.2 rounded shrink-0">
+                                          {safeIdx + 1}/{pairingsForMother.length}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
+                                      {currentPair.father.height ? `${currentPair.father.height}m` : "—"}/{currentPair.father.weight ? `${currentPair.father.weight}kg` : "—"}
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="min-w-0 flex-1">
-                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate" title={pair.father.sprite}>
-                                    {pair.father.sprite}
-                                  </div>
-                                  <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                                    {pair.father.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
-                                  </div>
-                                  <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
-                                    {pair.father.height ? `${pair.father.height}m` : "—"}/{pair.father.weight ? `${pair.father.weight}kg` : "—"}
-                                  </div>
-                                </div>
+
+                                {pairingsForMother.length > 1 && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setActiveFatherIndices(prev => ({
+                                        ...prev,
+                                        [group.mother.id]: (safeIdx + 1) % pairingsForMother.length
+                                      }));
+                                    }}
+                                    className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 cursor-pointer action-buttons shrink-0"
+                                    title="下一个父本"
+                                  >
+                                    <ChevronRight className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
                               </div>
 
                               {/* 中间牌子 + 爱心 */}
                               <div className="flex flex-col items-center justify-center shrink-0 gap-0.5 sm:gap-1 select-none">
-                                <span className={`text-[9.5px] sm:text-[11px] font-extrabold px-1.5 py-0.5 sm:px-2 rounded-lg border shadow-sm ${getBrandStyle(pair.brand)}`}>
-                                  {pair.brand}
+                                <span className={`text-[9.5px] sm:text-[11px] font-extrabold px-1.5 py-0.5 sm:px-2 rounded-lg border shadow-sm ${getBrandStyle(currentPair.brand)}`}>
+                                  {currentPair.brand}
                                 </span>
                                 <div className="text-base text-rose-400 font-bold leading-none">❤</div>
                               </div>
@@ -5569,21 +5662,21 @@ export default function App() {
                               {/* 母本 */}
                               <div className="flex items-center gap-1.5 sm:gap-2.5 flex-1 min-w-0 justify-end text-right">
                                 <div className="min-w-0 flex-1">
-                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate" title={pair.mother.sprite}>
-                                    {pair.mother.sprite}
+                                  <div className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 truncate" title={group.mother.sprite}>
+                                    {group.mother.sprite}
                                   </div>
                                   <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                                    {pair.mother.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
+                                    {group.mother.nature || <span className="text-slate-350 dark:text-slate-650 italic">无性格</span>}
                                   </div>
                                   <div className="text-[10px] sm:text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
-                                    {pair.mother.height ? `${pair.mother.height}m` : "—"}/{pair.mother.weight ? `${pair.mother.weight}kg` : "—"}
+                                    {group.mother.height ? `${group.mother.height}m` : "—"}/{group.mother.weight ? `${group.mother.weight}kg` : "—"}
                                   </div>
                                 </div>
                                 <div className="w-10 h-10 sm:w-14 sm:h-14 bg-pink-50/60 dark:bg-pink-950/20 rounded-lg sm:rounded-xl border border-pink-100 dark:border-pink-900/35 flex items-center justify-center shrink-0 relative overflow-hidden shadow-sm">
                                   {motherSpriteFile ? (
                                     <img
                                       src={getImagePath(`images/sprites/${motherSpriteFile}`)}
-                                      alt={pair.mother.sprite}
+                                      alt={group.mother.sprite}
                                       className="w-8 h-8 sm:w-11 sm:h-11 object-contain"
                                       loading="lazy"
                                     />
@@ -5599,7 +5692,7 @@ export default function App() {
                             {guideSize && (
                               <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl p-3 text-xs space-y-2 font-medium select-none">
                                 <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 font-bold border-b border-slate-200/60 dark:border-slate-800 pb-2 mb-2">
-                                  <span className="text-slate-800 dark:text-slate-200">【{pair.eggSprite}】子代规格参考</span>
+                                  <span className="text-slate-800 dark:text-slate-200">【{currentPair.eggSprite}】子代规格参考</span>
                                 </div>
                                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                                   <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
@@ -5644,11 +5737,11 @@ export default function App() {
                             <div className="bg-gradient-to-r from-slate-50 dark:from-slate-800/40 to-indigo-50/30 dark:to-indigo-950/20 rounded-xl border border-slate-200/80 dark:border-slate-800 px-2.5 py-2 sm:px-3 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2">
                               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
                                 <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">产出:</span>
-                                <span className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 shrink-0">{pair.eggSprite}蛋</span>
+                                <span className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 shrink-0">{currentPair.eggSprite}蛋</span>
                               </div>
                               <div className="flex gap-1 sm:gap-2 items-center min-w-0">
-                                <span className="bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-900/40 px-1.5 py-0.5 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-bold select-none truncate shrink-0 max-w-[80px] xs:max-w-none" title={pair.matchingGroups.join("/")}>
-                                  {pair.matchingGroups.join("/")}
+                                <span className="bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-900/40 px-1.5 py-0.5 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-bold select-none truncate shrink-0 max-w-[80px] xs:max-w-none" title={currentPair.matchingGroups.join("/")}>
+                                  {currentPair.matchingGroups.join("/")}
                                 </span>
                                 <span className={`font-bold px-1.5 py-0.5 sm:px-2 rounded-lg border text-[10px] sm:text-[11px] select-none shrink-0 ${
                                   isStatsMatch
@@ -5660,7 +5753,7 @@ export default function App() {
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleImportPairingsToNest([pair]);
+                                    handleImportPairingsToNest([{ father: currentPair.father, mother: group.mother, brand: currentPair.brand, eggSprite: currentPair.eggSprite, matchingGroups: currentPair.matchingGroups }]);
                                   }}
                                   className="px-2.5 py-1 sm:px-4 sm:py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] sm:text-xs font-bold rounded-lg cursor-pointer transition-all shadow hover:shadow-md action-buttons shrink-0 whitespace-nowrap"
                                 >
