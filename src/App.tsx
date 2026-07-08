@@ -1099,10 +1099,11 @@ export default function App() {
     if (p.hideStats) return false;
     const f = p.fatherStats || ["生命", "物攻", "速度"];
     const m = p.motherStats || ["生命", "物攻", "速度"];
-    if (f.includes("无") || m.includes("无")) return false;
-    const fSorted = [...f].sort();
-    const mSorted = [...m].sort();
-    return fSorted.every((v, idx) => v === mSorted[idx]);
+    const fValid = f.filter(s => s && s !== "无");
+    const mValid = m.filter(s => s && s !== "无");
+    return fValid.length > 0 &&
+      fValid.length === mValid.length &&
+      fValid.every(s => mValid.includes(s));
   };
 
   const threeVsCount = pets.filter(p => isPet3V(p) && p.status === "有现蛋").length;
@@ -1874,9 +1875,28 @@ export default function App() {
       return;
     }
 
-    const newPets: EggPet[] = pairings.map(pair => {
-      const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
-        pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
+    // 排重过滤：如果在已有蛋窝里，有一只宠物（父精灵名+父精灵性格）且（母精灵名+母精灵性格）均相同，则过滤掉不重复导入
+    const uniquePairings = pairings.filter(pair => {
+      const alreadyExists = pets.some(p => 
+        p.fatherName === pair.father.sprite &&
+        p.motherName === pair.mother.sprite &&
+        (p.fatherNatures && p.fatherNatures[0] === (pair.father.nature || "")) &&
+        (p.motherNatures && p.motherNatures[0] === (pair.mother.nature || ""))
+      );
+      return !alreadyExists;
+    });
+
+    if (uniquePairings.length === 0) {
+      showToast("所选配对已存在于蛋窝中心，无需重复导入", "info");
+      return;
+    }
+
+    const newPets: EggPet[] = uniquePairings.map(pair => {
+      const fatherValidStats = pair.father.stats.filter(s => s && s !== "无");
+      const motherValidStats = pair.mother.stats.filter(s => s && s !== "无");
+      const isStatsMatch = fatherValidStats.length > 0 &&
+        fatherValidStats.length === motherValidStats.length &&
+        fatherValidStats.every(s => motherValidStats.includes(s));
       
       const details = getPetDetails(pair.eggSprite);
       const groups = details ? details.groups : pair.mother.groups;
@@ -2860,7 +2880,7 @@ export default function App() {
     const matchBrand = filterBrand === "" || row.brand === filterBrand;
     const matchStatus = filterStatus === "" || row.status === filterStatus;
     const matchLimit = filterLimit === "" || row.isLimit === filterLimit;
-    const match3V = filter3V === "" || row.is3V === filter3V;
+    const match3V = filter3V === "" || (filter3V === "是" ? isPet3V(row) : (filter3V === "否" ? !isPet3V(row) : true));
     const matchSameNature = !filterSameNature || (
       row.fatherNatures && row.motherNatures &&
       row.fatherNatures.length > 0 && row.motherNatures.length > 0 &&
@@ -5368,8 +5388,11 @@ export default function App() {
 
             // 筛选逻辑
             const filteredPairings = allPairings.filter(pair => {
-              const isStatsMatch = pair.father.stats.length === pair.mother.stats.length &&
-                pair.father.stats.every((v, i) => v === pair.mother.stats[i] && v !== "无");
+              const fatherValidStats = pair.father.stats.filter(s => s && s !== "无");
+              const motherValidStats = pair.mother.stats.filter(s => s && s !== "无");
+              const isStatsMatch = fatherValidStats.length > 0 &&
+                fatherValidStats.length === motherValidStats.length &&
+                fatherValidStats.every(s => motherValidStats.includes(s));
 
               const matchSprite = (spriteName: string) => {
                 if (!spriteName) return false;
@@ -5578,8 +5601,11 @@ export default function App() {
                             const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
                             const currentPair = group.pairings[safeIdx];
 
-                            const isStatsMatch = currentPair.father.stats.length === currentPair.mother.stats.length &&
-                              currentPair.father.stats.every((v, i) => v === currentPair.mother.stats[i] && v !== "无");
+                            const fatherValidStats = currentPair.father.stats.filter(s => s && s !== "无");
+                            const motherValidStats = currentPair.mother.stats.filter(s => s && s !== "无");
+                            const isStatsMatch = fatherValidStats.length > 0 &&
+                              fatherValidStats.length === motherValidStats.length &&
+                              fatherValidStats.every(s => motherValidStats.includes(s));
 
                             const fatherSpriteFile = getSpriteFileName(currentPair.father.sprite);
                             const motherSpriteFile = getSpriteFileName(currentPair.mother.sprite);
