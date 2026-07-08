@@ -308,14 +308,23 @@ export default function App() {
     localStorage.setItem("roco_egg_nest_view_mode", nestViewMode);
   }, [nestViewMode]);
 
-  const [parentsViewMode, setParentsViewMode] = useState<"card" | "table">(() => {
-    const saved = localStorage.getItem("roco_egg_parents_view_mode");
+  const [fatherViewMode, setFatherViewMode] = useState<"card" | "table">(() => {
+    const saved = localStorage.getItem("roco_egg_father_view_mode");
     return (saved === "table" || saved === "card") ? saved : "card";
   });
 
   useEffect(() => {
-    localStorage.setItem("roco_egg_parents_view_mode", parentsViewMode);
-  }, [parentsViewMode]);
+    localStorage.setItem("roco_egg_father_view_mode", fatherViewMode);
+  }, [fatherViewMode]);
+
+  const [motherViewMode, setMotherViewMode] = useState<"card" | "table">(() => {
+    const saved = localStorage.getItem("roco_egg_mother_view_mode");
+    return (saved === "table" || saved === "card") ? saved : "card";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("roco_egg_mother_view_mode", motherViewMode);
+  }, [motherViewMode]);
 
   const PARENT_PAGE_SIZE = 10;
   const NEST_PAGE_SIZE = nestViewMode === "table" ? 50 : 9;
@@ -2972,8 +2981,12 @@ export default function App() {
   }, [visibleMothers.length, totalMotherPages, motherCurrentPage]);
 
   const handleDoubleClickParent = (parentId: string, gender: "♂" | "♀") => {
-    // 1. 切换为卡片模式
-    setParentsViewMode("card");
+    // 1. 切换对应仓库为卡片模式
+    if (gender === "♂") {
+      setFatherViewMode("card");
+    } else {
+      setMotherViewMode("card");
+    }
     // 2. 选中该卡片
     setSelectedCard({ id: parentId, type: "parent" });
     
@@ -4590,32 +4603,6 @@ export default function App() {
               <span className="text-slate-300 dark:text-slate-600">|</span>
               <span>母本 (♀): {visibleMothers.length}/{parents.filter(p => p.gender === "♀").length} 只</span>
             </div>
-            <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 action-buttons">
-              <button
-                onClick={() => setParentsViewMode("card")}
-                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                  parentsViewMode === "card"
-                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                }`}
-                title="卡片网格模式"
-              >
-                <LayoutGrid className="w-3 h-3" />
-                卡片
-              </button>
-              <button
-                onClick={() => setParentsViewMode("table")}
-                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                  parentsViewMode === "table"
-                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                }`}
-                title="数据表格模式"
-              >
-                <Table className="w-3 h-3" />
-                表格
-              </button>
-            </div>
             <button
               onClick={() => setShowRocoImportModal(true)}
               className="px-3 py-2 text-xs sm:text-sm font-semibold bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
@@ -4641,7 +4628,6 @@ export default function App() {
           activeNature={fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : ""}
           activeBrand={fatherFilterBrand}
           onSelectGrid={handleSelectGrid}
-          onSelectPair={handleSelectPair}
         />
 
         {/* 左右分栏 */}
@@ -4732,10 +4718,36 @@ export default function App() {
                   重置
                 </button>
               )}
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 h-7 items-center ml-auto">
+                <button
+                  onClick={() => setFatherViewMode("card")}
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
+                    fatherViewMode === "card"
+                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                  }`}
+                  title="卡片网格模式"
+                >
+                  <LayoutGrid className="w-3 h-3" />
+                  卡片
+                </button>
+                <button
+                  onClick={() => setFatherViewMode("table")}
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
+                    fatherViewMode === "table"
+                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                  }`}
+                  title="数据表格模式"
+                >
+                  <Table className="w-3 h-3" />
+                  表格
+                </button>
+              </div>
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
-              {parentsViewMode === "card" ? (
+              {fatherViewMode === "card" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                   {visibleFathers.length === 0 ? (
                     <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
@@ -4810,6 +4822,15 @@ export default function App() {
                             >
                               <td className="px-3 py-2 align-middle">
                                 <div className="flex items-center gap-2 text-left">
+                                  <input
+                                    type="checkbox"
+                                    checked={parent.checked}
+                                    onChange={(e) => {
+                                      e.stopPropagation();
+                                      handleUpdateParentChecked(parent.id, e.target.checked);
+                                    }}
+                                    className="w-3.5 h-3.5 rounded text-indigo-650 focus:ring-indigo-500 border-slate-300 dark:border-slate-700 cursor-pointer shrink-0"
+                                  />
                                   <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/50 dark:border-slate-800 flex items-center justify-center shrink-0 overflow-hidden">
                                     {spriteUrl ? (
                                       <img src={spriteUrl} alt={spriteName} className="w-[85%] h-[85%] object-contain" />
@@ -5033,10 +5054,36 @@ export default function App() {
                   重置
                 </button>
               )}
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 h-7 items-center ml-auto">
+                <button
+                  onClick={() => setMotherViewMode("card")}
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
+                    motherViewMode === "card"
+                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                  }`}
+                  title="卡片网格模式"
+                >
+                  <LayoutGrid className="w-3 h-3" />
+                  卡片
+                </button>
+                <button
+                  onClick={() => setMotherViewMode("table")}
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
+                    motherViewMode === "table"
+                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                  }`}
+                  title="数据表格模式"
+                >
+                  <Table className="w-3 h-3" />
+                  表格
+                </button>
+              </div>
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
-              {parentsViewMode === "card" ? (
+              {motherViewMode === "card" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                   {visibleMothers.length === 0 ? (
                     <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
@@ -5111,6 +5158,15 @@ export default function App() {
                             >
                               <td className="px-3 py-2 align-middle">
                                 <div className="flex items-center gap-2 text-left">
+                                  <input
+                                    type="checkbox"
+                                    checked={parent.checked}
+                                    onChange={(e) => {
+                                      e.stopPropagation();
+                                      handleUpdateParentChecked(parent.id, e.target.checked);
+                                    }}
+                                    className="w-3.5 h-3.5 rounded text-pink-600 focus:ring-pink-500 border-slate-300 dark:border-slate-700 cursor-pointer shrink-0"
+                                  />
                                   <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/50 dark:border-slate-800 flex items-center justify-center shrink-0 overflow-hidden">
                                     {spriteUrl ? (
                                       <img src={spriteUrl} alt={spriteName} className="w-[85%] h-[85%] object-contain" />
