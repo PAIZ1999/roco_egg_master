@@ -292,6 +292,13 @@ export default function App() {
   // Tab reset target state
   const [resetTabTarget, setResetTabTarget] = useState<"nest" | "parents" | "eggs" | null>(null);
 
+  // 分页设置与状态（大容量卡片展示性能优化）
+  const [fatherCurrentPage, setFatherCurrentPage] = useState(1);
+  const [motherCurrentPage, setMotherCurrentPage] = useState(1);
+  const [nestCurrentPage, setNestCurrentPage] = useState(1);
+  const PARENT_PAGE_SIZE = 10;
+  const NEST_PAGE_SIZE = 9;
+
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
   const [editingEggId, setEditingEggId] = useState<string | null>(null);
@@ -2866,6 +2873,21 @@ export default function App() {
     return pages;
   };
 
+  // 蛋窝分页计算
+  const totalNestPages = Math.ceil(filteredPets.length / NEST_PAGE_SIZE) || 1;
+  const paginatedNests = filteredPets.slice((nestCurrentPage - 1) * NEST_PAGE_SIZE, nestCurrentPage * NEST_PAGE_SIZE);
+
+  useEffect(() => {
+    setNestCurrentPage(1);
+  }, [searchTerm, filterNature, filterGroup, filterBrand, filterStatus, filterLimit, filter3V]);
+
+  useEffect(() => {
+    if (nestCurrentPage > totalNestPages) {
+      setNestCurrentPage(totalNestPages);
+    }
+  }, [filteredPets.length, totalNestPages, nestCurrentPage]);
+
+  // 父母本过滤与分页计算
   const visibleFathers = parents.filter((p) => {
     if (p.gender !== "♂") return false;
     const matchName = !fatherSearchTerm || p.sprite.toLowerCase().includes(fatherSearchTerm.toLowerCase());
@@ -2877,6 +2899,19 @@ export default function App() {
     return matchName && matchNature && matchGroup && matchBrand;
   });
 
+  const totalFatherPages = Math.ceil(visibleFathers.length / PARENT_PAGE_SIZE) || 1;
+  const paginatedFathers = visibleFathers.slice((fatherCurrentPage - 1) * PARENT_PAGE_SIZE, fatherCurrentPage * PARENT_PAGE_SIZE);
+
+  useEffect(() => {
+    setFatherCurrentPage(1);
+  }, [fatherSearchTerm, fatherNatureSearch, fatherFilterGroup, fatherFilterBrand]);
+
+  useEffect(() => {
+    if (fatherCurrentPage > totalFatherPages) {
+      setFatherCurrentPage(totalFatherPages);
+    }
+  }, [visibleFathers.length, totalFatherPages, fatherCurrentPage]);
+
   const visibleMothers = parents.filter((p) => {
     if (p.gender !== "♀") return false;
     const matchName = !motherSearchTerm || p.sprite.toLowerCase().includes(motherSearchTerm.toLowerCase());
@@ -2887,6 +2922,42 @@ export default function App() {
     const matchBrand = !motherFilterBrand || p.brand === motherFilterBrand;
     return matchName && matchNature && matchGroup && matchBrand;
   });
+
+  const totalMotherPages = Math.ceil(visibleMothers.length / PARENT_PAGE_SIZE) || 1;
+  const paginatedMothers = visibleMothers.slice((motherCurrentPage - 1) * PARENT_PAGE_SIZE, motherCurrentPage * PARENT_PAGE_SIZE);
+
+  useEffect(() => {
+    setMotherCurrentPage(1);
+  }, [motherSearchTerm, motherNatureSearch, motherFilterGroup, motherFilterBrand]);
+
+  useEffect(() => {
+    if (motherCurrentPage > totalMotherPages) {
+      setMotherCurrentPage(totalMotherPages);
+    }
+  }, [visibleMothers.length, totalMotherPages, motherCurrentPage]);
+
+  // 通用分页器按钮列表计算函数
+  const getPageNumbersHelper = (currentPage: number, totalPages: number) => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) {
+        pages.push("...");
+      }
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  };
 
   return (
     <div
@@ -3353,11 +3424,11 @@ export default function App() {
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={filteredPets.map(p => p.id as string)}
+              items={paginatedNests.map(p => p.id as string)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
-                {filteredPets.map((pet) => (
+                {paginatedNests.map((pet) => (
                   <SortableCard
                     key={pet.id}
                     pet={pet}
@@ -3385,6 +3456,72 @@ export default function App() {
               </div>
             </SortableContext>
           </DndContext>
+
+          {/* 蛋窝中心分页控制器 */}
+          {totalNestPages > 1 && (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-1 py-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium select-none text-left">
+                共 <span className="font-bold font-mono text-slate-700 dark:text-slate-300">{filteredPets.length}</span> 个蛋窝，
+                当前展示第 <span className="font-bold font-mono text-indigo-600 dark:text-indigo-400">{(nestCurrentPage - 1) * NEST_PAGE_SIZE + 1}-{Math.min(nestCurrentPage * NEST_PAGE_SIZE, filteredPets.length)}</span> 个
+              </div>
+              <div className="flex items-center gap-1.5 select-none">
+                <button
+                  onClick={() => setNestCurrentPage(1)}
+                  disabled={nestCurrentPage === 1}
+                  className="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                >
+                  首页
+                </button>
+                <button
+                  onClick={() => setNestCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={nestCurrentPage === 1}
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  上一页
+                </button>
+                <div className="flex items-center gap-1">
+                  {getPageNumbersHelper(nestCurrentPage, totalNestPages).map((pageNum, idx) => {
+                    if (pageNum === "...") {
+                      return (
+                        <span key={`nest-dots-${idx}`} className="px-2 text-slate-400 font-bold text-xs">
+                          ...
+                        </span>
+                      );
+                    }
+                    return (
+                      <button
+                        key={`nest-page-${pageNum}`}
+                        onClick={() => setNestCurrentPage(Number(pageNum))}
+                        className={`w-8 h-8 rounded-lg text-xs font-bold font-mono transition-all cursor-pointer flex items-center justify-center ${
+                          nestCurrentPage === pageNum
+                            ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-600"
+                            : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                </div>
+                <button
+                  onClick={() => setNestCurrentPage(prev => Math.min(totalNestPages, prev + 1))}
+                  disabled={nestCurrentPage === totalNestPages}
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-55 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                >
+                  下一页
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setNestCurrentPage(totalNestPages)}
+                  disabled={nestCurrentPage === totalNestPages}
+                  className="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 hover:bg-slate-55 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                >
+                  末页
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom utility controls */}
@@ -4272,8 +4409,8 @@ export default function App() {
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleFatherDragEnd}>
-                    <SortableContext items={visibleFathers.map(p => p.id)} strategy={verticalListSortingStrategy}>
-                      {visibleFathers.map(parent => (
+                    <SortableContext items={paginatedFathers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                      {paginatedFathers.map(parent => (
                         <ParentCard
                           key={parent.id}
                           parent={parent}
@@ -4296,6 +4433,69 @@ export default function App() {
                 )}
               </div>
             </div>
+
+            {/* 父本仓储分页控制器 */}
+            {totalFatherPages > 1 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-800">
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium select-none">
+                  第 {(fatherCurrentPage - 1) * PARENT_PAGE_SIZE + 1}-{Math.min(fatherCurrentPage * PARENT_PAGE_SIZE, visibleFathers.length)} 只，共 {visibleFathers.length} 只
+                </div>
+                <div className="flex items-center gap-1 select-none shrink-0">
+                  <button
+                    onClick={() => setFatherCurrentPage(1)}
+                    disabled={fatherCurrentPage === 1}
+                    className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    首页
+                  </button>
+                  <button
+                    onClick={() => setFatherCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={fatherCurrentPage === 1}
+                    className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </button>
+                  <div className="flex items-center gap-0.5">
+                    {getPageNumbersHelper(fatherCurrentPage, totalFatherPages).map((pageNum, idx) => {
+                      if (pageNum === "...") {
+                        return (
+                          <span key={`father-dots-${idx}`} className="px-0.5 text-slate-400 font-bold text-[10px]">
+                            ...
+                          </span>
+                        );
+                      }
+                      return (
+                        <button
+                          key={`father-page-${pageNum}`}
+                          onClick={() => setFatherCurrentPage(Number(pageNum))}
+                          className={`w-6 h-6 rounded text-[10px] font-bold font-mono cursor-pointer flex items-center justify-center ${
+                            fatherCurrentPage === pageNum
+                              ? "bg-indigo-600 text-white shadow-xs border border-indigo-600"
+                              : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={() => setFatherCurrentPage(prev => Math.min(totalFatherPages, prev + 1))}
+                    disabled={fatherCurrentPage === totalFatherPages}
+                    className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setFatherCurrentPage(totalFatherPages)}
+                    disabled={fatherCurrentPage === totalFatherPages}
+                    className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    末页
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 右侧母本栏 */}
@@ -4396,8 +4596,8 @@ export default function App() {
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleMotherDragEnd}>
-                    <SortableContext items={visibleMothers.map(p => p.id)} strategy={verticalListSortingStrategy}>
-                      {visibleMothers.map(parent => (
+                    <SortableContext items={paginatedMothers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                      {paginatedMothers.map(parent => (
                         <ParentCard
                           key={parent.id}
                           parent={parent}
@@ -4420,6 +4620,69 @@ export default function App() {
                 )}
               </div>
             </div>
+
+            {/* 母本仓储分页控制器 */}
+            {totalMotherPages > 1 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-800">
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium select-none">
+                  第 {(motherCurrentPage - 1) * PARENT_PAGE_SIZE + 1}-{Math.min(motherCurrentPage * PARENT_PAGE_SIZE, visibleMothers.length)} 只，共 {visibleMothers.length} 只
+                </div>
+                <div className="flex items-center gap-1 select-none shrink-0">
+                  <button
+                    onClick={() => setMotherCurrentPage(1)}
+                    disabled={motherCurrentPage === 1}
+                    className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-355 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    首页
+                  </button>
+                  <button
+                    onClick={() => setMotherCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={motherCurrentPage === 1}
+                    className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </button>
+                  <div className="flex items-center gap-0.5">
+                    {getPageNumbersHelper(motherCurrentPage, totalMotherPages).map((pageNum, idx) => {
+                      if (pageNum === "...") {
+                        return (
+                          <span key={`mother-dots-${idx}`} className="px-0.5 text-slate-400 font-bold text-[10px]">
+                            ...
+                          </span>
+                        );
+                      }
+                      return (
+                        <button
+                          key={`mother-page-${pageNum}`}
+                          onClick={() => setMotherCurrentPage(Number(pageNum))}
+                          className={`w-6 h-6 rounded text-[10px] font-bold font-mono cursor-pointer flex items-center justify-center ${
+                            motherCurrentPage === pageNum
+                              ? "bg-indigo-600 text-white shadow-xs border border-indigo-600"
+                              : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={() => setMotherCurrentPage(prev => Math.min(totalMotherPages, prev + 1))}
+                    disabled={motherCurrentPage === totalMotherPages}
+                    className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setMotherCurrentPage(totalMotherPages)}
+                    disabled={motherCurrentPage === totalMotherPages}
+                    className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-355 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                  >
+                    末页
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -13,7 +13,9 @@ import {
   ArrowRight,
   Database,
   User,
-  ChevronDown
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
 import {
@@ -213,6 +215,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   onImport
 }) => {
   const [activeTab, setActiveTab] = useState<"sqlite" | "paste">("sqlite");
+  const [importCurrentPage, setImportCurrentPage] = useState(1);
+  const IMPORT_PAGE_SIZE = 50;
   const [apiUrl, setApiUrl] = useState("http://127.0.0.1:4939/api/pets");
   const [jsonText, setJsonText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -236,6 +240,39 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   // 解析出来的宠物列表
   const [parsedPets, setParsedPets] = useState<ParsedPet[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // 监听过滤条件变化，重置导入分页码
+  useEffect(() => {
+    setImportCurrentPage(1);
+  }, [searchTerm, filterGender, filterNature, filterBrand, filterGroup, parsedPets]);
+
+  const totalImportPages = Math.ceil(filteredPets.length / IMPORT_PAGE_SIZE);
+  const visibleImportPets = filteredPets.slice(
+    (importCurrentPage - 1) * IMPORT_PAGE_SIZE,
+    importCurrentPage * IMPORT_PAGE_SIZE
+  );
+
+  const getImportPageNumbers = () => {
+    const pages = [];
+    if (totalImportPages <= 5) {
+      for (let i = 1; i <= totalImportPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (importCurrentPage > 3) {
+        pages.push("...");
+      }
+      const start = Math.max(2, importCurrentPage - 1);
+      const end = Math.min(totalImportPages - 1, importCurrentPage + 1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (importCurrentPage < totalImportPages - 2) {
+        pages.push("...");
+      }
+      pages.push(totalImportPages);
+    }
+    return pages;
+  };
   
   // 异步加载本地 SQLite 角色列表
   const loadSqliteUsers = async (): Promise<boolean> => {
@@ -296,7 +333,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   if (!isOpen) return null;
 
   // 自适应字段猜测解析单只宠物
-  const parseSinglePet = (item: any, index: number): ParsedPet | null => {
+  const parseSinglePet = (item: any, index: number, existingSet: Set<string>): ParsedPet | null => {
     try {
       // 1. 识别并解码精灵名字 (优先使用 ID 在本地 petsData 中反查，以实现 100% 官方数据库无缝对接)
       let rawName = "";
@@ -508,14 +545,10 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       });
 
-      // 8. 判定是否与本地已存在的数据完全重复
-      const isDuplicate = existingParents.some(
-        p => p.sprite === rawName &&
-             p.gender === gender &&
-             p.nature === nature &&
-             p.brand === brand &&
-             JSON.stringify(p.stats.sort()) === JSON.stringify([...stats].sort())
-      );
+      // 8. 判定是否与本地已存在的数据完全重复 (使用 Set 实现 O(1) 匹配，避免 N*M 复杂度的 JSON.stringify 与 sort 重绘假死)
+      const sortedStats = [...stats].sort().join(',');
+      const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
+      const isDuplicate = existingSet.has(key);
 
       return {
         uid: `parsed-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -552,9 +585,17 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       return;
     }
 
+    // 提前构建去重特征 Set (优化百万次 N*M JSON.stringify 查重开销)
+    const existingSet = new Set(
+      existingParents.map(p => {
+        const sortedStats = [...p.stats].sort().join(',');
+        return `${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`;
+      })
+    );
+
     const results: ParsedPet[] = [];
     list.forEach((item, index) => {
-      const parsed = parseSinglePet(item, index);
+      const parsed = parseSinglePet(item, index, existingSet);
       if (parsed) {
         results.push(parsed);
       }
@@ -705,11 +746,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     return true;
   });
 
-  // 全选/反选
+  // 全选/反选 (使用 Set 优化可见性过滤时间复杂度至 O(N))
   const handleToggleAll = (checked: boolean) => {
+    const visibleIds = new Set(filteredPets.map(p => p.uid));
     setParsedPets(prev => prev.map(p => {
-      const isVisible = filteredPets.some(fp => fp.uid === p.uid);
-      if (isVisible) {
+      if (visibleIds.has(p.uid)) {
         return { ...p, selected: checked };
       }
       return p;
@@ -1018,14 +1059,14 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {filteredPets.length === 0 ? (
+                    {visibleImportPets.length === 0 ? (
                       <tr>
                         <td colSpan={7} className="py-12 text-center text-xs text-slate-400 dark:text-slate-500">
                           没有找到符合筛选条件的精灵数据
                         </td>
                       </tr>
                     ) : (
-                      filteredPets.map((pet) => {
+                      visibleImportPets.map((pet) => {
                         const spriteFile = getSpriteFileName(pet.sprite);
                         const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
                         const thresholds = getPetSizeThresholds(pet.sprite);
@@ -1146,6 +1187,72 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                   </tbody>
                 </table>
               </div>
+
+              {/* 导入分页控制器 */}
+              {totalImportPages > 1 && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2 px-1 border-t border-slate-100 dark:border-slate-800 shrink-0">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium select-none text-left">
+                    共 <span className="font-bold font-mono text-slate-700 dark:text-slate-300">{filteredPets.length}</span> 只精灵，
+                    当前展示第 <span className="font-bold font-mono text-indigo-600 dark:text-indigo-400">{(importCurrentPage - 1) * IMPORT_PAGE_SIZE + 1}-{Math.min(importCurrentPage * IMPORT_PAGE_SIZE, filteredPets.length)}</span> 只
+                  </div>
+                  <div className="flex items-center gap-1.5 select-none">
+                    <button
+                      onClick={() => setImportCurrentPage(1)}
+                      disabled={importCurrentPage === 1}
+                      className="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    >
+                      首页
+                    </button>
+                    <button
+                      onClick={() => setImportCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={importCurrentPage === 1}
+                      className="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-650 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      上一页
+                    </button>
+                    <div className="flex items-center gap-1">
+                      {getImportPageNumbers().map((pageNum, idx) => {
+                        if (pageNum === "...") {
+                          return (
+                            <span key={`import-dots-${idx}`} className="px-1 text-slate-400 font-bold text-xs">
+                              ...
+                            </span>
+                          );
+                        }
+                        return (
+                          <button
+                            key={`import-page-${pageNum}`}
+                            onClick={() => setImportCurrentPage(Number(pageNum))}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold font-mono transition-all cursor-pointer flex items-center justify-center ${
+                              importCurrentPage === pageNum
+                                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-600"
+                                : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-50 dark:hover:bg-slate-700"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <button
+                      onClick={() => setImportCurrentPage(prev => Math.min(totalImportPages, prev + 1))}
+                      disabled={importCurrentPage === totalImportPages}
+                      className="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-650 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold flex items-center gap-1"
+                    >
+                      下一页
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => setImportCurrentPage(totalImportPages)}
+                      disabled={importCurrentPage === totalImportPages}
+                      className="px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-305 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 transition-all cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
+                    >
+                      末页
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
