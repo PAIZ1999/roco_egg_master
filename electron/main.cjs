@@ -82,8 +82,8 @@ function startRocoHelper() {
       return;
     }
 
-    // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动 (添加 shell: true 寻找环境变量)
-    const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden`;
+    // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动，并增加弹窗秒杀轮询脚本 (发送回车键关闭)
+    const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden; $ws = New-Object -ComObject wscript.shell; for ($i=0; $i -lt 50; $i++) { if ($ws.AppActivate('洛克助手 v3.2.2')) { $ws.SendKeys('{ENTER}'); break; }; Start-Sleep -Milliseconds 100; }`;
     try {
       const ps = spawn('powershell.exe', [
         '-NoProfile',
