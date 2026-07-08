@@ -184,9 +184,22 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
               <thead>
                 <tr className="bg-slate-50 dark:bg-slate-950/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200/60 dark:border-slate-800 select-none">
                   <th className="py-2.5 px-3 border-r border-slate-200/60 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900 text-left min-w-[80px]">性格 \ 蛋组</th>
-                  {EGG_GROUPS.map(group => (
-                    <th key={group} className="py-2.5 px-1 min-w-[75px] font-bold text-[10px]">{group}</th>
-                  ))}
+                  {EGG_GROUPS.map(group => {
+                    const isGroupFiltered = activeGroup === group;
+                    return (
+                      <th
+                        key={group}
+                        onClick={() => onSelectGrid(group, null, mode)}
+                        className={`py-2.5 px-1 min-w-[75px] font-bold text-[10px] cursor-pointer hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition-colors select-none ${
+                          isGroupFiltered
+                            ? "bg-indigo-100/70 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300"
+                            : ""
+                        }`}
+                      >
+                        {group}
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs select-none">
@@ -217,8 +230,9 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                         const hasFather = fatherCount > 0;
                         const hasMother = motherCount > 0;
 
-                        // 确定当前格子是否被筛选中
-                        const isGridFiltered = activeGroup === group && activeNature === nature;
+                        // 确定当前行与当前列是否被选中
+                        const isRowSelected = activeNature === nature;
+                        const isColSelected = activeGroup === group;
 
                         // 根据公母有无确定背景色
                         let bgClass = "bg-white dark:bg-slate-900";
@@ -236,9 +250,24 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                           // 只有母 -> 粉色底
                           bgClass = "bg-rose-100/80 dark:bg-rose-950/40";
                           borderClass = "border-rose-200/80 dark:border-rose-900/50";
+                        } else {
+                          // 无记录的格子，如果所在的行或列被选中，应用淡蓝色底高亮
+                          if (isRowSelected || isColSelected) {
+                            bgClass = "bg-indigo-50/30 dark:bg-indigo-950/20";
+                          }
                         }
 
-                        // 如果该格子正处于被点击筛选状态，则强制应用主题色高亮边框
+                        // 行列高亮交叉十字线边框追加
+                        let borderSelectedClass = "";
+                        if (isRowSelected) {
+                          borderSelectedClass += " border-t-indigo-200 border-b-indigo-200 dark:border-t-indigo-900/50 dark:border-b-indigo-900/50";
+                        }
+                        if (isColSelected) {
+                          borderSelectedClass += " border-l-indigo-200 border-r-indigo-200 dark:border-l-indigo-900/50 dark:border-r-indigo-900/50";
+                        }
+
+                        // 如果该格子正处于被点击筛选状态（行列交叉点），则强制应用主题色高亮边框和 Ring
+                        const isGridFiltered = activeGroup === group && activeNature === nature;
                         if (isGridFiltered) {
                           borderClass = "border-indigo-500 dark:border-indigo-400 ring-2 ring-indigo-500/20 dark:ring-indigo-400/20 z-10";
                         }
@@ -247,7 +276,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                           <td
                             key={group}
                             onClick={() => onSelectGrid(group, nature, mode)}
-                            className={`relative py-2 px-1 cursor-pointer transition-all border border-b-slate-100 dark:border-b-slate-800 font-sans h-11 min-w-[75px] ${bgClass} ${borderClass} hover:brightness-[0.98] dark:hover:brightness-110`}
+                            className={`relative py-2 px-1 cursor-pointer transition-all border border-b-slate-100 dark:border-b-slate-800 font-sans h-11 min-w-[75px] ${bgClass} ${borderClass} ${borderSelectedClass} hover:brightness-[0.98] dark:hover:brightness-110`}
                           >
                             {/* 公母只数显示 */}
                             {(hasFather || hasMother) ? (

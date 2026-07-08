@@ -1509,33 +1509,49 @@ export default function App() {
   }, []);
 
   const handleSelectGrid = useCallback((group: string | null, nature: string | null, brand: "大粗" | "大婉" | null) => {
-    if (group === null) {
+    // 1. 如果 group 和 nature 都是 null，代表点击“清空筛选”
+    if (group === null && nature === null) {
       setFatherFilterGroup("");
       setMotherFilterGroup("");
       setFatherNatureSearch("");
       setMotherNatureSearch("");
       setFatherFilterBrand("");
       setMotherFilterBrand("");
-    } else {
-      setFatherFilterGroup(group);
-      setMotherFilterGroup(group);
-      if (nature) {
-        const fullNature = NATURE_OPTIONS.find(opt => opt.startsWith(nature)) || "";
-        setFatherNatureSearch(fullNature);
-        setMotherNatureSearch(fullNature);
-      } else {
+      return;
+    }
+
+    // 2. 处理性格筛选
+    if (nature !== null) {
+      const fullNature = NATURE_OPTIONS.find(opt => opt.startsWith(nature)) || "";
+      const currentNatureShort = fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : "";
+      if (currentNatureShort === nature) {
+        // 反选：清空性格筛选
         setFatherNatureSearch("");
         setMotherNatureSearch("");
-      }
-      if (brand) {
-        setFatherFilterBrand(brand);
-        setMotherFilterBrand(brand);
       } else {
-        setFatherFilterBrand("");
-        setMotherFilterBrand("");
+        setFatherNatureSearch(fullNature);
+        setMotherNatureSearch(fullNature);
       }
     }
-  }, []);
+
+    // 3. 处理蛋组筛选
+    if (group !== null) {
+      if (fatherFilterGroup === group) {
+        // 反选：清空蛋组筛选
+        setFatherFilterGroup("");
+        setMotherFilterGroup("");
+      } else {
+        setFatherFilterGroup(group);
+        setMotherFilterGroup(group);
+      }
+    }
+
+    // 4. 处理品牌筛选
+    if (brand !== null) {
+      setFatherFilterBrand(brand);
+      setMotherFilterBrand(brand);
+    }
+  }, [fatherNatureSearch, fatherFilterGroup]);
 
   const handleSelectPair = useCallback((fatherId: string, motherId: string) => {
     setParents(prev => prev.map(p => {
