@@ -1962,6 +1962,7 @@ export default function App() {
       setFilterStatus("");
       setFilterLimit("");
       setFilter3V("");
+      setFilterSameNature(false);
       showToast("已成功还原初始默认蛋窝与需求列表，且已重置筛选条件！", "success");
     } else if (resetTabTarget === "parents") {
       setParents([]);
@@ -2059,6 +2060,7 @@ export default function App() {
             setFilterStatus("");
             setFilterLimit("");
             setFilter3V("");
+            setFilterSameNature(false);
 
             showToast(`已成功导入${label}数据！`, "success");
             setActiveModal("none");
@@ -2498,6 +2500,8 @@ export default function App() {
 
   const handleExportLongImage = async () => {
     showToast("正在生成高品质长图，请稍候...", "info");
+    setIsExporting(true);
+    await new Promise(resolve => setTimeout(resolve, 150));
 
     // Find the target element in the real document
     const target = document.getElementById("export-container");
@@ -2824,6 +2828,7 @@ export default function App() {
         document.body.removeChild(wrapper);
       }
       document.body.classList.remove("exporting");
+      setIsExporting(false);
     }
   };
 
@@ -2856,7 +2861,13 @@ export default function App() {
     const matchStatus = filterStatus === "" || row.status === filterStatus;
     const matchLimit = filterLimit === "" || row.isLimit === filterLimit;
     const match3V = filter3V === "" || row.is3V === filter3V;
-    return matchSprite && matchNature && matchGroup && matchBrand && matchStatus && matchLimit && match3V;
+    const matchSameNature = !filterSameNature || (
+      row.fatherNatures && row.motherNatures &&
+      row.fatherNatures.length > 0 && row.motherNatures.length > 0 &&
+      row.fatherNatures[0] && row.motherNatures[0] &&
+      row.fatherNatures[0] === row.motherNatures[0]
+    );
+    return matchSprite && matchNature && matchGroup && matchBrand && matchStatus && matchLimit && match3V && matchSameNature;
   });
 
 
@@ -3473,6 +3484,28 @@ export default function App() {
                   <option key={opt} value={opt} className="dark:bg-slate-800">{opt}</option>
                 ))}
               </select>
+
+              {/* Filter by 3V */}
+              <select
+                value={filter3V}
+                onChange={e => setFilter3V(e.target.value)}
+                className="text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
+              >
+                <option value="" className="dark:bg-slate-800">全部(有无3V蛋)</option>
+                <option value="是" className="dark:bg-slate-800">仅3V蛋</option>
+                <option value="否" className="dark:bg-slate-800">仅非3V蛋</option>
+              </select>
+
+              {/* 父母同性格筛选 */}
+              <label className="text-xs font-bold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto select-none bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm">
+                <input
+                  type="checkbox"
+                  checked={filterSameNature}
+                  onChange={e => setFilterSameNature(e.target.checked)}
+                  className="w-4 h-4 rounded text-indigo-650 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 cursor-pointer"
+                />
+                <span>父母同性格</span>
+              </label>
 
               {/* Watermark toggle */}
               <label

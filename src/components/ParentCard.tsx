@@ -435,6 +435,18 @@ export const ParentCard = React.memo(function ParentCard({
             </div>
           )}
 
+          {/* 📍 游戏内仓库位置定位 (精灵数据下方，上下排列) */}
+          {parent.position && parent.position !== "-" && (
+            <div className="flex flex-col gap-1.5 bg-indigo-50/50 dark:bg-indigo-950/15 p-2 rounded-xl border border-indigo-100/30 dark:border-indigo-900/20 select-none w-full mt-1.5">
+              <span className="text-[10px] font-bold text-indigo-750 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200/40 dark:border-indigo-900/25 px-2 py-0.5 rounded flex items-center gap-0.5 shrink-0 w-fit">
+                <span>📍</span>游戏位置
+              </span>
+              <span className="text-[11px] font-extrabold text-indigo-650 dark:text-indigo-350 pl-0.5 select-text" title={parent.position}>
+                {parent.position.replace('\n', ' ')}
+              </span>
+            </div>
+          )}
+
 
 
         </div>
@@ -579,17 +591,7 @@ export const ParentCard = React.memo(function ParentCard({
 
       </div>
 
-      {/* 📍 游戏内仓库位置定位 Badge (通栏横跨卡片底端) */}
-      {parent.position && parent.position !== "-" && (
-        <div className="mt-3 flex items-center justify-between gap-2 bg-indigo-50/50 dark:bg-indigo-950/15 p-2 rounded-xl border border-indigo-100/30 dark:border-indigo-900/20 select-none w-full">
-          <span className="text-[10px] font-bold text-indigo-750 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200/40 dark:border-indigo-900/25 px-2 py-0.5 rounded flex items-center gap-0.5 shrink-0">
-            <span>📍</span>游戏位置
-          </span>
-          <span className="text-[11px] font-extrabold text-indigo-650 dark:text-indigo-350 pr-1 truncate flex-1 text-right" title={parent.position}>
-            {parent.position.replace('\n', ' ')}
-          </span>
-        </div>
-      )}
+
     </div>
   );
 });
