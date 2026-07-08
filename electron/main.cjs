@@ -1,10 +1,13 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Tray, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { exec, spawn } = require('child_process');
 
 let mainWindow;
 let customSaveDir = null;
+let rememberCloseChoice = null; // null | 'tray' | 'exit'
+let tray = null;
+let isQuitting = false;
 const configPath = path.join(app.getPath('userData'), 'app_config.json');
 
 // 加载持久化的自定义路径配置
@@ -14,6 +17,9 @@ function loadConfig() {
       const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
       if (config.customSaveDir && fs.existsSync(config.customSaveDir)) {
         customSaveDir = config.customSaveDir;
+      }
+      if (config.rememberCloseChoice) {
+        rememberCloseChoice = config.rememberCloseChoice;
       }
     }
   } catch (e) {
@@ -25,13 +31,37 @@ function loadConfig() {
 function saveCustomPath(dir) {
   customSaveDir = dir;
   try {
+    let config = {};
+    if (fs.existsSync(configPath)) {
+      config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    }
+    config.customSaveDir = dir;
     const dirName = path.dirname(configPath);
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName, { recursive: true });
     }
-    fs.writeFileSync(configPath, JSON.stringify({ customSaveDir: dir }), 'utf8');
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
   } catch (e) {
     console.error('写入配置文件失败:', e);
+  }
+}
+
+// 写入关闭行为配置
+function saveCloseChoice(choice) {
+  rememberCloseChoice = choice;
+  try {
+    let config = {};
+    if (fs.existsSync(configPath)) {
+      config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    }
+    config.rememberCloseChoice = choice;
+    const dirName = path.dirname(configPath);
+    if (!fs.existsSync(dirName)) {
+      fs.mkdirSync(dirName, { recursive: true });
+    }
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
+  } catch (e) {
+    console.error('写入配置文件关闭行为失败:', e);
   }
 }
 
@@ -122,6 +152,40 @@ function stopRocoHelper() {
   });
 }
 
+function createTray() {
+  const iconPath = path.join(__dirname, 'icon.png');
+  tray = new Tray(iconPath);
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: '显示主界面',
+      click: () => {
+        if (mainWindow) {
+          mainWindow.show();
+          mainWindow.focus();
+        }
+      }
+    },
+    { type: 'separator' },
+    {
+      label: '退出软件',
+      click: () => {
+        isQuitting = true;
+        app.quit();
+      }
+    }
+  ]);
+  tray.setToolTip('洛克王国孵蛋数据管理系统');
+  tray.setContextMenu(contextMenu);
+
+  // 双击托盘图标显示主界面
+  tray.on('double-click', () => {
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.focus();
+    }
+  });
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1420,
@@ -143,6 +207,57 @@ function createWindow() {
   } else {
     mainWindow.loadURL('http://localhost:3000');
   }
+
+  // 拦截关闭按钮事件，转为系统托盘化
+  mainWindow.on('close', (event) => {
+    if (isQuitting) {
+      return;
+    }
+    
+    event.preventDefault();
+    
+    if (rememberCloseChoice === 'tray') {
+      mainWindow.hide();
+      return;
+    } else if (rememberCloseChoice === 'exit') {
+      isQuitting = true;
+      app.quit();
+      return;
+    }
+    
+    // 弹出确认选项框
+    const choice = dialog.showMessageBoxSync(mainWindow, {
+      type: 'question',
+      buttons: ['最小化到系统托盘', '直接退出软件', '取消'],
+      defaultId: 0,
+      cancelId: 2,
+      title: '关闭行为确认',
+      message: '您希望如何关闭软件？',
+      checkboxLabel: '记住我的选择，不再提示',
+      checkboxChecked: false
+    });
+    
+    const remember = (choice === 0 || choice === 1);
+    
+    if (choice === 0) {
+      if (remember) {
+        saveCloseChoice('tray');
+      }
+      mainWindow.hide();
+      try {
+        tray.displayBalloon({
+          title: '已最小化至托盘',
+          content: '软件已转入后台运行，双击托盘图标可重新显示主界面。'
+        });
+      } catch (err) {}
+    } else if (choice === 1) {
+      if (remember) {
+        saveCloseChoice('exit');
+      }
+      isQuitting = true;
+      app.quit();
+    }
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -411,6 +526,7 @@ except Exception as e:
 app.whenReady().then(() => {
   loadConfig();
   startRocoHelper(); // 启动时在后台静默隐藏拉起 roco_helper-v3.2.2.exe
+  createTray();      // 物理构造系统托盘
   createWindow();
 
   app.on('activate', () => {
