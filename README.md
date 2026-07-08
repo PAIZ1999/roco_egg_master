@@ -67,10 +67,12 @@
 
 ### 1. 前置条件安装
 1. **安装网卡捕获驱动 Npcap**：
-   - 抓取网络封包需要底层驱动支持。请下载并安装根目录下的 [npcap-1.88.exe](npcap-1.88.exe)。
+   - Windows 的网卡抓包模式依赖于 Npcap 驱动。请访问官网下载安装：[Npcap 官网 (npcap.com/#download)](https://npcap.com/#download)，或直接运行项目根目录下的本地安装包 [npcap-1.88.exe](npcap-1.88.exe)。
    - **安装注意**：必须使用**管理员权限**运行安装包，且在安装过程中**务必勾选 "Install Npcap in WinPcap API-compatible Mode"**（以 WinPcap 兼容模式安装）。
-2. **运行数据抓取助手**：
-   - 启动 [roco_helper-v3.2.2.exe](dist-electron/roco_helper-v3.2.2.exe)（存放于 `dist-electron/` 目录），使其在 Windows 系统后台静默运行以捕获并解密游戏数据。
+   - **排错建议**：安装或重新安装后建议重启工具；如果仍无法看到网卡，可以尝试重启 Windows 操作系统。
+2. **配置数据抓取助手**：
+   - 玩家**无需手动运行**数据抓取助手。只需将 [roco_helper-v3.2.2.exe](dist-electron/roco_helper-v3.2.2.exe)（存放于 `dist-electron/` 目录）复制并放置在本系统的 `.exe` 可执行文件同级目录下。
+   - 当本系统启动时，会自动在后台静默运行该抓取助手来监听并解密游戏数据。
 
 ### 2. 精灵一键导入步骤
 1. **登录游戏**：
@@ -163,8 +165,8 @@
 > 🏅 **特别鸣谢** 孟德尔实验室为洛克王国社区提供的优质数据资源！
 
 ### 🏅 项目特别致谢
-*   本系统的“游戏数据一键解密直连导入”功能，核心依赖于优秀的 [roco_helper-v3.2.2.exe](dist-electron/roco_helper-v3.2.2.exe) 网络包捕获与本地数据库处理工具。
-*   在此对 `roco_helper` 开发团队为洛克王国社区所提供的底层网络捕获解密和数据交互支持致以最诚挚的感激之情！
+*   本系统的“游戏数据一键解密直连导入”功能，核心鸣谢并依赖于优秀的开源抓包助手项目 [rocom-helper](https://github.com/h3110w0r1d-y/rocom-helper)。
+*   在此对 [rocom-helper](https://github.com/h3110w0r1d-y/rocom-helper) 的开发者团队为洛克王国社区所提供的底层网络捕获解密 and 数据交互支持致以最诚挚的感激之情！
 
 ---
 
