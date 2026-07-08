@@ -306,6 +306,9 @@ export default function App() {
     localStorage.setItem("roco_egg_nest_view_mode", nestViewMode);
   }, [nestViewMode]);
 
+  const PARENT_PAGE_SIZE = 10;
+  const NEST_PAGE_SIZE = 9;
+
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
   const [editingEggId, setEditingEggId] = useState<string | null>(null);
