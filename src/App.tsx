@@ -6754,7 +6754,7 @@ export default function App() {
                   </div>
                   <div>
                     <h2 className="text-white font-bold text-base tracking-tight">洛克王国孵蛋数据管理系统</h2>
-                    <p className="text-slate-400 text-[11px] mt-0.5">v4.0.0 · 关于 &amp; 数据致谢</p>
+                    <p className="text-slate-400 text-[11px] mt-0.5">v6.0.0 · 关于 &amp; 数据致谢</p>
                   </div>
                 </div>
                 <button
