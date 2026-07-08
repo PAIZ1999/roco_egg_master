@@ -278,8 +278,8 @@ try:
                 if isinstance(b_data, list):
                     for grid_idx, p_id in enumerate(b_data):
                         if p_id and p_id > 0:
-                            row = (grid_idx // 5) + 1
-                            col = (grid_idx % 5) + 1
+                            row = (grid_idx // 6) + 1
+                            col = (grid_idx % 6) + 1
                             pet_positions[p_id] = f"{b_id + 1}盒\\n{row}行{col}列"
             except:
                 pass
