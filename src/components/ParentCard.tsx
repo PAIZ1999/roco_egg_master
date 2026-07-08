@@ -217,17 +217,17 @@ export const ParentCard = React.memo(function ParentCard({
     return (
       <div
         key={sIdx}
-        className={`relative w-[28px] h-[28px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-100 active:scale-95 stat-icon-select-container ${badgeColors}`}
+        className={`relative w-[24px] h-[24px] rounded-full border flex items-center justify-center transition-all shadow-3xs cursor-pointer hover:scale-105 active:scale-95 stat-icon-select-container ${badgeColors}`}
         title={`三围[${sIdx + 1}]: ${currentValue}`}
       >
         {isImageStat ? (
           <img
             src={getImagePath(`images/6围/${currentValue}.png`)}
             alt={currentValue}
-            className="w-[18px] h-[18px] object-contain shrink-0"
+            className="w-[15px] h-[15px] object-contain shrink-0"
           />
         ) : (
-          <Minus className="w-3 h-3 text-slate-400 shrink-0" />
+          <Minus className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0" />
         )}
         <select
           value={currentValue}
@@ -278,11 +278,11 @@ export const ParentCard = React.memo(function ParentCard({
           : "bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 shadow-sm"
       }`}
     >
-      {/* Left Column: Avatar, Checkbox, Delete */}
-      <div className="w-full sm:col-span-4 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2 relative min-h-0 gap-3 sm:gap-1.5">
+      {/* Left Column: Avatar, Checkbox, Delete, Groups, Location, Stats */}
+      <div className="w-full sm:col-span-5 flex flex-row sm:flex-col items-center sm:border-r sm:border-slate-100 dark:sm:border-slate-800 pr-0 sm:pr-2.5 relative min-h-0 gap-3 sm:gap-1.5">
         
         {/* Checkbox and Delete Row */}
-        <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-between w-auto sm:w-full gap-2 sm:pb-1.5 shrink-0 z-20">
+        <div className="absolute top-1.5 right-1.5 sm:static flex sm:items-center sm:justify-between w-auto sm:w-full gap-2 sm:pb-1 shrink-0 z-20">
           <div
             {...attributes}
             {...listeners}
@@ -359,17 +359,6 @@ export const ParentCard = React.memo(function ParentCard({
             </div>
           )}
 
-          {/* Type Badge absolute overlay */}
-          {petDetails && petDetails.types && petDetails.types.length > 0 && (
-            <div className="absolute bottom-0.5 right-0.5 w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 z-10">
-              <img
-                src={getImagePath(`images/attributes/${petDetails.types[0]}.png`)}
-                alt={petDetails.types[0]}
-                className="w-3 h-3 sm:w-3.5 sm:h-3.5 object-contain"
-              />
-            </div>
-          )}
-
           {/* Gender Overlay */}
           <span className={`absolute top-0.5 left-0.5 p-0.5 rounded-md shadow-2xs text-white scale-80 origin-top-left z-15`}>
             {parent.gender === "♂" ? (
@@ -380,8 +369,8 @@ export const ParentCard = React.memo(function ParentCard({
           </span>
         </div>
 
-        {/* Name and types */}
-        <div className="flex flex-col items-start sm:items-center gap-1 sm:gap-1.5 flex-1 min-w-0 pr-10 sm:pr-0">
+        {/* Name and metadata info */}
+        <div className="flex flex-col items-start sm:items-center gap-1 sm:gap-1.5 flex-1 min-w-0 pr-10 sm:pr-0 w-full">
           <div className="w-full text-left sm:text-center shrink-0">
             <Autocomplete
               value={parent.sprite}
@@ -393,6 +382,7 @@ export const ParentCard = React.memo(function ParentCard({
             />
           </div>
 
+          {/* Types Row */}
           {petDetails && petDetails.types && petDetails.types.length > 0 && (
             <div className="flex gap-1 justify-start sm:justify-center items-center flex-wrap w-full shrink-0">
               {petDetails.types.map((t) => {
@@ -415,22 +405,55 @@ export const ParentCard = React.memo(function ParentCard({
             </div>
           )}
 
+          {/* 所属组别 (蛋组) */}
+          {parent.groups && parent.groups.length > 0 && (
+            <div className="flex flex-wrap gap-1 justify-start sm:justify-center items-center w-full mt-1 shrink-0">
+              {parent.groups.map((grp) => (
+                <span
+                  key={grp}
+                  className={`text-[9px] font-extrabold py-0.5 px-1.5 rounded-md border shadow-3xs select-none ${getEggGroupStyle(
+                    grp
+                  )}`}
+                >
+                  {grp}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* 📍 游戏内仓库位置定位 */}
+          {parent.position && parent.position !== "-" && (
+            <span 
+              className="text-[9px] font-extrabold text-indigo-650 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/30 border border-indigo-150/40 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md select-none shrink-0 w-fit text-center mt-1 truncate max-w-full"
+              title={`游戏位置: ${parent.position}`}
+            >
+              📍 {parent.position.replace('\n', ' ')}
+            </span>
+          )}
+
+          {/* 三围选择 (移入左侧最底部) */}
+          <div className="flex items-center gap-1.5 justify-center py-1 mt-1 shrink-0 w-full">
+            {(parent.stats || ["无", "无", "无"]).map((stat, sIdx) =>
+              renderStatSelect(sIdx, stat)
+            )}
+          </div>
+
         </div>
       </div>
 
-      {/* Right Column: Settings */}
-      <div className="w-full sm:col-span-8 flex flex-col justify-start gap-1 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-0">
+      {/* Right Column: Core Settings (Grid Form & Nature) */}
+      <div className="w-full sm:col-span-7 flex flex-col justify-between gap-2.5 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-0">
         
-        {/* Core Profile: Brand, Height, Weight, Voice */}
-        <div className="flex flex-col gap-2 bg-slate-50/70 dark:bg-slate-900/40 p-2 rounded-lg border border-slate-100/60 dark:border-slate-800">
+        {/* Core Profile: Brand, Height, Weight, Voice (2x2 Grid) */}
+        <div className="grid grid-cols-2 gap-2 bg-slate-50/70 dark:bg-slate-900/40 p-2 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0">
           {/* Brand */}
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">牌子</span>
+          <div className="flex items-center justify-between gap-1.5">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-400 w-8 shrink-0 select-none text-left">牌子</span>
             <div className="flex-1 relative">
               <select
                 value={parent.brand}
                 onChange={(e) => handleUpdateParentBrand(parent.id, e.target.value)}
-                className={`appearance-none text-xs font-bold text-center border rounded-md py-0.5 px-2 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors ${getBrandStyle(
+                className={`appearance-none text-[10.5px] font-bold text-center border rounded-md py-0.5 px-1.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-colors h-7 ${getBrandStyle(
                   parent.brand
                 )}`}
               >
@@ -443,48 +466,12 @@ export const ParentCard = React.memo(function ParentCard({
             </div>
           </div>
 
-          {/* Height (Ruler) */}
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">身高</span>
-            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
-                <Ruler className="w-3.5 h-3.5" />
-              </div>
-              <input
-                type="text"
-                value={parent.height}
-                onChange={(e) => handleUpdateParentHeight(parent.id, e.target.value)}
-                placeholder="输入身高..."
-                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-              />
-              <span className="text-[10px] font-bold text-slate-400 pr-2.5 pointer-events-none select-none shrink-0">m</span>
-            </div>
-          </div>
-
-          {/* Weight (Weight/Scale) */}
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">体重</span>
-            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-550 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
-                <Weight className="w-3.5 h-3.5" />
-              </div>
-              <input
-                type="text"
-                value={parent.weight}
-                onChange={(e) => handleUpdateParentWeight(parent.id, e.target.value)}
-                placeholder="输入体重..."
-                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-              />
-              <span className="text-[10px] font-bold text-slate-400 pr-2.5 pointer-events-none select-none shrink-0">kg</span>
-            </div>
-          </div>
-
           {/* Voice (🎤 Input) */}
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-300 w-12 shrink-0 select-none text-left">声音值</span>
+          <div className="flex items-center justify-between gap-1.5">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-400 w-10 shrink-0 select-none text-left">声音值</span>
             <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
-              <div className="pl-2 pr-1.5 flex items-center text-slate-400 dark:text-slate-500 pointer-events-none select-none shrink-0">
-                <span className="text-[10px]">🎤</span>
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 pointer-events-none select-none shrink-0">
+                <span className="text-[9px]">🎤</span>
               </div>
               <input
                 type="text"
@@ -498,21 +485,57 @@ export const ParentCard = React.memo(function ParentCard({
                     handleUpdateParentVoice(parent.id, isNaN(numVal) ? null : numVal);
                   }
                 }}
-                placeholder="输入声音值..."
-                className="w-full text-xs font-bold pl-1 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                placeholder="声音..."
+                className="w-full text-xs font-bold pl-0.5 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
+            </div>
+          </div>
+
+          {/* Height (Ruler) */}
+          <div className="flex items-center justify-between gap-1.5">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-400 w-8 shrink-0 select-none text-left">身高</span>
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 pointer-events-none select-none shrink-0">
+                <Ruler className="w-3.5 h-3.5" />
+              </div>
+              <input
+                type="text"
+                value={parent.height}
+                onChange={(e) => handleUpdateParentHeight(parent.id, e.target.value)}
+                placeholder="身高..."
+                className="w-full text-xs font-bold pl-0.5 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+              />
+              <span className="text-[9px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none shrink-0">m</span>
+            </div>
+          </div>
+
+          {/* Weight (Weight/Scale) */}
+          <div className="flex items-center justify-between gap-1.5">
+            <span className="text-[10px] font-bold text-slate-450 dark:text-slate-400 w-10 shrink-0 select-none text-left">体重</span>
+            <div className="flex-1 relative flex items-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus-within:border-indigo-400 dark:focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-950/40 transition-all shadow-3xs overflow-hidden h-7">
+              <div className="pl-1.5 pr-1 flex items-center text-slate-400 pointer-events-none select-none shrink-0">
+                <Weight className="w-3.5 h-3.5" />
+              </div>
+              <input
+                type="text"
+                value={parent.weight}
+                onChange={(e) => handleUpdateParentWeight(parent.id, e.target.value)}
+                placeholder="体重..."
+                className="w-full text-xs font-bold pl-0.5 text-slate-800 dark:text-slate-100 bg-transparent py-0.5 border-none focus:outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+              />
+              <span className="text-[9px] font-bold text-slate-400 pr-1.5 pointer-events-none select-none shrink-0">kg</span>
             </div>
           </div>
         </div>
 
         {getStatusBadge() && (
-          <div className="flex justify-start pl-0.5 my-0.5 shrink-0">
+          <div className="flex justify-start pl-0.5 shrink-0">
             {getStatusBadge()}
           </div>
         )}
 
         {/* Nature Selection Container */}
-        <div className="flex flex-col gap-1 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
+        <div className="flex flex-col gap-1 bg-slate-50/70 dark:bg-slate-900/40 p-2 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0">
           <span className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md select-none shrink-0 w-fit flex items-center gap-0.5">
             精灵性格
           </span>
@@ -522,59 +545,12 @@ export const ParentCard = React.memo(function ParentCard({
             placeholder="选择/输入性格"
             onChange={(val) => handleUpdateParentNature(parent.id, val)}
             className="w-full"
-            inputClassName="font-bold text-[13px] text-center text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md py-0.5 px-2 w-full focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all shadow-3xs"
+            inputClassName="font-bold text-[12.5px] text-center text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md py-0.5 px-2 w-full focus:outline-none focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-950/40 transition-all shadow-3xs"
           />
         </div>
-
-        {/* Stats Section */}
-        <div className="flex flex-col gap-1.5 bg-slate-50/70 dark:bg-slate-900/40 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/25 border border-teal-200/50 dark:border-teal-900/30 px-1.5 py-0.5 rounded-md select-none shrink-0 w-fit flex items-center gap-0.5">
-              精灵三围
-            </span>
-          </div>
-          <div className="flex items-center gap-2.5 justify-center py-0.5 shrink-0">
-            {(parent.stats || ["无", "无", "无"]).map((stat, sIdx) =>
-              renderStatSelect(sIdx, stat)
-            )}
-          </div>
-        </div>
-
-        {/* Groups Display */}
-        {parent.groups && parent.groups.length > 0 && (
-          <div className="flex items-center justify-between gap-1.5 bg-slate-50/70 dark:bg-slate-950 p-1.5 rounded-lg border border-slate-100/60 dark:border-slate-800 shrink-0">
-            <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 border border-amber-200/50 dark:border-amber-900/30 px-1.5 py-0.5 rounded-md select-none shrink-0">
-              所属组别
-            </span>
-            <div className="flex flex-wrap gap-1 items-center justify-end flex-1">
-              {parent.groups.map((grp) => (
-                <span
-                  key={grp}
-                  className={`text-[10px] font-bold py-0.5 px-2 rounded-full border shadow-3xs select-none ${getEggGroupStyle(
-                    grp
-                  )}`}
-                >
-                  {grp}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 📍 游戏内仓库位置定位 Badge */}
-        {parent.position && parent.position !== "-" && (
-          <div className="flex items-center justify-between gap-1.5 bg-indigo-50/60 dark:bg-indigo-950/20 p-1.5 rounded-lg border border-indigo-100/40 dark:border-indigo-900/30 shrink-0 select-none">
-            <span className="text-[10px] font-bold text-indigo-750 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
-              <span>📍</span>游戏位置
-            </span>
-            <span className="text-[10px] font-extrabold text-indigo-650 dark:text-indigo-350 pr-1.5">
-              {parent.position.replace('\n', ' ')}
-            </span>
-          </div>
-        )}
       </div>
 
-      {/* 底部通栏：标准尺寸与及格指示面板，横排排布以完全避免左栏溢出撑爆卡片 */}
+      {/* 底部通栏：标准尺寸与及格指示面板，横排排布 */}
       {guideSize && (
         <div className="col-span-12 mt-1 bg-slate-50/90 dark:bg-slate-950/30 border border-slate-100/60 dark:border-slate-800 p-2 rounded-lg text-[10.5px] text-slate-500 dark:text-slate-400 select-none shadow-3xs flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
           <div className="flex items-center gap-1.5">

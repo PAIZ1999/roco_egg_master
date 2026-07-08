@@ -4656,6 +4656,32 @@ export default function App() {
                 <span className="text-[9px] sm:text-[10px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">FATHER</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
+                <div className="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 select-none shrink-0 h-6.5 items-center mr-1">
+                  <button
+                    onClick={() => setFatherViewMode("card")}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all cursor-pointer flex items-center gap-0.5 h-full ${
+                      fatherViewMode === "card"
+                        ? "bg-slate-700 text-sky-400 shadow-3xs"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                    title="卡片网格模式"
+                  >
+                    <LayoutGrid className="w-2.5 h-2.5" />
+                    卡片
+                  </button>
+                  <button
+                    onClick={() => setFatherViewMode("table")}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all cursor-pointer flex items-center gap-0.5 h-full ${
+                      fatherViewMode === "table"
+                        ? "bg-slate-700 text-sky-400 shadow-3xs"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                    title="数据表格模式"
+                  >
+                    <Table className="w-2.5 h-2.5" />
+                    表格
+                  </button>
+                </div>
                 <button
                   onClick={() => {
                     const allChecked = visibleFathers.length > 0 && visibleFathers.every(p => p.checked);
@@ -4734,32 +4760,6 @@ export default function App() {
                   重置
                 </button>
               )}
-              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 h-7 items-center ml-auto">
-                <button
-                  onClick={() => setFatherViewMode("card")}
-                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
-                    fatherViewMode === "card"
-                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
-                  title="卡片网格模式"
-                >
-                  <LayoutGrid className="w-3 h-3" />
-                  卡片
-                </button>
-                <button
-                  onClick={() => setFatherViewMode("table")}
-                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
-                    fatherViewMode === "table"
-                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
-                  title="数据表格模式"
-                >
-                  <Table className="w-3 h-3" />
-                  表格
-                </button>
-              </div>
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
@@ -4992,6 +4992,32 @@ export default function App() {
                 <span className="text-[9px] sm:text-[10px] bg-pink-500/20 text-pink-300 border border-pink-500/30 px-1 py-0.1 sm:px-1.5 sm:py-0.2 rounded font-mono shrink-0 whitespace-nowrap">MOTHER</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2 shrink-0 whitespace-nowrap">
+                <div className="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 select-none shrink-0 h-6.5 items-center mr-1">
+                  <button
+                    onClick={() => setMotherViewMode("card")}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all cursor-pointer flex items-center gap-0.5 h-full ${
+                      motherViewMode === "card"
+                        ? "bg-slate-700 text-pink-400 shadow-3xs"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                    title="卡片网格模式"
+                  >
+                    <LayoutGrid className="w-2.5 h-2.5" />
+                    卡片
+                  </button>
+                  <button
+                    onClick={() => setMotherViewMode("table")}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all cursor-pointer flex items-center gap-0.5 h-full ${
+                      motherViewMode === "table"
+                        ? "bg-slate-700 text-pink-400 shadow-3xs"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                    title="数据表格模式"
+                  >
+                    <Table className="w-2.5 h-2.5" />
+                    表格
+                  </button>
+                </div>
                 <button
                   onClick={() => {
                     const allChecked = visibleMothers.length > 0 && visibleMothers.every(p => p.checked);
@@ -5070,32 +5096,6 @@ export default function App() {
                   重置
                 </button>
               )}
-              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 h-7 items-center ml-auto">
-                <button
-                  onClick={() => setMotherViewMode("card")}
-                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
-                    motherViewMode === "card"
-                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
-                  title="卡片网格模式"
-                >
-                  <LayoutGrid className="w-3 h-3" />
-                  卡片
-                </button>
-                <button
-                  onClick={() => setMotherViewMode("table")}
-                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 h-full ${
-                    motherViewMode === "table"
-                      ? "bg-white dark:bg-slate-750 text-indigo-650 dark:text-indigo-400 shadow-3xs"
-                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
-                  }`}
-                  title="数据表格模式"
-                >
-                  <Table className="w-3 h-3" />
-                  表格
-                </button>
-              </div>
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
