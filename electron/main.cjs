@@ -137,9 +137,6 @@ function createWindow() {
   // 隐藏默认菜单栏
   mainWindow.setMenuBarVisibility(false);
 
-  // 始终打开 DevTools 以便调试捕获报错
-  mainWindow.webContents.openDevTools();
-
   // 加载页面
   if (app.isPackaged) {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
