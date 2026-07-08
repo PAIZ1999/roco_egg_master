@@ -306,6 +306,15 @@ export default function App() {
     localStorage.setItem("roco_egg_nest_view_mode", nestViewMode);
   }, [nestViewMode]);
 
+  const [parentsViewMode, setParentsViewMode] = useState<"card" | "table">(() => {
+    const saved = localStorage.getItem("roco_egg_parents_view_mode");
+    return (saved === "table" || saved === "card") ? saved : "card";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("roco_egg_parents_view_mode", parentsViewMode);
+  }, [parentsViewMode]);
+
   const PARENT_PAGE_SIZE = 10;
   const NEST_PAGE_SIZE = nestViewMode === "table" ? 50 : 9;
 
@@ -2960,6 +2969,33 @@ export default function App() {
     }
   }, [visibleMothers.length, totalMotherPages, motherCurrentPage]);
 
+  const handleDoubleClickParent = (parentId: string, gender: "♂" | "♀") => {
+    // 1. 切换为卡片模式
+    setParentsViewMode("card");
+    // 2. 选中该卡片
+    setSelectedCard({ id: parentId, type: "parent" });
+    
+    // 3. 计算并跳转到对应的卡片所在的页码
+    const list = gender === "♂" ? visibleFathers : visibleMothers;
+    const index = list.findIndex(p => p.id === parentId);
+    if (index !== -1) {
+      const page = Math.floor(index / PARENT_PAGE_SIZE) + 1;
+      if (gender === "♂") {
+        setFatherCurrentPage(page);
+      } else {
+        setMotherCurrentPage(page);
+      }
+    }
+
+    // 4. 滚动到对应卡片
+    setTimeout(() => {
+      const element = document.getElementById(`parent-card-${parentId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 120);
+  };
+
   // 通用分页器按钮列表计算函数
   const getPageNumbersHelper = (currentPage: number, totalPages: number) => {
     const pages: (number | string)[] = [];
@@ -4552,6 +4588,32 @@ export default function App() {
               <span className="text-slate-300 dark:text-slate-600">|</span>
               <span>母本 (♀): {visibleMothers.length}/{parents.filter(p => p.gender === "♀").length} 只</span>
             </div>
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200/60 dark:border-slate-700 select-none shrink-0 action-buttons">
+              <button
+                onClick={() => setParentsViewMode("card")}
+                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  parentsViewMode === "card"
+                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`}
+                title="卡片网格模式"
+              >
+                <LayoutGrid className="w-3 h-3" />
+                卡片
+              </button>
+              <button
+                onClick={() => setParentsViewMode("table")}
+                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  parentsViewMode === "table"
+                    ? "bg-white dark:bg-slate-700 text-indigo-650 dark:text-indigo-400 shadow-3xs"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`}
+                title="数据表格模式"
+              >
+                <Table className="w-3 h-3" />
+                表格
+              </button>
+            </div>
             <button
               onClick={() => setShowRocoImportModal(true)}
               className="px-3 py-2 text-xs sm:text-sm font-semibold bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
@@ -4671,38 +4733,152 @@ export default function App() {
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-                {visibleFathers.length === 0 ? (
-                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                    <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
-                    <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♂️ 暂无登记的父本精灵</span>
-                    <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加父本”录入</span>
-                  </div>
-                ) : (
-                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleFatherDragEnd}>
-                    <SortableContext items={paginatedFathers.map(p => p.id)} strategy={verticalListSortingStrategy}>
-                      {paginatedFathers.map(parent => (
-                        <ParentCard
-                          key={parent.id}
-                          parent={parent}
-                          handleDeleteParent={handleDeleteParent}
-                          handleUpdateParentSprite={handleUpdateParentSprite}
-                          handleUpdateParentBrand={handleUpdateParentBrand}
-                          handleUpdateParentHeight={handleUpdateParentHeight}
-                          handleUpdateParentWeight={handleUpdateParentWeight}
-                          handleUpdateParentNature={handleUpdateParentNature}
-                          handleUpdateParentStat={handleUpdateParentStat}
-                          handleUpdateParentChecked={handleUpdateParentChecked}
-                          handleUpdateParentVoice={handleUpdateParentVoice}
-                          isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
-                          onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
-                          onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
-                        />
-                      ))}
-                    </SortableContext>
-                  </DndContext>
-                )}
-              </div>
+              {parentsViewMode === "card" ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+                  {visibleFathers.length === 0 ? (
+                    <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                      <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
+                      <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♂️ 暂无登记的父本精灵</span>
+                      <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加父本”录入</span>
+                    </div>
+                  ) : (
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleFatherDragEnd}>
+                      <SortableContext items={paginatedFathers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                        {paginatedFathers.map(parent => (
+                          <ParentCard
+                            key={parent.id}
+                            parent={parent}
+                            handleDeleteParent={handleDeleteParent}
+                            handleUpdateParentSprite={handleUpdateParentSprite}
+                            handleUpdateParentBrand={handleUpdateParentBrand}
+                            handleUpdateParentHeight={handleUpdateParentHeight}
+                            handleUpdateParentWeight={handleUpdateParentWeight}
+                            handleUpdateParentNature={handleUpdateParentNature}
+                            handleUpdateParentStat={handleUpdateParentStat}
+                            handleUpdateParentChecked={handleUpdateParentChecked}
+                            handleUpdateParentVoice={handleUpdateParentVoice}
+                            isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
+                            onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
+                            onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
+                          />
+                        ))}
+                      </SortableContext>
+                    </DndContext>
+                  )}
+                </div>
+              ) : (
+                // 父本表格模式
+                <div className="overflow-x-auto w-full bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-2 shadow-xs">
+                  {visibleFathers.length === 0 ? (
+                    <div className="py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6">
+                      <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2" />
+                      <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♂️ 暂无登记的父本精灵</span>
+                    </div>
+                  ) : (
+                    <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-fixed">
+                      <thead>
+                        <tr className="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 select-none border-b border-slate-200 dark:border-slate-800">
+                          <th className="px-3 py-2.5 text-left text-xs font-bold tracking-wider w-[25%]">精灵</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[16%]">性格</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[16%]">牌子</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[20%]">三维</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[15%]">位置</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[8%]">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {paginatedFathers.map((parent, pIdx) => {
+                          const petDetails = getPetDetails(parent.sprite);
+                          const spriteName = petDetails ? petDetails.name : parent.sprite;
+                          const spriteFile = getSpriteFileName(parent.sprite);
+                          const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+                          const stats = parent.stats || ["无", "无", "无"];
+
+                          // 隔行斑马线交替背景
+                          const rowBg = pIdx % 2 === 1 
+                            ? "bg-slate-50/50 dark:bg-slate-900/30 hover:bg-indigo-50/15 dark:hover:bg-slate-850/40" 
+                            : "bg-white dark:bg-slate-950 hover:bg-indigo-50/20 dark:hover:bg-slate-850/30";
+
+                          return (
+                            <tr 
+                              key={parent.id} 
+                              onDoubleClick={() => handleDoubleClickParent(parent.id, "♂")}
+                              className={`transition-colors duration-150 border-b border-slate-100/70 dark:border-slate-800/40 cursor-pointer ${rowBg}`}
+                              title="双击自动跳转到该精灵卡片"
+                            >
+                              <td className="px-3 py-2 align-middle">
+                                <div className="flex items-center gap-2 text-left">
+                                  <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/50 dark:border-slate-800 flex items-center justify-center shrink-0 overflow-hidden">
+                                    {spriteUrl ? (
+                                      <img src={spriteUrl} alt={spriteName} className="w-[85%] h-[85%] object-contain" />
+                                    ) : (
+                                      <span className="text-xs">🧬</span>
+                                    )}
+                                  </div>
+                                  <span className="text-[12px] font-black text-slate-850 dark:text-slate-100 truncate">{spriteName}</span>
+                                </div>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <span className="inline-block text-[11.5px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/80 dark:bg-indigo-950/20 border border-indigo-150/60 dark:border-indigo-900/40 px-2 py-0.5 rounded-full">
+                                  {parent.nature.split(" ")[0] || parent.nature || "未选"}
+                                </span>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <span className={`inline-block text-[11px] font-extrabold px-2.5 py-0.5 border rounded-full ${getBrandStyle(parent.brand)}`}>
+                                  {parent.brand}
+                                </span>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <div className="flex items-center gap-1 justify-center">
+                                  {stats.map((stat, sIdx) => {
+                                    const badgeColors = getStatBadgeStyle(stat);
+                                    const isImageStat = ["生命", "物攻", "速度", "魔攻", "物防", "魔防"].includes(stat);
+                                    return (
+                                      <div 
+                                        key={sIdx} 
+                                        className={`w-5.5 h-5.5 rounded-full border flex items-center justify-center shadow-3xs ${badgeColors}`}
+                                        title={stat}
+                                      >
+                                        {isImageStat ? (
+                                          <img
+                                            src={getImagePath(`images/6围/${stat}.png`)}
+                                            alt={stat}
+                                            className="w-3.5 h-3.5 object-contain"
+                                          />
+                                        ) : (
+                                          <Minus className="w-2.5 h-2.5 text-slate-400" />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                {parent.position && parent.position !== "-" ? (
+                                  <span className="inline-block text-[10px] font-bold text-indigo-650 dark:text-indigo-350 bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-100/40 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md">
+                                    {parent.position.replace("\n", " ")}
+                                  </span>
+                                ) : (
+                                  <span className="text-slate-350 dark:text-slate-600 font-mono text-[10px]">-</span>
+                                )}
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); handleDeleteParent(parent.id); }}
+                                  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50/50 dark:hover:bg-rose-950/30 p-1 rounded-lg transition-colors cursor-pointer"
+                                  title="删除"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* 父本仓储分页控制器 */}
@@ -4858,38 +5034,152 @@ export default function App() {
             </div>
 
             <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-                {visibleMothers.length === 0 ? (
-                  <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                    <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
-                    <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♀️ 暂无登记的母本精灵</span>
-                    <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加母本”录入</span>
-                  </div>
-                ) : (
-                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleMotherDragEnd}>
-                    <SortableContext items={paginatedMothers.map(p => p.id)} strategy={verticalListSortingStrategy}>
-                      {paginatedMothers.map(parent => (
-                        <ParentCard
-                          key={parent.id}
-                          parent={parent}
-                          handleDeleteParent={handleDeleteParent}
-                          handleUpdateParentSprite={handleUpdateParentSprite}
-                          handleUpdateParentBrand={handleUpdateParentBrand}
-                          handleUpdateParentHeight={handleUpdateParentHeight}
-                          handleUpdateParentWeight={handleUpdateParentWeight}
-                          handleUpdateParentNature={handleUpdateParentNature}
-                          handleUpdateParentStat={handleUpdateParentStat}
-                          handleUpdateParentChecked={handleUpdateParentChecked}
-                          handleUpdateParentVoice={handleUpdateParentVoice}
-                          isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
-                          onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
-                          onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
-                        />
-                      ))}
-                    </SortableContext>
-                  </DndContext>
-                )}
-              </div>
+              {parentsViewMode === "card" ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+                  {visibleMothers.length === 0 ? (
+                    <div className="col-span-full py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                      <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2 animate-bounce" />
+                      <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♀️ 暂无登记的母本精灵</span>
+                      <span className="text-[10px] text-slate-350 dark:text-slate-550 mt-1">点击右上方“添加母本”录入</span>
+                    </div>
+                  ) : (
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleMotherDragEnd}>
+                      <SortableContext items={paginatedMothers.map(p => p.id)} strategy={verticalListSortingStrategy}>
+                        {paginatedMothers.map(parent => (
+                          <ParentCard
+                            key={parent.id}
+                            parent={parent}
+                            handleDeleteParent={handleDeleteParent}
+                            handleUpdateParentSprite={handleUpdateParentSprite}
+                            handleUpdateParentBrand={handleUpdateParentBrand}
+                            handleUpdateParentHeight={handleUpdateParentHeight}
+                            handleUpdateParentWeight={handleUpdateParentWeight}
+                            handleUpdateParentNature={handleUpdateParentNature}
+                            handleUpdateParentStat={handleUpdateParentStat}
+                            handleUpdateParentChecked={handleUpdateParentChecked}
+                            handleUpdateParentVoice={handleUpdateParentVoice}
+                            isSelected={selectedCard?.id === parent.id && selectedCard?.type === "parent"}
+                            onSelect={() => setSelectedCard({ id: parent.id, type: "parent" })}
+                            onHover={(hovered) => setHoveredCard(hovered ? { id: parent.id, type: "parent" } : null)}
+                          />
+                        ))}
+                      </SortableContext>
+                    </DndContext>
+                  )}
+                </div>
+              ) : (
+                // 母本表格模式
+                <div className="overflow-x-auto w-full bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-2 shadow-xs">
+                  {visibleMothers.length === 0 ? (
+                    <div className="py-12 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6">
+                      <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 stroke-1 mb-2" />
+                      <span className="text-xs font-bold text-slate-400 dark:text-slate-300">♀️ 暂无登记的母本精灵</span>
+                    </div>
+                  ) : (
+                    <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-fixed">
+                      <thead>
+                        <tr className="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 select-none border-b border-slate-200 dark:border-slate-800">
+                          <th className="px-3 py-2.5 text-left text-xs font-bold tracking-wider w-[25%]">精灵</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[16%]">性格</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[16%]">牌子</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[20%]">三维</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[15%]">位置</th>
+                          <th className="px-2 py-2.5 text-center text-xs font-bold tracking-wider w-[8%]">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {paginatedMothers.map((parent, pIdx) => {
+                          const petDetails = getPetDetails(parent.sprite);
+                          const spriteName = petDetails ? petDetails.name : parent.sprite;
+                          const spriteFile = getSpriteFileName(parent.sprite);
+                          const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+                          const stats = parent.stats || ["无", "无", "无"];
+
+                          // 隔行斑马线交替背景
+                          const rowBg = pIdx % 2 === 1 
+                            ? "bg-slate-50/50 dark:bg-slate-900/30 hover:bg-pink-50/15 dark:hover:bg-slate-850/40" 
+                            : "bg-white dark:bg-slate-950 hover:bg-pink-50/20 dark:hover:bg-slate-850/30";
+
+                          return (
+                            <tr 
+                              key={parent.id} 
+                              onDoubleClick={() => handleDoubleClickParent(parent.id, "♀")}
+                              className={`transition-colors duration-150 border-b border-slate-100/70 dark:border-slate-800/40 cursor-pointer ${rowBg}`}
+                              title="双击自动跳转到该精灵卡片"
+                            >
+                              <td className="px-3 py-2 align-middle">
+                                <div className="flex items-center gap-2 text-left">
+                                  <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/50 dark:border-slate-800 flex items-center justify-center shrink-0 overflow-hidden">
+                                    {spriteUrl ? (
+                                      <img src={spriteUrl} alt={spriteName} className="w-[85%] h-[85%] object-contain" />
+                                    ) : (
+                                      <span className="text-xs">🧬</span>
+                                    )}
+                                  </div>
+                                  <span className="text-[12px] font-black text-slate-850 dark:text-slate-100 truncate">{spriteName}</span>
+                                </div>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <span className="inline-block text-[11.5px] font-bold text-pink-700 dark:text-pink-300 bg-pink-50/80 dark:bg-pink-950/20 border border-pink-150/60 dark:border-pink-900/40 px-2 py-0.5 rounded-full">
+                                  {parent.nature.split(" ")[0] || parent.nature || "未选"}
+                                </span>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <span className={`inline-block text-[11px] font-extrabold px-2.5 py-0.5 border rounded-full ${getBrandStyle(parent.brand)}`}>
+                                  {parent.brand}
+                                </span>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <div className="flex items-center gap-1 justify-center">
+                                  {stats.map((stat, sIdx) => {
+                                    const badgeColors = getStatBadgeStyle(stat);
+                                    const isImageStat = ["生命", "物攻", "速度", "魔攻", "物防", "魔防"].includes(stat);
+                                    return (
+                                      <div 
+                                        key={sIdx} 
+                                        className={`w-5.5 h-5.5 rounded-full border flex items-center justify-center shadow-3xs ${badgeColors}`}
+                                        title={stat}
+                                      >
+                                        {isImageStat ? (
+                                          <img
+                                            src={getImagePath(`images/6围/${stat}.png`)}
+                                            alt={stat}
+                                            className="w-3.5 h-3.5 object-contain"
+                                          />
+                                        ) : (
+                                          <Minus className="w-2.5 h-2.5 text-slate-400" />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                {parent.position && parent.position !== "-" ? (
+                                  <span className="inline-block text-[10px] font-bold text-indigo-650 dark:text-indigo-350 bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-100/40 dark:border-indigo-900/30 px-1.5 py-0.5 rounded-md">
+                                    {parent.position.replace("\n", " ")}
+                                  </span>
+                                ) : (
+                                  <span className="text-slate-350 dark:text-slate-600 font-mono text-[10px]">-</span>
+                                )}
+                              </td>
+                              <td className="px-2 py-2 text-center align-middle">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); handleDeleteParent(parent.id); }}
+                                  className="text-slate-400 hover:text-rose-500 hover:bg-rose-50/50 dark:hover:bg-rose-950/30 p-1 rounded-lg transition-colors cursor-pointer"
+                                  title="删除"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* 母本仓储分页控制器 */}

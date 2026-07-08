@@ -275,6 +275,7 @@ export const ParentCard = React.memo(function ParentCard({
   return (
     <div
       ref={setNodeRef}
+      id={`parent-card-${parent.id}`}
       style={style}
       onClick={onSelect}
       onMouseEnter={() => onHover && onHover(true)}
@@ -425,33 +426,7 @@ export const ParentCard = React.memo(function ParentCard({
               })}
             </div>
           )}
-          {guideSize && (
-            <div className="flex flex-col gap-1 bg-slate-50/90 dark:bg-slate-950/30 border border-slate-100/60 dark:border-slate-800 p-1.5 rounded-md text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 select-none w-full sm:w-fit min-w-[92px] shrink-0 shadow-3xs items-start sm:items-center">
-              <div className="flex items-center gap-1 whitespace-nowrap" title="标准身高范围">
-                <Ruler className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
-                <span className="font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">{guideSize.height} m</span>
-              </div>
-              <div className="flex items-center gap-1 whitespace-nowrap" title="标准体重范围">
-                <Weight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
-                <span className="font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">{guideSize.weight} kg</span>
-              </div>
-              {thresholds && (
-                <>
-                  <div className="w-full border-t border-dashed border-slate-200 dark:border-slate-800 my-1 shrink-0" />
-                  <div className="flex flex-col gap-0.5 w-full text-[9px] text-slate-400 dark:text-slate-500">
-                    <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="大块头及格重量">
-                      <span className="shrink-0 whitespace-nowrap">大及格:</span>
-                      <span className="font-bold text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">≥{thresholds.giantWeightLine}kg</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-1 whitespace-nowrap w-full" title="小不点及格重量">
-                      <span className="shrink-0 whitespace-nowrap">小及格:</span>
-                      <span className="font-bold text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">≤{thresholds.tinyWeightLine}kg</span>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+
         </div>
       </div>
 
@@ -610,6 +585,30 @@ export const ParentCard = React.memo(function ParentCard({
           </div>
         )}
       </div>
+
+      {/* 底部通栏：标准尺寸与及格指示面板，横排排布以完全避免左栏溢出撑爆卡片 */}
+      {guideSize && (
+        <div className="col-span-12 mt-1 bg-slate-50/90 dark:bg-slate-950/30 border border-slate-100/60 dark:border-slate-800 p-2 rounded-lg text-[10.5px] text-slate-500 dark:text-slate-400 select-none shadow-3xs flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          <div className="flex items-center gap-1.5">
+            <Ruler className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
+            <span className="text-slate-450 dark:text-slate-500">标准区间:</span>
+            <span className="font-bold text-slate-700 dark:text-slate-300">{guideSize.height} m</span>
+            <span className="text-slate-300 dark:text-slate-700 px-0.5">|</span>
+            <Weight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
+            <span className="font-bold text-slate-700 dark:text-slate-300">{guideSize.weight} kg</span>
+          </div>
+          {thresholds && (
+            <div className="flex items-center gap-2 text-[10px] font-semibold">
+              <span className="px-1.5 py-0.5 bg-amber-50/80 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400 rounded border border-amber-100 dark:border-amber-900/30">
+                大及格: ≥{thresholds.giantWeightLine}kg
+              </span>
+              <span className="px-1.5 py-0.5 bg-sky-50/85 dark:bg-sky-950/20 text-sky-700 dark:text-sky-400 rounded border border-sky-100 dark:border-sky-900/30">
+                小及格: ≤{thresholds.tinyWeightLine}kg
+              </span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 });
