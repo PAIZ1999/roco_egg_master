@@ -61,11 +61,13 @@ function startRocoHelper() {
   }
 
   if (!helperPath) {
-    console.log('未找到 roco_helper-v3.2.2.exe，跳过后台自动启动。已尝试寻找路径：', pathsToTry);
+    const searchPathsText = pathsToTry.slice(0, 6).join('\n');
+    dialog.showErrorBox(
+      '未检测到 roco_helper 助手',
+      `系统已尝试在同级和父级目录下搜寻 roco_helper-v3.2.2.exe，但均未找到。\n\n请确认该文件是否放置在正确的位置。\n\n搜索路径清单：\n${searchPathsText}`
+    );
     return;
   }
-
-  console.log('找到 roco_helper-v3.2.2.exe，确立启动路径为:', helperPath);
 
   // 检查是否已经在运行，防止重复开启
   exec('tasklist /FI "IMAGENAME eq roco_helper-v3.2.2.exe"', (err, stdout) => {
@@ -74,7 +76,7 @@ function startRocoHelper() {
       return;
     }
 
-    // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动 (以防路径中含空格转义崩溃)
+    // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动 (添加 shell: true 寻找环境变量)
     const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden`;
     try {
       const ps = spawn('powershell.exe', [
@@ -83,12 +85,22 @@ function startRocoHelper() {
         '-Command', psCommand
       ], {
         detached: true,
-        stdio: 'ignore'
+        stdio: 'ignore',
+        shell: true
       });
       ps.unref();
-      console.log('已在后台执行 spawn 静默拉起 roco_helper-v3.2.2.exe');
+
+      ps.on('error', (spawnError) => {
+        dialog.showErrorBox(
+          '后台启动助手失败 (Spawn)',
+          `无法拉起 powershell.exe 子进程，错误信息：\n${spawnError.message}`
+        );
+      });
     } catch (e) {
-      console.error('后台执行 spawn 启动 roco_helper 抛出错误:', e);
+      dialog.showErrorBox(
+        '后台启动助手抛出异常',
+        `系统抛出未捕获的错误：\n${e.message}`
+      );
     }
   });
 }
