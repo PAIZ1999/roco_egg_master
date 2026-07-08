@@ -2883,9 +2883,23 @@ export default function App() {
     return pages;
   };
 
+  // 蛋数量排序字段与方向状态 (默认降序排序，符合用户对蛋窝现蛋多寡的一目了然查询需求)
+  const [nestSortField, setNestSortField] = useState<"eggCount" | null>("eggCount");
+  const [nestSortDirection, setNestSortDirection] = useState<"asc" | "desc">("desc");
+
+  // 蛋窝排序计算
+  const sortedNests = [...filteredPets];
+  if (nestViewMode === "table" && nestSortField === "eggCount") {
+    sortedNests.sort((a, b) => {
+      const countA = Number(a.eggCount) || 0;
+      const countB = Number(b.eggCount) || 0;
+      return nestSortDirection === "desc" ? countB - countA : countA - countB;
+    });
+  }
+
   // 蛋窝分页计算
-  const totalNestPages = Math.ceil(filteredPets.length / NEST_PAGE_SIZE) || 1;
-  const paginatedNests = filteredPets.slice((nestCurrentPage - 1) * NEST_PAGE_SIZE, nestCurrentPage * NEST_PAGE_SIZE);
+  const totalNestPages = Math.ceil(sortedNests.length / NEST_PAGE_SIZE) || 1;
+  const paginatedNests = sortedNests.slice((nestCurrentPage - 1) * NEST_PAGE_SIZE, nestCurrentPage * NEST_PAGE_SIZE);
 
   useEffect(() => {
     setNestCurrentPage(1);
@@ -3507,7 +3521,29 @@ export default function App() {
                     <th className="px-4 py-3 text-center text-xs font-extrabold tracking-wider min-w-[200px]">三维</th>
                     <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px]">牌子</th>
                     <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[110px]">蛋窝状态</th>
-                    <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[90px]">现蛋</th>
+                    <th
+                      onClick={() => {
+                        if (nestSortField !== "eggCount") {
+                          setNestSortField("eggCount");
+                          setNestSortDirection("desc");
+                        } else if (nestSortDirection === "desc") {
+                          setNestSortDirection("asc");
+                        } else {
+                          setNestSortField(null);
+                        }
+                      }}
+                      className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[100px] cursor-pointer hover:bg-indigo-700 select-none transition-colors"
+                      title="点击切换现蛋排序：降序 -> 升序 -> 默认"
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        <span>现蛋</span>
+                        {nestSortField === "eggCount" ? (
+                          nestSortDirection === "desc" ? "⬇️" : "⬆️"
+                        ) : (
+                          <span className="opacity-35 text-[10px]">↕️</span>
+                        )}
+                      </div>
+                    </th>
                     <th className="px-3 py-3 text-center text-xs font-extrabold tracking-wider w-[60px] action-buttons">操作</th>
                   </tr>
                 </thead>
