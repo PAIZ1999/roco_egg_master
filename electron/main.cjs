@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 
 let mainWindow;
 let customSaveDir = null;
@@ -38,10 +38,18 @@ function saveCustomPath(dir) {
 // 自动在后台隐藏启动 roco_helper-v3.2.2.exe 进程
 function startRocoHelper() {
   const pathsToTry = [
+    // 1. AppPath 内层及外层
     path.join(app.getAppPath(), 'roco_helper-v3.2.2.exe'),
     path.join(app.getAppPath(), '..', 'roco_helper-v3.2.2.exe'),
+    path.join(app.getAppPath(), '../..', 'roco_helper-v3.2.2.exe'),
+    // 2. 真实执行程序（process.execPath）的同级、上一级、上上级 (覆盖编译、分发、解压多种情况)
     path.join(path.dirname(process.execPath), 'roco_helper-v3.2.2.exe'),
-    path.join(process.cwd(), 'roco_helper-v3.2.2.exe')
+    path.join(path.dirname(process.execPath), '..', 'roco_helper-v3.2.2.exe'),
+    path.join(path.dirname(process.execPath), '../..', 'roco_helper-v3.2.2.exe'),
+    // 3. 当前运行工作目录
+    path.join(process.cwd(), 'roco_helper-v3.2.2.exe'),
+    path.join(process.cwd(), '..', 'roco_helper-v3.2.2.exe'),
+    path.join(process.cwd(), '../..', 'roco_helper-v3.2.2.exe')
   ];
 
   let helperPath = null;
@@ -53,28 +61,35 @@ function startRocoHelper() {
   }
 
   if (!helperPath) {
-    console.log('未找到 roco_helper-v3.2.2.exe，跳过后台自动启动');
+    console.log('未找到 roco_helper-v3.2.2.exe，跳过后台自动启动。已尝试寻找路径：', pathsToTry);
     return;
   }
 
-  console.log('找到 roco_helper-v3.2.2.exe，路径为:', helperPath);
+  console.log('找到 roco_helper-v3.2.2.exe，确立启动路径为:', helperPath);
 
   // 检查是否已经在运行，防止重复开启
   exec('tasklist /FI "IMAGENAME eq roco_helper-v3.2.2.exe"', (err, stdout) => {
     if (stdout && stdout.includes('roco_helper-v3.2.2.exe')) {
-      console.log('roco_helper-v3.2.2.exe 已经在运行中，无需重新启动');
+      console.log('roco_helper-v3.2.2.exe 已经在运行中，无需重复启动');
       return;
     }
 
-    // Windows 平台使用 powershell 隐藏窗口启动
-    const psCommand = `Start-Process -FilePath "${helperPath}" -WindowStyle Hidden`;
-    exec(`powershell -NoProfile -ExecutionPolicy Bypass -Command "${psCommand}"`, (error) => {
-      if (error) {
-        console.error('后台启动 roco_helper 失败:', error);
-      } else {
-        console.log('已在后台静默隐藏启动 roco_helper-v3.2.2.exe');
-      }
-    });
+    // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动 (以防路径中含空格转义崩溃)
+    const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden`;
+    try {
+      const ps = spawn('powershell.exe', [
+        '-NoProfile',
+        '-ExecutionPolicy', 'Bypass',
+        '-Command', psCommand
+      ], {
+        detached: true,
+        stdio: 'ignore'
+      });
+      ps.unref();
+      console.log('已在后台执行 spawn 静默拉起 roco_helper-v3.2.2.exe');
+    } catch (e) {
+      console.error('后台执行 spawn 启动 roco_helper 抛出错误:', e);
+    }
   });
 }
 
