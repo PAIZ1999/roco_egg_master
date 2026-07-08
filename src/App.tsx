@@ -307,7 +307,7 @@ export default function App() {
   }, [nestViewMode]);
 
   const PARENT_PAGE_SIZE = 10;
-  const NEST_PAGE_SIZE = 9;
+  const NEST_PAGE_SIZE = nestViewMode === "table" ? 50 : 9;
 
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
@@ -3513,7 +3513,7 @@ export default function App() {
             <div className="overflow-x-auto w-full rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
               <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-fixed">
                 <thead>
-                  <tr className="bg-indigo-650 dark:bg-indigo-950/80 text-white select-none">
+                  <tr className="bg-indigo-600 dark:bg-indigo-950/80 text-white select-none">
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[5%]">#</th>
                     <th className="px-3 py-4 text-left text-xs font-extrabold tracking-wider w-[14%]">精灵</th>
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[12%]">性格</th>
