@@ -9,6 +9,7 @@ let customSaveDir = null;
 let rememberCloseChoice = null; // null | 'tray' | 'exit'
 let tray = null;
 let isQuitting = false;
+let showPetEnabled = true;
 const configPath = path.join(app.getPath('userData'), 'app_config.json');
 
 // 加载持久化的自定义路径配置
@@ -171,15 +172,18 @@ function createTray() {
       {
         label: '显示桌面宠物',
         type: 'checkbox',
-        checked: floatWindow ? floatWindow.isVisible() : false,
+        checked: showPetEnabled,
         click: (menuItem) => {
+          showPetEnabled = menuItem.checked;
           if (floatWindow) {
-            if (menuItem.checked) {
-              floatWindow.show();
+            if (showPetEnabled) {
+              if (!mainWindow || !mainWindow.isVisible()) {
+                floatWindow.show();
+              }
             } else {
               floatWindow.hide();
             }
-          } else if (menuItem.checked) {
+          } else if (showPetEnabled) {
             createFloatWindow();
           }
         }
@@ -286,6 +290,18 @@ function createWindow() {
     }
   });
 
+  mainWindow.on('show', () => {
+    if (floatWindow) {
+      floatWindow.hide();
+    }
+  });
+
+  mainWindow.on('hide', () => {
+    if (!isQuitting && floatWindow && showPetEnabled) {
+      floatWindow.show();
+    }
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -306,7 +322,7 @@ function createFloatWindow() {
     alwaysOnTop: true,
     resizable: false,
     skipTaskbar: true,
-    show: true,
+    show: false, // 默认主窗口处于激活状态时隐藏桌宠
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,

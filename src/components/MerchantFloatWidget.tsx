@@ -626,24 +626,55 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0 || isOpen) return; // 必须是左键，且只能在折叠态拖动
     e.preventDefault();
+    e.stopPropagation();
     
+    const startX = e.screenX;
+    const startY = e.screenY;
     let lastX = e.screenX;
     let lastY = e.screenY;
+    let hasDragged = false;
     
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const deltaX = moveEvent.screenX - lastX;
       const deltaY = moveEvent.screenY - lastY;
+      
+      // 累计移动距离如果超过 4 像素，标记为拖拽
+      const dist = Math.sqrt(
+        Math.pow(moveEvent.screenX - startX, 2) + Math.pow(moveEvent.screenY - startY, 2)
+      );
+      if (dist > 4) {
+        hasDragged = true;
+      }
+      
       lastX = moveEvent.screenX;
       lastY = moveEvent.screenY;
       
-      if (window.electronAPI && window.electronAPI.dragFloatWindow) {
+      if (hasDragged && window.electronAPI && window.electronAPI.dragFloatWindow) {
         window.electronAPI.dragFloatWindow({ deltaX, deltaY });
       }
     };
     
-    const handleMouseUp = () => {
+    const handleMouseUp = (upEvent: MouseEvent) => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+      
+      // 只有在没发生实质拖拽的情况下，才触发点击逻辑
+      if (!hasDragged) {
+        if (clickTimerRef.current) {
+          // 双击逻辑：唤醒并显示主窗口
+          clearTimeout(clickTimerRef.current);
+          clickTimerRef.current = null;
+          if (window.electronAPI && window.electronAPI.showMainWindow) {
+            window.electronAPI.showMainWindow();
+          }
+        } else {
+          // 单击逻辑：延时判定展开聊天
+          clickTimerRef.current = setTimeout(() => {
+            clickTimerRef.current = null;
+            setIsOpen(true);
+          }, 220);
+        }
+      }
     };
     
     document.addEventListener("mousemove", handleMouseMove);
@@ -850,7 +881,6 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
       {/* 悬浮图标 (折叠态：具有呼吸漂动特效的喵喵桌面宠物) */}
       {!isOpen && (
         <button
-          onClick={handleFloatClick}
           onMouseDown={handleMouseDown}
           className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-slate-900/90 to-indigo-950/90 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border border-indigo-500/30 group p-1 animate-myow-float"
           title="按住左键拖拽位置，单击聊天，双击显示软件主页"
@@ -858,7 +888,8 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
           <img
             src={getImagePath("images/sprites/喵喵.png")}
             alt="喵喵"
-            className="w-12 h-12 object-contain pointer-events-none"
+            draggable={false}
+            className="w-12 h-12 object-contain pointer-events-none select-none"
             onError={(e) => {
               (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
             }}
