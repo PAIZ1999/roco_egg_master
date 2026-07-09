@@ -205,6 +205,8 @@ declare global {
       getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: number; data: any }>; error?: string }>;
       showMainWindow?: () => void;
       resizeFloatWindow?: (size: { width: number; height: number }) => void;
+      dragFloatWindow?: (delta: { deltaX: number; deltaY: number }) => void;
+      isFloatWindow?: () => boolean;
     };
   }
 }

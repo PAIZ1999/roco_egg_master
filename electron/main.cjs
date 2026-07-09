@@ -310,7 +310,8 @@ function createFloatWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      additionalArguments: ['--window-type=float']
     }
   });
 
@@ -319,6 +320,10 @@ function createFloatWindow() {
   } else {
     floatWindow.loadURL('http://localhost:3000/#float');
   }
+
+  // 保证独立窗口能跨虚拟桌面展示并强制显示在顶层
+  floatWindow.setVisibleOnAllWorkspaces(true);
+  floatWindow.setAlwaysOnTop(true, 'screen-saver');
 
   floatWindow.on('closed', () => {
     floatWindow = null;
@@ -345,6 +350,19 @@ ipcMain.on('resize-float-window', (event, { width, height }) => {
     const y = screenHeight - height - 25;
     
     floatWindow.setBounds({ x, y, width, height }, true);
+  }
+});
+
+// 接收鼠标拖拽桌宠移动窗口位置的指令
+ipcMain.on('drag-float-window', (event, { deltaX, deltaY }) => {
+  if (floatWindow) {
+    const { x, y, width, height } = floatWindow.getBounds();
+    floatWindow.setBounds({
+      x: x + deltaX,
+      y: y + deltaY,
+      width,
+      height
+    });
   }
 });
 

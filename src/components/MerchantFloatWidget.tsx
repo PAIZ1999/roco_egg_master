@@ -609,17 +609,80 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
   const [isMerchantActive, setIsMerchantActive] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [chatWidth, setChatWidth] = useState(380);
+  const [chatHeight, setChatHeight] = useState(540);
 
   // 仅在独立窗口模式下，动态通知 Electron 缩放窗口大小，防止折叠时遮挡桌面其他区域
   useEffect(() => {
     if (isStandalone && window.electronAPI && window.electronAPI.resizeFloatWindow) {
       if (isOpen) {
-        window.electronAPI.resizeFloatWindow({ width: 420, height: 600 });
+        window.electronAPI.resizeFloatWindow({ width: chatWidth, height: chatHeight });
       } else {
         window.electronAPI.resizeFloatWindow({ width: 70, height: 75 });
       }
     }
-  }, [isOpen, isStandalone]);
+  }, [isOpen, isStandalone, chatWidth, chatHeight]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0 || isOpen) return; // 必须是左键，且只能在折叠态拖动
+    e.preventDefault();
+    
+    let lastX = e.screenX;
+    let lastY = e.screenY;
+    
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const deltaX = moveEvent.screenX - lastX;
+      const deltaY = moveEvent.screenY - lastY;
+      lastX = moveEvent.screenX;
+      lastY = moveEvent.screenY;
+      
+      if (window.electronAPI && window.electronAPI.dragFloatWindow) {
+        window.electronAPI.dragFloatWindow({ deltaX, deltaY });
+      }
+    };
+    
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+    
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleResizeMouseDown = (e: React.MouseEvent, direction: "left" | "top") => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    let lastX = e.screenX;
+    let lastY = e.screenY;
+    
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      if (direction === "left") {
+        const deltaX = moveEvent.screenX - lastX;
+        lastX = moveEvent.screenX;
+        setChatWidth(prev => {
+          const next = prev - deltaX;
+          return Math.max(320, Math.min(580, next));
+        });
+      } else if (direction === "top") {
+        const deltaY = moveEvent.screenY - lastY;
+        lastY = moveEvent.screenY;
+        setChatHeight(prev => {
+          const next = prev - deltaY;
+          return Math.max(400, Math.min(780, next));
+        });
+      }
+    };
+    
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+    
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
 
   // 定期轮询检查行商是否营业以点亮红点
   const checkMerchantStatus = async () => {
@@ -788,13 +851,14 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
       {!isOpen && (
         <button
           onClick={handleFloatClick}
+          onMouseDown={handleMouseDown}
           className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-slate-900/90 to-indigo-950/90 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border border-indigo-500/30 group p-1 animate-myow-float"
-          title="单击与喵喵聊天，双击打开软件主界面"
+          title="按住左键拖拽位置，单击聊天，双击显示软件主页"
         >
           <img
             src={getImagePath("images/sprites/喵喵.png")}
             alt="喵喵"
-            className="w-12 h-12 object-contain"
+            className="w-12 h-12 object-contain pointer-events-none"
             onError={(e) => {
               (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
             }}
@@ -815,7 +879,20 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
 
       {/* 聊天室 (展开态) */}
       {isOpen && (
-        <div className="w-[370px] sm:w-[400px] h-[540px] flex flex-col bg-slate-900/95 dark:bg-slate-950/98 backdrop-blur-xl border border-slate-700/80 dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right">
+        <div
+          style={{ width: `${chatWidth}px`, height: `${chatHeight}px` }}
+          className="flex flex-col bg-slate-900/95 dark:bg-slate-950/98 backdrop-blur-xl border border-slate-700/80 dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right relative"
+        >
+          {/* 左边缘拉伸把手 */}
+          <div
+            className="w-2.5 h-full absolute left-0 top-0 cursor-w-resize z-50 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all"
+            onMouseDown={(e) => handleResizeMouseDown(e, "left")}
+          />
+          {/* 顶边缘拉伸把手 */}
+          <div
+            className="h-2.5 w-full absolute left-0 top-0 cursor-n-resize z-50 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all"
+            onMouseDown={(e) => handleResizeMouseDown(e, "top")}
+          />
           {/* 聊天头部 */}
           <div className="px-4 py-3 bg-gradient-to-r from-indigo-900/40 to-slate-900/20 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">

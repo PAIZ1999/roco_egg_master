@@ -9,5 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getRocoUsers: () => ipcRenderer.invoke('get-roco-users'),
   getRocoPets: (uid) => ipcRenderer.invoke('get-roco-pets', uid),
   showMainWindow: () => ipcRenderer.send('show-main-window'),
-  resizeFloatWindow: (size) => ipcRenderer.send('resize-float-window', size)
+  resizeFloatWindow: (size) => ipcRenderer.send('resize-float-window', size),
+  dragFloatWindow: (delta) => ipcRenderer.send('drag-float-window', delta),
+  isFloatWindow: () => process.argv.includes('--window-type=float')
 });
