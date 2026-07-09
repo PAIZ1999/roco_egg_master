@@ -2,6 +2,8 @@ import { pinyin } from "pinyin-pro";
 import eggChartDataRaw from "./egg_chart_data.json";
 import petsDataRaw from "./pets_data.json";
 import petsRaceData from "./pets_race_data.json";
+import { getSpriteFileName } from "./petHelper";
+
 
 // 类型定义
 export interface PetRaceStat {
@@ -35,6 +37,7 @@ export interface QueryPetResult {
   types: string[];
   evolution_chain: any[];
   currentForm: QueryPetForm;
+  forms: any[];
   egg_data: any | null;
   avatarPath: string | null;
   avatars: Array<{ styleName: string; absolutePath: string }>;
@@ -73,7 +76,7 @@ if (ylt && ylt.egg_data) {
 }
 
 // 种族值 Map
-const petsRaceMap: Record<string, any> = {};
+export const petsRaceMap: Record<string, any> = {};
 petsRaceData.forEach((item: any) => {
   if (item.name) {
     petsRaceMap[item.name.trim()] = item;
@@ -179,17 +182,10 @@ function initEggGroupMap() {
   eggGroupMap['wffd'] = '无法孵蛋';
 }
 
-// 模拟头像查找 - 在前端，头像都放到 `./images/sprites/` 目录下！
-// 在主项目里，图片读取函数是 getImagePath("images/sprites/" + filename)
 function findAvatarPath(formName: string, petName: string): string | null {
-  // 我们根据 pets_data 中头像映射逻辑直接映射到相对地址
-  // 去除后缀
-  const cleanName = (name: string) => name.split('_')[0];
   const nameToUse = formName || petName;
-  
-  // 在前端直接引用 `./images/sprites/${nameToUse}.png` 是最简单的！
-  // 我们可以通过 getImagePath 获得该图片
-  return `./images/sprites/${nameToUse}.png`;
+  const fileName = getSpriteFileName(nameToUse);
+  return fileName ? `./images/sprites/${fileName}` : `./images/sprites/${nameToUse}.png`;
 }
 
 // 初始化
@@ -340,6 +336,7 @@ export function queryPet(queryText: string): QueryPetResult | null {
       tiny_weight_line: (form && form.tiny_weight_line !== undefined) ? form.tiny_weight_line : (pet.egg_data ? pet.egg_data.tiny_weight_line : null),
       race: null
     },
+    forms: pet.forms || [],
     egg_data: pet.egg_data || null,
     avatarPath: null,
     avatars: []
@@ -409,10 +406,17 @@ export function queryPet(queryText: string): QueryPetResult | null {
   const avatarPath = findAvatarPath(result.currentForm.name, result.name);
   result.avatarPath = avatarPath;
 
-  result.avatars = [{
-    styleName: result.currentForm.name === result.name ? '本来的样子' : result.currentForm.name,
-    absolutePath: avatarPath || ""
-  }];
+  const associatedAvatars = (pet.forms || []).map((f: any) => {
+    const fileName = getSpriteFileName(f.name);
+    let styleName = f.name === pet.name ? '本来的样子' : f.name.replace(pet.name, '').replace(/[（()）]/g, '').trim();
+    if (!styleName) styleName = '本来的样子';
+    return {
+      styleName,
+      absolutePath: fileName ? `./images/sprites/${fileName}` : `./images/sprites/${f.name}.png`
+    };
+  });
+
+  result.avatars = associatedAvatars;
 
   return result;
 }

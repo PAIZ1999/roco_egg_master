@@ -238,11 +238,17 @@ export const getSpriteFileName = (petName: string): string | null => {
   if (!petName) return null;
   const baseName = getBasePetName(petName);
   
+  // 转换括号为下划线以兼容 regional forms (如 "鸭吉吉（蓬松的样子）" -> "鸭吉吉_蓬松的样子")
+  const cleanName = petName
+    .replace(/[（(]/g, "_")
+    .replace(/[）)]/g, "");
+
   // 1. Try exact match (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
-  const exactMatch = petName + ".png";
+  const exactMatch = cleanName + ".png";
   if (spriteFiles.includes(exactMatch)) {
     return exactMatch;
   }
+
   
   // 2. Try prefix match
   const prefixMatch = spriteFiles.find(file => file.startsWith(petName + "_") && file.endsWith(".png"));

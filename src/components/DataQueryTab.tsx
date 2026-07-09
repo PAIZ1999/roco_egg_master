@@ -1,8 +1,152 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Sparkles, BookOpen, Layers, Zap, Info, ChevronRight, HelpCircle, Activity } from "lucide-react";
 import { Autocomplete } from "./Autocomplete";
-import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult } from "../queryHelper";
-import { ALL_PET_NAMES, getImagePath } from "../petHelper";
+import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult, petsRaceMap } from "../queryHelper";
+import { ALL_PET_NAMES, getImagePath, getSpriteFileName } from "../petHelper";
+
+// 六边形内联雷达图组件
+function RadarChart({ stats }: { stats: { hp: number; speed: number; atk: number; def: number; sp_atk: number; sp_def: number } }) {
+  const cx = 150;
+  const cy = 135;
+  const R = 75;
+  const M = 200;
+
+  const keys = ['hp', 'atk', 'def', 'speed', 'sp_def', 'sp_atk'];
+  const iconFileNames: Record<string, string> = {
+    hp: '生命',
+    atk: '物攻',
+    def: '物防',
+    speed: '速度',
+    sp_def: '魔防',
+    sp_atk: '魔攻'
+  };
+  const angles = [
+    -Math.PI / 2,         // 生命 (正上方 12 点)
+    7 * Math.PI / 6,      // 物攻 (左上方 10 点)
+    5 * Math.PI / 6,      // 物防 (左下方 8 点)
+    Math.PI / 2,          // 速度 (正下方 6 点)
+    Math.PI / 6,          // 魔防 (右下方 4 点)
+    -Math.PI / 6          // 魔攻 (右上方 2 点)
+  ];
+
+  // 绘制 5 层背景六边形网格
+  const bgPolygons = [];
+  for (let scale = 1; scale <= 5; scale++) {
+    const ratio = scale / 5;
+    const r = R * ratio;
+    const points = angles.map(angle => {
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    bgPolygons.push(
+      <polygon
+        key={scale}
+        points={points}
+        className="fill-none stroke-slate-200/10 dark:stroke-slate-800/40 stroke-[0.7]"
+      />
+    );
+  }
+
+  // 绘制 6 条轴线
+  const axisLines = angles.map((angle, i) => {
+    const x = cx + R * Math.cos(angle);
+    const y = cy + R * Math.sin(angle);
+    return (
+      <line
+        key={i}
+        x1={cx}
+        y1={cy}
+        x2={x.toFixed(1)}
+        y2={y.toFixed(1)}
+        className="stroke-slate-200/15 dark:stroke-slate-800/40 stroke-[0.7]"
+      />
+    );
+  });
+
+  // 计算数据坐标
+  const dataPoints = keys.map((key, i) => {
+    const val = (stats as any)[key] !== null && (stats as any)[key] !== undefined ? (stats as any)[key] : 0;
+    const limitedVal = Math.min(val, M);
+    const r = R * (limitedVal / M);
+    const angle = angles[i];
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    return { x, y, val, key };
+  });
+
+  const areaPoints = dataPoints.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+  // 顶点圆圈
+  const dots = dataPoints.map((p, i) => (
+    <circle
+      key={i}
+      cx={p.x.toFixed(1)}
+      cy={p.y.toFixed(1)}
+      r="2.5"
+      className="fill-indigo-400 stroke-indigo-600 stroke-[1]"
+    />
+  ));
+
+  // 标签渲染
+  const labels = dataPoints.map((p, i) => {
+    const angle = angles[i];
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const labelDist = R + 14;
+    const anchorX = cx + labelDist * cos;
+    const anchorY = cy + labelDist * sin;
+
+    let textAnchor = "middle";
+    if (cos > 0.1) textAnchor = "start";
+    else if (cos < -0.1) textAnchor = "end";
+
+    let dy = "0.33em";
+    if (sin < -0.85) dy = "-0.2em"; // 顶部
+    else if (sin > 0.85) dy = "0.8em"; // 底部
+
+    const labelName = iconFileNames[p.key];
+
+    return (
+      <g key={i} className="select-none pointer-events-none">
+        <text
+          x={anchorX.toFixed(1)}
+          y={anchorY.toFixed(1)}
+          textAnchor={textAnchor}
+          dy={dy}
+          className="text-[10px] font-black fill-slate-400 dark:fill-slate-400"
+        >
+          {labelName} <tspan className="fill-emerald-400 dark:fill-emerald-300 font-extrabold">{p.val}</tspan>
+        </text>
+      </g>
+    );
+  });
+
+  return (
+    <svg viewBox="20 15 260 240" className="w-52 h-48 sm:w-60 sm:h-56 mx-auto shrink-0 select-none">
+      <defs>
+        <radialGradient id="radar-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="rgba(99, 102, 241, 0.05)" />
+          <stop offset="100%" stopColor="rgba(99, 102, 241, 0.3)" />
+        </radialGradient>
+      </defs>
+      {/* 背景网格 */}
+      <g>
+        {bgPolygons}
+        {axisLines}
+      </g>
+      {/* 数据填充多边形 */}
+      <polygon
+        points={areaPoints}
+        className="fill-[url(#radar-grad)] stroke-indigo-500/70 stroke-[1.5]"
+      />
+      {/* 顶点数据点 */}
+      {dots}
+      {/* 标签 */}
+      {labels}
+    </svg>
+  );
+}
 
 export function DataQueryTab() {
   const [subTab, setSubTab] = useState<"pet" | "eggGroup" | "eggPredict">("pet");
@@ -10,6 +154,7 @@ export function DataQueryTab() {
   // ==================== 精灵图鉴状态 ====================
   const [petSearchVal, setPetSearchVal] = useState("");
   const [petResult, setPetResult] = useState<QueryPetResult | null>(null);
+  const [activeForm, setActiveForm] = useState<any>(null); // 当前选中的具体形态数据
 
   // ==================== 蛋组筛选状态 ====================
   const [groupSearchVal, setGroupSearchVal] = useState("");
@@ -21,11 +166,35 @@ export function DataQueryTab() {
   const [eggResult, setEggResult] = useState<PredictedEggResult[]>([]);
   const [eggError, setEggError] = useState("");
 
+  // 当精灵查询结果变化时，同步设置当前选中的形态为默认形态
+  useEffect(() => {
+    if (petResult) {
+      setActiveForm(petResult.currentForm);
+    } else {
+      setActiveForm(null);
+    }
+  }, [petResult]);
+
   // 执行精灵查询
   const handlePetQuery = (name: string) => {
     if (!name) return;
     const result = queryPet(name);
     setPetResult(result);
+  };
+
+  // 处理形态选择切换
+  const handleFormSelect = (formItem: any) => {
+    const cleanFormName = formItem.name.trim();
+    const raceInfo = petsRaceMap[cleanFormName];
+    const race = raceInfo && raceInfo.stats ? {
+      sum: raceInfo.sum,
+      stats: raceInfo.stats
+    } : null;
+
+    setActiveForm({
+      ...formItem,
+      race
+    });
   };
 
   // 执行蛋组查询
@@ -65,6 +234,13 @@ export function DataQueryTab() {
     { key: "sp_atk", name: "魔攻", color: "from-purple-500 to-purple-400", icon: "魔攻" },
     { key: "sp_def", name: "魔防", color: "from-cyan-500 to-cyan-400", icon: "魔防" }
   ];
+
+  // 解析当前 activeForm 所需的图像名称
+  const getActiveFormSpritePath = () => {
+    if (!activeForm) return getImagePath("images/egg-icon.png");
+    const fileName = getSpriteFileName(activeForm.name);
+    return fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${activeForm.name}.png`);
+  };
 
   return (
     <div className="flex flex-col gap-6 text-left select-none relative z-10 w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -139,201 +315,325 @@ export function DataQueryTab() {
           </div>
 
           {/* 查询结果详情 */}
-          {petResult ? (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* 左侧：精灵立绘/头像/基本属性 */}
-              <div className="lg:col-span-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-6 flex flex-col items-center gap-4 text-center relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full filter blur-2xl"></div>
-                {/* 头像 */}
-                <div className="relative w-32 h-32 rounded-3xl bg-gradient-to-tr from-slate-950 to-slate-900 flex items-center justify-center border border-slate-800 shadow-2xl group overflow-hidden">
-                  <img
-                    src={getImagePath(`images/sprites/${petResult.name}.png`)}
-                    alt={petResult.name}
-                    className="w-24 h-24 object-contain group-hover:scale-110 transition-all duration-300 relative z-10"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-all"></div>
-                </div>
-
-                <div className="flex flex-col gap-1 z-10">
-                  <h3 className="text-lg font-black text-slate-100 flex items-center justify-center gap-1.5">
-                    {petResult.currentForm.name}
-                    <span className="text-[10px] text-slate-500 font-mono">ID: {petResult.id}</span>
-                  </h3>
-                  
-                  {/* 系别 Badge */}
-                  <div className="flex gap-1.5 justify-center items-center mt-1">
-                    {petResult.currentForm.types.map((type, idx) => (
-                      <div
-                        key={idx}
-                        className="w-6 h-6 rounded-full bg-slate-950 border border-slate-850 flex items-center justify-center relative cursor-help"
-                        title={`系别: ${type}`}
-                      >
-                        <img
-                          src={getImagePath(`images/attributes/${type}.png`)}
-                          alt={type}
-                          className="w-4 h-4 object-contain"
-                        />
-                      </div>
-                    ))}
-                    
-                    {/* 蛋组 Badge */}
-                    {petResult.currentForm.egg_groups.map((group, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[9.5px] bg-slate-950 border border-slate-800 text-indigo-400 px-2 py-0.5 rounded-full font-bold"
-                      >
-                        {group}
-                      </span>
-                    ))}
+          {petResult && activeForm ? (
+            <div className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* 左侧：精灵立绘/头像/基本属性 */}
+                <div className="lg:col-span-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-6 flex flex-col items-center gap-4 text-center relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full filter blur-2xl"></div>
+                  {/* 头像 */}
+                  <div className="relative w-32 h-32 rounded-3xl bg-gradient-to-tr from-slate-950 to-slate-900 flex items-center justify-center border border-slate-800 shadow-2xl group overflow-hidden">
+                    <img
+                      key={activeForm.name} // 样式形态变化时重新渲染，避免闪烁
+                      src={getActiveFormSpritePath()}
+                      alt={activeForm.name}
+                      className="w-24 h-24 object-contain group-hover:scale-110 transition-all duration-300 relative z-10"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-all"></div>
                   </div>
-                </div>
 
-                {/* 精灵蛋理论区间 */}
-                {petResult.egg_data && (
-                  <div className="w-full bg-slate-950/40 border border-slate-800/80 rounded-xl p-3.5 mt-2 flex flex-col gap-2 text-xs">
-                    <span className="font-extrabold text-amber-400/90 text-left text-[11px]">🥚 精灵蛋体积参数</span>
-                    <div className="grid grid-cols-2 gap-3 text-left">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-slate-500 font-bold">直径理论区间:</span>
-                        <span className="text-slate-300 font-extrabold text-[11px] mt-0.5">
-                          {petResult.egg_data.height_min}m ~ {petResult.egg_data.height_max}m
+                  <div className="flex flex-col gap-1 z-10">
+                    <h3 className="text-lg font-black text-slate-100 flex items-center justify-center gap-1.5 flex-wrap">
+                      {activeForm.name}
+                      <span className="text-[10px] text-slate-500 font-mono">ID: {petResult.id}</span>
+                    </h3>
+                    
+                    {/* 系别 Badge */}
+                    <div className="flex gap-1.5 justify-center items-center mt-1">
+                      {activeForm.types.map((type: string, idx: number) => (
+                        <div
+                          key={idx}
+                          className="w-6 h-6 rounded-full bg-slate-950 border border-slate-850 flex items-center justify-center relative cursor-help"
+                          title={`系别: ${type}`}
+                        >
+                          <img
+                            src={getImagePath(`images/attributes/${type}.png`)}
+                            alt={type}
+                            className="w-4 h-4 object-contain"
+                          />
+                        </div>
+                      ))}
+                      
+                      {/* 蛋组 Badge */}
+                      {activeForm.egg_groups.map((group: string, idx: number) => (
+                        <span
+                          key={idx}
+                          className="text-[9.5px] bg-slate-950 border border-slate-800 text-indigo-400 px-2 py-0.5 rounded-full font-bold"
+                        >
+                          {group}
                         </span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-slate-500 font-bold">重量理论区间:</span>
-                        <span className="text-slate-300 font-extrabold text-[11px] mt-0.5">
-                          {petResult.egg_data.weight_min}kg ~ {petResult.egg_data.weight_max}kg
-                        </span>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                )}
+
+                  {/* 不同形态选择画廊 */}
+                  {petResult.avatars && petResult.avatars.length > 1 && (
+                    <div className="w-full mt-2 border-t border-slate-800/80 pt-3.5">
+                      <span className="text-[10px] text-slate-500 font-black text-left block mb-2">切换形态样式:</span>
+                      <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto no-scrollbar">
+                        {petResult.avatars.map((avatar, idx) => {
+                          const formItem = petResult.forms[idx];
+                          const isSelected = activeForm && activeForm.name === formItem.name;
+                          return (
+                            <button
+                              key={idx}
+                              onClick={() => handleFormSelect(formItem)}
+                              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer hover:bg-slate-950/65 ${
+                                isSelected
+                                  ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold scale-102"
+                                  : "bg-slate-950/40 border-slate-800/80 text-slate-400 hover:border-slate-600"
+                              }`}
+                            >
+                              <img
+                                src={getImagePath(avatar.absolutePath)}
+                                alt={avatar.styleName}
+                                className="w-5 h-5 object-contain"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                                }}
+                              />
+                              <span className="text-[9.5px] truncate max-w-20 font-bold">{avatar.styleName}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 右侧：种族六围资质雷达图与条形图 */}
+                <div className="lg:col-span-8 flex flex-col gap-6">
+                  {/* 六温种族资质大表 */}
+                  {activeForm.race ? (
+                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6">
+                      <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                        <span className="text-xs text-slate-400 font-black flex items-center gap-1.5">
+                          <Activity className="w-4 h-4 text-emerald-400" />
+                          种族资质数据大面板
+                        </span>
+                        <div className="text-right">
+                          <span className="text-[10px] text-slate-500 font-bold mr-1.5">资质总和:</span>
+                          <span className="text-base font-black text-emerald-400">{activeForm.race.sum}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row items-center gap-6">
+                        {/* 左侧：雷达图 */}
+                        <div className="flex-shrink-0 w-full md:w-auto bg-slate-950/30 border border-slate-850 rounded-xl p-2 flex items-center justify-center">
+                          <RadarChart stats={activeForm.race.stats} />
+                        </div>
+
+                        {/* 右侧：条形图进度条 */}
+                        <div className="flex-1 w-full grid grid-cols-1 gap-3.5">
+                          {statConfig.map((stat) => {
+                            const val = (activeForm.race!.stats as any)[stat.key] || 0;
+                            const pct = Math.min((val / 200) * 100, 100);
+                            return (
+                              <div key={stat.key} className="flex flex-col gap-1 text-xs">
+                                <div className="flex items-center justify-between font-bold">
+                                  <span className="text-slate-400 flex items-center gap-2">
+                                    <img
+                                      src={getImagePath(`images/6围/${stat.icon}.png`)}
+                                      alt={stat.name}
+                                      className="w-4 h-4 object-contain"
+                                    />
+                                    {stat.name}
+                                  </span>
+                                  <span className="text-slate-200 font-extrabold">{val}</span>
+                                </div>
+                                <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-850">
+                                  <div
+                                    className={`h-full rounded-full bg-gradient-to-r ${stat.color} transition-all duration-500 ease-out`}
+                                    style={{ width: `${pct}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 text-center py-16 text-xs text-slate-500">
+                      暂无该形态的资质资质六围数据
+                    </div>
+                  )}
+
+                  {/* 进化链 */}
+                  {petResult.evolution_chain && petResult.evolution_chain.length > 0 && (
+                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6">
+                      <span className="text-xs text-slate-400 font-black block mb-4">🧬 进化链走向 (点击可跳转查询)</span>
+                      <div className="flex flex-wrap items-center gap-3.5">
+                        {petResult.evolution_chain.map((chainItem: any, idx) => {
+                          if (typeof chainItem === "string") {
+                            const cleanName = chainItem.split(/[（(]/)[0].trim();
+                            const matchedForm = petResult.forms.find((f: any) => f.name.startsWith(cleanName));
+                            const spriteName = matchedForm ? matchedForm.name : cleanName;
+                            const fileName = getSpriteFileName(spriteName);
+                            const iconPath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${cleanName}.png`);
+                            return (
+                              <React.Fragment key={idx}>
+                                {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
+                                <button
+                                  onClick={() => handlePetQuery(chainItem)}
+                                  className={`px-3.5 py-2.5 rounded-xl border transition-all flex items-center gap-2 hover:scale-103 cursor-pointer ${
+                                    cleanName === petResult.name
+                                      ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold"
+                                      : "bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-600 hover:text-slate-100"
+                                  }`}
+                                >
+                                  <img
+                                    src={iconPath}
+                                    alt={cleanName}
+                                    className="w-6 h-6 object-contain"
+                                    onError={(e) => {
+                                      (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                                    }}
+                                  />
+                                  <span className="text-[11.5px] font-bold">{chainItem}</span>
+                                </button>
+                              </React.Fragment>
+                            );
+                          } else if (Array.isArray(chainItem)) {
+                            // 分支进化
+                            return (
+                              <React.Fragment key={idx}>
+                                {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
+                                <div className="flex flex-col gap-1.5">
+                                  {chainItem.map((subItem: string, subIdx) => {
+                                    const cleanSub = subItem.split(/[（(]/)[0].trim();
+                                    const matchedForm = petResult.forms.find((f: any) => f.name.startsWith(cleanSub));
+                                    const spriteName = matchedForm ? matchedForm.name : cleanSub;
+                                    const fileName = getSpriteFileName(spriteName);
+                                    const iconPath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${cleanSub}.png`);
+                                    return (
+                                      <button
+                                        key={subIdx}
+                                        onClick={() => handlePetQuery(subItem)}
+                                        className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-1.5 hover:scale-102 cursor-pointer ${
+                                          cleanSub === petResult.name
+                                            ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold"
+                                            : "bg-slate-950/60 border-slate-800 text-slate-350 hover:border-slate-600 hover:text-slate-100"
+                                        }`}
+                                      >
+                                        <img
+                                          src={iconPath}
+                                          alt={cleanSub}
+                                          className="w-5 h-5 object-contain"
+                                          onError={(e) => {
+                                            (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                                          }}
+                                        />
+                                        <span className="text-[10px] font-semibold">{subItem}</span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </React.Fragment>
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* 右侧：种族六围与进化链 */}
-              <div className="lg:col-span-8 flex flex-col gap-6">
-                {/* 六围种族资质 */}
-                {petResult.currentForm.race ? (
-                  <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6">
-                    <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-                      <span className="text-xs text-slate-400 font-black flex items-center gap-1.5">
-                        <Activity className="w-4 h-4 text-emerald-400" />
-                        精灵六围种族资质大表
-                      </span>
-                      <div className="text-right">
-                        <span className="text-[10px] text-slate-500 font-bold mr-1.5">资质总和:</span>
-                        <span className="text-base font-black text-emerald-400">{petResult.currentForm.race.sum}</span>
+              {/* 下方：精灵与精灵蛋尺寸指标及极端线限制 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* 精灵本体体型区间 */}
+                <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-5">
+                  <div className="flex items-center gap-2 border-b border-slate-850 pb-3 mb-3.5">
+                    <span className="p-1.5 bg-indigo-500/10 rounded-lg text-indigo-400">📏</span>
+                    <span className="text-xs font-black text-slate-200">精灵本体尺寸指标区间</span>
+                  </div>
+                  <div className="flex flex-col gap-3.5 text-xs">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex flex-col bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                        <span className="text-[10px] text-slate-500 font-bold">身高理论区间:</span>
+                        <span className="text-slate-250 font-extrabold text-[12.5px] mt-1 font-mono">
+                          {activeForm.height_min !== null ? `${activeForm.height_min}m` : '-'} ~ {activeForm.height_max !== null ? `${activeForm.height_max}m` : '-'}
+                        </span>
+                      </div>
+                      <div className="flex flex-col bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                        <span className="text-[10px] text-slate-500 font-bold">体重理论区间:</span>
+                        <span className="text-slate-255 font-extrabold text-[12.5px] mt-1 font-mono">
+                          {activeForm.weight_min !== null ? `${activeForm.weight_min}kg` : '-'} ~ {activeForm.weight_max !== null ? `${activeForm.weight_max}kg` : '-'}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                      {statConfig.map((stat) => {
-                        const val = (petResult.currentForm.race!.stats as any)[stat.key] || 0;
-                        const pct = Math.min((val / 200) * 100, 100);
-                        return (
-                          <div key={stat.key} className="flex flex-col gap-1 text-xs">
-                            <div className="flex items-center justify-between font-bold">
-                              <span className="text-slate-400 flex items-center gap-2">
-                                <img
-                                  src={getImagePath(`images/6围/${stat.icon}.png`)}
-                                  alt={stat.name}
-                                  className="w-4 h-4 object-contain"
-                                />
-                                {stat.name}
-                              </span>
-                              <span className="text-slate-200 font-extrabold">{val}</span>
-                            </div>
-                            <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-850">
-                              <div
-                                className={`h-full rounded-full bg-gradient-to-r ${stat.color} transition-all duration-500 ease-out`}
-                                style={{ width: `${pct}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                        );
-                      })}
+                    <div className="bg-slate-950/60 border border-slate-850 rounded-xl p-3.5 flex flex-col gap-2">
+                      <span className="text-[10px] text-slate-500 font-black">体型极端线判定线 (本体及格限制):</span>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-amber-500/90 font-bold">🔥 大块头体重达标:</span>
+                          <span className="font-extrabold font-mono text-slate-300">
+                            ≥ {activeForm.giant_weight_line !== null ? `${activeForm.giant_weight_line}kg` : '-'}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-cyan-500/90 font-bold">✨ 小不点体重达标:</span>
+                          <span className="font-extrabold font-mono text-slate-300">
+                            ≤ {activeForm.tiny_weight_line !== null ? `${activeForm.tiny_weight_line}kg` : '-'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                ) : (
-                  <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 text-center py-12 text-xs text-slate-500">
-                    暂无该形态的资质资质六围数据
-                  </div>
-                )}
+                </div>
 
-                {/* 进化链 */}
-                {petResult.evolution_chain && petResult.evolution_chain.length > 0 && (
-                  <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6">
-                    <span className="text-xs text-slate-400 font-black block mb-4">🧬 进化链走向 (点击可跳转查询)</span>
-                    <div className="flex flex-wrap items-center gap-3.5">
-                      {petResult.evolution_chain.map((chainItem: any, idx) => {
-                        // chainItem 可能是 string，也可能是分支进化数组，我们只显示串联的 string
-                        if (typeof chainItem === "string") {
-                          const cleanName = chainItem.split(/[（(]/)[0].trim();
-                          return (
-                            <React.Fragment key={idx}>
-                              {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
-                              <button
-                                onClick={() => handlePetQuery(chainItem)}
-                                className={`px-3.5 py-2.5 rounded-xl border transition-all flex items-center gap-2 hover:scale-103 cursor-pointer ${
-                                  cleanName === petResult.name
-                                    ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold"
-                                    : "bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-600 hover:text-slate-100"
-                                }`}
-                              >
-                                <img
-                                  src={getImagePath(`images/sprites/${cleanName}.png`)}
-                                  alt={cleanName}
-                                  className="w-6 h-6 object-contain"
-                                  onError={(e) => {
-                                    (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
-                                  }}
-                                />
-                                <span className="text-[11.5px] font-bold">{chainItem}</span>
-                              </button>
-                            </React.Fragment>
-                          );
-                        } else if (Array.isArray(chainItem)) {
-                          // 分支进化渲染成一个包裹列
-                          return (
-                            <React.Fragment key={idx}>
-                              {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
-                              <div className="flex flex-col gap-1.5">
-                                {chainItem.map((subItem: string, subIdx) => {
-                                  const cleanSub = subItem.split(/[（(]/)[0].trim();
-                                  return (
-                                    <button
-                                      key={subIdx}
-                                      onClick={() => handlePetQuery(subItem)}
-                                      className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-1.5 hover:scale-102 cursor-pointer ${
-                                        cleanSub === petResult.name
-                                          ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold"
-                                          : "bg-slate-950/60 border-slate-800 text-slate-350 hover:border-slate-600 hover:text-slate-100"
-                                      }`}
-                                    >
-                                      <img
-                                        src={getImagePath(`images/sprites/${cleanSub}.png`)}
-                                        alt={cleanSub}
-                                        className="w-5 h-5 object-contain"
-                                        onError={(e) => {
-                                          (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
-                                        }}
-                                      />
-                                      <span className="text-[10px] font-semibold">{subItem}</span>
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </React.Fragment>
-                          );
-                        }
-                        return null;
-                      })}
-                    </div>
+                {/* 精灵蛋体型区间 */}
+                <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-5">
+                  <div className="flex items-center gap-2 border-b border-slate-850 pb-3 mb-3.5">
+                    <span className="p-1.5 bg-amber-500/10 rounded-lg text-amber-400">🥚</span>
+                    <span className="text-xs font-black text-slate-200">精灵蛋尺寸指标区间</span>
                   </div>
-                )}
+                  {petResult.egg_data && !petResult.egg_data.egg_groups.includes("无法孵蛋") ? (
+                    <div className="flex flex-col gap-3.5 text-xs">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex flex-col bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                          <span className="text-[10px] text-slate-500 font-bold">蛋直径理论区间:</span>
+                          <span className="text-slate-250 font-extrabold text-[12.5px] mt-1 font-mono">
+                            {petResult.egg_data.height_min !== null ? `${petResult.egg_data.height_min}m` : '-'} ~ {petResult.egg_data.height_max !== null ? `${petResult.egg_data.height_max}m` : '-'}
+                          </span>
+                        </div>
+                        <div className="flex flex-col bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                          <span className="text-[10px] text-slate-500 font-bold">蛋重量理论区间:</span>
+                          <span className="text-slate-255 font-extrabold text-[12.5px] mt-1 font-mono">
+                            {petResult.egg_data.weight_min !== null ? `${petResult.egg_data.weight_min}kg` : '-'} ~ {petResult.egg_data.weight_max !== null ? `${petResult.egg_data.weight_max}kg` : '-'}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-950/60 border border-slate-850 rounded-xl p-3.5 flex flex-col gap-2">
+                        <span className="text-[10px] text-slate-500 font-black">精灵蛋大块头/小不点达标重量线:</span>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-amber-500/90 font-bold">🔥 大块头蛋达标线:</span>
+                            <span className="font-extrabold font-mono text-slate-300">
+                              ≥ {petResult.egg_data.giant_weight_line !== null ? `${petResult.egg_data.giant_weight_line}kg` : '-'}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-cyan-500/90 font-bold">✨ 小不点蛋达标线:</span>
+                            <span className="font-extrabold font-mono text-slate-300">
+                              ≤ {petResult.egg_data.tiny_weight_line !== null ? `${petResult.egg_data.tiny_weight_line}kg` : '-'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-32 bg-slate-950/20 border border-slate-850/60 rounded-xl flex items-center justify-center text-xs text-slate-500">
+                      该精灵为“无法孵蛋”分类，无对应的精灵蛋参数
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -379,48 +679,52 @@ export function DataQueryTab() {
           {/* 蛋组筛选结果 */}
           {groupResult.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {groupResult.map((pet, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    setSubTab("pet");
-                    setPetSearchVal(pet.name);
-                    handlePetQuery(pet.name);
-                  }}
-                  className="bg-slate-900/40 border border-slate-800 hover:border-indigo-500/40 hover:bg-slate-900/60 p-4 rounded-2xl flex items-center gap-3 cursor-pointer group transition-all"
-                  title="点击查询精灵图鉴与六围"
-                >
-                  <div className="w-12 h-12 bg-slate-950 border border-slate-850 rounded-xl flex items-center justify-center shrink-0 overflow-hidden relative">
-                    <img
-                      src={getImagePath(`images/sprites/${pet.name}.png`)}
-                      alt={pet.name}
-                      className="w-9 h-9 object-contain group-hover:scale-110 transition-all duration-300 relative z-10"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
-                      }}
-                    />
-                  </div>
+              {groupResult.map((pet, idx) => {
+                const fileName = getSpriteFileName(pet.name);
+                const spritePath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${pet.name}.png`);
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setSubTab("pet");
+                      setPetSearchVal(pet.name);
+                      handlePetQuery(pet.name);
+                    }}
+                    className="bg-slate-900/40 border border-slate-800 hover:border-indigo-500/40 hover:bg-slate-900/60 p-4 rounded-2xl flex items-center gap-3 cursor-pointer group transition-all"
+                    title="点击查询精灵图鉴与六围"
+                  >
+                    <div className="w-12 h-12 bg-slate-950 border border-slate-850 rounded-xl flex items-center justify-center shrink-0 overflow-hidden relative">
+                      <img
+                        src={spritePath}
+                        alt={pet.name}
+                        className="w-9 h-9 object-contain group-hover:scale-110 transition-all duration-300 relative z-10"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                        }}
+                      />
+                    </div>
 
-                  <div className="flex-1 min-w-0 text-left">
-                    <span className="text-[12.5px] font-black text-slate-200 group-hover:text-indigo-400 truncate block">
-                      {pet.name}
-                    </span>
-                    <div className="flex items-center gap-1.5 mt-1">
-                      {pet.types.map((type: string, tIdx: number) => (
-                        <img
-                          key={tIdx}
-                          src={getImagePath(`images/attributes/${type}.png`)}
-                          alt={type}
-                          className="w-3.5 h-3.5 object-contain"
-                        />
-                      ))}
-                      <span className="text-[9px] text-slate-500">
-                        {pet.height_min}m / {pet.weight_min}kg
+                    <div className="flex-1 min-w-0 text-left">
+                      <span className="text-[12.5px] font-black text-slate-200 group-hover:text-indigo-400 truncate block">
+                        {pet.name}
                       </span>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        {pet.types.map((type: string, tIdx: number) => (
+                          <img
+                            key={tIdx}
+                            src={getImagePath(`images/attributes/${type}.png`)}
+                            alt={type}
+                            className="w-3.5 h-3.5 object-contain"
+                          />
+                        ))}
+                        <span className="text-[9px] text-slate-500">
+                          {pet.height_min}m / {pet.weight_min}kg
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             !groupError && (
@@ -477,66 +781,70 @@ export function DataQueryTab() {
               </div>
 
               <div className="divide-y divide-slate-850">
-                {eggResult.map((egg, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      setSubTab("pet");
-                      setPetSearchVal(egg.name);
-                      handlePetQuery(egg.name);
-                    }}
-                    className="px-4 py-3 hover:bg-slate-800/40 grid grid-cols-12 gap-2 items-center text-center text-xs cursor-pointer group"
-                    title="点击查询精灵图鉴与六围"
-                  >
-                    {/* 精灵头像与名称 */}
-                    <div className="col-span-4 flex items-center gap-3 text-left">
-                      <div className="w-10 h-10 bg-slate-950 border border-slate-850 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
-                        <img
-                          src={getImagePath(`images/sprites/${egg.name}.png`)}
-                          alt={egg.name}
-                          className="w-7 h-7 object-contain group-hover:scale-110 transition-all duration-300"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
-                          }}
-                        />
+                {eggResult.map((egg, idx) => {
+                  const fileName = getSpriteFileName(egg.name);
+                  const spritePath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${egg.name}.png`);
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => {
+                        setSubTab("pet");
+                        setPetSearchVal(egg.name);
+                        handlePetQuery(egg.name);
+                      }}
+                      className="px-4 py-3 hover:bg-slate-800/40 grid grid-cols-12 gap-2 items-center text-center text-xs cursor-pointer group"
+                      title="点击查询精灵图鉴与六围"
+                    >
+                      {/* 精灵头像与名称 */}
+                      <div className="col-span-4 flex items-center gap-3 text-left">
+                        <div className="w-10 h-10 bg-slate-950 border border-slate-850 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                          <img
+                            src={spritePath}
+                            alt={egg.name}
+                            className="w-7 h-7 object-contain group-hover:scale-110 transition-all duration-300"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                            }}
+                          />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="font-extrabold text-slate-200 group-hover:text-indigo-400 truncate">
+                            {egg.name}
+                          </span>
+                          <span className="text-[9px] text-slate-500 font-semibold truncate">
+                            {egg.egg_groups.join(" & ")}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="font-extrabold text-slate-200 group-hover:text-indigo-400 truncate">
-                          {egg.name}
-                        </span>
-                        <span className="text-[9px] text-slate-500 font-semibold truncate">
-                          {egg.egg_groups.join(" & ")}
+
+                      {/* 预测概率 */}
+                      <div className="col-span-3">
+                        <span className="text-sm font-black text-amber-500">{egg.probability}</span>
+                      </div>
+
+                      {/* 极限体型标记 */}
+                      <div className="col-span-2 flex items-center justify-center">
+                        <span
+                          className={`px-2 py-0.5 rounded text-[9.5px] font-bold ${
+                            egg.sizeTag === "大块头"
+                              ? "bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-xs"
+                              : egg.sizeTag === "小不点"
+                              ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-xs"
+                              : "bg-slate-800 text-slate-500 border border-transparent"
+                          }`}
+                        >
+                          {egg.sizeTag}
                         </span>
                       </div>
-                    </div>
 
-                    {/* 预测概率 */}
-                    <div className="col-span-3">
-                      <span className="text-sm font-black text-amber-500">{egg.probability}</span>
+                      {/* 理论直径和重量范围 */}
+                      <div className="col-span-3 text-right text-[11px] text-slate-400 font-semibold">
+                        <div>直: {egg.height_min}m ~ {egg.height_max}m</div>
+                        <div className="text-[10px] text-slate-500">重: {egg.weight_min}kg ~ {egg.weight_max}kg</div>
+                      </div>
                     </div>
-
-                    {/* 极限体型标记 */}
-                    <div className="col-span-2 flex items-center justify-center">
-                      <span
-                        className={`px-2 py-0.5 rounded text-[9.5px] font-bold ${
-                          egg.sizeTag === "大块头"
-                            ? "bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-xs"
-                            : egg.sizeTag === "小不点"
-                            ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-xs"
-                            : "bg-slate-800 text-slate-500 border border-transparent"
-                        }`}
-                      >
-                        {egg.sizeTag}
-                      </span>
-                    </div>
-
-                    {/* 理论直径和重量范围 */}
-                    <div className="col-span-3 text-right text-[11px] text-slate-400 font-semibold">
-                      <div>直: {egg.height_min}m ~ {egg.height_max}m</div>
-                      <div className="text-[10px] text-slate-500">重: {egg.weight_min}kg ~ {egg.weight_max}kg</div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : (
