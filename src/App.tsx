@@ -80,6 +80,8 @@ import { ParentCard } from "./components/ParentCard";
 import { RocoImportModal } from "./components/RocoImportModal";
 import { Autocomplete } from "./components/Autocomplete";
 import { WarehouseStatsTable } from "./components/WarehouseStatsTable";
+import { DataQueryTab } from "./components/DataQueryTab";
+import { MerchantFloatWidget } from "./components/MerchantFloatWidget";
 import {
   getPetDetails,
   ALL_PET_NAMES,
@@ -262,7 +264,7 @@ export default function App() {
     return [];
   });
 
-  const [activeTab, setActiveTab] = useState<"nest" | "parents" | "eggs">("nest");
+  const [activeTab, setActiveTab] = useState<"nest" | "parents" | "eggs" | "dataQuery">("nest");
   const [eggs, setEggs] = useState<EggData[]>(() => {
     const saved = localStorage.getItem("roco_egg_eggs_v1");
     if (saved) {
@@ -3284,7 +3286,7 @@ export default function App() {
 
         {/* Tab 导航切换 */}
         <div id="tab-navigation-bar" className="bg-slate-900 border-t border-slate-800 px-3 sm:px-6 md:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 select-none relative z-30">
-          <div className="grid grid-cols-3 gap-1 w-full sm:flex sm:gap-4 sm:w-auto whitespace-nowrap shrink-0">
+          <div className="grid grid-cols-4 gap-1 w-full sm:flex sm:gap-4 sm:w-auto whitespace-nowrap shrink-0">
             <button
               onClick={() => setActiveTab("nest")}
               className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
@@ -3320,6 +3322,18 @@ export default function App() {
               <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="sm:hidden">精灵蛋库</span>
               <span className="hidden sm:inline">蛋管理中心</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("dataQuery")}
+              className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
+                activeTab === "dataQuery"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-100"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+              }`}
+            >
+              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden">数据查询</span>
+              <span className="hidden sm:inline">数据查询中心</span>
             </button>
           </div>
 
@@ -6358,6 +6372,10 @@ const handleUnselectAllPairings = () => {
           </div>
         )}
 
+        {activeTab === "dataQuery" && (
+          <DataQueryTab />
+        )}
+
         {activeModal === "reset" && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div
@@ -7096,6 +7114,7 @@ const handleUnselectAllPairings = () => {
           showToast(`成功导入 ${newParents.length} 只精灵到父母本仓储！`, "success");
         }}
       />
+      <MerchantFloatWidget />
     </div>
     </div>
   );

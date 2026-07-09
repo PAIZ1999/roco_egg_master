@@ -1,0 +1,2900 @@
+{
+  "一窝蜂": {
+    "name": "一窝蜂",
+    "s_mean": 0.19,
+    "s_min": 0.16,
+    "s_max": 0.22,
+    "w_mean": 1.7984,
+    "w_min": 1.392,
+    "w_max": 2.2,
+    "n": 498,
+    "theory_box_real": [
+      0.1233,
+      0.325,
+      0.7692,
+      2.2
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.22,
+      1.4874,
+      2.1106
+    ],
+    "is_rideable": true
+  },
+  "丢丢": {
+    "name": "丢丢",
+    "s_mean": 0.1794,
+    "s_min": 0.15,
+    "s_max": 0.21,
+    "w_mean": 1.9639,
+    "w_min": 1.501,
+    "w_max": 2.439,
+    "n": 556,
+    "theory_box_real": [
+      0.1167,
+      0.3187,
+      0.8269,
+      2.44
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.21,
+      1.605,
+      2.333
+    ],
+    "is_rideable": true
+  },
+  "乌达": {
+    "name": "乌达",
+    "s_mean": 0.2139,
+    "s_min": 0.19,
+    "s_max": 0.24,
+    "w_mean": 2.0122,
+    "w_min": 1.591,
+    "w_max": 2.439,
+    "n": 494,
+    "theory_box_real": [
+      0.1467,
+      0.3625,
+      0.8846,
+      2.44
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.24,
+      1.6963,
+      2.3454
+    ],
+    "is_rideable": true
+  },
+  "乖乖鹄": {
+    "name": "乖乖鹄",
+    "s_mean": 0.2393,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 1.8293,
+    "w_min": 1.47,
+    "w_max": 2.2,
+    "n": 479,
+    "theory_box_real": [
+      0.1533,
+      0.4188,
+      0.8077,
+      2.2
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.27,
+      1.5478,
+      2.115
+    ],
+    "is_rideable": false
+  },
+  "书魔虫": {
+    "name": "书魔虫",
+    "s_mean": 0.1476,
+    "s_min": 0.13,
+    "s_max": 0.17,
+    "w_mean": 1.1349,
+    "w_min": 0.79,
+    "w_max": 1.554,
+    "n": 531,
+    "theory_box_real": [
+      0.1,
+      0.2563,
+      0.4385,
+      1.544
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.17,
+      0.855,
+      1.449
+    ],
+    "is_rideable": true
+  },
+  "仪使者": {
+    "name": "仪使者",
+    "s_mean": 0.2152,
+    "s_min": 0.19,
+    "s_max": 0.24,
+    "w_mean": 10.3226,
+    "w_min": 6.846,
+    "w_max": 13.95,
+    "n": 147,
+    "theory_box_real": [
+      0.15,
+      0.3625,
+      3.6635,
+      14.02
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.24,
+      7.45,
+      13.344
+    ],
+    "is_rideable": true
+  },
+  "伊贝儿": {
+    "name": "伊贝儿",
+    "s_mean": 0.2262,
+    "s_min": 0.19,
+    "s_max": 0.26,
+    "w_mean": 1.4235,
+    "w_min": 1.155,
+    "w_max": 1.68,
+    "n": 357,
+    "theory_box_real": [
+      0.1467,
+      0.3875,
+      0.6346,
+      1.68
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.26,
+      1.212,
+      1.6188
+    ],
+    "is_rideable": false
+  },
+  "伊雷龙": {
+    "name": "伊雷龙",
+    "s_mean": 0.3495,
+    "s_min": 0.31,
+    "s_max": 0.39,
+    "w_mean": 11.5509,
+    "w_min": 9.594,
+    "w_max": 13.6,
+    "n": 335,
+    "theory_box_real": [
+      0.24,
+      0.5875,
+      5.2308,
+      13.6
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.39,
+      10.0228,
+      13.197
+    ],
+    "is_rideable": false
+  },
+  "优优": {
+    "name": "优优",
+    "s_mean": 0.1946,
+    "s_min": 0.16,
+    "s_max": 0.23,
+    "w_mean": 1.3484,
+    "w_min": 1.061,
+    "w_max": 1.64,
+    "n": 400,
+    "theory_box_real": [
+      0.1267,
+      0.35,
+      0.5827,
+      1.636
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.23,
+      1.1269,
+      1.5741
+    ],
+    "is_rideable": false
+  },
+  "公平鸽": {
+    "name": "公平鸽",
+    "s_mean": 0.218,
+    "s_min": 0.19,
+    "s_max": 0.25,
+    "w_mean": 1.2054,
+    "w_min": 0.875,
+    "w_max": 1.576,
+    "n": 483,
+    "theory_box_real": [
+      0.15,
+      0.375,
+      0.4808,
+      1.576
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.25,
+      0.9352,
+      1.4948
+    ],
+    "is_rideable": false
+  },
+  "兽花蕾": {
+    "name": "兽花蕾",
+    "s_mean": 0.1747,
+    "s_min": 0.16,
+    "s_max": 0.19,
+    "w_mean": 2.0383,
+    "w_min": 1.488,
+    "w_max": 2.6,
+    "n": 639,
+    "theory_box_real": [
+      0.1267,
+      0.2812,
+      0.8173,
+      2.6
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.19,
+      1.6068,
+      2.4692
+    ],
+    "is_rideable": false
+  },
+  "刺轮砣": {
+    "name": "刺轮砣",
+    "s_mean": 0.1039,
+    "s_min": 0.08,
+    "s_max": 0.13,
+    "w_mean": 1.2588,
+    "w_min": 0.945,
+    "w_max": 1.6,
+    "n": 426,
+    "theory_box_real": [
+      0.06,
+      0.1937,
+      0.5192,
+      1.6
+    ],
+    "empirical_box_real": [
+      0.08,
+      0.13,
+      0.9905,
+      1.5265
+    ],
+    "is_rideable": true
+  },
+  "厉毒小萝": {
+    "name": "厉毒小萝",
+    "s_mean": 0.2507,
+    "s_min": 0.24,
+    "s_max": 0.27,
+    "w_mean": 4.5992,
+    "w_min": 3.592,
+    "w_max": 5.927,
+    "n": 44,
+    "theory_box_real": [
+      0.1833,
+      0.4062,
+      1.6788,
+      5.968
+    ],
+    "empirical_box_real": [
+      0.24,
+      0.26,
+      3.7,
+      5.206
+    ],
+    "is_rideable": false
+  },
+  "双灯鱼": {
+    "name": "双灯鱼",
+    "s_mean": 0.258,
+    "s_min": 0.21,
+    "s_max": 0.3,
+    "w_mean": 6.221,
+    "w_min": 5.219,
+    "w_max": 7.08,
+    "n": 548,
+    "theory_box_real": [
+      0.1667,
+      0.45,
+      2.8654,
+      7.12
+    ],
+    "empirical_box_real": [
+      0.22,
+      0.3,
+      5.5621,
+      6.9254
+    ],
+    "is_rideable": false
+  },
+  "古钟蛇": {
+    "name": "古钟蛇",
+    "s_mean": 0.4301,
+    "s_min": 0.4,
+    "s_max": 0.46,
+    "w_mean": 2.7691,
+    "w_min": 2.413,
+    "w_max": 3.12,
+    "n": 410,
+    "theory_box_real": [
+      0.3167,
+      0.6875,
+      1.3269,
+      3.12
+    ],
+    "empirical_box_real": [
+      0.4,
+      0.46,
+      2.4968,
+      3.0433
+    ],
+    "is_rideable": true
+  },
+  "可爱猿": {
+    "name": "可爱猿",
+    "s_mean": 0.3369,
+    "s_min": 0.32,
+    "s_max": 0.37,
+    "w_mean": 8.6837,
+    "w_min": 8.443,
+    "w_max": 9.497,
+    "n": 9,
+    "theory_box_real": [
+      0.23,
+      0.6125,
+      4.0385,
+      12.6
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.37,
+      8.443,
+      9.497
+    ],
+    "is_rideable": true
+  },
+  "可立鸡": {
+    "name": "可立鸡",
+    "s_mean": 0.1993,
+    "s_min": 0.17,
+    "s_max": 0.23,
+    "w_mean": 2.2744,
+    "w_min": 1.611,
+    "w_max": 2.96,
+    "n": 713,
+    "theory_box_real": [
+      0.13,
+      0.35,
+      0.8846,
+      2.96
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.23,
+      1.7474,
+      2.8116
+    ],
+    "is_rideable": true
+  },
+  "号儿鱼": {
+    "name": "号儿鱼",
+    "s_mean": 0.1496,
+    "s_min": 0.13,
+    "s_max": 0.17,
+    "w_mean": 1.7274,
+    "w_min": 1.36,
+    "w_max": 2.107,
+    "n": 437,
+    "theory_box_real": [
+      0.1033,
+      0.2625,
+      0.75,
+      2.208
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.17,
+      1.4432,
+      2.0202
+    ],
+    "is_rideable": false
+  },
+  "吸泥鸥": {
+    "name": "吸泥鸥",
+    "s_mean": 0.2616,
+    "s_min": 0.23,
+    "s_max": 0.29,
+    "w_mean": 4.1996,
+    "w_min": 3.317,
+    "w_max": 4.998,
+    "n": 850,
+    "theory_box_real": [
+      0.1833,
+      0.4437,
+      1.8269,
+      5
+    ],
+    "empirical_box_real": [
+      0.23,
+      0.29,
+      3.5284,
+      4.8461
+    ],
+    "is_rideable": false
+  },
+  "呆小路": {
+    "name": "呆小路",
+    "s_mean": 0.2936,
+    "s_min": 0.25,
+    "s_max": 0.34,
+    "w_mean": 1.9364,
+    "w_min": 1.575,
+    "w_max": 2.319,
+    "n": 462,
+    "theory_box_real": [
+      0.1933,
+      0.5187,
+      0.8654,
+      2.32
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.339,
+      1.6482,
+      2.243
+    ],
+    "is_rideable": false
+  },
+  "呼呼猪": {
+    "name": "呼呼猪",
+    "s_mean": 0.2645,
+    "s_min": 0.22,
+    "s_max": 0.31,
+    "w_mean": 2.9642,
+    "w_min": 2.38,
+    "w_max": 3.56,
+    "n": 661,
+    "theory_box_real": [
+      0.1733,
+      0.4688,
+      1.3077,
+      3.56
+    ],
+    "empirical_box_real": [
+      0.22,
+      0.3,
+      2.494,
+      3.434
+    ],
+    "is_rideable": true
+  },
+  "哭哭菇": {
+    "name": "哭哭菇",
+    "s_mean": 0.1662,
+    "s_min": 0.14,
+    "s_max": 0.2,
+    "w_mean": 0.9193,
+    "w_min": 0.617,
+    "w_max": 1.28,
+    "n": 560,
+    "theory_box_real": [
+      0.11,
+      0.2937,
+      0.3462,
+      1.28
+    ],
+    "empirical_box_real": [
+      0.14,
+      0.2,
+      0.6859,
+      1.1881
+    ],
+    "is_rideable": true
+  },
+  "喵喵": {
+    "name": "喵喵",
+    "s_mean": 0.2773,
+    "s_min": 0.25,
+    "s_max": 0.31,
+    "w_mean": 1.6079,
+    "w_min": 1.427,
+    "w_max": 1.791,
+    "n": 15,
+    "theory_box_real": [
+      0.0833,
+      0.1875,
+      0.2873,
+      0.7104
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.3,
+      1.494,
+      1.776
+    ],
+    "is_rideable": true
+  },
+  "嗜光嗡嗡": {
+    "name": "嗜光嗡嗡",
+    "s_mean": 0.113,
+    "s_min": 0.1,
+    "s_max": 0.13,
+    "w_mean": 0.818,
+    "w_min": 0.516,
+    "w_max": 1.177,
+    "n": 93,
+    "theory_box_real": [
+      0.08,
+      0.2,
+      0.2808,
+      1.22
+    ],
+    "empirical_box_real": [
+      0.1,
+      0.13,
+      0.59,
+      1.064
+    ],
+    "is_rideable": false
+  },
+  "嘟嘟煲": {
+    "name": "嘟嘟煲",
+    "s_mean": 0.3053,
+    "s_min": 0.28,
+    "s_max": 0.33,
+    "w_mean": 19.7151,
+    "w_min": 16.984,
+    "w_max": 22.399,
+    "n": 1247,
+    "theory_box_real": [
+      0.2167,
+      0.5,
+      9.3269,
+      22.4
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.33,
+      17.5544,
+      21.9008
+    ],
+    "is_rideable": false
+  },
+  "噼啪鸟": {
+    "name": "噼啪鸟",
+    "s_mean": 0.8757,
+    "s_min": 0.87,
+    "s_max": 0.88,
+    "w_mean": 42.2821,
+    "w_min": 39.756,
+    "w_max": 43.937,
+    "n": 7,
+    "theory_box_real": [
+      0.6667,
+      1.3438,
+      17.2115,
+      51
+    ],
+    "empirical_box_real": [
+      0.87,
+      0.88,
+      39.756,
+      43.937
+    ],
+    "is_rideable": true
+  },
+  "圆眼蜘蛛": {
+    "name": "圆眼蜘蛛",
+    "s_mean": 0.239,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 1.605,
+    "w_min": 1.226,
+    "w_max": 2,
+    "n": 493,
+    "theory_box_real": [
+      0.16,
+      0.425,
+      0.6731,
+      2
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.27,
+      1.3062,
+      1.9148
+    ],
+    "is_rideable": false
+  },
+  "圣剑侍从": {
+    "name": "圣剑侍从",
+    "s_mean": 0.445,
+    "s_min": 0.4,
+    "s_max": 0.49,
+    "w_mean": 54.9991,
+    "w_min": 40.7,
+    "w_max": 69.409,
+    "n": 123,
+    "theory_box_real": [
+      0.3133,
+      0.7375,
+      22.25,
+      69.44
+    ],
+    "empirical_box_real": [
+      0.4,
+      0.49,
+      42.839,
+      67.319
+    ],
+    "is_rideable": true
+  },
+  "地鼠": {
+    "name": "地鼠",
+    "s_mean": 0.2344,
+    "s_min": 0.2,
+    "s_max": 0.27,
+    "w_mean": 0.7932,
+    "w_min": 0.624,
+    "w_max": 0.96,
+    "n": 385,
+    "theory_box_real": [
+      0.1533,
+      0.4125,
+      0.7308,
+      2.052
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.27,
+      0.666,
+      0.9226
+    ],
+    "is_rideable": false
+  },
+  "多多": {
+    "name": "多多",
+    "s_mean": 0.2297,
+    "s_min": 0.19,
+    "s_max": 0.27,
+    "w_mean": 6.2683,
+    "w_min": 5.11,
+    "w_max": 7.437,
+    "n": 1098,
+    "theory_box_real": [
+      0.15,
+      0.4062,
+      2.8077,
+      7.44
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.26,
+      5.3534,
+      7.188
+    ],
+    "is_rideable": false
+  },
+  "多西": {
+    "name": "多西",
+    "s_mean": 0.346,
+    "s_min": 0.34,
+    "s_max": 0.35,
+    "w_mean": 2.4466,
+    "w_min": 2.42,
+    "w_max": 2.468,
+    "n": 5,
+    "theory_box_real": [
+      0.2167,
+      0.5875,
+      1.0962,
+      2.84
+    ],
+    "empirical_box_real": [
+      0.34,
+      0.35,
+      2.42,
+      2.468
+    ],
+    "is_rideable": true
+  },
+  "大头骨龙": {
+    "name": "大头骨龙",
+    "s_mean": 0.3902,
+    "s_min": 0.36,
+    "s_max": 0.42,
+    "w_mean": 9.9753,
+    "w_min": 6.51,
+    "w_max": 13.396,
+    "n": 1530,
+    "theory_box_real": [
+      0.2833,
+      0.625,
+      3.5769,
+      13.4
+    ],
+    "empirical_box_real": [
+      0.36,
+      0.42,
+      7.2918,
+      12.6562
+    ],
+    "is_rideable": true
+  },
+  "大耳帽兜": {
+    "name": "大耳帽兜",
+    "s_mean": 0.1852,
+    "s_min": 0.17,
+    "s_max": 0.2,
+    "w_mean": 3.6123,
+    "w_min": 2.94,
+    "w_max": 4.296,
+    "n": 592,
+    "theory_box_real": [
+      0.13,
+      0.2625,
+      1.6135,
+      4.28
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.2,
+      3.1532,
+      4.1097
+    ],
+    "is_rideable": false
+  },
+  "奇丽草": {
+    "name": "奇丽草",
+    "s_mean": 0.195,
+    "s_min": 0.16,
+    "s_max": 0.23,
+    "w_mean": 1.8561,
+    "w_min": 1.43,
+    "w_max": 2.28,
+    "n": 540,
+    "theory_box_real": [
+      0.1267,
+      0.3437,
+      0.7865,
+      2.28
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.23,
+      1.5327,
+      2.1821
+    ],
+    "is_rideable": true
+  },
+  "奔波鼠": {
+    "name": "奔波鼠",
+    "s_mean": 0.2249,
+    "s_min": 0.2,
+    "s_max": 0.25,
+    "w_mean": 1.9269,
+    "w_min": 1.3,
+    "w_max": 2.56,
+    "n": 687,
+    "theory_box_real": [
+      0.1533,
+      0.375,
+      0.7135,
+      2.56
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.25,
+      1.4446,
+      2.4214
+    ],
+    "is_rideable": false
+  },
+  "小夜": {
+    "name": "小夜",
+    "s_mean": 0.2596,
+    "s_min": 0.22,
+    "s_max": 0.3,
+    "w_mean": 2.2998,
+    "w_min": 1.575,
+    "w_max": 3.04,
+    "n": 767,
+    "theory_box_real": [
+      0.17,
+      0.4562,
+      0.8654,
+      3.04
+    ],
+    "empirical_box_real": [
+      0.22,
+      0.3,
+      1.7206,
+      2.8874
+    ],
+    "is_rideable": false
+  },
+  "小怂猫": {
+    "name": "小怂猫",
+    "s_mean": 0.2986,
+    "s_min": 0.25,
+    "s_max": 0.35,
+    "w_mean": 7.9031,
+    "w_min": 6.86,
+    "w_max": 8.999,
+    "n": 1026,
+    "theory_box_real": [
+      0.1967,
+      0.525,
+      3.7692,
+      9
+    ],
+    "empirical_box_real": [
+      0.26,
+      0.34,
+      7.068,
+      8.7655
+    ],
+    "is_rideable": true
+  },
+  "小星光": {
+    "name": "小星光",
+    "s_mean": 0.3963,
+    "s_min": 0.33,
+    "s_max": 0.46,
+    "w_mean": 12.0937,
+    "w_min": 9.636,
+    "w_max": 14.479,
+    "n": 1209,
+    "theory_box_real": [
+      0.26,
+      0.7,
+      5.2885,
+      14.48
+    ],
+    "empirical_box_real": [
+      0.34,
+      0.45,
+      10.1528,
+      13.9674
+    ],
+    "is_rideable": false
+  },
+  "小灵菇": {
+    "name": "小灵菇",
+    "s_mean": 0.2142,
+    "s_min": 0.18,
+    "s_max": 0.25,
+    "w_mean": 2.3574,
+    "w_min": 1.89,
+    "w_max": 2.84,
+    "n": 530,
+    "theory_box_real": [
+      0.1433,
+      0.3812,
+      1.0385,
+      2.84
+    ],
+    "empirical_box_real": [
+      0.18,
+      0.25,
+      1.9928,
+      2.7342
+    ],
+    "is_rideable": false
+  },
+  "小灵面": {
+    "name": "小灵面",
+    "s_mean": 0.1943,
+    "s_min": 0.15,
+    "s_max": 0.23,
+    "w_mean": 0.0472,
+    "w_min": 0.034,
+    "w_max": 0.06,
+    "n": 42,
+    "theory_box_real": [
+      0.1267,
+      0.3437,
+      0.0192,
+      0.22
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.23,
+      0.037,
+      0.057
+    ],
+    "is_rideable": false
+  },
+  "小独角兽": {
+    "name": "小独角兽",
+    "s_mean": 0.5057,
+    "s_min": 0.42,
+    "s_max": 0.59,
+    "w_mean": 18.4116,
+    "w_min": 14.5,
+    "w_max": 22.24,
+    "n": 1769,
+    "theory_box_real": [
+      0.3267,
+      0.8812,
+      7.9808,
+      22.24
+    ],
+    "empirical_box_real": [
+      0.43,
+      0.58,
+      15.3336,
+      21.4068
+    ],
+    "is_rideable": true
+  },
+  "小狮鹫": {
+    "name": "小狮鹫",
+    "s_mean": 0.3612,
+    "s_min": 0.3,
+    "s_max": 0.42,
+    "w_mean": 5.5402,
+    "w_min": 4.03,
+    "w_max": 6.997,
+    "n": 1250,
+    "theory_box_real": [
+      0.2367,
+      0.6375,
+      2.2115,
+      7
+    ],
+    "empirical_box_real": [
+      0.31,
+      0.41,
+      4.3359,
+      6.7063
+    ],
+    "is_rideable": true
+  },
+  "小甲虫": {
+    "name": "小甲虫",
+    "s_mean": 0.2408,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 2.8256,
+    "w_min": 2.276,
+    "w_max": 3.359,
+    "n": 611,
+    "theory_box_real": [
+      0.16,
+      0.425,
+      1.25,
+      3.36
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.28,
+      2.394,
+      3.244
+    ],
+    "is_rideable": true
+  },
+  "小电企鹅": {
+    "name": "小电企鹅",
+    "s_mean": 0.2097,
+    "s_min": 0.19,
+    "s_max": 0.23,
+    "w_mean": 1.7385,
+    "w_min": 1.337,
+    "w_max": 2.156,
+    "n": 502,
+    "theory_box_real": [
+      0.1467,
+      0.35,
+      0.7346,
+      2.156
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.23,
+      1.4262,
+      2.0568
+    ],
+    "is_rideable": false
+  },
+  "小箱怪": {
+    "name": "小箱怪",
+    "s_mean": 0.1648,
+    "s_min": 0.14,
+    "s_max": 0.19,
+    "w_mean": 2.1385,
+    "w_min": 1.557,
+    "w_max": 2.724,
+    "n": 640,
+    "theory_box_real": [
+      0.1133,
+      0.2875,
+      0.8558,
+      2.724
+    ],
+    "empirical_box_real": [
+      0.14,
+      0.19,
+      1.6828,
+      2.5962
+    ],
+    "is_rideable": true
+  },
+  "小翼龙": {
+    "name": "小翼龙",
+    "s_mean": 0.309,
+    "s_min": 0.26,
+    "s_max": 0.35,
+    "w_mean": 11.7208,
+    "w_min": 8.789,
+    "w_max": 13.956,
+    "n": 10,
+    "theory_box_real": [
+      0.2033,
+      0.5437,
+      4.8269,
+      14.6
+    ],
+    "empirical_box_real": [
+      0.2869,
+      0.35,
+      10.6529,
+      13.7425
+    ],
+    "is_rideable": true
+  },
+  "小草虫": {
+    "name": "小草虫",
+    "s_mean": 0.2345,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 1.01,
+    "w_min": 0.73,
+    "w_max": 1.36,
+    "n": 517,
+    "theory_box_real": [
+      0.1567,
+      0.4188,
+      0.4038,
+      1.36
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.27,
+      0.7876,
+      1.2814
+    ],
+    "is_rideable": false
+  },
+  "小鹬": {
+    "name": "小鹬",
+    "s_mean": 0.1301,
+    "s_min": 0.11,
+    "s_max": 0.15,
+    "w_mean": 0.6864,
+    "w_min": 0.49,
+    "w_max": 0.892,
+    "n": 422,
+    "theory_box_real": [
+      0.0833,
+      0.225,
+      0.2692,
+      0.88
+    ],
+    "empirical_box_real": [
+      0.11,
+      0.15,
+      0.5321,
+      0.8399
+    ],
+    "is_rideable": false
+  },
+  "小黑猫": {
+    "name": "小黑猫",
+    "s_mean": 0.2495,
+    "s_min": 0.23,
+    "s_max": 0.27,
+    "w_mean": 1.4361,
+    "w_min": 1.086,
+    "w_max": 1.795,
+    "n": 181,
+    "theory_box_real": [
+      0.1833,
+      0.4062,
+      0.5962,
+      1.8
+    ],
+    "empirical_box_real": [
+      0.23,
+      0.27,
+      1.173,
+      1.723
+    ],
+    "is_rideable": false
+  },
+  "小鼠獭": {
+    "name": "小鼠獭",
+    "s_mean": 0.1899,
+    "s_min": 0.16,
+    "s_max": 0.22,
+    "w_mean": 2.6719,
+    "w_min": 2.345,
+    "w_max": 3,
+    "n": 396,
+    "theory_box_real": [
+      0.1233,
+      0.3312,
+      1.2885,
+      3
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.22,
+      2.427,
+      2.9255
+    ],
+    "is_rideable": true
+  },
+  "布是石": {
+    "name": "布是石",
+    "s_mean": 0.215,
+    "s_min": 0.18,
+    "s_max": 0.25,
+    "w_mean": 9.7493,
+    "w_min": 6.484,
+    "w_max": 12.999,
+    "n": 1367,
+    "theory_box_real": [
+      0.14,
+      0.375,
+      3.5577,
+      13
+    ],
+    "empirical_box_real": [
+      0.18,
+      0.25,
+      7.1556,
+      12.398
+    ],
+    "is_rideable": true
+  },
+  "布鲁斯": {
+    "name": "布鲁斯",
+    "s_mean": 0.2696,
+    "s_min": 0.25,
+    "s_max": 0.28,
+    "w_mean": 1.3447,
+    "w_min": 1.106,
+    "w_max": 1.567,
+    "n": 24,
+    "theory_box_real": [
+      0.1767,
+      0.475,
+      0.4615,
+      1.84
+    ],
+    "empirical_box_real": [
+      0.26,
+      0.28,
+      1.199,
+      1.518
+    ],
+    "is_rideable": true
+  },
+  "幽影树": {
+    "name": "幽影树",
+    "s_mean": 0.3241,
+    "s_min": 0.27,
+    "s_max": 0.38,
+    "w_mean": 12.6309,
+    "w_min": 10.326,
+    "w_max": 14.993,
+    "n": 1247,
+    "theory_box_real": [
+      0.2133,
+      0.575,
+      5.6731,
+      15
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.37,
+      10.7482,
+      14.53
+    ],
+    "is_rideable": false
+  },
+  "忽幽狸": {
+    "name": "忽幽狸",
+    "s_mean": 0.3851,
+    "s_min": 0.32,
+    "s_max": 0.44,
+    "w_mean": 3.412,
+    "w_min": 2.965,
+    "w_max": 3.787,
+    "n": 65,
+    "theory_box_real": [
+      0.2533,
+      0.6813,
+      1.5962,
+      3.92
+    ],
+    "empirical_box_real": [
+      0.34,
+      0.43,
+      3.11,
+      3.741
+    ],
+    "is_rideable": false
+  },
+  "恶魔叮": {
+    "name": "恶魔叮",
+    "s_mean": 0.1998,
+    "s_min": 0.17,
+    "s_max": 0.23,
+    "w_mean": 1.4503,
+    "w_min": 1.256,
+    "w_max": 1.64,
+    "n": 257,
+    "theory_box_real": [
+      0.13,
+      0.35,
+      0.6923,
+      2.08
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.23,
+      1.3032,
+      1.5932
+    ],
+    "is_rideable": false
+  },
+  "恶魔狼": {
+    "name": "恶魔狼",
+    "s_mean": 0.6238,
+    "s_min": 0.52,
+    "s_max": 0.73,
+    "w_mean": 31.2792,
+    "w_min": 25.919,
+    "w_max": 36.772,
+    "n": 2404,
+    "theory_box_real": [
+      0.41,
+      1.1,
+      14.2308,
+      36.8
+    ],
+    "empirical_box_real": [
+      0.54,
+      0.71,
+      27.2362,
+      35.4558
+    ],
+    "is_rideable": true
+  },
+  "护主犬": {
+    "name": "护主犬",
+    "s_mean": 0.3254,
+    "s_min": 0.27,
+    "s_max": 0.38,
+    "w_mean": 5.8902,
+    "w_min": 4.761,
+    "w_max": 7,
+    "n": 1111,
+    "theory_box_real": [
+      0.2133,
+      0.575,
+      2.6154,
+      7
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.37,
+      4.994,
+      6.771
+    ],
+    "is_rideable": true
+  },
+  "拉特": {
+    "name": "拉特",
+    "s_mean": 0.2293,
+    "s_min": 0.21,
+    "s_max": 0.25,
+    "w_mean": 3.0577,
+    "w_min": 2.69,
+    "w_max": 3.443,
+    "n": 430,
+    "theory_box_real": [
+      0.1633,
+      0.3812,
+      1.4808,
+      3.44
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.25,
+      2.7678,
+      3.3571
+    ],
+    "is_rideable": false
+  },
+  "斑斑": {
+    "name": "斑斑",
+    "s_mean": 0.2247,
+    "s_min": 0.2,
+    "s_max": 0.25,
+    "w_mean": 2.0662,
+    "w_min": 1.677,
+    "w_max": 2.472,
+    "n": 477,
+    "theory_box_real": [
+      0.1567,
+      0.375,
+      0.9212,
+      2.468
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.25,
+      1.7638,
+      2.3798
+    ],
+    "is_rideable": false
+  },
+  "旋叶虫": {
+    "name": "旋叶虫",
+    "s_mean": 0.05,
+    "s_min": 0.04,
+    "s_max": 0.06,
+    "w_mean": 0.0767,
+    "w_min": 0.053,
+    "w_max": 0.1,
+    "n": 52,
+    "theory_box_real": [
+      0.0333,
+      0.0937,
+      0.0192,
+      0.34
+    ],
+    "empirical_box_real": [
+      0.04,
+      0.06,
+      0.058,
+      0.095
+    ],
+    "is_rideable": false
+  },
+  "星尘虫": {
+    "name": "星尘虫",
+    "s_mean": 0.0698,
+    "s_min": 0.06,
+    "s_max": 0.08,
+    "w_mean": 0.2997,
+    "w_min": 0.263,
+    "w_max": 0.34,
+    "n": 40,
+    "theory_box_real": [
+      0.05,
+      0.125,
+      0.0865,
+      0.56
+    ],
+    "empirical_box_real": [
+      0.06,
+      0.08,
+      0.2697,
+      0.3252
+    ],
+    "is_rideable": true
+  },
+  "春团": {
+    "name": "春团",
+    "s_mean": 0.1754,
+    "s_min": 0.14,
+    "s_max": 0.2,
+    "w_mean": 1.044,
+    "w_min": 0.687,
+    "w_max": 1.347,
+    "n": 54,
+    "theory_box_real": [
+      0.1167,
+      0.3187,
+      0.4038,
+      1.44
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.2,
+      0.767,
+      1.27
+    ],
+    "is_rideable": false
+  },
+  "月牙雪熊": {
+    "name": "月牙雪熊",
+    "s_mean": 0.5652,
+    "s_min": 0.53,
+    "s_max": 0.6,
+    "w_mean": 31.9175,
+    "w_min": 26.805,
+    "w_max": 36.984,
+    "n": 366,
+    "theory_box_real": [
+      0.4167,
+      0.9062,
+      14.7115,
+      37
+    ],
+    "empirical_box_real": [
+      0.54,
+      0.59,
+      28.5155,
+      35.349
+    ],
+    "is_rideable": true
+  },
+  "机械方方": {
+    "name": "机械方方",
+    "s_mean": 0.2065,
+    "s_min": 0.19,
+    "s_max": 0.23,
+    "w_mean": 3.4191,
+    "w_min": 3.041,
+    "w_max": 3.885,
+    "n": 171,
+    "theory_box_real": [
+      0.14,
+      0.375,
+      1.5385,
+      4.4
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.22,
+      3.081,
+      3.767
+    ],
+    "is_rideable": true
+  },
+  "权杖-Ⅱ": {
+    "name": "权杖-Ⅱ",
+    "s_mean": 0.2099,
+    "s_min": 0.19,
+    "s_max": 0.23,
+    "w_mean": 12.1108,
+    "w_min": 9.987,
+    "w_max": 14.28,
+    "n": 1156,
+    "theory_box_real": [
+      0.15,
+      0.3437,
+      5.4808,
+      14.28
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.23,
+      10.3785,
+      13.79
+    ],
+    "is_rideable": false
+  },
+  "松仔": {
+    "name": "松仔",
+    "s_mean": 0.25,
+    "s_min": 0.23,
+    "s_max": 0.27,
+    "w_mean": 2.656,
+    "w_min": 2.512,
+    "w_max": 2.87,
+    "n": 3,
+    "theory_box_real": [
+      0.1733,
+      0.425,
+      1.2019,
+      3.14
+    ],
+    "empirical_box_real": [
+      0.23,
+      0.27,
+      2.512,
+      2.87
+    ],
+    "is_rideable": true
+  },
+  "板板壳": {
+    "name": "板板壳",
+    "s_mean": 0.2753,
+    "s_min": 0.23,
+    "s_max": 0.32,
+    "w_mean": 3.4178,
+    "w_min": 2.627,
+    "w_max": 4.198,
+    "n": 769,
+    "theory_box_real": [
+      0.1767,
+      0.475,
+      1.4423,
+      4.2
+    ],
+    "empirical_box_real": [
+      0.238,
+      0.32,
+      2.7816,
+      4.0502
+    ],
+    "is_rideable": true
+  },
+  "果冻": {
+    "name": "果冻",
+    "s_mean": 0.1404,
+    "s_min": 0.13,
+    "s_max": 0.15,
+    "w_mean": 1.8852,
+    "w_min": 1.529,
+    "w_max": 2.239,
+    "n": 115,
+    "theory_box_real": [
+      0.1,
+      0.225,
+      0.8365,
+      2.24
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.15,
+      1.602,
+      2.171
+    ],
+    "is_rideable": false
+  },
+  "柴渣虫": {
+    "name": "柴渣虫",
+    "s_mean": 0.2048,
+    "s_min": 0.19,
+    "s_max": 0.23,
+    "w_mean": 5.9738,
+    "w_min": 5.016,
+    "w_max": 7.44,
+    "n": 259,
+    "theory_box_real": [
+      0.15,
+      0.3437,
+      2.7885,
+      7.44
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.22,
+      5.2578,
+      6.8178
+    ],
+    "is_rideable": false
+  },
+  "格兰种子": {
+    "name": "格兰种子",
+    "s_mean": 0.2043,
+    "s_min": 0.17,
+    "s_max": 0.24,
+    "w_mean": 1.6835,
+    "w_min": 1.226,
+    "w_max": 2.16,
+    "n": 570,
+    "theory_box_real": [
+      0.1333,
+      0.3562,
+      0.6731,
+      2.16
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.24,
+      1.3279,
+      2.0501
+    ],
+    "is_rideable": false
+  },
+  "梦游": {
+    "name": "梦游",
+    "s_mean": 0.2303,
+    "s_min": 0.21,
+    "s_max": 0.252,
+    "w_mean": 0.3596,
+    "w_min": 0.298,
+    "w_max": 0.42,
+    "n": 147,
+    "theory_box_real": [
+      0.1667,
+      0.375,
+      0.1154,
+      0.748
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.25,
+      0.312,
+      0.405
+    ],
+    "is_rideable": true
+  },
+  "棋棋": {
+    "name": "棋棋",
+    "s_mean": 0.1751,
+    "s_min": 0.15,
+    "s_max": 0.2,
+    "w_mean": 4.7746,
+    "w_min": 3.745,
+    "w_max": 5.799,
+    "n": 1033,
+    "theory_box_real": [
+      0.1167,
+      0.2937,
+      2.0577,
+      5.8
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.2,
+      3.9808,
+      5.5796
+    ],
+    "is_rideable": true
+  },
+  "毛头小蛛": {
+    "name": "毛头小蛛",
+    "s_mean": 0.1587,
+    "s_min": 0.13,
+    "s_max": 0.19,
+    "w_mean": 0.4841,
+    "w_min": 0.366,
+    "w_max": 0.601,
+    "n": 30,
+    "theory_box_real": [
+      0.1,
+      0.2812,
+      0.1827,
+      0.8
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.18,
+      0.3727,
+      0.5942
+    ],
+    "is_rideable": false
+  },
+  "毛毛": {
+    "name": "毛毛",
+    "s_mean": 0.1603,
+    "s_min": 0.13,
+    "s_max": 0.19,
+    "w_mean": 1.4264,
+    "w_min": 1.05,
+    "w_max": 1.8,
+    "n": 461,
+    "theory_box_real": [
+      0.1033,
+      0.2812,
+      0.5769,
+      1.8
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.19,
+      1.138,
+      1.719
+    ],
+    "is_rideable": true
+  },
+  "水滴蛇": {
+    "name": "水滴蛇",
+    "s_mean": 0.27,
+    "s_min": 0.26,
+    "s_max": 0.28,
+    "w_mean": 1.4845,
+    "w_min": 1.472,
+    "w_max": 1.497,
+    "n": 2,
+    "theory_box_real": [
+      0.1767,
+      0.4312,
+      0.4327,
+      1.64
+    ],
+    "empirical_box_real": [
+      0.26,
+      0.28,
+      1.472,
+      1.497
+    ],
+    "is_rideable": true
+  },
+  "水蓝蓝": {
+    "name": "水蓝蓝",
+    "s_mean": 0.2253,
+    "s_min": 0.2,
+    "s_max": 0.27,
+    "w_mean": 1.1663,
+    "w_min": 1.07,
+    "w_max": 1.326,
+    "n": 15,
+    "theory_box_real": [
+      0.0733,
+      0.15,
+      0.2233,
+      0.4892
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.25,
+      1.1,
+      1.268
+    ],
+    "is_rideable": true
+  },
+  "治愈兔": {
+    "name": "治愈兔",
+    "s_mean": 0.2899,
+    "s_min": 0.24,
+    "s_max": 0.34,
+    "w_mean": 4.9887,
+    "w_min": 4.2,
+    "w_max": 5.764,
+    "n": 1057,
+    "theory_box_real": [
+      0.19,
+      0.5125,
+      2.3135,
+      5.768
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.33,
+      4.3982,
+      5.5888
+    ],
+    "is_rideable": false
+  },
+  "波波螺": {
+    "name": "波波螺",
+    "s_mean": 0.1543,
+    "s_min": 0.14,
+    "s_max": 0.17,
+    "w_mean": 1.9699,
+    "w_min": 1.698,
+    "w_max": 2.26,
+    "n": 337,
+    "theory_box_real": [
+      0.1067,
+      0.2625,
+      0.9327,
+      2.26
+    ],
+    "empirical_box_real": [
+      0.14,
+      0.17,
+      1.7562,
+      2.1948
+    ],
+    "is_rideable": true
+  },
+  "海枝枝": {
+    "name": "海枝枝",
+    "s_mean": 0.3348,
+    "s_min": 0.32,
+    "s_max": 0.35,
+    "w_mean": 1.9728,
+    "w_min": 1.23,
+    "w_max": 2.728,
+    "n": 733,
+    "theory_box_real": [
+      0.25,
+      0.5312,
+      0.675,
+      2.728
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.35,
+      1.3876,
+      2.5696
+    ],
+    "is_rideable": false
+  },
+  "海盔虫": {
+    "name": "海盔虫",
+    "s_mean": 0.2599,
+    "s_min": 0.23,
+    "s_max": 0.29,
+    "w_mean": 3.014,
+    "w_min": 2.591,
+    "w_max": 3.438,
+    "n": 511,
+    "theory_box_real": [
+      0.1833,
+      0.4375,
+      1.4231,
+      3.44
+    ],
+    "empirical_box_real": [
+      0.23,
+      0.29,
+      2.691,
+      3.345
+    ],
+    "is_rideable": false
+  },
+  "海豹战士": {
+    "name": "海豹战士",
+    "s_mean": 0.3259,
+    "s_min": 0.27,
+    "s_max": 0.38,
+    "w_mean": 29.7596,
+    "w_min": 24.331,
+    "w_max": 35.04,
+    "n": 1418,
+    "theory_box_real": [
+      0.2133,
+      0.575,
+      13.3654,
+      35.04
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.37,
+      25.3777,
+      34.021
+    ],
+    "is_rideable": false
+  },
+  "火尾瓦特": {
+    "name": "火尾瓦特",
+    "s_mean": 0.3238,
+    "s_min": 0.27,
+    "s_max": 0.38,
+    "w_mean": 7.4528,
+    "w_min": 6.476,
+    "w_max": 8.48,
+    "n": 970,
+    "theory_box_real": [
+      0.2133,
+      0.575,
+      3.5577,
+      8.48
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.37,
+      6.6657,
+      8.2752
+    ],
+    "is_rideable": false
+  },
+  "火红尾": {
+    "name": "火红尾",
+    "s_mean": 0.5058,
+    "s_min": 0.4,
+    "s_max": 0.61,
+    "w_mean": 11.9976,
+    "w_min": 8.101,
+    "w_max": 15.919,
+    "n": 362,
+    "theory_box_real": [
+      0.24,
+      0.6125,
+      3.3654,
+      12.2
+    ],
+    "empirical_box_real": [
+      0.42,
+      0.58,
+      9.0995,
+      14.7564
+    ],
+    "is_rideable": false
+  },
+  "火花": {
+    "name": "火花",
+    "s_mean": 0.2752,
+    "s_min": 0.25,
+    "s_max": 0.29,
+    "w_mean": 3.206,
+    "w_min": 2.873,
+    "w_max": 3.4,
+    "n": 23,
+    "theory_box_real": [
+      0.0833,
+      0.1812,
+      0.5525,
+      1.36
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.29,
+      2.918,
+      3.399
+    ],
+    "is_rideable": true
+  },
+  "灵狐": {
+    "name": "灵狐",
+    "s_mean": 0.2849,
+    "s_min": 0.24,
+    "s_max": 0.33,
+    "w_mean": 3.073,
+    "w_min": 2.59,
+    "w_max": 3.56,
+    "n": 574,
+    "theory_box_real": [
+      0.1867,
+      0.5,
+      1.4231,
+      3.56
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.33,
+      2.6903,
+      3.4634
+    ],
+    "is_rideable": false
+  },
+  "甜田螺": {
+    "name": "甜田螺",
+    "s_mean": 0.2054,
+    "s_min": 0.17,
+    "s_max": 0.24,
+    "w_mean": 3.195,
+    "w_min": 2.625,
+    "w_max": 3.772,
+    "n": 590,
+    "theory_box_real": [
+      0.1367,
+      0.3625,
+      1.4423,
+      3.76
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.24,
+      2.7419,
+      3.6363
+    ],
+    "is_rideable": false
+  },
+  "电动长颈鹿": {
+    "name": "电动长颈鹿",
+    "s_mean": 0.3602,
+    "s_min": 0.3,
+    "s_max": 0.42,
+    "w_mean": 12.5819,
+    "w_min": 10.43,
+    "w_max": 14.726,
+    "n": 1298,
+    "theory_box_real": [
+      0.2333,
+      0.625,
+      5.7308,
+      14.72
+    ],
+    "empirical_box_real": [
+      0.31,
+      0.41,
+      10.8497,
+      14.2946
+    ],
+    "is_rideable": true
+  },
+  "电咩咩": {
+    "name": "电咩咩",
+    "s_mean": 0.2947,
+    "s_min": 0.25,
+    "s_max": 0.34,
+    "w_mean": 3.0718,
+    "w_min": 2.512,
+    "w_max": 3.641,
+    "n": 632,
+    "theory_box_real": [
+      0.1933,
+      0.5187,
+      1.3788,
+      3.64
+    ],
+    "empirical_box_real": [
+      0.26,
+      0.33,
+      2.6343,
+      3.5088
+    ],
+    "is_rideable": true
+  },
+  "画精灵": {
+    "name": "画精灵",
+    "s_mean": 0.1403,
+    "s_min": 0.12,
+    "s_max": 0.16,
+    "w_mean": 0.4784,
+    "w_min": 0.347,
+    "w_max": 0.608,
+    "n": 299,
+    "theory_box_real": [
+      0.0933,
+      0.2375,
+      0.1904,
+      0.884
+    ],
+    "empirical_box_real": [
+      0.12,
+      0.16,
+      0.3768,
+      0.5782
+    ],
+    "is_rideable": true
+  },
+  "白发懒人": {
+    "name": "白发懒人",
+    "s_mean": 0.3688,
+    "s_min": 0.31,
+    "s_max": 0.43,
+    "w_mean": 8.0885,
+    "w_min": 6.827,
+    "w_max": 9.395,
+    "n": 1080,
+    "theory_box_real": [
+      0.24,
+      0.6437,
+      3.75,
+      9.4
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.42,
+      7.0549,
+      9.0932
+    ],
+    "is_rideable": true
+  },
+  "矮脚爬爬": {
+    "name": "矮脚爬爬",
+    "s_mean": 0.1498,
+    "s_min": 0.12,
+    "s_max": 0.18,
+    "w_mean": 1.4161,
+    "w_min": 1.15,
+    "w_max": 1.684,
+    "n": 351,
+    "theory_box_real": [
+      0.0933,
+      0.275,
+      0.6346,
+      1.68
+    ],
+    "empirical_box_real": [
+      0.12,
+      0.18,
+      1.215,
+      1.616
+    ],
+    "is_rideable": true
+  },
+  "石石": {
+    "name": "石石",
+    "s_mean": 0.1804,
+    "s_min": 0.15,
+    "s_max": 0.21,
+    "w_mean": 25.7302,
+    "w_min": 21.33,
+    "w_max": 29.995,
+    "n": 1415,
+    "theory_box_real": [
+      0.1167,
+      0.3125,
+      11.7308,
+      30
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.21,
+      22.136,
+      29.2586
+    ],
+    "is_rideable": true
+  },
+  "石肤蜥": {
+    "name": "石肤蜥",
+    "s_mean": 0.2508,
+    "s_min": 0.21,
+    "s_max": 0.29,
+    "w_mean": 10.5194,
+    "w_min": 7.35,
+    "w_max": 13.599,
+    "n": 1259,
+    "theory_box_real": [
+      0.1633,
+      0.4375,
+      4.0385,
+      13.6
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.29,
+      7.9546,
+      12.9204
+    ],
+    "is_rideable": true
+  },
+  "矿晶虫": {
+    "name": "矿晶虫",
+    "s_mean": 0.2754,
+    "s_min": 0.23,
+    "s_max": 0.32,
+    "w_mean": 2.2762,
+    "w_min": 2.024,
+    "w_max": 2.52,
+    "n": 324,
+    "theory_box_real": [
+      0.18,
+      0.4813,
+      1.1154,
+      4.212
+    ],
+    "empirical_box_real": [
+      0.24,
+      0.31,
+      2.08,
+      2.4681
+    ],
+    "is_rideable": false
+  },
+  "空空颅": {
+    "name": "空空颅",
+    "s_mean": 0.2135,
+    "s_min": 0.18,
+    "s_max": 0.25,
+    "w_mean": 2.6815,
+    "w_min": 1.966,
+    "w_max": 3.462,
+    "n": 130,
+    "theory_box_real": [
+      0.14,
+      0.3812,
+      1.0769,
+      3.48
+    ],
+    "empirical_box_real": [
+      0.19,
+      0.24,
+      2.18,
+      3.2487
+    ],
+    "is_rideable": true
+  },
+  "粉星仔": {
+    "name": "粉星仔",
+    "s_mean": 0.1872,
+    "s_min": 0.17,
+    "s_max": 0.21,
+    "w_mean": 4.1744,
+    "w_min": 3.43,
+    "w_max": 5.12,
+    "n": 707,
+    "theory_box_real": [
+      0.13,
+      0.3125,
+      1.8846,
+      5.12
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.21,
+      3.6168,
+      4.784
+    ],
+    "is_rideable": true
+  },
+  "粉粉星": {
+    "name": "粉粉星",
+    "s_mean": 0.2653,
+    "s_min": 0.23,
+    "s_max": 0.32,
+    "w_mean": 0.9224,
+    "w_min": 0.739,
+    "w_max": 1.191,
+    "n": 264,
+    "theory_box_real": [
+      0.1767,
+      0.475,
+      0.4038,
+      1.2
+    ],
+    "empirical_box_real": [
+      0.23,
+      0.3,
+      0.7726,
+      1.0711
+    ],
+    "is_rideable": false
+  },
+  "绿翼鸟": {
+    "name": "绿翼鸟",
+    "s_mean": 0.2298,
+    "s_min": 0.21,
+    "s_max": 0.25,
+    "w_mean": 1.5866,
+    "w_min": 1.26,
+    "w_max": 1.919,
+    "n": 407,
+    "theory_box_real": [
+      0.1633,
+      0.3812,
+      0.6923,
+      1.92
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.25,
+      1.3322,
+      1.8438
+    ],
+    "is_rideable": false
+  },
+  "绿耳松鼠": {
+    "name": "绿耳松鼠",
+    "s_mean": 0.2398,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 1.8111,
+    "w_min": 1.22,
+    "w_max": 2.4,
+    "n": 677,
+    "theory_box_real": [
+      0.1567,
+      0.425,
+      0.6731,
+      2.4
+    ],
+    "empirical_box_real": [
+      0.2,
+      0.27,
+      1.3542,
+      2.269
+    ],
+    "is_rideable": false
+  },
+  "绿草精灵": {
+    "name": "绿草精灵",
+    "s_mean": 0.3684,
+    "s_min": 0.3,
+    "s_max": 0.42,
+    "w_mean": 3.7405,
+    "w_min": 3.263,
+    "w_max": 4.117,
+    "n": 143,
+    "theory_box_real": [
+      0.2367,
+      0.6312,
+      1.7885,
+      4.12
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.41,
+      3.404,
+      4.047
+    ],
+    "is_rideable": false
+  },
+  "缇塔": {
+    "name": "缇塔",
+    "s_mean": 0.2956,
+    "s_min": 0.28,
+    "s_max": 0.31,
+    "w_mean": 15.7946,
+    "w_min": 13.38,
+    "w_max": 18.076,
+    "n": 1304,
+    "theory_box_real": [
+      0.2167,
+      0.4688,
+      7.3462,
+      18.08
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.31,
+      13.8473,
+      17.6487
+    ],
+    "is_rideable": false
+  },
+  "翡翠水母": {
+    "name": "翡翠水母",
+    "s_mean": 0.2507,
+    "s_min": 0.21,
+    "s_max": 0.29,
+    "w_mean": 12.8994,
+    "w_min": 11.027,
+    "w_max": 14.711,
+    "n": 1196,
+    "theory_box_real": [
+      0.1633,
+      0.4375,
+      6.0577,
+      14.72
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.29,
+      11.4045,
+      14.3645
+    ],
+    "is_rideable": false
+  },
+  "胆小鳗鱼": {
+    "name": "胆小鳗鱼",
+    "s_mean": 0.3739,
+    "s_min": 0.31,
+    "s_max": 0.44,
+    "w_mean": 8.3923,
+    "w_min": 6.125,
+    "w_max": 10.737,
+    "n": 1246,
+    "theory_box_real": [
+      0.2467,
+      0.6687,
+      3.3654,
+      10.74
+    ],
+    "empirical_box_real": [
+      0.32,
+      0.43,
+      6.578,
+      10.24
+    ],
+    "is_rideable": false
+  },
+  "脆筒甜甜": {
+    "name": "脆筒甜甜",
+    "s_mean": 0.159,
+    "s_min": 0.15,
+    "s_max": 0.17,
+    "w_mean": 1.2173,
+    "w_min": 1.07,
+    "w_max": 1.436,
+    "n": 10,
+    "theory_box_real": [
+      0.1,
+      0.25,
+      0.3462,
+      1.52
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.17,
+      1.0799,
+      1.3945
+    ],
+    "is_rideable": false
+  },
+  "花怨鳗": {
+    "name": "花怨鳗",
+    "s_mean": 0.265,
+    "s_min": 0.25,
+    "s_max": 0.28,
+    "w_mean": 1.3066,
+    "w_min": 0.99,
+    "w_max": 1.612,
+    "n": 366,
+    "theory_box_real": [
+      0.1933,
+      0.425,
+      0.5577,
+      1.6
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.28,
+      1.068,
+      1.537
+    ],
+    "is_rideable": true
+  },
+  "草头鸭": {
+    "name": "草头鸭",
+    "s_mean": 0.253,
+    "s_min": 0.21,
+    "s_max": 0.3,
+    "w_mean": 2.1531,
+    "w_min": 1.716,
+    "w_max": 2.628,
+    "n": 549,
+    "theory_box_real": [
+      0.1667,
+      0.45,
+      0.9423,
+      2.628
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.29,
+      1.8018,
+      2.5174
+    ],
+    "is_rideable": false
+  },
+  "菇菇丁": {
+    "name": "菇菇丁",
+    "s_mean": 0.1296,
+    "s_min": 0.11,
+    "s_max": 0.15,
+    "w_mean": 0.4416,
+    "w_min": 0.38,
+    "w_max": 0.5,
+    "n": 137,
+    "theory_box_real": [
+      0.0833,
+      0.2187,
+      0.2115,
+      1.104
+    ],
+    "empirical_box_real": [
+      0.11,
+      0.15,
+      0.396,
+      0.487
+    ],
+    "is_rideable": true
+  },
+  "菊花梨": {
+    "name": "菊花梨",
+    "s_mean": 0.3199,
+    "s_min": 0.27,
+    "s_max": 0.37,
+    "w_mean": 1.8948,
+    "w_min": 1.471,
+    "w_max": 2.318,
+    "n": 529,
+    "theory_box_real": [
+      0.21,
+      0.5625,
+      0.8077,
+      2.32
+    ],
+    "empirical_box_real": [
+      0.28,
+      0.36,
+      1.5568,
+      2.2306
+    ],
+    "is_rideable": false
+  },
+  "蒲公英": {
+    "name": "蒲公英",
+    "s_mean": 0.1702,
+    "s_min": 0.13,
+    "s_max": 0.21,
+    "w_mean": 0.0775,
+    "w_min": 0.036,
+    "w_max": 0.12,
+    "n": 110,
+    "theory_box_real": [
+      0.1,
+      0.3125,
+      0.0192,
+      0.24
+    ],
+    "empirical_box_real": [
+      0.14,
+      0.2,
+      0.045,
+      0.1101
+    ],
+    "is_rideable": true
+  },
+  "螺旋帕帕": {
+    "name": "螺旋帕帕",
+    "s_mean": 0.1678,
+    "s_min": 0.15,
+    "s_max": 0.19,
+    "w_mean": 1.1872,
+    "w_min": 0.728,
+    "w_max": 1.739,
+    "n": 656,
+    "theory_box_real": [
+      0.1167,
+      0.2812,
+      0.4,
+      1.74
+    ],
+    "empirical_box_real": [
+      0.15,
+      0.19,
+      0.8045,
+      1.614
+    ],
+    "is_rideable": true
+  },
+  "裘洛": {
+    "name": "裘洛",
+    "s_mean": 0.38,
+    "s_min": 0.38,
+    "s_max": 0.38,
+    "w_mean": 4.2745,
+    "w_min": 4.252,
+    "w_max": 4.297,
+    "n": 2,
+    "theory_box_real": [
+      0.2333,
+      0.625,
+      1.4423,
+      5
+    ],
+    "empirical_box_real": [
+      0.38,
+      0.38,
+      4.252,
+      4.297
+    ],
+    "is_rideable": true
+  },
+  "记忆石": {
+    "name": "记忆石",
+    "s_mean": 0.4943,
+    "s_min": 0.41,
+    "s_max": 0.58,
+    "w_mean": 38.1402,
+    "w_min": 31.6,
+    "w_max": 44.786,
+    "n": 1470,
+    "theory_box_real": [
+      0.3233,
+      0.8687,
+      17.3462,
+      44.8
+    ],
+    "empirical_box_real": [
+      0.42,
+      0.57,
+      32.9198,
+      43.3383
+    ],
+    "is_rideable": true
+  },
+  "豆丁鱼": {
+    "name": "豆丁鱼",
+    "s_mean": 0.1548,
+    "s_min": 0.13,
+    "s_max": 0.18,
+    "w_mean": 0.5092,
+    "w_min": 0.42,
+    "w_max": 0.6,
+    "n": 213,
+    "theory_box_real": [
+      0.1033,
+      0.275,
+      0.2308,
+      1.36
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.18,
+      0.441,
+      0.579
+    ],
+    "is_rideable": true
+  },
+  "贝瑟": {
+    "name": "贝瑟",
+    "s_mean": 0.2859,
+    "s_min": 0.24,
+    "s_max": 0.34,
+    "w_mean": 11.014,
+    "w_min": 8.648,
+    "w_max": 13.711,
+    "n": 192,
+    "theory_box_real": [
+      0.19,
+      0.5125,
+      4.7115,
+      13.84
+    ],
+    "empirical_box_real": [
+      0.26,
+      0.31,
+      9.641,
+      12.104
+    ],
+    "is_rideable": true
+  },
+  "蹦蹦种子": {
+    "name": "蹦蹦种子",
+    "s_mean": 0.2394,
+    "s_min": 0.2,
+    "s_max": 0.28,
+    "w_mean": 1.8663,
+    "w_min": 1.507,
+    "w_max": 2.238,
+    "n": 470,
+    "theory_box_real": [
+      0.1533,
+      0.4188,
+      0.8269,
+      2.24
+    ],
+    "empirical_box_real": [
+      0.21,
+      0.271,
+      1.5838,
+      2.1521
+    ],
+    "is_rideable": true
+  },
+  "逗逗": {
+    "name": "逗逗",
+    "s_mean": 0.1502,
+    "s_min": 0.13,
+    "s_max": 0.171,
+    "w_mean": 0.2655,
+    "w_min": 0.21,
+    "w_max": 0.341,
+    "n": 133,
+    "theory_box_real": [
+      0.1,
+      0.25,
+      0.0865,
+      0.612
+    ],
+    "empirical_box_real": [
+      0.13,
+      0.17,
+      0.223,
+      0.309
+    ],
+    "is_rideable": true
+  },
+  "里拉鳐": {
+    "name": "里拉鳐",
+    "s_mean": 0.4309,
+    "s_min": 0.4,
+    "s_max": 0.46,
+    "w_mean": 16.7357,
+    "w_min": 13.529,
+    "w_max": 19.8,
+    "n": 1395,
+    "theory_box_real": [
+      0.3133,
+      0.6875,
+      7.4231,
+      19.8
+    ],
+    "empirical_box_real": [
+      0.4,
+      0.46,
+      14.1766,
+      19.267
+    ],
+    "is_rideable": false
+  },
+  "锤头鹳": {
+    "name": "锤头鹳",
+    "s_mean": 0.5542,
+    "s_min": 0.46,
+    "s_max": 0.65,
+    "w_mean": 22.1002,
+    "w_min": 17.963,
+    "w_max": 26.317,
+    "n": 1471,
+    "theory_box_real": [
+      0.3633,
+      0.975,
+      9.8654,
+      26.32
+    ],
+    "empirical_box_real": [
+      0.48,
+      0.64,
+      18.872,
+      25.491
+    ],
+    "is_rideable": false
+  },
+  "锥尾羊": {
+    "name": "锥尾羊",
+    "s_mean": 0.2897,
+    "s_min": 0.24,
+    "s_max": 0.34,
+    "w_mean": 5.6223,
+    "w_min": 4.656,
+    "w_max": 6.597,
+    "n": 1035,
+    "theory_box_real": [
+      0.19,
+      0.5062,
+      2.5577,
+      6.6
+    ],
+    "empirical_box_real": [
+      0.25,
+      0.33,
+      4.8608,
+      6.3996
+    ],
+    "is_rideable": true
+  },
+  "闪电环": {
+    "name": "闪电环",
+    "s_mean": 0.1726,
+    "s_min": 0.16,
+    "s_max": 0.19,
+    "w_mean": 1.0141,
+    "w_min": 0.827,
+    "w_max": 1.239,
+    "n": 326,
+    "theory_box_real": [
+      0.1233,
+      0.2875,
+      0.4615,
+      1.24
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.19,
+      0.8715,
+      1.1845
+    ],
+    "is_rideable": false
+  },
+  "阿米亚特": {
+    "name": "阿米亚特",
+    "s_mean": 0.2858,
+    "s_min": 0.24,
+    "s_max": 0.33,
+    "w_mean": 16.6257,
+    "w_min": 13.475,
+    "w_max": 19.68,
+    "n": 1458,
+    "theory_box_real": [
+      0.19,
+      0.4938,
+      7.4038,
+      19.68
+    ],
+    "empirical_box_real": [
+      0.24,
+      0.33,
+      14.0731,
+      19.0846
+    ],
+    "is_rideable": true
+  },
+  "雪娃娃": {
+    "name": "雪娃娃",
+    "s_mean": 0.1448,
+    "s_min": 0.12,
+    "s_max": 0.17,
+    "w_mean": 2.8215,
+    "w_min": 2.381,
+    "w_max": 3.261,
+    "n": 498,
+    "theory_box_real": [
+      0.0967,
+      0.2625,
+      1.3077,
+      3.264
+    ],
+    "empirical_box_real": [
+      0.12,
+      0.17,
+      2.4774,
+      3.1723
+    ],
+    "is_rideable": false
+  },
+  "雪绒鸟": {
+    "name": "雪绒鸟",
+    "s_mean": 0.1842,
+    "s_min": 0.16,
+    "s_max": 0.21,
+    "w_mean": 1.3717,
+    "w_min": 0.97,
+    "w_max": 1.8,
+    "n": 510,
+    "theory_box_real": [
+      0.1267,
+      0.3187,
+      0.5327,
+      1.8
+    ],
+    "empirical_box_real": [
+      0.16,
+      0.21,
+      1.0389,
+      1.7101
+    ],
+    "is_rideable": true
+  },
+  "雪豆丁": {
+    "name": "雪豆丁",
+    "s_mean": 0.4432,
+    "s_min": 0.37,
+    "s_max": 0.51,
+    "w_mean": 4.1986,
+    "w_min": 3.327,
+    "w_max": 5,
+    "n": 895,
+    "theory_box_real": [
+      0.2867,
+      0.7687,
+      1.8269,
+      5
+    ],
+    "empirical_box_real": [
+      0.38,
+      0.5,
+      3.5142,
+      4.8532
+    ],
+    "is_rideable": true
+  },
+  "风铃鲨": {
+    "name": "风铃鲨",
+    "s_mean": 0.2055,
+    "s_min": 0.17,
+    "s_max": 0.24,
+    "w_mean": 5.6606,
+    "w_min": 4.565,
+    "w_max": 6.856,
+    "n": 1048,
+    "theory_box_real": [
+      0.1367,
+      0.3687,
+      2.5135,
+      6.72
+    ],
+    "empirical_box_real": [
+      0.17,
+      0.24,
+      4.8004,
+      6.5109
+    ],
+    "is_rideable": true
+  },
+  "鸭吉吉": {
+    "name": "鸭吉吉",
+    "s_mean": 0.3371,
+    "s_min": 0.28,
+    "s_max": 0.41,
+    "w_mean": 6.1091,
+    "w_min": 5.111,
+    "w_max": 7.253,
+    "n": 1043,
+    "theory_box_real": [
+      0.2167,
+      0.5875,
+      2.8077,
+      7.04
+    ],
+    "empirical_box_real": [
+      0.29,
+      0.38,
+      5.3088,
+      6.8776
+    ],
+    "is_rideable": false
+  }
+}
