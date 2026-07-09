@@ -3691,8 +3691,8 @@ export default function App() {
                 <thead>
                   <tr className="bg-indigo-600 dark:bg-indigo-950/80 text-white select-none">
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[4%]">#</th>
-                    <th className="px-3 py-4 text-left text-xs font-extrabold tracking-wider w-[19%]">精灵</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[12%]">蛋窝状态</th>
+                    <th className="px-3 py-4 text-left text-xs font-extrabold tracking-wider w-[12%]">精灵</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[10%]">蛋窝状态</th>
                     <th
                       onClick={() => {
                         if (nestSortField !== "eggCount") {
@@ -3704,7 +3704,7 @@ export default function App() {
                           setNestSortField(null);
                         }
                       }}
-                      className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[9%] cursor-pointer hover:bg-indigo-700 select-none transition-colors"
+                      className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[7%] cursor-pointer hover:bg-indigo-700 select-none transition-colors"
                       title="点击切换现蛋排序：降序 -> 升序 -> 默认"
                     >
                       <div className="flex items-center justify-center gap-1">
@@ -3717,9 +3717,9 @@ export default function App() {
                       </div>
                     </th>
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[10%]">性格</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[11%]">牌子</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[11%]">蛋组</th>
-                    <th className="px-3 py-4 text-center text-xs font-extrabold tracking-wider w-[19%]">三维</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[9%]">牌子</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[12%]">蛋组</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold tracking-wider w-[31%]">三维</th>
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[5%] action-buttons">操作</th>
                   </tr>
                 </thead>
