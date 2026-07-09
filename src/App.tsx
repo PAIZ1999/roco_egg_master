@@ -2720,19 +2720,29 @@ export default function App() {
       clonedFooter.remove();
     }
 
-    // Exclude header configuration buttons and the control panel from the export image
-    const clonedWatermarkBtn = clone.querySelector("#header-watermark-btn");
-    if (clonedWatermarkBtn) {
-      clonedWatermarkBtn.remove();
-    }
-    const clonedExportBtn = clone.querySelector("#header-export-btn");
-    if (clonedExportBtn) {
-      clonedExportBtn.remove();
-    }
-    const clonedWatermarkPanel = clone.querySelector("#watermark-control-panel");
-    if (clonedWatermarkPanel) {
-      clonedWatermarkPanel.remove();
-    }
+    // Exclude header configuration buttons and control panels from the export image
+    const toRemoveSelectors = [
+      "#header-banner",
+      "#tab-navigation-bar",
+      "#nest-stats-panel",
+      "#filter-header-bar",
+      "#parents-header-bar",
+      "#parents-stats-table-container",
+      "#father-filter-bar",
+      "#mother-filter-bar",
+      "#pairing-filter-bar",
+      "#eggs-stats-panel",
+      "#eggs-header-bar",
+      "#header-watermark-btn",
+      "#header-export-btn",
+      "#watermark-control-panel"
+    ];
+    toRemoveSelectors.forEach(selector => {
+      const el = clone.querySelector(selector);
+      if (el) {
+        el.remove();
+      }
+    });
 
     // Replace the title of custom breeding nest center in long image export
     const clonedNestTitle = clone.querySelector("#nest-center-title");
@@ -3101,7 +3111,7 @@ export default function App() {
         className="max-w-[1400px] mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden"
       >
         {/* Banner Section */}
-        <div className="bg-slate-900 text-white p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 relative overflow-hidden">
+        <div id="header-banner" className="bg-slate-900 text-white p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 relative overflow-hidden">
           {/* Decorative background radial glow */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full filter blur-3xl pointer-events-none" />
 
@@ -3169,7 +3179,7 @@ export default function App() {
         </div>
 
         {/* Tab 导航切换 */}
-        <div className="bg-slate-900 border-t border-slate-800 px-3 sm:px-6 md:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 select-none relative z-30">
+        <div id="tab-navigation-bar" className="bg-slate-900 border-t border-slate-800 px-3 sm:px-6 md:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 select-none relative z-30">
           <div className="grid grid-cols-3 gap-1 w-full sm:flex sm:gap-4 sm:w-auto whitespace-nowrap shrink-0">
             <button
               onClick={() => setActiveTab("nest")}
@@ -3322,7 +3332,7 @@ export default function App() {
         {activeTab === "nest" && (
           <>
             {/* Real-time stats section */}
-            <div className="p-5 bg-slate-50/30 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800">
+            <div id="nest-stats-panel" className="p-5 bg-slate-50/30 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
                         {/* Card 1: 总收录 */}
             <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group">
@@ -3708,11 +3718,11 @@ export default function App() {
 
                       const petIs3V = isPet3V(pet);
                       let rowBgClass = "";
-                      // 严格隔行交替背景色，奇数白，偶数淡青灰蓝，与图二视觉呼应
-                      if (idx % 2 === 1) {
-                        rowBgClass = "bg-[#f0f7ff]/60 dark:bg-slate-900/40 hover:bg-indigo-50/30 dark:hover:bg-slate-800/60";
+                      // 严格隔行交替背景色，奇行 #F2F6F8，偶行 #ffffff，悬停 #DFE9EF
+                      if (idx % 2 === 0) {
+                        rowBgClass = "bg-[#F2F6F8] dark:bg-slate-900/40 hover:bg-[#DFE9EF] dark:hover:bg-slate-800/60";
                       } else {
-                        rowBgClass = "bg-white dark:bg-slate-950 hover:bg-indigo-50/20 dark:hover:bg-slate-800/40";
+                        rowBgClass = "bg-white dark:bg-slate-950 hover:bg-[#DFE9EF] dark:hover:bg-slate-800/40";
                       }
 
                       return (
@@ -4354,7 +4364,7 @@ export default function App() {
     {activeTab === "eggs" && (
       <div className="bg-slate-50/50 dark:bg-slate-950 p-4 sm:p-6 flex flex-col gap-6">
         {/* Statistics section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+        <div id="eggs-stats-panel" className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-3 sm:p-4 flex flex-col justify-between min-h-[80px] sm:min-h-[96px] relative overflow-hidden group select-none">
             <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-50 dark:bg-slate-800/50 rounded-full pointer-events-none" />
             <div className="flex items-center justify-between z-10">
@@ -4434,7 +4444,7 @@ export default function App() {
         </div>
 
         {/* Filters and Header inside center */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-4 p-5">
+        <div id="eggs-header-bar" className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-4 p-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
@@ -4659,7 +4669,7 @@ export default function App() {
     {activeTab === "parents" && (
       <div className="bg-slate-50/50 dark:bg-slate-950 p-4 sm:p-6 flex flex-col gap-6">
         {/* 父母本头部 */}
-        <div className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div id="parents-header-bar" className="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100/50 dark:border-indigo-900/50">
               <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
@@ -4687,7 +4697,7 @@ export default function App() {
             </button>
             <button
               onClick={() => handleReset("parents")}
-              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
+              className="px-3 py-2 text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-55 dark:hover:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-sm font-sans"
               title="清空当前所有父母本登记数据"
             >
               <RefreshCw className="w-4 h-4" />
@@ -4696,13 +4706,15 @@ export default function App() {
           </div>
         </div>
 
-        <WarehouseStatsTable
-          parents={parents}
-          activeGroup={fatherFilterGroup}
-          activeNature={fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : ""}
-          activeBrand={fatherFilterBrand}
-          onSelectGrid={handleSelectGrid}
-        />
+        <div id="parents-stats-table-container">
+          <WarehouseStatsTable
+            parents={parents}
+            activeGroup={fatherFilterGroup}
+            activeNature={fatherNatureSearch ? fatherNatureSearch.substring(0, 2) : ""}
+            activeBrand={fatherFilterBrand}
+            onSelectGrid={handleSelectGrid}
+          />
+        </div>
 
         {/* 左右分栏 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -4760,7 +4772,7 @@ export default function App() {
             </div>
 
             {/* 父本单独过滤栏 */}
-            <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+            <div id="father-filter-bar" className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
@@ -4882,10 +4894,10 @@ export default function App() {
                           const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
                           const stats = parent.stats || ["无", "无", "无"];
 
-                          // 隔行斑马线交替背景
-                          const rowBg = pIdx % 2 === 1 
-                            ? "bg-slate-50/50 dark:bg-slate-900/30 hover:bg-indigo-50/15 dark:hover:bg-slate-850/40" 
-                            : "bg-white dark:bg-slate-950 hover:bg-indigo-50/20 dark:hover:bg-slate-850/30";
+                          // 隔行斑马线交替背景：奇行 #F2F6F8，偶行 #ffffff，悬停 #DFE9EF
+                          const rowBg = pIdx % 2 === 0 
+                            ? "bg-[#F2F6F8] dark:bg-slate-900/30 hover:bg-[#DFE9EF] dark:hover:bg-slate-850/40" 
+                            : "bg-white dark:bg-slate-950 hover:bg-[#DFE9EF] dark:hover:bg-slate-850/30";
 
                           return (
                             <tr 
@@ -5096,7 +5108,7 @@ export default function App() {
             </div>
 
             {/* 母本单独过滤栏 */}
-            <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+            <div id="mother-filter-bar" className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
               <div className="relative flex-1 min-w-[120px] flex items-center shrink-0">
                 <Search className="absolute left-2.5 top-2 w-3.5 h-3.5 text-slate-400 dark:text-slate-500 z-10 pointer-events-none" />
                 <Autocomplete
@@ -5218,10 +5230,10 @@ export default function App() {
                           const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
                           const stats = parent.stats || ["无", "无", "无"];
 
-                          // 隔行斑马线交替背景
-                          const rowBg = pIdx % 2 === 1 
-                            ? "bg-slate-50/50 dark:bg-slate-900/30 hover:bg-pink-50/15 dark:hover:bg-slate-850/40" 
-                            : "bg-white dark:bg-slate-950 hover:bg-pink-50/20 dark:hover:bg-slate-850/30";
+                          // 隔行斑马线交替背景：奇行 #F2F6F8，偶行 #ffffff，悬停 #DFE9EF
+                          const rowBg = pIdx % 2 === 0 
+                            ? "bg-[#F2F6F8] dark:bg-slate-900/30 hover:bg-[#DFE9EF] dark:hover:bg-slate-850/40" 
+                            : "bg-white dark:bg-slate-950 hover:bg-[#DFE9EF] dark:hover:bg-slate-850/30";
 
                           return (
                             <tr 
@@ -5424,9 +5436,6 @@ export default function App() {
               return nameMatch && groupMatch && brandMatch && v3Match && natureMatch;
             });
 
-            // 已选中的配对：只从过滤后的配对中提取勾选的！
-            const selectedPairings = filteredPairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
-
             // 按子代精灵蛋 (eggSprite) 分组合并，以此实现同一进化链同样子的母本合并
             interface GroupedPairing {
               eggSprite: string;
@@ -5461,11 +5470,36 @@ export default function App() {
               });
             }
 
+            // 找出每一个 group 当前选择显示的配对（默认一个母本卡片只选中/导入当前选择显示的那个父本）
+            const activePairings = groupedPairings.map(group => {
+              const groupKey = group.eggSprite;
+              const activeIndex = activeFatherIndices[groupKey] || 0;
+              const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
+              return group.pairings[safeIdx];
+            }).filter(Boolean);
+
+            // 已选中的配对：只从当前显示的配对中提取未被排除的！
+            const selectedPairings = activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
+
             const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterNature;
+
+            const handleSelectAllPairings = () => {
+              setExcludedPairKeys(new Set());
+              showToast("已全选当前显示的繁育配对！", "success");
+            };
+
+            const handleUnselectAllPairings = () => {
+              const newSet = new Set<string>();
+              activePairings.forEach(pair => {
+                newSet.add(pair.father.id + "-" + pair.mother.id);
+              });
+              setExcludedPairKeys(newSet);
+              showToast("已清空选中当前显示的繁育配对！", "info");
+            };
 
             return (
               <>
-                {/* Header (一键导入联动) */}
+                {/* Header (一键导入与勾选控制) */}
                 <div className="p-4 bg-slate-900 dark:bg-slate-950/60 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none">
                   <div className="flex items-center gap-2.5">
                     <div className="p-1.5 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
@@ -5478,15 +5512,33 @@ export default function App() {
                       </p>
                     </div>
                   </div>
-                  {selectedPairings.length > 0 ? (
-                    <button
-                      onClick={() => handleImportPairingsToNest(selectedPairings)}
-                      className="px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-emerald-600/10 cursor-pointer flex items-center gap-1 shrink-0"
-                    >
-                      <Check className="w-3.5 h-3.5" />
-                      一键导入所选配对 ({selectedPairings.length} 组)
-                    </button>
-                  ) : null}
+                  <div className="flex items-center gap-2 flex-wrap shrink-0">
+                    {activePairings.length > 0 && (
+                      <>
+                        <button
+                          onClick={handleSelectAllPairings}
+                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg border border-slate-700 transition-all cursor-pointer"
+                        >
+                          全选
+                        </button>
+                        <button
+                          onClick={handleUnselectAllPairings}
+                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg border border-slate-700 transition-all cursor-pointer"
+                        >
+                          取消全选
+                        </button>
+                      </>
+                    )}
+                    {selectedPairings.length > 0 && (
+                      <button
+                        onClick={() => handleImportPairingsToNest(selectedPairings)}
+                        className="px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-emerald-600/10 cursor-pointer flex items-center gap-1 shrink-0"
+                      >
+                        <Check className="w-3.5 h-3.5" />
+                        一键导入所选配对 ({selectedPairings.length} 组)
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 <div className="p-5">
@@ -5501,7 +5553,7 @@ export default function App() {
                   ) : (
                     <>
                       {/* 筛选栏 */}
-                      <div className="mb-4 p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200/80 dark:border-slate-800 flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
+                      <div id="pairing-filter-bar" className="mb-4 p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200/80 dark:border-slate-800 flex gap-2 items-center overflow-x-auto no-scrollbar whitespace-nowrap">
                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">
                           <Filter className="w-3.5 h-3.5" />
                           筛选配对
