@@ -31,7 +31,15 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedPetDetails, setSearchedPetDetails] = useState<any>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [focusedSuggestionIdx, setFocusedSuggestionIdx] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // 1.7. 过滤联想项逻辑
+  const getFilteredSuggestions = () => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return [];
+    return ALL_PET_NAMES.filter(name => name.toLowerCase().includes(query)).slice(0, 5);
+  };
 
   // 点击外部自动关闭联想提示框
   useEffect(() => {
@@ -270,6 +278,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                     const val = e.target.value;
                     setSearchQuery(val);
                     setShowSuggestions(true);
+                    setFocusedSuggestionIdx(0); // 默认高亮第一项
                     const details = getPetDetails(val.trim());
                     if (details) {
                       setSearchedPetDetails(details);
@@ -277,8 +286,32 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                       setSearchedPetDetails(null);
                     }
                   }}
+                  onKeyDown={(e) => {
+                    const suggestions = getFilteredSuggestions();
+                    if (suggestions.length === 0) return;
+
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setFocusedSuggestionIdx(prev => (prev + 1) % suggestions.length);
+                    } else if (e.key === "ArrowUp") {
+                      e.preventDefault();
+                      setFocusedSuggestionIdx(prev => (prev - 1 + suggestions.length) % suggestions.length);
+                    } else if (e.key === "Enter") {
+                      e.preventDefault();
+                      const idx = focusedSuggestionIdx >= 0 && focusedSuggestionIdx < suggestions.length ? focusedSuggestionIdx : 0;
+                      const selectedName = suggestions[idx];
+                      if (selectedName) {
+                        setSearchQuery(selectedName);
+                        const details = getPetDetails(selectedName);
+                        setSearchedPetDetails(details);
+                        setShowSuggestions(false);
+                      }
+                    } else if (e.key === "Escape") {
+                      setShowSuggestions(false);
+                    }
+                  }}
                   placeholder="输入精灵名查蛋组..."
-                  className="w-full pl-8 pr-7 py-1 h-8 text-xs font-semibold rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-850 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-550 focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 transition-all shadow-3xs"
+                  className="w-full pl-8 pr-7 py-1 h-8 text-xs font-semibold rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-855 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-550 focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 transition-all shadow-3xs"
                 />
                 {searchQuery && (
                   <button
@@ -288,7 +321,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                     }}
                     className="absolute right-2 text-slate-400 hover:text-slate-650 dark:hover:text-slate-350 p-0.5 rounded cursor-pointer"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 )}
 
@@ -296,8 +329,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                 {showSuggestions && searchQuery.trim().length > 0 && (
                   <div className="absolute top-9 left-0 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-md max-h-48 overflow-y-auto z-40 py-1 divide-y divide-slate-50 dark:divide-slate-700/40">
                     {(() => {
-                      const query = searchQuery.trim().toLowerCase();
-                      const filtered = ALL_PET_NAMES.filter(name => name.toLowerCase().includes(query)).slice(0, 5);
+                      const filtered = getFilteredSuggestions();
                       if (filtered.length === 0) {
                         return (
                           <div className="px-3 py-2 text-[11px] text-slate-400 dark:text-slate-500 font-medium">
@@ -305,10 +337,11 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                           </div>
                         );
                       }
-                      return filtered.map(name => {
+                      return filtered.map((name, index) => {
                         const details = getPetDetails(name);
                         const spriteFile = getSpriteFileName(name);
                         const spriteUrl = spriteFile ? getImagePath(`images/sprites/${spriteFile}`) : null;
+                        const isFocused = index === focusedSuggestionIdx;
                         return (
                           <button
                             key={name}
@@ -317,9 +350,13 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                               setSearchedPetDetails(details);
                               setShowSuggestions(false);
                             }}
-                            className="w-full text-left px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-750 flex items-center gap-2 cursor-pointer transition-colors"
+                            className={`w-full text-left px-3 py-1.5 flex items-center gap-2 cursor-pointer transition-colors ${
+                              isFocused
+                                ? "bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-750 dark:text-indigo-300 border-l-2 border-l-indigo-500 font-bold"
+                                : "hover:bg-slate-50 dark:hover:bg-slate-750"
+                            }`}
                           >
-                            <div className="w-6 h-6 rounded bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 flex items-center justify-center overflow-hidden shrink-0">
+                            <div className="w-6 h-6 rounded bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 flex items-center justify-center overflow-hidden shrink-0">
                               {spriteUrl ? (
                                 <img src={spriteUrl} alt={name} className="w-[85%] h-[85%] object-contain" />
                               ) : (
@@ -327,7 +364,7 @@ export const WarehouseStatsTable: React.FC<WarehouseStatsTableProps> = ({
                               )}
                             </div>
                             <div className="flex flex-col min-w-0 leading-tight">
-                              <span className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">{name}</span>
+                              <span className="text-xs text-slate-800 dark:text-slate-100 truncate">{name}</span>
                               {details && details.groups && (
                                 <span className="text-[9px] text-indigo-400 dark:text-indigo-500 font-semibold truncate">
                                   {details.groups.join('/')}
