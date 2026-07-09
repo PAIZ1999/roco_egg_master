@@ -327,7 +327,7 @@ export default function App() {
   }, [motherViewMode]);
 
   const PARENT_PAGE_SIZE = 10;
-  const NEST_PAGE_SIZE = nestViewMode === "table" ? 50 : 9;
+  const NEST_PAGE_SIZE = nestViewMode === "table" ? 25 : 9;
 
   // Egg Modal Form states
   const [showEggModal, setShowEggModal] = useState(false);
@@ -348,10 +348,10 @@ export default function App() {
   const [pairingFilterGroup, setPairingFilterGroup] = useState("");
   const [pairingFilterBrand, setPairingFilterBrand] = useState("");
   const [pairingFilter3V, setPairingFilter3V] = useState(""); // "" | "3V" | "非3V"
-  const [pairingFilterSameNature, setPairingFilterSameNature] = useState(false);
+  const [pairingFilterSameNature, setPairingFilterSameNature] = useState(""); // 父母性格关系: "" | "same" | "diff" | "diff3V"
   const [pairingFilterNature, setPairingFilterNature] = useState(""); // 性格过滤
   const [activeFatherIndices, setActiveFatherIndices] = useState<Record<string, number>>({});
-  const [filterSameNature, setFilterSameNature] = useState(false); // 蛋窝父母同性格
+  const [filterSameNature, setFilterSameNature] = useState(""); // 蛋窝父母性格关系: "" | "same" | "diff" | "diff3V"
   const [isExporting, setIsExporting] = useState(false); // 是否正在导出长图
 
   // Egg trade form states
@@ -1982,7 +1982,7 @@ export default function App() {
       setFilterStatus("");
       setFilterLimit("");
       setFilter3V("");
-      setFilterSameNature(false);
+      setFilterSameNature("");
       showToast("已成功还原初始默认蛋窝与需求列表，且已重置筛选条件！", "success");
     } else if (resetTabTarget === "parents") {
       setParents([]);
@@ -2673,6 +2673,37 @@ export default function App() {
     const clonedDropdownArrows = clone.querySelectorAll(".dropdown-arrow");
     clonedDropdownArrows.forEach(el => el.remove());
 
+    // 3.5. Rearrange nest table columns to matches Image 2 (图二) export layout order:
+    // #, Sprite, Brand, Nature, Eggs count, Nest status, Groups, Stats
+    if (nestViewMode === "table") {
+      const tables = clone.querySelectorAll("table");
+      tables.forEach(table => {
+        // Only target nest table (identified by headers length or content, e.g. text containing "精灵" and "三维")
+        const thText = Array.from(table.querySelectorAll("th")).map(th => th.textContent || "");
+        if (thText.includes("精灵") && thText.includes("三维")) {
+          const rows = table.querySelectorAll("tr");
+          rows.forEach(row => {
+            const cells = Array.from(row.children) as HTMLElement[];
+            // At this point, action-buttons has been removed, so length should be 8
+            if (cells.length >= 8) {
+              // Current edit mode cells order in row:
+              // 0: #, 1: 精灵, 2: 蛋窝状态, 3: 现蛋, 4: 性格, 5: 牌子, 6: 蛋组, 7: 三维
+              // Target export mode order (Image 2):
+              // 0: #, 1: 精灵, 2: 牌子 (idx 5), 3: 性格 (idx 4), 4: 现蛋 (idx 3), 5: 蛋窝状态 (idx 2), 6: 蛋组 (idx 6), 7: 三维 (idx 7)
+              const targetOrder = [0, 1, 5, 4, 3, 2, 6, 7];
+              
+              row.innerHTML = "";
+              targetOrder.forEach(idx => {
+                if (cells[idx]) {
+                  row.appendChild(cells[idx]);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
     // 4. Remove the first <col> in <colgroup> and redistribute percentages perfectly for remaining 7 columns
     const clonedColGroup = clone.querySelector("colgroup");
     if (clonedColGroup) {
@@ -2890,13 +2921,22 @@ export default function App() {
     const matchBrand = filterBrand === "" || row.brand === filterBrand;
     const matchStatus = filterStatus === "" || row.status === filterStatus;
     const matchLimit = filterLimit === "" || row.isLimit === filterLimit;
-    const match3V = filter3V === "" || (filter3V === "是" ? isPet3V(row) : (filter3V === "否" ? !isPet3V(row) : true));
-    const matchSameNature = !filterSameNature || (
-      row.fatherNatures && row.motherNatures &&
-      row.fatherNatures.length > 0 && row.motherNatures.length > 0 &&
-      row.fatherNatures[0] && row.motherNatures[0] &&
-      row.fatherNatures[0] === row.motherNatures[0]
-    );
+    const is3V = isPet3V(row);
+    const match3V = filter3V === "" || (filter3V === "是" ? is3V : (filter3V === "否" ? !is3V : true));
+    
+    const fNature = row.fatherNatures?.[0] || "";
+    const mNature = row.motherNatures?.[0] || "";
+    const isSameN = !!fNature && !!mNature && fNature === mNature;
+    
+    let matchSameNature = true;
+    if (filterSameNature === "same") {
+      matchSameNature = isSameN;
+    } else if (filterSameNature === "diff") {
+      matchSameNature = !isSameN;
+    } else if (filterSameNature === "diff3V") {
+      matchSameNature = is3V && !isSameN;
+    }
+    
     return matchSprite && matchNature && matchGroup && matchBrand && matchStatus && matchLimit && match3V && matchSameNature;
   });
 
@@ -3526,16 +3566,17 @@ export default function App() {
                 <option value="否" className="dark:bg-slate-800">仅非3V蛋</option>
               </select>
 
-              {/* 父母同性格筛选 */}
-              <label className="text-xs font-bold py-1.5 px-3 rounded-lg border transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto select-none bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm">
-                <input
-                  type="checkbox"
-                  checked={filterSameNature}
-                  onChange={e => setFilterSameNature(e.target.checked)}
-                  className="w-4 h-4 rounded text-indigo-650 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 cursor-pointer"
-                />
-                <span>父母同性格</span>
-              </label>
+              {/* 父母性格关系筛选 */}
+              <select
+                value={filterSameNature}
+                onChange={e => setFilterSameNature(e.target.value)}
+                className="text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-full sm:w-auto"
+              >
+                <option value="" className="dark:bg-slate-800">全部(性格关系)</option>
+                <option value="same" className="dark:bg-slate-800">父母同性格</option>
+                <option value="diff" className="dark:bg-slate-800">父母不同性格</option>
+                <option value="diff3V" className="dark:bg-slate-800">仅非同性格3V</option>
+              </select>
 
               {/* Watermark toggle */}
               <label
@@ -3649,12 +3690,8 @@ export default function App() {
               <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-fixed">
                 <thead>
                   <tr className="bg-indigo-600 dark:bg-indigo-950/80 text-white select-none">
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[5%]">#</th>
-                    <th className="px-3 py-4 text-left text-xs font-extrabold tracking-wider w-[14%]">精灵</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[12%]">性格</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[13%]">蛋组</th>
-                    <th className="px-3 py-4 text-center text-xs font-extrabold tracking-wider w-[18%]">三维</th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[11%]">牌子</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[4%]">#</th>
+                    <th className="px-3 py-4 text-left text-xs font-extrabold tracking-wider w-[19%]">精灵</th>
                     <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[12%]">蛋窝状态</th>
                     <th
                       onClick={() => {
@@ -3679,7 +3716,11 @@ export default function App() {
                         )}
                       </div>
                     </th>
-                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[6%] action-buttons">操作</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[10%]">性格</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[11%]">牌子</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[11%]">蛋组</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold tracking-wider w-[19%]">三维</th>
+                    <th className="px-2 py-4 text-center text-xs font-extrabold tracking-wider w-[5%] action-buttons">操作</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
@@ -3730,9 +3771,11 @@ export default function App() {
                           key={pet.id}
                           className={`transition-colors duration-200 border-b border-slate-100/80 dark:border-slate-800/50 ${rowBgClass}`}
                         >
-                          <td className="px-2 py-3.5 text-center text-xs font-bold text-slate-400 dark:text-slate-500 font-mono align-middle">
+                          {/* 0. # */}
+                          <td className="px-2 py-3.5 text-center text-xs font-bold text-slate-400 dark:text-slate-550 font-mono align-middle">
                             {rowNum}
                           </td>
+                          {/* 1. 精灵 */}
                           <td className="px-3 py-3 align-middle">
                             <div className="flex items-center gap-2.5 text-left">
                               <div className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/65 dark:border-slate-800 flex items-center justify-center relative overflow-hidden shrink-0">
@@ -3750,55 +3793,7 @@ export default function App() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-2 py-3 text-center align-middle">
-                            {naturesEqual ? (
-                              <span className="text-[12.5px] font-bold text-slate-800 dark:text-slate-100">{getShortNature(fNat)}</span>
-                            ) : (
-                              <div className="inline-flex flex-col text-left text-[11px] leading-normal font-semibold mx-auto">
-                                <span className="text-slate-800 dark:text-slate-200"><span className="text-blue-500/70 mr-0.5 font-bold">♂</span>{getShortNature(fNat)}</span>
-                                <span className="text-slate-850 dark:text-slate-200"><span className="text-pink-500/70 mr-0.5 font-bold">♀</span>{getShortNature(mNat)}</span>
-                              </div>
-                            )}
-                          </td>
-                          <td className="px-2 py-3 text-center align-middle">
-                            <div className="flex flex-wrap gap-1 justify-center">
-                              {pet.groups.map(grp => (
-                                <span
-                                  key={grp}
-                                  className={`inline-block text-[10.5px] font-extrabold border rounded-full px-2.5 py-0.5 ${getEggGroupStyle(grp)}`}
-                                >
-                                  {grp}
-                                </span>
-                              ))}
-                            </div>
-                          </td>
-                          <td className="px-3 py-3 text-center align-middle">
-                            {pet.hideStats ? (
-                              <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500">已隐藏</span>
-                            ) : statsEqual ? (
-                              <span className="text-[12.5px] font-bold text-slate-800 dark:text-slate-100">{fStr}</span>
-                            ) : (
-                              <div className="inline-flex flex-col text-left text-[11px] leading-normal font-semibold mx-auto">
-                                <span className="text-slate-800 dark:text-slate-200"><span className="text-blue-500/70 mr-1 font-bold">♂</span>{fStr}</span>
-                                <span className="text-slate-850 dark:text-slate-200"><span className="text-pink-500/70 mr-1 font-bold">♀</span>{mStr}</span>
-                              </div>
-                            )}
-                          </td>
-                          <td className="px-2 py-3 text-center align-middle">
-                            <div className="relative inline-block w-full max-w-[85px] mx-auto">
-                              <select
-                                value={pet.brand}
-                                onChange={(e) => handleUpdateBrand(pet.id as string, e.target.value)}
-                                className={`appearance-none text-[11px] font-extrabold text-center border-0 rounded-full py-1 px-2.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-all shadow-3xs ${getBrandStyle(pet.brand)}`}
-                              >
-                                {BRAND_OPTIONS.map((opt) => (
-                                  <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">
-                                    {opt}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </td>
+                          {/* 2. 蛋窝状态 */}
                           <td className="px-2 py-3 text-center align-middle">
                             <div className="relative inline-block w-full max-w-[105px] mx-auto">
                               <select
@@ -3814,6 +3809,7 @@ export default function App() {
                               </select>
                             </div>
                           </td>
+                          {/* 3. 现蛋 */}
                           <td className="px-2 py-3 text-center align-middle">
                             {pet.status === "有现蛋" ? (
                               <div className="flex items-center justify-center gap-1 bg-amber-50/80 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 font-extrabold border border-amber-200/50 dark:border-amber-900/40 rounded-full pl-2.5 pr-1.5 py-0.5 w-[72px] mx-auto shadow-3xs group/egg">
@@ -3845,6 +3841,60 @@ export default function App() {
                               </div>
                             )}
                           </td>
+                          {/* 4. 性格 */}
+                          <td className="px-2 py-3 text-center align-middle">
+                            {naturesEqual ? (
+                              <span className="text-[12.5px] font-bold text-slate-800 dark:text-slate-100">{getShortNature(fNat)}</span>
+                            ) : (
+                              <div className="inline-flex flex-col text-left text-[11px] leading-normal font-semibold mx-auto">
+                                <span className="text-slate-800 dark:text-slate-200"><span className="text-blue-500/70 mr-0.5 font-bold">♂</span>{getShortNature(fNat)}</span>
+                                <span className="text-slate-850 dark:text-slate-200"><span className="text-pink-500/70 mr-0.5 font-bold">♀</span>{getShortNature(mNat)}</span>
+                              </div>
+                            )}
+                          </td>
+                          {/* 5. 牌子 */}
+                          <td className="px-2 py-3 text-center align-middle">
+                            <div className="relative inline-block w-full max-w-[85px] mx-auto">
+                              <select
+                                value={pet.brand}
+                                onChange={(e) => handleUpdateBrand(pet.id as string, e.target.value)}
+                                className={`appearance-none text-[11px] font-extrabold text-center border-0 rounded-full py-1 px-2.5 w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-950 transition-all shadow-3xs ${getBrandStyle(pet.brand)}`}
+                              >
+                                {BRAND_OPTIONS.map((opt) => (
+                                  <option key={opt} value={opt} className="dark:bg-slate-800 dark:text-slate-200">
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </td>
+                          {/* 6. 蛋组 */}
+                          <td className="px-2 py-3 text-center align-middle">
+                            <div className="flex flex-wrap gap-1 justify-center">
+                              {pet.groups.map(grp => (
+                                <span
+                                  key={grp}
+                                  className={`inline-block text-[10.5px] font-extrabold border rounded-full px-2.5 py-0.5 ${getEggGroupStyle(grp)}`}
+                                >
+                                  {grp}
+                                </span>
+                              ))}
+                            </div>
+                          </td>
+                          {/* 7. 三维 */}
+                          <td className="px-3 py-3 text-center align-middle">
+                            {pet.hideStats ? (
+                              <span className="text-[11px] font-bold text-slate-400 dark:text-slate-555 font-semibold">已隐藏</span>
+                            ) : statsEqual ? (
+                              <span className="text-[12.5px] font-bold text-slate-800 dark:text-slate-100">{fStr}</span>
+                            ) : (
+                              <div className="inline-flex flex-col text-left text-[11px] leading-normal font-semibold mx-auto">
+                                <span className="text-slate-800 dark:text-slate-200"><span className="text-blue-500/70 mr-1 font-bold">♂</span>{fStr}</span>
+                                <span className="text-slate-850 dark:text-slate-200"><span className="text-pink-500/70 mr-1 font-bold">♀</span>{mStr}</span>
+                              </div>
+                            )}
+                          </td>
+                          {/* 8. 操作 */}
                           <td className="px-2 py-3 text-center align-middle action-buttons">
                             <button
                               onClick={() => handleDeletePet(pet.id as string)}
@@ -5425,15 +5475,23 @@ export default function App() {
                 (pair.mother.nature && pair.mother.nature.includes(pairingFilterNature));
 
               let v3Match = true;
-              if (pairingFilter3V === "sameNature") {
-                v3Match = !!pair.father.nature && !!pair.mother.nature && pair.father.nature === pair.mother.nature;
-              } else if (pairingFilter3V === "3V") {
+              if (pairingFilter3V === "3V") {
                 v3Match = isStatsMatch;
               } else if (pairingFilter3V === "非3V") {
                 v3Match = !isStatsMatch;
               }
 
-              return nameMatch && groupMatch && brandMatch && v3Match && natureMatch;
+              const isSameN = !!pair.father.nature && !!pair.mother.nature && pair.father.nature === pair.mother.nature;
+              let sameNatureMatch = true;
+              if (pairingFilterSameNature === "same") {
+                sameNatureMatch = isSameN;
+              } else if (pairingFilterSameNature === "diff") {
+                sameNatureMatch = !isSameN;
+              } else if (pairingFilterSameNature === "diff3V") {
+                sameNatureMatch = isStatsMatch && !isSameN;
+              }
+
+              return nameMatch && groupMatch && brandMatch && v3Match && sameNatureMatch && natureMatch;
             });
 
             // 按子代精灵蛋 (eggSprite) 分组合并，以此实现同一进化链同样子的母本合并
@@ -5481,14 +5539,13 @@ export default function App() {
             // 已选中的配对：只从当前显示的配对中提取未被排除的！
             const selectedPairings = activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
 
-            const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterNature;
+            const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterSameNature || pairingFilterNature;
 
             const handleSelectAllPairings = () => {
               setExcludedPairKeys(new Set());
               showToast("已全选当前显示的繁育配对！", "success");
             };
-
-            const handleUnselectAllPairings = () => {
+const handleUnselectAllPairings = () => {
               const newSet = new Set<string>();
               activePairings.forEach(pair => {
                 newSet.add(pair.father.id + "-" + pair.mother.id);
@@ -5594,16 +5651,26 @@ export default function App() {
                             <option key={b} value={b} className="dark:bg-slate-900">{b}</option>
                           ))}
                         </select>
-                        {/* 3V/性格合并筛选 */}
+                        {/* 配对三围筛选 */}
                         <select
                           value={pairingFilter3V}
                           onChange={e => setPairingFilter3V(e.target.value)}
                           className="text-xs text-slate-700 dark:text-slate-355 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
                         >
-                          <option value="" className="dark:bg-slate-900">全部配对</option>
-                          <option value="sameNature" className="dark:bg-slate-900">双亲同性格</option>
+                          <option value="" className="dark:bg-slate-900">全部(3V)</option>
                           <option value="3V" className="dark:bg-slate-900">仅3V配对</option>
                           <option value="非3V" className="dark:bg-slate-900">仅非3V配对</option>
+                        </select>
+                        {/* 父母性格关系筛选 */}
+                        <select
+                          value={pairingFilterSameNature}
+                          onChange={e => setPairingFilterSameNature(e.target.value)}
+                          className="text-xs text-slate-700 dark:text-slate-355 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 h-8 focus:outline-none focus:border-indigo-400 cursor-pointer font-medium hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors w-auto shrink-0 whitespace-nowrap"
+                        >
+                          <option value="" className="dark:bg-slate-900">全部(性格关系)</option>
+                          <option value="same" className="dark:bg-slate-900">双亲同性格</option>
+                          <option value="diff" className="dark:bg-slate-900">双亲不同性格</option>
+                          <option value="diff3V" className="dark:bg-slate-900">仅非同性格3V</option>
                         </select>
                         {/* 性格筛选 */}
                         <select
@@ -5628,6 +5695,7 @@ export default function App() {
                                 setPairingFilterGroup("");
                                 setPairingFilterBrand("");
                                 setPairingFilter3V("");
+                                setPairingFilterSameNature("");
                                 setPairingFilterNature("");
                               }}
                               className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-bold transition-colors cursor-pointer px-2 py-1 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded-lg border border-indigo-100 dark:border-indigo-900/55"

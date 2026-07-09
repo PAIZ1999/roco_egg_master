@@ -1,66 +1,29 @@
-# Notes: 智能配对、长图导出与浅色主题表格颜色优化
+# Notes: 智能配对、长图导出与父母统计功能二次优化
 
-## 1. 浅色主题表格颜色修改
-根据用户要求：
-- 偶数行（1-indexed 的第偶数行，React 中 `index % 2 === 1`）：`#ffffff` (bg-white)
-- 奇数行（1-indexed 的第奇数行，React 中 `index % 2 === 0`）：`#F2F6F8` (bg-[#F2F6F8])
-- 悬停：`#DFE9EF` (hover:bg-[#DFE9EF])
+## 1. 3V 与同性格解耦筛选
+配对中心与蛋窝中心原先将 3V 筛选和同性格匹配塞进同一个下拉框中，现在完全分开，支持交叉过滤：
+- **3V 筛选**：`全部`、`仅3V`、`仅非3V`
+- **性格关系筛选**：`全部`、`父母同性格`、`父母不同性格`、`仅非同性格3V`（即三围匹配相同但性格不同）
+- 修改状态为 string 以支持更细的选项逻辑。
 
-需要修改的文件和行：
-- `src/App.tsx` 3710 行（蛋窝表格模式行背景色）
-- `src/App.tsx` 4886 行（父本表格模式行背景色）
-- `src/App.tsx` 5222 行（母本表格模式行背景色）
+## 2. 蛋窝表格每页条数调整
+- 表格模式每页蛋窝数量限制 `NEST_PAGE_SIZE` 从原先的 50 调整为 25。
 
-## 2. 智能配对中心一键导入与选择逻辑优化
-当前同一个母本的卡片（通过蛋品种 `eggSprite` 分组），有多个配对（`pairings`）。默认情况下，一键导入会把所有未排出的配对全部导入。
-优化方案：
-- 将配对选择池从 `filteredPairings` 缩减为只取当前显示的配对 `activePairings`。
-- 对于每个 `groupedPairing`，当前显示的配对是 `group.pairings[safeIdx]`，其中 `safeIdx` 是当前 Chevron 切换索引。
-- 一键导入按钮和 `selectedPairings` 统计只联动 `activePairings`：
-  ```typescript
-  const activePairings = groupedPairings.map(group => {
-    const groupKey = group.eggSprite;
-    const activeIndex = activeFatherIndices[groupKey] || 0;
-    const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
-    return group.pairings[safeIdx];
-  }).filter(Boolean);
-  
-  const selectedPairings = activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
-  ```
-- 顶部的“一键导入所选配对”按钮仅导入 `selectedPairings`。
-- 添加“全选”与“取消全选”按钮：
-  - “全选”：把 `excludedPairKeys` 清空。
-  - “取消全选”：把当前 `activePairings` 的配对键都放进 `excludedPairKeys` 集中。
+## 3. 表格列顺序与列宽优化 (图一 vs 图二)
+为了平衡视觉，缩窄了性格列（10%）和三维列（19%），并将精灵列宽度拉伸到 19% 以容纳更多精灵信息。
+- **编辑时的顺序 (图一)**:
+  `#` -> `精灵` -> `蛋窝状态` -> `现蛋` -> `性格` -> `牌子` -> `蛋组` -> `三维` -> `操作`
+- **导出的顺序 (图二)**:
+  在克隆 DOM 生成图片时，如果为表格模式，自动执行列重新排列：
+  `#` -> `精灵` -> `牌子` -> `性格` -> `现蛋` -> `蛋窝状态` -> `蛋组` -> `三维`
+  (物理移除了操作列)
+- **重排原理**: 克隆出的 row 抓取 cells 子节点重新以 `[0, 1, 5, 4, 3, 2, 6, 7]` 索引顺序排列，原 `<th>` 的宽度自动随之生效。
 
-## 3. 长图导出只保留核心内容
-长图导出原有逻辑克隆了 `#export-container`。为了只保留表格或卡片主体内容，不导出顶部的头部和统计区域，可以通过克隆后操作 DOM 节点的 `.remove()` 干净地移除它们：
-- 给 `Banner Section` 添加 `id="header-banner"`
-- 给 `Tab 切换导航栏` 添加 `id="tab-navigation-bar"`
-- 给 `蛋窝 Tab` 的实时数据统计面板添加 `id="nest-stats-panel"`
-- 给 `父母本 Tab` 的头部操作栏添加 `id="parents-header-bar"`
-- 给 `父母本 Tab` 的 `WarehouseStatsTable` 外部容器添加 `id="parents-stats-table-container"`
-- 给 `父本单独过滤栏` 添加 `id="father-filter-bar"`
-- 给 `母本单独过滤栏` 添加 `id="mother-filter-bar"`
-- 给 `配对筛选栏` 添加 `id="pairing-filter-bar"`
-- 给 `精灵蛋 Tab` 的实时统计面板添加 `id="eggs-stats-panel"`
-- 给 `精灵蛋 Tab` 的头部和筛选栏添加 `id="eggs-header-bar"`
-- 在 `handleExportLongImage` 里一并移除：
-  ```typescript
-  const toRemoveSelectors = [
-    "#header-banner",
-    "#tab-navigation-bar",
-    "#nest-stats-panel",
-    "#filter-header-bar",
-    "#parents-header-bar",
-    "#parents-stats-table-container",
-    "#father-filter-bar",
-    "#mother-filter-bar",
-    "#pairing-filter-bar",
-    "#eggs-stats-panel",
-    "#eggs-header-bar"
-  ];
-  toRemoveSelectors.forEach(selector => {
-    const el = clone.querySelector(selector);
-    if (el) el.remove();
-  });
-  ```
+## 4. 父母本统计大表 (WarehouseStatsTable) 增强
+- **蛋组精灵查询**：
+  - 在大粗/大婉切换区右侧，增加一个带有智能联想联想词 Autocomplete 下拉推荐的精灵输入框。
+  - 输入名字，选中后获取该精灵的蛋组信息与大头像，渲染在顶部详情大卡片中。
+  - 左上角的表头单元格在有查询精灵时展示“🔍 查: 精灵名”。
+  - **蛋组列高亮**：若查询出的精灵包含两个蛋组，全览表中对应的这两个蛋组列会以金色聚光灯框（琥珀色边框与淡光背景色）高亮。
+- **只看种公**：
+  - 新增“只看种公”复选框，勾选后，`parents` 数据统计过滤只录入性别为 `♂` 的种公，彻底规避并隐藏母本只数，格子只高亮呈现有种公（蓝色）及暂无状态。
