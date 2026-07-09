@@ -595,7 +595,7 @@ interface Message {
   data?: any;
 }
 
-export function MerchantFloatWidget() {
+export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -608,6 +608,18 @@ export function MerchantFloatWidget() {
   const [inputText, setInputText] = useState("");
   const [isMerchantActive, setIsMerchantActive] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 仅在独立窗口模式下，动态通知 Electron 缩放窗口大小，防止折叠时遮挡桌面其他区域
+  useEffect(() => {
+    if (isStandalone && window.electronAPI && window.electronAPI.resizeFloatWindow) {
+      if (isOpen) {
+        window.electronAPI.resizeFloatWindow({ width: 420, height: 600 });
+      } else {
+        window.electronAPI.resizeFloatWindow({ width: 70, height: 75 });
+      }
+    }
+  }, [isOpen, isStandalone]);
 
   // 定期轮询检查行商是否营业以点亮红点
   const checkMerchantStatus = async () => {
@@ -741,14 +753,43 @@ export function MerchantFloatWidget() {
     }
   };
 
+  // 单双击事件分流
+  const handleFloatClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (clickTimerRef.current) {
+      // 250ms 内的第二次点击，判定为双击
+      clearTimeout(clickTimerRef.current);
+      clickTimerRef.current = null;
+      if (window.electronAPI && window.electronAPI.showMainWindow) {
+        window.electronAPI.showMainWindow();
+      }
+    } else {
+      // 单击：设置定时器延迟执行
+      clickTimerRef.current = setTimeout(() => {
+        clickTimerRef.current = null;
+        setIsOpen(true);
+      }, 220);
+    }
+  };
+
   return (
-    <div className="fixed right-4 bottom-24 z-50 flex items-end justify-end select-none">
-      {/* 悬浮图标 (折叠态：喵喵桌面宠物形象) */}
+    <div className={`${isStandalone ? "w-full h-full p-2" : "fixed right-4 bottom-24 z-50"} flex items-end justify-end select-none`}>
+      <style>{`
+        @keyframes myowFloat {
+          0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+          50% { transform: translateY(-4px) scale(1.03) rotate(0.8deg); }
+        }
+        .animate-myow-float {
+          animation: myowFloat 3s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* 悬浮图标 (折叠态：具有呼吸漂动特效的喵喵桌面宠物) */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
-          className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-slate-900 to-indigo-950 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border border-indigo-500/30 group p-1"
-          title="点击召唤智能助宠喵喵"
+          onClick={handleFloatClick}
+          className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-slate-900/90 to-indigo-950/90 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border border-indigo-500/30 group p-1 animate-myow-float"
+          title="单击与喵喵聊天，双击打开软件主界面"
         >
           <img
             src={getImagePath("images/sprites/喵喵.png")}
@@ -759,20 +800,22 @@ export function MerchantFloatWidget() {
             }}
           />
           {isMerchantActive && (
-            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-500 rounded-full border border-white flex items-center justify-center animate-bounce shadow">
+            <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-500 rounded-full border border-white flex items-center justify-center animate-bounce shadow">
               <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
             </span>
           )}
           {/* 悬浮气泡提示 */}
-          <span className="absolute right-16 scale-0 group-hover:scale-100 bg-slate-900/90 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-slate-700 transition-all">
-            🐱 喵喵智能助手在线！
-          </span>
+          {!isStandalone && (
+            <span className="absolute right-16 scale-0 group-hover:scale-100 bg-slate-900/90 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-slate-700 transition-all">
+              🐱 喵喵智能助手在线！
+            </span>
+          )}
         </button>
       )}
 
       {/* 聊天室 (展开态) */}
       {isOpen && (
-        <div className="w-[370px] sm:w-[410px] h-[550px] flex flex-col bg-slate-900/95 dark:bg-slate-950/98 backdrop-blur-xl border border-slate-700/80 dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right">
+        <div className="w-[370px] sm:w-[400px] h-[540px] flex flex-col bg-slate-900/95 dark:bg-slate-950/98 backdrop-blur-xl border border-slate-700/80 dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right">
           {/* 聊天头部 */}
           <div className="px-4 py-3 bg-gradient-to-r from-indigo-900/40 to-slate-900/20 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">

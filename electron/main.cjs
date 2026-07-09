@@ -4,6 +4,7 @@ const fs = require('fs');
 const { exec, spawn } = require('child_process');
 
 let mainWindow;
+let floatWindow = null;
 let customSaveDir = null;
 let rememberCloseChoice = null; // null | 'tray' | 'exit'
 let tray = null;
@@ -155,27 +156,53 @@ function stopRocoHelper() {
 function createTray() {
   const iconPath = path.join(__dirname, 'icon.png');
   tray = new Tray(iconPath);
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: '显示主界面',
-      click: () => {
-        if (mainWindow) {
-          mainWindow.show();
-          mainWindow.focus();
+  
+  const updateMenu = () => {
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: '显示主界面',
+        click: () => {
+          if (mainWindow) {
+            mainWindow.show();
+            mainWindow.focus();
+          }
+        }
+      },
+      {
+        label: '显示桌面宠物',
+        type: 'checkbox',
+        checked: floatWindow ? floatWindow.isVisible() : false,
+        click: (menuItem) => {
+          if (floatWindow) {
+            if (menuItem.checked) {
+              floatWindow.show();
+            } else {
+              floatWindow.hide();
+            }
+          } else if (menuItem.checked) {
+            createFloatWindow();
+          }
+        }
+      },
+      { type: 'separator' },
+      {
+        label: '退出软件',
+        click: () => {
+          isQuitting = true;
+          app.quit();
         }
       }
-    },
-    { type: 'separator' },
-    {
-      label: '退出软件',
-      click: () => {
-        isQuitting = true;
-        app.quit();
-      }
-    }
-  ]);
+    ]);
+    tray.setContextMenu(contextMenu);
+  };
+
+  updateMenu();
   tray.setToolTip('洛克王国孵蛋数据管理系统');
-  tray.setContextMenu(contextMenu);
+
+  // 当悬浮窗显示/隐藏时由渲染进程通知更新菜单勾选状态
+  ipcMain.on('update-tray-menu', () => {
+    updateMenu();
+  });
 
   // 双击托盘图标显示主界面
   tray.on('double-click', () => {
@@ -263,6 +290,63 @@ function createWindow() {
     mainWindow = null;
   });
 }
+
+function createFloatWindow() {
+  const { screen } = require('electron');
+  const display = screen.getPrimaryDisplay();
+  const { width, height } = display.workAreaSize;
+  
+  floatWindow = new BrowserWindow({
+    width: 70, // 初始紧凑猫头尺寸
+    height: 75,
+    x: width - 90, // 靠最右下角对齐
+    y: height - 100,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    resizable: false,
+    skipTaskbar: true,
+    show: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.cjs'),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  });
+
+  if (app.isPackaged) {
+    floatWindow.loadFile(path.join(__dirname, '../dist/index.html'), { hash: 'float' });
+  } else {
+    floatWindow.loadURL('http://localhost:3000/#float');
+  }
+
+  floatWindow.on('closed', () => {
+    floatWindow = null;
+  });
+}
+
+// 接收双击桌宠时呼出主界面的指令
+ipcMain.on('show-main-window', () => {
+  if (mainWindow) {
+    mainWindow.show();
+    mainWindow.focus();
+  }
+});
+
+// 接收折叠/展开桌宠改变窗口大小的指令，并保持右下角定位不动
+ipcMain.on('resize-float-window', (event, { width, height }) => {
+  if (floatWindow) {
+    const { screen } = require('electron');
+    const display = screen.getPrimaryDisplay();
+    const { width: screenWidth, height: screenHeight } = display.workAreaSize;
+    
+    // 对齐最右下角（右边距 20px，底边距 25px）
+    const x = screenWidth - width - 20;
+    const y = screenHeight - height - 25;
+    
+    floatWindow.setBounds({ x, y, width, height }, true);
+  }
+});
 
 // 自动保存的数据路径判定
 function getDataFilePath() {
@@ -808,6 +892,7 @@ app.whenReady().then(async () => {
   startRocoHelper(); // 启动时在后台静默隐藏拉起 roco_helper-v3.2.2.exe
   createTray();      // 物理构造系统托盘
   createWindow();
+  createFloatWindow(); // 创建独立桌面宠物悬浮窗
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

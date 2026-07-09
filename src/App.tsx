@@ -3202,6 +3202,15 @@ export default function App() {
     return pages;
   };
 
+  const isFloatWindow = window.location.hash.includes("float");
+  if (isFloatWindow) {
+    return (
+      <div className="w-screen h-screen bg-transparent overflow-hidden flex items-end justify-end p-2 select-none">
+        <MerchantFloatWidget />
+      </div>
+    );
+  }
+
   return (
     <div
       className="bg-slate-50 dark:bg-slate-950 min-h-screen py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white"
@@ -7114,7 +7123,7 @@ const handleUnselectAllPairings = () => {
           showToast(`成功导入 ${newParents.length} 只精灵到父母本仓储！`, "success");
         }}
       />
-      <MerchantFloatWidget />
+      {!isFloatWindow && <MerchantFloatWidget />}
     </div>
     </div>
   );

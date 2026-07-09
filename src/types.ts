@@ -203,6 +203,8 @@ declare global {
       httpGet?: (url: string) => Promise<{ success: boolean; data?: any; error?: string; raw?: string }>;
       getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: number; name: string }>; error?: string }>;
       getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: number; data: any }>; error?: string }>;
+      showMainWindow?: () => void;
+      resizeFloatWindow?: (size: { width: number; height: number }) => void;
     };
   }
 }

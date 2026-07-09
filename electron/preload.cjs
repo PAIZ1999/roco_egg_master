@@ -7,5 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectSavePath: (currentData) => ipcRenderer.invoke('select-save-path', currentData),
   httpGet: (url) => ipcRenderer.invoke('http-get', url),
   getRocoUsers: () => ipcRenderer.invoke('get-roco-users'),
-  getRocoPets: (uid) => ipcRenderer.invoke('get-roco-pets', uid)
+  getRocoPets: (uid) => ipcRenderer.invoke('get-roco-pets', uid),
+  showMainWindow: () => ipcRenderer.send('show-main-window'),
+  resizeFloatWindow: (size) => ipcRenderer.send('resize-float-window', size)
 });
