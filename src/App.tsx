@@ -1140,7 +1140,16 @@ export default function App() {
   }, []);
 
   const handleUpdateStatus = useCallback((id: string, status: string) => {
-    setPets(prev => prev.map(p => p.id === id ? { ...p, status } : p));
+    setPets(prev => prev.map(p => {
+      if (p.id === id) {
+        // 卡片与表格切换为有现蛋时，默认蛋数量为 0
+        if (status === "有现蛋") {
+          return { ...p, status, eggCount: "0" };
+        }
+        return { ...p, status };
+      }
+      return p;
+    }));
   }, []);
 
   const handleUpdateLimit = useCallback((id: string, limit: string) => {
@@ -1152,8 +1161,63 @@ export default function App() {
   }, []);
 
   const handleUpdateEggCount = useCallback((id: string, count: string) => {
-    setPets(prev => prev.map(p => p.id === id ? { ...p, eggCount: count } : p));
-  }, []);
+    setPets(prevPets => {
+      const pet = prevPets.find(p => p.id === id);
+      if (!pet) return prevPets;
+
+      const oldVal = parseInt(pet.eggCount || "0", 10);
+      const newVal = Math.max(0, parseInt(count || "0", 10));
+
+      if (oldVal === newVal) return prevPets;
+
+      // 现蛋数减到 0 时，自动改为 "正在孵，可预约" 状态
+      const targetStatus = newVal === 0 ? "正在孵，可预约" : pet.status;
+
+      // 现蛋数量与蛋管理中心联动
+      setEggs(prevEggs => {
+        if (newVal > oldVal) {
+          const diff = newVal - oldVal;
+          const lowestName = getLowestStageName(pet.sprite);
+          const now = new Date();
+          const offset = now.getTimezoneOffset() * 60000;
+          const localISODate = (new Date(now.getTime() - offset)).toISOString().slice(0, 10);
+
+          const newEggsList: EggData[] = [];
+          for (let i = 0; i < diff; i++) {
+            newEggsList.push({
+              id: `egg-${Date.now()}-${Math.random().toString(36).substr(2, 5)}-${i}`,
+              sprite: lowestName,
+              fatherNature: pet.fatherNatures?.[0] || "",
+              motherNature: pet.motherNatures?.[0] || "",
+              fatherStats: pet.fatherStats && pet.fatherStats.length > 0 ? [...pet.fatherStats] : ["生命", "物攻", "速度"],
+              motherStats: pet.motherStats && pet.motherStats.length > 0 ? [...pet.motherStats] : ["生命", "物攻", "速度"],
+              brand: pet.brand,
+              eggSize: "",
+              eggWeight: "",
+              produceTime: localISODate,
+              fromNestId: pet.id
+            });
+          }
+          return [...newEggsList, ...prevEggs];
+        } else {
+          const diff = oldVal - newVal;
+          let deletedCount = 0;
+          const nextEggs: EggData[] = [];
+          // 从最新创建的（排在前面的蛋）开始删除最多 diff 个该蛋窝出产的蛋
+          for (const egg of prevEggs) {
+            if (egg.fromNestId === id && deletedCount < diff) {
+              deletedCount++;
+              continue;
+            }
+            nextEggs.push(egg);
+          }
+          return nextEggs;
+        }
+      });
+
+      return prevPets.map(p => p.id === id ? { ...p, eggCount: newVal.toString(), status: targetStatus } : p);
+    });
+  }, [setEggs]);
 
   const handleUpdateParentName = useCallback((id: string, parent: "father" | "mother", name: string) => {
     setPets(prev => prev.map(p => {
@@ -3818,7 +3882,7 @@ export default function App() {
                                   min="0"
                                   value={pet.eggCount || "0"}
                                   onChange={(e) => handleUpdateEggCount(pet.id as string, e.target.value)}
-                                  className="w-7 bg-transparent text-center text-sm font-black border-0 p-0 focus:ring-0 focus:outline-none text-amber-800 dark:text-amber-200"
+                                  className="w-7 bg-transparent text-center text-sm font-black border-0 p-0 focus:ring-0 focus:outline-none text-amber-800 dark:text-amber-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                 />
                                 <div className="flex flex-col gap-0.5 shrink-0 select-none text-[8px] font-bold text-amber-500/70 hover:text-amber-700">
                                   <button
