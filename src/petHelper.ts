@@ -1,5 +1,6 @@
 import petsData from "./pets_data.json";
 import spriteFiles from "./sprite_files.json";
+import petsRaceData from "./pets_race_data.json";
 import { EggData } from "./types";
 
 // 深拷贝以纠正原始 JSON 中错误录入的小数点放大及蛋组信息 (如月亮砣 ID 238)
@@ -15,6 +16,67 @@ if (ylt && ylt.egg_data) {
   }
 }
 
+// 种族值 Map 用于装载形态
+const petsRaceMap: Record<string, any> = {};
+petsRaceData.forEach((item: any) => {
+  if (item.name) {
+    petsRaceMap[item.name.trim()] = item;
+  }
+});
+
+// 装载从 pets_race_data.json 中提取出的多形态/变体形态进入 cleanedPetsData
+const allRaceKeys = Object.keys(petsRaceMap);
+let tempIdCounter = 10000;
+for (const formName of allRaceKeys) {
+  if (formName.includes('（') || formName.includes('(')) {
+    const mainName = formName.split(/[（(]/)[0].trim();
+    
+    let parentPet = cleanedPetsData.find((p: any) => p.name === mainName);
+    let baseForm: any = null;
+    
+    if (!parentPet) {
+      parentPet = cleanedPetsData.find((p: any) => p.forms && p.forms.some((f: any) => f.name === mainName));
+      if (parentPet) {
+        baseForm = parentPet.forms.find((f: any) => f.name === mainName);
+      }
+    } else {
+      baseForm = parentPet.forms && parentPet.forms[0] ? parentPet.forms[0] : null;
+    }
+
+    if (!parentPet) {
+      parentPet = {
+        id: tempIdCounter++,
+        name: mainName,
+        types: ["普通"],
+        evolution_chain: [mainName],
+        forms: []
+      };
+      cleanedPetsData.push(parentPet);
+    }
+
+    if (parentPet) {
+      if (!parentPet.forms) {
+        parentPet.forms = [];
+      }
+      const hasForm = parentPet.forms.some((f: any) => f.name === formName);
+      if (!hasForm) {
+        const raceItem = petsRaceMap[formName];
+        const newForm = {
+          name: formName,
+          types: (raceItem && raceItem.type_name) ? [raceItem.type_name] : (baseForm ? [...baseForm.types] : (parentPet.types ? [...parentPet.types] : ["普通"])),
+          egg_groups: baseForm && baseForm.egg_groups ? [...baseForm.egg_groups] : (parentPet.egg_data && parentPet.egg_data.egg_groups ? [...parentPet.egg_data.egg_groups] : ["无法孵蛋"]),
+          height_min: baseForm ? baseForm.height_min : (parentPet.egg_data ? parentPet.egg_data.height_min : null),
+          height_max: baseForm ? baseForm.height_max : (parentPet.egg_data ? parentPet.egg_data.height_max : null),
+          weight_min: baseForm ? baseForm.weight_min : (parentPet.egg_data ? parentPet.egg_data.weight_min : null),
+          weight_max: baseForm ? baseForm.weight_max : (parentPet.egg_data ? parentPet.egg_data.weight_max : null),
+          giant_weight_line: baseForm ? baseForm.giant_weight_line : (parentPet.egg_data ? parentPet.egg_data.giant_weight_line : null),
+          tiny_weight_line: baseForm ? baseForm.tiny_weight_line : (parentPet.egg_data ? parentPet.egg_data.tiny_weight_line : null)
+        };
+        parentPet.forms.push(newForm);
+      }
+    }
+  }
+}
 
 export interface PetData {
   display_name: string;
@@ -108,10 +170,48 @@ export const getBasePetName = (name: string): string => {
 };
 
 /**
+ * Helper to find precise matching form from cleanedPetsData
+ */
+const findForm = (spriteName: string): any => {
+  if (!spriteName) return null;
+  const cleanName = spriteName.replace(/[（(]/g, "_").replace(/[）)]/g, "");
+  const bracketName = spriteName.includes("_") 
+    ? `${spriteName.split("_")[0]}（${spriteName.split("_")[1]}）` 
+    : spriteName;
+
+  for (const pet of cleanedPetsData) {
+    let form = pet.forms.find((f: any) => 
+      f.name === spriteName || 
+      f.name === cleanName || 
+      f.name === bracketName
+    );
+    if (form) return form;
+  }
+  
+  const baseName = getBasePetName(spriteName);
+  for (const pet of cleanedPetsData) {
+    let form = pet.forms.find((f: any) => f.name === baseName);
+    if (form) return form;
+  }
+  return null;
+};
+
+/**
  * Returns pet details by name, or null if not found. Supports multi-form suffixes.
  */
 export const getPetDetails = (name: string): PetDetails | null => {
   if (!name) return null;
+  
+  if (petDataMap[name]) return petDataMap[name];
+  
+  const cleanName = name.replace(/[（(]/g, "_").replace(/[）)]/g, "");
+  if (petDataMap[cleanName]) return petDataMap[cleanName];
+
+  const bracketName = name.includes("_") 
+    ? `${name.split("_")[0]}（${name.split("_")[1]}）` 
+    : name;
+  if (petDataMap[bracketName]) return petDataMap[bracketName];
+
   const baseName = getBasePetName(name);
   return petDataMap[baseName] || null;
 };
@@ -121,15 +221,7 @@ export const getPetDetails = (name: string): PetDetails | null => {
  * 支持带有下划线后缀的多形态智能匹配
  */
 export const getPetGuideSize = (spriteName: string): { height: string; weight: string } | null => {
-  if (!spriteName) return null;
-  const baseName = getBasePetName(spriteName);
-
-  let matchedForm: any = null;
-  for (const pet of cleanedPetsData) {
-    matchedForm = pet.forms.find((f: any) => f.name === baseName);
-    if (matchedForm) break;
-  }
-
+  const matchedForm = findForm(spriteName);
   if (!matchedForm) return null;
 
   const heightStr = matchedForm.height_min === matchedForm.height_max
@@ -158,15 +250,7 @@ export interface SizeThresholds {
  * 计算精灵身高体重的临界值和大块头/小不点及格线
  */
 export const getPetSizeThresholds = (spriteName: string): SizeThresholds | null => {
-  if (!spriteName) return null;
-  const baseName = getBasePetName(spriteName);
-
-  let matchedForm: any = null;
-  for (const pet of cleanedPetsData) {
-    matchedForm = pet.forms.find((f: any) => f.name === baseName);
-    if (matchedForm) break;
-  }
-
+  const matchedForm = findForm(spriteName);
   if (!matchedForm) return null;
 
   return {
@@ -178,7 +262,6 @@ export const getPetSizeThresholds = (spriteName: string): SizeThresholds | null 
     tinyWeightLine: matchedForm.tiny_weight_line
   };
 };
-
 
 /**
  * Gets all available sprites (forms) for a pet name.
@@ -249,12 +332,14 @@ export const getSpriteFileName = (petName: string): string | null => {
     return exactMatch;
   }
 
-  
-  // 2. Try prefix match
+  // 2. Try prefix match (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
   const prefixMatches = spriteFiles.filter(file => file.startsWith(petName + "_") && file.endsWith(".png"));
   if (prefixMatches.length > 0) {
-    // 优先寻找包含 "本来的样子" 或 "平常的样子" 的图片，避免默认情况下匹配到其他特殊形态（如本命年的样子）
-    const originalMatch = prefixMatches.find(file => file.includes("本来的样子") || file.includes("平常的样子"));
+    const originalMatch = prefixMatches.find(file => 
+      file.includes("本来的样子") || 
+      file.includes("平常的样子") ||
+      (baseName === "鸭吉吉" && file.includes("蓬松的样子"))
+    );
     if (originalMatch) {
       return originalMatch;
     }
@@ -270,7 +355,11 @@ export const getSpriteFileName = (petName: string): string | null => {
   // 4. Try base name prefix match
   const basePrefixMatches = spriteFiles.filter(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
   if (basePrefixMatches.length > 0) {
-    const originalMatch = basePrefixMatches.find(file => file.includes("本来的样子") || file.includes("平常的样子"));
+    const originalMatch = basePrefixMatches.find(file => 
+      file.includes("本来的样子") || 
+      file.includes("平常的样子") ||
+      (baseName === "鸭吉吉" && file.includes("蓬松的样子"))
+    );
     if (originalMatch) {
       return originalMatch;
     }

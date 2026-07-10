@@ -352,6 +352,19 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
+      // 特殊多形态宠物 conf_id 映射：如鸭吉吉 (base_conf_id: 3742)
+      const isYajiji = (rawId === 3742 || rawName === "鸭吉吉" || rawOriginalName === "鸭吉吉");
+      if (isYajiji) {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 3742001) {
+          formSuffix = "蓬松的样子";
+        } else if (confIdVal === 410738) {
+          formSuffix = "紧实的样子"; // 即睡帽鸭
+        } else if (confIdVal === 300710) {
+          formSuffix = "起来鸭";
+        }
+      }
+
       if (rawName && formSuffix) {
         // 如果 rawName 本身没有形态后缀，则拼接形态
         if (!rawName.includes("_") && !rawName.includes("（") && !rawName.includes("(")) {
