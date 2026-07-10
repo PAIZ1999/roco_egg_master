@@ -31,6 +31,18 @@
    - **网页端部署静态资源拷贝**：为解决网页端（如 Vercel、Cloudflare Pages）部署后根目录 `images` 文件夹内图片丢失导致图片裂开的问题，新增了 `copy-images.js` 脚本，并在 `package.json` 中的 `build` 命令后追加 `node copy-images.js`，使打包后自动将根目录 `images` 递归拷贝至 `dist/images`。
     - **桌面宠物悬浮球与主窗口内拖拽及多向拉伸与阻断滚动穿透优化 (2026-07-09 新增)**:
       - **独立悬浮球组件挂载**：在 `App.tsx` 区分独立窗口（`isFloatWindow`）时，联合 URL Hash (`#float`) 与 Electron 进程参数 `--window-type=float`（通过 `window.electronAPI.isFloatWindow()` 检测）双重判定，确保渲染 `MerchantFloatWidget` 时正确传入 `isStandalone={true}`，采用 `w-full h-full p-2` 紧凑尺寸填充 70x75 视口，防范单靠 Hash 传递在打包加载中丢失导致溢出裁剪无法显示的问题。
+      - **游戏数据提取形态智能还原 (2026-07-10 新增)**：当从游戏 SQLite 直连或 API 提取宠物时，由于默认名字仅含基础名称（如“鸭吉吉”、“丢丢”），在此建立基于 `conf_id` 与属性还原的形态解析映射：
+        - **时序优化**：将原本在后缀拼接之后的兜底名字解码逻辑移到前置，使形态判定和拼接时 `rawName` 具备正确的精灵基础名称，彻底解决“起来鸭”等形态因 `rawName` 暂空而错过形态后缀拼接、最后退化为“蓬松的样子”的 Bug。
+        - **鸭吉吉（3742/起来鸭等）形态映射**：
+          - `3742001` -> 蓬松的样子（鸭吉吉的默认形态）。
+          - `410738` -> 紧实的样子（戴睡帽的鸭吉吉）。
+          - `300710` -> 起来鸭。
+        - **丢丢进化链（丢丢、卡卡虫、卡瓦重）形态映射**：
+          - `2200004` -> 草地附近的样子。
+          - `Math.floor(conf_id / 10000) === 329` (如 `3290001`/`3291001`/`3292001`) -> 沙地附近的样子。
+          - `300036` -> 雪山附近的样子。
+          - `410036` -> 火山附近的样子。
+        这彻底解决了导入时多形态混淆丢失、野外亚种还原为错误默认图的问题。
       - **主界面喵喵随意拖拽**：在 `MerchantFloatWidget.tsx` 中增加 React 组件级 position 状态定位，计算拖动 delta。若在主窗口（`isStandalone === false`）内则在 DOM 级更新 right 与 bottom 定位，并设置边界值防超出窗口，而非一律调用 Electron 移动独立窗口的 IPC `dragFloatWindow`；在独立窗口中（`isStandalone === true`）则继续执行 `dragFloatWindow` 移动整个桌面悬浮窗。
       - **多向拉伸支持**：在 `MerchantFloatWidget.tsx` 展开聊天室时，除原有的左边缘和顶边缘拉伸外，在左上角追加了 `cursor-nw-resize` 鼠标手势的对角线拉伸热区，拖拽时同时调节聊天窗口的宽度和高度，并伴有斜线折角视觉引导线。
       - **滚动穿透深度隔离**：为阻断消息历史区域、父本仓储列表和母本仓储列表由于过度滚动（overscroll）导致整个软件外层页面上下滚动的现象，为这三处滚动容器均物理应用了现代 CSS `overscroll-behavior: contain` 规则，实现零 JS 开销的安全滚动隔离。

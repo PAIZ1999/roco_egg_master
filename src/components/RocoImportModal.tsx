@@ -329,6 +329,19 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
+      // 如果通过 ID 没查到，再使用名字字段解码兜底 (提前执行，确保后续形态映射与拼接能获取到 rawName)
+      if (!rawName) {
+        if (typeof item.name === "string" && item.name) {
+          rawName = decodeBase64Name(item.name);
+        } else if (typeof item.sprite === "string" && item.sprite) {
+          rawName = decodeBase64Name(item.sprite);
+        } else if (typeof item.pet_name === "string" && item.pet_name) {
+          rawName = decodeBase64Name(item.pet_name);
+        } else if (typeof item.displayName === "string" && item.displayName) {
+          rawName = decodeBase64Name(item.displayName);
+        }
+      }
+
       // 获取 item 中可能存在的带形态的原始名字
       let rawOriginalName = "";
       if (typeof item.name === "string" && item.name) {
@@ -365,25 +378,32 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
+      // 特殊多形态宠物 conf_id 映射：如丢丢/卡卡虫/卡瓦重 (丢丢进化链，基础 ID 3040/3041/3042，以及沙地 3290/3291/3292)
+      const isDiudiuChain = (
+        rawId === 3040 || rawId === 3041 || rawId === 3042 ||
+        rawId === 3290 || rawId === 3291 || rawId === 3292 ||
+        rawName === "丢丢" || rawName === "卡卡虫" || rawName === "卡瓦重" ||
+        rawOriginalName === "丢丢" || rawOriginalName === "卡卡虫" || rawOriginalName === "卡瓦重"
+      );
+      if (isDiudiuChain) {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 2200004) {
+          formSuffix = "草地附近的样子";
+        } else if (confIdVal && Math.floor(confIdVal / 10000) === 329) {
+          formSuffix = "沙地附近的样子";
+        } else if (confIdVal === 300036) {
+          formSuffix = "雪山附近的样子";
+        } else if (confIdVal === 410036) {
+          formSuffix = "火山附近的样子";
+        }
+      }
+
       if (rawName && formSuffix) {
         // 如果 rawName 本身没有形态后缀，则拼接形态
         if (!rawName.includes("_") && !rawName.includes("（") && !rawName.includes("(")) {
           if (rawName !== formSuffix) {
             rawName = `${rawName}_${formSuffix}`;
           }
-        }
-      }
-
-      // 如果通过 ID 没查到，再使用名字字段解码兜底
-      if (!rawName) {
-        if (typeof item.name === "string" && item.name) {
-          rawName = decodeBase64Name(item.name);
-        } else if (typeof item.sprite === "string" && item.sprite) {
-          rawName = decodeBase64Name(item.sprite);
-        } else if (typeof item.pet_name === "string" && item.pet_name) {
-          rawName = decodeBase64Name(item.pet_name);
-        } else if (typeof item.displayName === "string" && item.displayName) {
-          rawName = decodeBase64Name(item.displayName);
         }
       }
 
