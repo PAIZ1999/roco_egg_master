@@ -11,5 +11,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showMainWindow: () => ipcRenderer.send('show-main-window'),
   resizeFloatWindow: (size) => ipcRenderer.send('resize-float-window', size),
   dragFloatWindow: (delta) => ipcRenderer.send('drag-float-window', delta),
-  isFloatWindow: () => process.argv.includes('--window-type=float')
+  isFloatWindow: () => process.argv.includes('--window-type=float'),
+  resetCloseChoice: () => ipcRenderer.invoke('reset-close-choice')
 });

@@ -251,9 +251,14 @@ export const getSpriteFileName = (petName: string): string | null => {
 
   
   // 2. Try prefix match
-  const prefixMatch = spriteFiles.find(file => file.startsWith(petName + "_") && file.endsWith(".png"));
-  if (prefixMatch) {
-    return prefixMatch;
+  const prefixMatches = spriteFiles.filter(file => file.startsWith(petName + "_") && file.endsWith(".png"));
+  if (prefixMatches.length > 0) {
+    // 优先寻找包含 "本来的样子" 或 "平常的样子" 的图片，避免默认情况下匹配到其他特殊形态（如本命年的样子）
+    const originalMatch = prefixMatches.find(file => file.includes("本来的样子") || file.includes("平常的样子"));
+    if (originalMatch) {
+      return originalMatch;
+    }
+    return prefixMatches[0];
   }
   
   // 3. Try base name exact match
@@ -263,9 +268,13 @@ export const getSpriteFileName = (petName: string): string | null => {
   }
   
   // 4. Try base name prefix match
-  const basePrefixMatch = spriteFiles.find(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
-  if (basePrefixMatch) {
-    return basePrefixMatch;
+  const basePrefixMatches = spriteFiles.filter(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
+  if (basePrefixMatches.length > 0) {
+    const originalMatch = basePrefixMatches.find(file => file.includes("本来的样子") || file.includes("平常的样子"));
+    if (originalMatch) {
+      return originalMatch;
+    }
+    return basePrefixMatches[0];
   }
   
   // 5. Try substring match

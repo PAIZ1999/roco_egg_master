@@ -11,6 +11,7 @@ let tray = null;
 let isQuitting = false;
 let showPetEnabled = true;
 const configPath = path.join(app.getPath('userData'), 'app_config.json');
+let detectedHelperFileName = 'roco_helper-v3.2.2.exe'; // 存储实际检测到的助手文件名
 
 // 加载持久化的自定义路径配置
 function loadConfig() {
@@ -67,55 +68,78 @@ function saveCloseChoice(choice) {
   }
 }
 
-// 自动在后台隐藏启动 roco_helper-v3.2.2.exe 进程
+// 自动在后台隐藏启动 roco_helper-v*.exe 进程
 function startRocoHelper() {
-  const pathsToTry = [
+  const dirsToSearch = [
     // 0. 特殊处理：如果是 electron-builder 制造的 portable 便携版单文件，优先从其启动时环境变量获取原始同级/父级路径
     ...(process.env.PORTABLE_EXECUTABLE_DIR ? [
-      path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'roco_helper-v3.2.2.exe'),
-      path.join(process.env.PORTABLE_EXECUTABLE_DIR, '..', 'roco_helper-v3.2.2.exe')
+      process.env.PORTABLE_EXECUTABLE_DIR,
+      path.join(process.env.PORTABLE_EXECUTABLE_DIR, '..')
     ] : []),
 
     // 1. AppPath 内层及外层
-    path.join(app.getAppPath(), 'roco_helper-v3.2.2.exe'),
-    path.join(app.getAppPath(), '..', 'roco_helper-v3.2.2.exe'),
-    path.join(app.getAppPath(), '../..', 'roco_helper-v3.2.2.exe'),
+    app.getAppPath(),
+    path.join(app.getAppPath(), '..'),
+    path.join(app.getAppPath(), '../..'),
     // 2. 真实执行程序（process.execPath）的同级、上一级、上上级 (覆盖编译、分发、解压多种情况)
-    path.join(path.dirname(process.execPath), 'roco_helper-v3.2.2.exe'),
-    path.join(path.dirname(process.execPath), '..', 'roco_helper-v3.2.2.exe'),
-    path.join(path.dirname(process.execPath), '../..', 'roco_helper-v3.2.2.exe'),
+    path.dirname(process.execPath),
+    path.join(path.dirname(process.execPath), '..'),
+    path.join(path.dirname(process.execPath), '../..'),
     // 3. 当前运行工作目录
-    path.join(process.cwd(), 'roco_helper-v3.2.2.exe'),
-    path.join(process.cwd(), '..', 'roco_helper-v3.2.2.exe'),
-    path.join(process.cwd(), '../..', 'roco_helper-v3.2.2.exe')
+    process.cwd(),
+    path.join(process.cwd(), '..'),
+    path.join(process.cwd(), '../..')
   ];
 
+  const uniqueDirs = [...new Set(dirsToSearch)].filter(d => {
+    try {
+      return fs.existsSync(d);
+    } catch (e) {
+      return false;
+    }
+  });
+
   let helperPath = null;
-  for (const p of pathsToTry) {
-    if (fs.existsSync(p)) {
-      helperPath = p;
-      break;
+  // 在各有效目录中模糊搜寻符合格式的 exe 文件
+  for (const dir of uniqueDirs) {
+    try {
+      const files = fs.readdirSync(dir);
+      const matchedFile = files.find(file => 
+        file.toLowerCase().startsWith('roco_helper-') && 
+        file.toLowerCase().endsWith('.exe')
+      );
+      if (matchedFile) {
+        helperPath = path.join(dir, matchedFile);
+        detectedHelperFileName = matchedFile;
+        break;
+      }
+    } catch (e) {
+      console.error(`扫描目录 ${dir} 失败:`, e);
     }
   }
 
   if (!helperPath) {
-    const searchPathsText = pathsToTry.slice(0, 6).join('\n');
+    helperPath = path.join(path.dirname(process.execPath), 'roco_helper-v3.2.2.exe');
+    detectedHelperFileName = 'roco_helper-v3.2.2.exe';
+
+    const searchPathsText = uniqueDirs.slice(0, 6).join('\n');
     dialog.showErrorBox(
       '未检测到 roco_helper 助手',
-      `系统已尝试在同级和父级目录下搜寻 roco_helper-v3.2.2.exe，但均未找到。\n\n请确认该文件是否放置在正确的位置。\n\n搜索路径清单：\n${searchPathsText}`
+      `系统已尝试在同级和父级目录下搜寻 roco_helper-v*.exe，但均未找到。\n\n请确认该文件是否放置在正确的位置。\n\n搜索路径清单：\n${searchPathsText}`
     );
     return;
   }
 
   // 检查是否已经在运行，防止重复开启
-  exec('tasklist /FI "IMAGENAME eq roco_helper-v3.2.2.exe"', (err, stdout) => {
-    if (stdout && stdout.includes('roco_helper-v3.2.2.exe')) {
-      console.log('roco_helper-v3.2.2.exe 已经在运行中，无需重复启动');
+  exec(`tasklist /FI "IMAGENAME eq ${detectedHelperFileName}"`, (err, stdout) => {
+    if (stdout && stdout.includes(detectedHelperFileName)) {
+      console.log(`${detectedHelperFileName} 已经在运行中，无需重复启动`);
       return;
     }
 
     // Windows 平台使用 spawn 调用 powershell 隐藏窗口启动，并增加弹窗秒杀轮询脚本 (发送回车键关闭)
-    const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden; $ws = New-Object -ComObject wscript.shell; for ($i=0; $i -lt 50; $i++) { if ($ws.AppActivate('洛克助手 v3.2.2')) { $ws.SendKeys('{ENTER}'); break; }; Start-Sleep -Milliseconds 100; }`;
+    // WScript.Shell 标题匹配缩短至通用前缀 '洛克助手'
+    const psCommand = `Start-Process -FilePath '${helperPath}' -WindowStyle Hidden; $ws = New-Object -ComObject wscript.shell; for ($i=0; $i -lt 50; $i++) { if ($ws.AppActivate('洛克助手')) { $ws.SendKeys('{ENTER}'); break; }; Start-Sleep -Milliseconds 100; }`;
     try {
       const ps = spawn('powershell.exe', [
         '-NoProfile',
@@ -143,13 +167,13 @@ function startRocoHelper() {
   });
 }
 
-// 退出时强制清理 roco_helper-v3.2.2.exe 进程
+// 退出时强制清理 roco_helper-v*.exe 进程
 function stopRocoHelper() {
-  exec('taskkill /F /IM roco_helper-v3.2.2.exe', (err) => {
+  exec(`taskkill /F /IM ${detectedHelperFileName}`, (err) => {
     if (err) {
-      console.log('清理后台 roco_helper 失败或当前无对应运行实例');
+      console.log(`清理后台 ${detectedHelperFileName} 失败或当前无对应运行实例`);
     } else {
-      console.log('已成功在后台清理结束 roco_helper-v3.2.2.exe 进程');
+      console.log(`已成功在后台清理结束 ${detectedHelperFileName} 进程`);
     }
   });
 }
@@ -186,6 +210,19 @@ function createTray() {
           } else if (showPetEnabled) {
             createFloatWindow();
           }
+        }
+      },
+      { type: 'separator' },
+      {
+        label: '重置关闭确认提示',
+        click: () => {
+          rememberCloseChoice = null;
+          saveCloseChoice(null);
+          dialog.showMessageBox({
+            type: 'info',
+            title: '系统重置',
+            message: '已成功重置关闭行为确认提示！下次点击主窗口右上角关闭时，软件将重新提示询问您的偏好选择。'
+          });
         }
       },
       { type: 'separator' },
@@ -257,7 +294,7 @@ function createWindow() {
     }
     
     // 弹出确认选项框
-    const choice = dialog.showMessageBoxSync(mainWindow, {
+    dialog.showMessageBox({
       type: 'question',
       buttons: ['最小化到系统托盘', '直接退出软件', '取消'],
       defaultId: 0,
@@ -266,28 +303,28 @@ function createWindow() {
       message: '您希望如何关闭软件？',
       checkboxLabel: '记住我的选择，不再提示',
       checkboxChecked: false
+    }).then(({ response: choice, checkboxChecked: remember }) => {
+      if (choice === 0) {
+        if (remember) {
+          saveCloseChoice('tray');
+        }
+        mainWindow.hide();
+        try {
+          tray.displayBalloon({
+            title: '已最小化至托盘',
+            content: '软件已转入后台运行，双击托盘图标可重新显示主界面。'
+          });
+        } catch (err) {}
+      } else if (choice === 1) {
+        if (remember) {
+          saveCloseChoice('exit');
+        }
+        isQuitting = true;
+        app.quit();
+      }
+    }).catch((err) => {
+      dialog.showErrorBox('弹出关闭行为确认框异常', err.stack || err.message);
     });
-    
-    const remember = (choice === 0 || choice === 1);
-    
-    if (choice === 0) {
-      if (remember) {
-        saveCloseChoice('tray');
-      }
-      mainWindow.hide();
-      try {
-        tray.displayBalloon({
-          title: '已最小化至托盘',
-          content: '软件已转入后台运行，双击托盘图标可重新显示主界面。'
-        });
-      } catch (err) {}
-    } else if (choice === 1) {
-      if (remember) {
-        saveCloseChoice('exit');
-      }
-      isQuitting = true;
-      app.quit();
-    }
   });
 
   mainWindow.on('show', () => {
@@ -314,7 +351,7 @@ function createFloatWindow() {
   
   floatWindow = new BrowserWindow({
     width: 70, // 初始紧凑猫头尺寸
-    height: 75,
+    height: 70,
     x: width - 90, // 靠最右下角对齐
     y: height - 100,
     frame: false,
@@ -414,6 +451,12 @@ function getDataFilePath() {
 }
 
 // IPC 接口监听
+ipcMain.handle('reset-close-choice', async () => {
+  rememberCloseChoice = null;
+  saveCloseChoice(null);
+  return { success: true };
+});
+
 ipcMain.handle('load-data', async () => {
   const filePath = getDataFilePath();
   if (fs.existsSync(filePath)) {

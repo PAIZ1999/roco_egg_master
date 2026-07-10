@@ -29,8 +29,14 @@
        - **精灵蛋组智能查询**：在统计表格顶部加入 Autocomplete 智能联想精灵输入框，支持输入名字快速查询，在顶部详情区展现对应的精灵头像、系别、蛋组，同时在下方大表格中以琥珀金色分割聚光灯高亮该精灵对应的蛋组列。
        - **只看种公统计**：支持一键开启“只看种公”模式，在此模式下，系统会在统计分析、已收集达成格子判断中排除全部种母，只亮起种公的收集状态。
    - **网页端部署静态资源拷贝**：为解决网页端（如 Vercel、Cloudflare Pages）部署后根目录 `images` 文件夹内图片丢失导致图片裂开的问题，新增了 `copy-images.js` 脚本，并在 `package.json` 中的 `build` 命令后追加 `node copy-images.js`，使打包后自动将根目录 `images` 递归拷贝至 `dist/images`。
-   - 数据变更（`pets`、水印配置等）会触发自动保存，优先使用 `window.electronAPI.saveData` 保存至本地，同时也保留了 `localStorage` 的备份。
-   - **智能 3V 蛋与极限蛋统计检测**:
+    - **桌面宠物悬浮球与主窗口内拖拽及多向拉伸与阻断滚动穿透优化 (2026-07-09 新增)**:
+      - **独立悬浮球组件挂载**：在 `App.tsx` 区分独立窗口（`isFloatWindow`）时，联合 URL Hash (`#float`) 与 Electron 进程参数 `--window-type=float`（通过 `window.electronAPI.isFloatWindow()` 检测）双重判定，确保渲染 `MerchantFloatWidget` 时正确传入 `isStandalone={true}`，采用 `w-full h-full p-2` 紧凑尺寸填充 70x75 视口，防范单靠 Hash 传递在打包加载中丢失导致溢出裁剪无法显示的问题。
+      - **主界面喵喵随意拖拽**：在 `MerchantFloatWidget.tsx` 中增加 React 组件级 position 状态定位，计算拖动 delta。若在主窗口（`isStandalone === false`）内则在 DOM 级更新 right 与 bottom 定位，并设置边界值防超出窗口，而非一律调用 Electron 移动独立窗口的 IPC `dragFloatWindow`；在独立窗口中（`isStandalone === true`）则继续执行 `dragFloatWindow` 移动整个桌面悬浮窗。
+      - **多向拉伸支持**：在 `MerchantFloatWidget.tsx` 展开聊天室时，除原有的左边缘和顶边缘拉伸外，在左上角追加了 `cursor-nw-resize` 鼠标手势的对角线拉伸热区，拖拽时同时调节聊天窗口的宽度和高度，并伴有斜线折角视觉引导线。
+      - **滚动穿透深度隔离**：为阻断消息历史区域、父本仓储列表和母本仓储列表由于过度滚动（overscroll）导致整个软件外层页面上下滚动的现象，为这三处滚动容器均物理应用了现代 CSS `overscroll-behavior: contain` 规则，实现零 JS 开销的安全滚动隔离。
+      - **智能助手随主题切换亮暗色模式**：对 `MerchantFloatWidget.tsx` 中的折叠图标、聊天室外壳、头部、消息历史背景、输入发送区以及所有自定义卡片气泡（`ChatPetCard`，`ChatEggGroupCard`，`ChatEggPredictCard`，`ChatMerchantCard`）均做了深浅双色主题（Tailwind `dark:`）重构，保证了高对比度及自适应主题的极简设计。
+      - **系统偏好设置与重置**：在 About（关于）模态框的 Body 中集成了“系统工具”面板，新增“重置关闭行为确认提示”按钮，方便用户一键清除主进程已记录的关闭行为。
+    - **智能 3V 蛋与极限蛋统计检测**:
      - **3V 蛋**: 当父母三围（生命、物攻、速度等）设置完全一致时，系统会自动将该宠物行高亮，并在表头左侧显示“3V蛋”标志。只有当父母三围一样且窝点状态为“有现蛋”时，才会统计入顶部的“3V蛋”总数。当任一三围被设置为“无”或者三围被隐藏时，系统会自动将该行排除在 3V 统计之外。
      - **极限蛋**: 只有当选择为“极限”且窝点状态为“有现蛋”时，才会统计入顶部的“极限蛋”总数.
     - **体型声音临界牌子与联合强力过滤 (2026-07-08 新增)**:
@@ -229,6 +235,9 @@
         - **检测机制**：启动时在拉起窗口前依次探测 Python 3 环境（执行 `python --version`）与 Npcap 驱动（通过服务查询 `sc query npcap` 及 `wpcap.dll` 文件检查联合判定）。
         - **离线安装定位**：若缺失环境，自动从便携式 EXE 同级目录、打包根目录或工作目录中定位 `python-3.12.10-amd64.exe` 和 `npcap-1.88.exe` 安装包。
         - **安装交互**：支持 Python 一键静默安装（后台运行带有 `/quiet InstallAllUsers=1 PrependPath=1` 参数）和 Npcap 交互引导安装。若安装成功，主进程会动态检索新生成的安装路径并将其刷新至当前 Node.js 的 `process.env.PATH` 中，实现环境无缝加载；若用户在警告后选择不安装，则允许其继续运行网页/粘贴模式，以提升容错性。
+      - **关闭托盘化行为重构 (2026-07-09 新增)**：
+        - **异步拦截获取复选框**：将主窗口 close 事件中同步的 `dialog.showMessageBoxSync` 修改为异步的 `dialog.showMessageBox`，正确提取 resolve 对象的 `{ response: choice, checkboxChecked: remember }`；修复了原先无论用户是否勾选均因为 `const remember = (choice === 0 || choice === 1)` 误判为 true 导致强制写入配置直接退出托盘的重大 Bug。
+        - **重置关闭偏好 IPC**：增加了 `reset-close-choice` 的 IPC 监听器，接收前端发来的指令将内存中及 `app_config.json` 中的 `rememberCloseChoice` 擦除并重置为 `null`。
 
 3. **打包配置 (`package.json`)**:
    - 使用 `electron-builder` 打包。
@@ -281,4 +290,40 @@
 - **管理规范**: 详细的上传与 GitHub 看板管理教程已保存在本地根目录的 `github_management_guide.md` 中。
 - **Commit 规范**: 建议遵循 Angular 提交规范（如 `feat:`, `fix:`, `docs:`, `refactor:`），并利用 Smart Commits (如 `close #12`) 联动关闭 GitHub Issues。
 - **开发与部署经验**: 本地代理运行在 10808 端口上，可在本地 Git 配置中执行 `git config --local http.proxy http://127.0.0.1:10808` 确保顺畅推送与拉取。
+
+---
+
+## 🎨 主题自适应适配记录 (2026-07-09)
+
+### DataQueryTab.tsx 全站亮色/暗色适配
+- **头部导航栏**：亮色下改为 `bg-white/80` 白色毛玻璃底板 + `border-slate-200` 边框；子 Tab 切换区背景改为 `bg-slate-100` 浅灰；未激活按钮文字在亮色下显示深灰 `text-slate-500`。
+- **搜索输入框**：亮色下改为 `bg-slate-50`、`border-slate-200`、`text-slate-800`，图标颜色跟随切换。
+- **精灵图鉴结果区**：
+  - 左侧精灵卡片面板：亮色 `bg-white`，头像底座 `bg-slate-50`，精灵名称 `text-slate-800`，ID徽章 `text-indigo-600 bg-indigo-50`，系别/蛋组徽章改为淡蓝色底板。
+  - 右侧种族资质面板：亮色 `bg-white`，资质总和数字改为深绿 `text-emerald-600`，进度条底轨 `bg-slate-100 border-slate-200`。
+  - 进化链容器：亮色 `bg-white`，按钮亮色下为浅灰底 `bg-slate-50`，悬停 `hover:bg-slate-100`。
+  - 精灵/蛋尺寸数值面板：亮色下数值区为 `bg-slate-50`，数值文字深色，达标线标记改为 `amber-50/200`（橙黄） 和 `cyan-50/200`（青蓝）浅色背景 + 深色文字。
+- **蛋组筛选 Tab**：精灵卡片改为亮色 `bg-white`，名称深色，图标头像底座 `bg-slate-50`。
+- **孵蛋预测 Tab**：结果表格改为 `bg-white`，表头区 `bg-slate-50`，分割线 `divide-slate-100`，行 hover `hover:bg-slate-50`，精灵名称深色。体型标签大块头/小不点/普通均补充亮色变体。
+
+### MerchantFloatWidget.tsx 与独立窗口视觉和交互优化
+- **喵喵气泡暗色修复**：将喵喵气泡的 `dark:bg-slate-850` 修改为标准 Tailwind 颜色 `dark:bg-slate-800`，彻底解决暗色下气泡背景失效回退成纯白的问题。
+- **防止渲染变形挤压**：移除了独立窗口模式（`isStandalone === true`）下的多重 `p-2` 内边距，改用 `p-0` 结合 `flex items-center justify-center`。同时将 Electron 初始和折叠态的窗口高度由 `75px` 调整为完美的正方形 `70px`，使桌面宠物在折叠时呈现与软件内一致的精美正圆形（不再因可用空间过窄被压缩为椭圆形）。
+- **跨窗口主题（亮暗色）同步**：在 `App.tsx` 中向全局注入了对 `storage` 事件的监听器。每当主窗口修改了本地存储的主题设置（`localStorage.getItem('theme')`），桌面独立悬浮窗将立刻接收事件并调用 `setTheme` 刷新状态与 `document.documentElement`，实现亮暗色无缝跟随。
+- **聊天窗状态拖拽支持**：在 `MerchantFloatWidget.tsx` 里新增了专为聊天面板标题栏定制的鼠标按下拖动事件处理器 `handleHeaderMouseDown`，并为该 `div` 元素设置 `cursor-move select-none` 样式。现已实现不管是折叠悬浮球状态，还是展开聊天框状态（通过按住顶部标题栏），用户都可以随心所欲地拖拽桌面独立窗口的位置。
+
+### main.cjs 系统托盘与独立窗口重置
+- 托盘右键新增“重置关闭确认提示”菜单，一键清除已存储的“记住退出选择”偏好，允许重新弹出关闭选项询问框。
+- 调整了创建独立窗口 `createFloatWindow` 时的默认宽高为 `70x70` 像素，以防止在紧凑状态下渲染溢出或被挤压。
+
+
+### 古钟蛇多形态导入与错误显示智能纠偏 (2026-07-10 新增)
+- **多形态导入后缀保留 ([RocoImportModal.tsx](file:///d:/desk/洛克王国孵蛋表-副本/src/components/RocoImportModal.tsx))**：在根据 ID 匹配基础精灵名后，提取 `item` 中可能存在的具体形态后缀（如括号 `（本来的样子）` 或下划线），如果存在且名字暂无后缀，将其规范还原为 `基础名_形态名` 格式（如 `"古钟蛇_本来的样子"`）。这彻底解决了包括古钟蛇、冬羽雀、丢丢、板板壳在内的所有多形态精灵在从 SQLite/API 导入时由于 ID 查名导致形态被抹去的共性问题。
+- **图片匹配前缀纠偏 ([petHelper.ts](file:///d:/desk/洛克王国孵蛋表-副本/src/petHelper.ts))**：在 `getSpriteFileName` 中，当前缀模糊匹配 `startsWith(精灵名 + "_")` 命中多个形态图片文件时，**优先寻找并返回**包含 `"本来的样子"` 或 `"平常的样子"` 的图片文件。这保证了即使在手动录入或数据格式中只有基础名 `"古钟蛇"`，前台渲染图片时也能完美智能纠偏至 `"古钟蛇_本来的样子.png"`，消除了以前因 `find()` 返回第一个文件而误显示成 `"古钟蛇_本命年的样子.png"` 的 bug。
+
+
+### 洛克王国助手 roco_helper 文件名版本兼容 (2026-07-10 新增)
+- **动态扫描匹配 ([main.cjs](file:///d:/desk/洛克王国孵蛋表-副本/electron/main.cjs))**：在主进程 `startRocoHelper()` 中废弃了原先对特定文件名 `"roco_helper-v3.2.2.exe"` 的多重路径硬编码，升级为自动扫描路径探测链上的各个有效目录，并利用 `fs.readdirSync` 与 `file.startsWith('roco_helper-')` 进行动态模糊匹配，搜寻首个存在的助手 exe 文件（如更新后的 `roco_helper-v3.2.4.exe` 等）。
+- **动态进程生命周期 ([main.cjs](file:///d:/desk/洛克王国孵蛋表-副本/electron/main.cjs))**：在检测到匹配的助手 exe 后，将其动态记录在全局变量 `detectedHelperFileName` 中，在后续的 `tasklist` 进程查重和 `taskkill` 清理中，全部使用此变量动态查杀，保证了即使助手版本升级也能完美静默拉起并在退出时彻底关闭。
+- **窗口标题模糊前缀 ([main.cjs](file:///d:/desk/洛克王国孵蛋表-副本/electron/main.cjs))**：Powershell 执行命令中激活秒杀初始弹框的标题匹配从固定的 `'洛克助手 v3.2.2'` 缩短为通用前缀 `'洛克助手'`。由于 AppActivate 匹配标题前缀，这使得任何版本助手的弹窗均能正确被激活和静默关闭。
 

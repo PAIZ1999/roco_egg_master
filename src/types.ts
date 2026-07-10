@@ -207,6 +207,7 @@ declare global {
       resizeFloatWindow?: (size: { width: number; height: number }) => void;
       dragFloatWindow?: (delta: { deltaX: number; deltaY: number }) => void;
       isFloatWindow?: () => boolean;
+      resetCloseChoice?: () => Promise<{ success: boolean }>;
     };
   }
 }

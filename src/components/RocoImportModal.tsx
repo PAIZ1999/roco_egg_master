@@ -329,6 +329,38 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
+      // 获取 item 中可能存在的带形态的原始名字
+      let rawOriginalName = "";
+      if (typeof item.name === "string" && item.name) {
+        rawOriginalName = decodeBase64Name(item.name);
+      } else if (typeof item.sprite === "string" && item.sprite) {
+        rawOriginalName = decodeBase64Name(item.sprite);
+      } else if (typeof item.pet_name === "string" && item.pet_name) {
+        rawOriginalName = decodeBase64Name(item.pet_name);
+      } else if (typeof item.displayName === "string" && item.displayName) {
+        rawOriginalName = decodeBase64Name(item.displayName);
+      }
+
+      // 提取原始名称中可能的形态信息 (如 "古钟蛇（本来的样子）" -> "本来的样子")
+      let formSuffix = "";
+      if (rawOriginalName) {
+        const matchBracket = rawOriginalName.match(/[（(](.+?)[）)]/);
+        if (matchBracket) {
+          formSuffix = matchBracket[1];
+        } else if (rawOriginalName.includes("_")) {
+          formSuffix = rawOriginalName.split("_")[1];
+        }
+      }
+
+      if (rawName && formSuffix) {
+        // 如果 rawName 本身没有形态后缀，则拼接形态
+        if (!rawName.includes("_") && !rawName.includes("（") && !rawName.includes("(")) {
+          if (rawName !== formSuffix) {
+            rawName = `${rawName}_${formSuffix}`;
+          }
+        }
+      }
+
       // 如果通过 ID 没查到，再使用名字字段解码兜底
       if (!rawName) {
         if (typeof item.name === "string" && item.name) {

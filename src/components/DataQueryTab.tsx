@@ -245,20 +245,20 @@ export function DataQueryTab() {
   return (
     <div className="flex flex-col gap-6 text-left select-none relative z-10 w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
       {/* 选项卡头部 */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/60 dark:bg-slate-950/60 backdrop-blur-md p-3.5 rounded-2xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/80 dark:bg-slate-950/60 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-indigo-400" />
-          <h2 className="text-base font-black text-slate-100">高级数据集成检索</h2>
+          <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-base font-black text-slate-800 dark:text-slate-100">高级数据集成检索</h2>
         </div>
 
         {/* 磨砂玻璃小导航 */}
-        <div className="flex bg-slate-950/60 p-1 rounded-xl border border-slate-800 w-full sm:w-auto overflow-x-auto no-scrollbar">
+        <div className="flex bg-slate-100 dark:bg-slate-950/60 p-1 rounded-xl border border-slate-200 dark:border-slate-800 w-full sm:w-auto overflow-x-auto no-scrollbar shadow-3xs">
           <button
             onClick={() => setSubTab("pet")}
             className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer ${
               subTab === "pet"
                 ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                : "text-slate-400 hover:text-slate-200"
+                : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
@@ -269,7 +269,7 @@ export function DataQueryTab() {
             className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer ${
               subTab === "eggGroup"
                 ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                : "text-slate-400 hover:text-slate-200"
+                : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -280,7 +280,7 @@ export function DataQueryTab() {
             className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer ${
               subTab === "eggPredict"
                 ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                : "text-slate-400 hover:text-slate-200"
+                : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             }`}
           >
             <Zap className="w-3.5 h-3.5" />
@@ -293,8 +293,8 @@ export function DataQueryTab() {
       {subTab === "pet" && (
         <div className="flex flex-col gap-6 animate-in fade-in duration-200">
           {/* 搜索框 */}
-          <div className="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center">
-            <span className="text-xs text-slate-400 whitespace-nowrap font-bold">查询精灵名:</span>
+          <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center shadow-sm">
+            <span className="text-xs text-slate-550 dark:text-slate-400 whitespace-nowrap font-bold">查询精灵名:</span>
             <div className="flex-1 w-full relative">
               <Autocomplete
                 value={petSearchVal}
@@ -302,13 +302,13 @@ export function DataQueryTab() {
                 onSelect={(val) => handlePetQuery(val)}
                 options={ALL_PET_NAMES}
                 placeholder="输入精灵名称，支持中文、全拼或首字母缩写..."
-                inputClassName="w-full pl-9 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-slate-100 text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                inputClassName="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-950/80 dark:border-slate-800 dark:text-slate-100 dark:placeholder-slate-500"
               />
-              <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3.5" />
+              <Search className="w-4 h-4 text-slate-400 dark:text-slate-555 absolute left-3 top-3.5" />
             </div>
             <button
               onClick={() => handlePetQuery(petSearchVal)}
-              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-md shadow-indigo-950/40 shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-sm shrink-0"
             >
               精灵数据查询
             </button>
@@ -319,19 +319,19 @@ export function DataQueryTab() {
             <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 {/* 左侧：精灵立绘/头像/基本属性 */}
-                <div className="lg:col-span-4 bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-6 flex flex-col items-center justify-between gap-6 text-center relative overflow-hidden">
+                <div className="lg:col-span-4 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col items-center justify-between gap-6 text-center relative overflow-hidden shadow-sm">
                   {/* 背景霓虹光效 */}
-                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-500/10 rounded-full filter blur-3xl pointer-events-none"></div>
+                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
                   
                   <div className="flex flex-col items-center gap-4 w-full">
                     {/* 头像 */}
-                    <div className="relative w-36 h-36 rounded-3xl bg-gradient-to-tr from-slate-950 to-slate-900 flex items-center justify-center border border-slate-800 shadow-2xl group overflow-hidden">
+                    <div className="relative w-36 h-36 rounded-3xl bg-slate-50 dark:bg-gradient-to-tr dark:from-slate-950 dark:to-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-2xl group overflow-hidden">
                       <div className="absolute inset-0 bg-indigo-500/5 group-hover:scale-110 transition-all duration-300"></div>
                       <img
                         key={activeForm.name} // 样式形态变化时重新渲染，避免闪烁
                         src={getActiveFormSpritePath()}
                         alt={activeForm.name}
-                        className="w-28 h-28 object-contain group-hover:scale-110 transition-all duration-300 relative z-10 filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)]"
+                        className="w-28 h-28 object-contain group-hover:scale-110 transition-all duration-300 relative z-10 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)]"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
                         }}
@@ -340,9 +340,9 @@ export function DataQueryTab() {
                     </div>
 
                     <div className="flex flex-col gap-1.5 z-10 w-full">
-                      <h3 className="text-xl font-black text-slate-100 flex items-center justify-center gap-2 flex-wrap">
+                      <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2 flex-wrap">
                         {activeForm.name}
-                        <span className="text-[10px] text-indigo-400 bg-indigo-950/80 border border-indigo-500/30 px-1.5 py-0.5 rounded-md font-mono">ID: {petResult.id}</span>
+                        <span className="text-[10px] text-indigo-600 bg-indigo-50 border border-indigo-150/60 dark:text-indigo-400 dark:bg-indigo-950/80 dark:border-indigo-500/30 px-1.5 py-0.5 rounded-md font-mono">ID: {petResult.id}</span>
                       </h3>
                       
                       {/* 系别 & 蛋组 Badge */}
@@ -350,7 +350,7 @@ export function DataQueryTab() {
                         {activeForm.types.map((type: string, idx: number) => (
                           <div
                             key={idx}
-                            className="w-7 h-7 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center shadow-lg relative cursor-help hover:scale-105 transition-all"
+                            className="w-7 h-7 rounded-full bg-white border border-slate-200 dark:bg-slate-950 dark:border-slate-800 flex items-center justify-center shadow-lg relative cursor-help hover:scale-105 transition-all"
                             title={`系别: ${type}`}
                           >
                             <img
@@ -364,7 +364,7 @@ export function DataQueryTab() {
                         {activeForm.egg_groups.map((group: string, idx: number) => (
                           <span
                             key={idx}
-                            className="text-[10px] bg-slate-950 border border-slate-800 text-indigo-400 px-3 py-1 rounded-full font-black shadow-md"
+                            className="text-[10px] bg-indigo-50/60 border border-indigo-100 text-indigo-655 dark:bg-slate-950 dark:border-slate-800 dark:text-indigo-400 px-3 py-1 rounded-full font-black shadow-3xs"
                           >
                             {group}
                           </span>
@@ -375,9 +375,9 @@ export function DataQueryTab() {
 
                   {/* 不同形态选择画廊 */}
                   {petResult.avatars && petResult.avatars.length > 1 && (
-                    <div className="w-full border-t border-slate-800/80 pt-4 mt-2">
-                      <span className="text-[10px] text-slate-500 font-black text-left block mb-2.5 uppercase tracking-wider">切换形态样式:</span>
-                      <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+                    <div className="w-full border-t border-slate-150 dark:border-slate-800/80 pt-4 mt-2">
+                      <span className="text-[10px] text-slate-455 dark:text-slate-550 font-black text-left block mb-2.5 uppercase tracking-wider">切换形态样式:</span>
+                      <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 scrollbar-track-transparent">
                         {petResult.avatars.map((avatar, idx) => {
                           const formItem = petResult.forms[idx];
                           const isSelected = activeForm && activeForm.name === formItem.name;
@@ -385,10 +385,10 @@ export function DataQueryTab() {
                             <button
                               key={idx}
                               onClick={() => handleFormSelect(formItem)}
-                              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-all cursor-pointer hover:bg-slate-950/65 ${
+                              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-all cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-950/65 ${
                                 isSelected
-                                  ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold scale-102 shadow-lg shadow-indigo-950/50"
-                                  : "bg-slate-950/40 border-slate-850 text-slate-400 hover:border-slate-600"
+                                  ? "bg-indigo-50 dark:bg-indigo-600/20 border-indigo-200 dark:border-indigo-500 text-indigo-600 dark:text-indigo-300 font-extrabold scale-102 shadow-md dark:shadow-indigo-950/50"
+                                  : "bg-slate-50 border-slate-200 text-slate-500 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-400 dark:hover:border-slate-600"
                               }`}
                             >
                               <img
@@ -412,15 +412,15 @@ export function DataQueryTab() {
                 <div className="lg:col-span-8 flex flex-col justify-between gap-6">
                   {/* 六温种族资质大表 */}
                   {activeForm.race ? (
-                    <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-6 h-full flex flex-col justify-between">
-                      <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-                        <span className="text-xs text-slate-400 font-black flex items-center gap-1.5">
-                          <Activity className="w-4 h-4 text-emerald-400" />
+                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 h-full flex flex-col justify-between shadow-sm">
+                      <div className="flex items-center justify-between mb-4 border-b border-slate-150 dark:border-slate-800 pb-3">
+                        <span className="text-xs text-slate-500 dark:text-slate-450 font-black flex items-center gap-1.5">
+                          <Activity className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                           种族资质数据大面板
                         </span>
                         <div className="text-right">
-                          <span className="text-[10px] text-slate-500 font-bold mr-1.5">资质总和:</span>
-                          <span className="text-lg font-black text-emerald-400 tracking-wide font-mono">{activeForm.race.sum}</span>
+                          <span className="text-[10px] text-slate-455 dark:text-slate-550 font-bold mr-1.5">资质总和:</span>
+                          <span className="text-lg font-black text-emerald-600 dark:text-emerald-400 tracking-wide font-mono">{activeForm.race.sum}</span>
                         </div>
                       </div>
 
@@ -438,7 +438,7 @@ export function DataQueryTab() {
                             return (
                               <div key={stat.key} className="flex flex-col gap-1 text-xs">
                                 <div className="flex items-center justify-between font-bold">
-                                  <span className="text-slate-400 flex items-center gap-2">
+                                  <span className="text-slate-600 dark:text-slate-400 flex items-center gap-2">
                                     <img
                                       src={getImagePath(`images/6围/${stat.icon}.png`)}
                                       alt={stat.name}
@@ -446,11 +446,11 @@ export function DataQueryTab() {
                                     />
                                     {stat.name}
                                   </span>
-                                  <span className="text-slate-100 font-extrabold text-[12.5px] font-mono">{val}</span>
+                                  <span className="text-slate-800 dark:text-slate-100 font-extrabold text-[12.5px] font-mono">{val}</span>
                                 </div>
-                                <div className="w-full h-3 bg-slate-950 rounded-full overflow-hidden border border-slate-850 shadow-inner">
+                                <div className="w-full h-3 bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden border border-slate-200 dark:border-slate-800 shadow-inner">
                                   <div
-                                    className={`h-full rounded-full bg-gradient-to-r ${stat.color} shadow-[0_0_10px_rgba(99,102,241,0.2)] transition-all duration-500 ease-out`}
+                                    className={`h-full rounded-full bg-gradient-to-r ${stat.color} shadow-[0_0_10px_rgba(99,102,241,0.1)] dark:shadow-[0_0_10px_rgba(99,102,241,0.2)] transition-all duration-500 ease-out`}
                                     style={{ width: `${pct}%` }}
                                   ></div>
                                 </div>
@@ -461,7 +461,7 @@ export function DataQueryTab() {
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-6 text-center py-20 text-xs text-slate-500 h-full flex items-center justify-center">
+                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-center py-20 text-xs text-slate-500 h-full flex items-center justify-center shadow-sm">
                       暂无该形态的资质资质六围数据
                     </div>
                   )}
@@ -470,8 +470,8 @@ export function DataQueryTab() {
 
               {/* 中间：进化链走向 */}
               {petResult.evolution_chain && petResult.evolution_chain.length > 0 && (
-                <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-6">
-                  <span className="text-xs text-slate-400 font-black block mb-4 uppercase tracking-wider">🧬 进化链走向 (点击可跳转查询)</span>
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-black block mb-4 uppercase tracking-wider">🧬 进化链走向 (点击可跳转查询)</span>
                   <div className="flex flex-wrap items-center gap-4">
                     {petResult.evolution_chain.map((chainItem: any, idx) => {
                       if (typeof chainItem === "string") {
@@ -482,13 +482,13 @@ export function DataQueryTab() {
                         const iconPath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${cleanName}.png`);
                         return (
                           <React.Fragment key={idx}>
-                            {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
+                            {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-450 dark:text-slate-600 shrink-0" />}
                             <button
                               onClick={() => handlePetQuery(chainItem)}
                               className={`px-4 py-3 rounded-2xl border transition-all flex items-center gap-2.5 hover:scale-103 cursor-pointer ${
                                 cleanName === petResult.name
                                   ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold shadow-lg shadow-indigo-950/40"
-                                  : "bg-slate-950/60 border-slate-850 text-slate-300 hover:border-slate-600 hover:text-slate-100"
+                                  : "bg-slate-50 border-slate-200 text-slate-600 dark:bg-slate-950/60 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-slate-100 hover:bg-slate-100"
                               }`}
                             >
                               <img
@@ -507,7 +507,7 @@ export function DataQueryTab() {
                         // 分支进化
                         return (
                           <React.Fragment key={idx}>
-                            {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />}
+                            {idx > 0 && <ChevronRight className="w-4 h-4 text-slate-455 dark:text-slate-600 shrink-0" />}
                             <div className="flex flex-col gap-2">
                               {chainItem.map((subItem: string, subIdx) => {
                                 const cleanSub = subItem.split(/[（(]/)[0].trim();
@@ -522,7 +522,7 @@ export function DataQueryTab() {
                                     className={`px-3.5 py-2 rounded-xl border transition-all flex items-center gap-2 hover:scale-102 cursor-pointer ${
                                       cleanSub === petResult.name
                                         ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold shadow-lg shadow-indigo-950/40"
-                                        : "bg-slate-950/60 border-slate-850 text-slate-350 hover:border-slate-600 hover:text-slate-100"
+                                        : "bg-slate-50 border-slate-200 text-slate-600 dark:bg-slate-950/60 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-slate-100 hover:bg-slate-100"
                                     }`}
                                   >
                                     <img
@@ -550,37 +550,37 @@ export function DataQueryTab() {
               {/* 下方：精灵与精灵蛋尺寸指标及极端线限制 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* 精灵本体体型区间 */}
-                <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-5 flex flex-col justify-between gap-4">
-                  <div className="flex items-center gap-2 border-b border-slate-850 pb-3">
-                    <span className="p-1.5 bg-indigo-500/10 rounded-lg text-indigo-400">📏</span>
-                    <span className="text-xs font-black text-slate-200">精灵本体尺寸指标区间</span>
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 flex flex-col justify-between gap-4 shadow-sm">
+                  <div className="flex items-center gap-2 border-b border-slate-150 dark:border-slate-855 pb-3">
+                    <span className="p-1.5 bg-indigo-50 dark:bg-indigo-500/10 rounded-lg text-indigo-600 dark:text-indigo-400">📏</span>
+                    <span className="text-xs font-black text-slate-800 dark:text-slate-200">精灵本体尺寸指标区间</span>
                   </div>
                   <div className="flex flex-col gap-4 text-xs">
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="flex flex-col bg-slate-950/80 p-3.5 rounded-2xl border border-slate-850/60 shadow-inner">
-                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">身高区间:</span>
-                        <span className="text-slate-100 font-black text-[13.5px] mt-1 font-mono">
+                      <div className="flex flex-col bg-slate-50 dark:bg-slate-950/80 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-850/60 shadow-3xs">
+                        <span className="text-[10px] text-slate-455 dark:text-slate-500 font-bold uppercase tracking-wider">身高区间:</span>
+                        <span className="text-slate-850 dark:text-slate-100 font-black text-[13.5px] mt-1 font-mono">
                           {activeForm.height_min !== null ? `${activeForm.height_min}m` : '-'} ~ {activeForm.height_max !== null ? `${activeForm.height_max}m` : '-'}
                         </span>
                       </div>
-                      <div className="flex flex-col bg-slate-950/80 p-3.5 rounded-2xl border border-slate-850/60 shadow-inner">
-                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">体重区间:</span>
-                        <span className="text-slate-100 font-black text-[13.5px] mt-1 font-mono">
+                      <div className="flex flex-col bg-slate-50 dark:bg-slate-950/80 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-850/60 shadow-3xs">
+                        <span className="text-[10px] text-slate-455 dark:text-slate-555 font-bold uppercase tracking-wider">体重区间:</span>
+                        <span className="text-slate-850 dark:text-slate-100 font-black text-[13.5px] mt-1 font-mono">
                           {activeForm.weight_min !== null ? `${activeForm.weight_min}kg` : '-'} ~ {activeForm.weight_max !== null ? `${activeForm.weight_max}kg` : '-'}
                         </span>
                       </div>
                     </div>
 
-                    <div className="bg-slate-950/50 border border-slate-850/60 rounded-2xl p-4 flex flex-col gap-3">
-                      <span className="text-[10px] text-slate-500 font-black uppercase tracking-wider">体型判定及格线:</span>
+                    <div className="bg-slate-50/50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/60 rounded-2xl p-4 flex flex-col gap-3">
+                      <span className="text-[10px] text-slate-450 dark:text-slate-500 font-black uppercase tracking-wider">体型判定及及格线:</span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 text-[11px] font-bold text-amber-400/90 shadow-sm">
+                        <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-50/60 to-transparent border border-amber-200 dark:from-amber-500/10 dark:to-transparent dark:border-amber-500/20 text-[11px] font-bold text-amber-700 dark:text-amber-450 shadow-sm">
                           <span>🔥 大块头体重达标:</span>
                           <span className="font-mono font-black text-[12px]">
                             ≥ {activeForm.giant_weight_line !== null ? `${activeForm.giant_weight_line}kg` : '-'}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20 text-[11px] font-bold text-cyan-400/90 shadow-sm">
+                        <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-cyan-50/60 to-transparent border border-cyan-200 dark:from-cyan-500/10 dark:to-transparent dark:border-cyan-500/20 text-[11px] font-bold text-cyan-700 dark:text-cyan-455 shadow-sm">
                           <span>✨ 小不点体重达标:</span>
                           <span className="font-mono font-black text-[12px]">
                             ≤ {activeForm.tiny_weight_line !== null ? `${activeForm.tiny_weight_line}kg` : '-'}
@@ -592,38 +592,38 @@ export function DataQueryTab() {
                 </div>
 
                 {/* 精灵蛋体型区间 */}
-                <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-5 flex flex-col justify-between gap-4">
-                  <div className="flex items-center gap-2 border-b border-slate-850 pb-3">
-                    <span className="p-1.5 bg-amber-500/10 rounded-lg text-amber-400">🥚</span>
-                    <span className="text-xs font-black text-slate-200">精灵蛋尺寸指标区间</span>
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 flex flex-col justify-between gap-4 shadow-sm">
+                  <div className="flex items-center gap-2 border-b border-slate-150 dark:border-slate-855 pb-3">
+                    <span className="p-1.5 bg-amber-50 dark:bg-amber-500/10 rounded-lg text-amber-600 dark:text-amber-400">🥚</span>
+                    <span className="text-xs font-black text-slate-800 dark:text-slate-200">精灵蛋尺寸指标区间</span>
                   </div>
                   {petResult.egg_data && !petResult.egg_data.egg_groups.includes("无法孵蛋") ? (
                     <div className="flex flex-col gap-4 text-xs">
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="flex flex-col bg-slate-950/80 p-3.5 rounded-2xl border border-slate-850/60 shadow-inner">
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">蛋直径区间:</span>
-                          <span className="text-slate-100 font-black text-[13.5px] mt-1 font-mono">
+                        <div className="flex flex-col bg-slate-50 dark:bg-slate-950/80 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-850/60 shadow-3xs">
+                          <span className="text-[10px] text-slate-450 dark:text-slate-500 font-bold uppercase tracking-wider">蛋直径区间:</span>
+                          <span className="text-slate-850 dark:text-slate-100 font-black text-[13.5px] mt-1 font-mono">
                             {petResult.egg_data.height_min !== null ? `${petResult.egg_data.height_min}m` : '-'} ~ {petResult.egg_data.height_max !== null ? `${petResult.egg_data.height_max}m` : '-'}
                           </span>
                         </div>
-                        <div className="flex flex-col bg-slate-950/80 p-3.5 rounded-2xl border border-slate-850/60 shadow-inner">
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">蛋重量区间:</span>
-                          <span className="text-slate-100 font-black text-[13.5px] mt-1 font-mono">
+                        <div className="flex flex-col bg-slate-50 dark:bg-slate-950/80 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-850/60 shadow-3xs">
+                          <span className="text-[10px] text-slate-455 dark:text-slate-550 font-bold uppercase tracking-wider">蛋重量区间:</span>
+                          <span className="text-slate-850 dark:text-slate-100 font-black text-[13.5px] mt-1 font-mono">
                             {petResult.egg_data.weight_min !== null ? `${petResult.egg_data.weight_min}kg` : '-'} ~ {petResult.egg_data.weight_max !== null ? `${petResult.egg_data.weight_max}kg` : '-'}
                           </span>
                         </div>
                       </div>
 
-                      <div className="bg-slate-950/50 border border-slate-850/60 rounded-2xl p-4 flex flex-col gap-3">
-                        <span className="text-[10px] text-slate-500 font-black uppercase tracking-wider">精灵蛋体型判定及格线:</span>
+                      <div className="bg-slate-50/50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/60 rounded-2xl p-4 flex flex-col gap-3">
+                        <span className="text-[10px] text-slate-450 dark:text-slate-550 font-black uppercase tracking-wider">精灵蛋体型判定及格线:</span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 text-[11px] font-bold text-amber-400/90 shadow-sm">
+                          <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-50/60 to-transparent border border-amber-200 dark:from-amber-500/10 dark:to-transparent dark:border-amber-500/20 text-[11px] font-bold text-amber-700 dark:text-amber-455 shadow-sm">
                             <span>🔥 大块头蛋达标线:</span>
                             <span className="font-mono font-black text-[12px]">
                               ≥ {petResult.egg_data.giant_weight_line !== null ? `${petResult.egg_data.giant_weight_line}kg` : '-'}
                             </span>
                           </div>
-                          <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20 text-[11px] font-bold text-cyan-400/90 shadow-sm">
+                          <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-cyan-50/60 to-transparent border border-cyan-200 dark:from-cyan-500/10 dark:to-transparent dark:border-cyan-500/20 text-[11px] font-bold text-cyan-700 dark:text-cyan-455 shadow-sm">
                             <span>✨ 小不点蛋达标线:</span>
                             <span className="font-mono font-black text-[12px]">
                               ≤ {petResult.egg_data.tiny_weight_line !== null ? `${petResult.egg_data.tiny_weight_line}kg` : '-'}
@@ -633,7 +633,7 @@ export function DataQueryTab() {
                       </div>
                     </div>
                   ) : (
-                    <div className="h-[148px] bg-slate-950/20 border border-slate-850/60 rounded-2xl flex items-center justify-center text-xs text-slate-500 font-bold">
+                    <div className="h-[148px] bg-slate-50/20 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-850/60 rounded-2xl flex items-center justify-center text-xs text-slate-450 dark:text-slate-500 font-bold shadow-3xs">
                       该精灵属于“无法孵蛋”分类，无对应的精灵蛋体型参数
                     </div>
                   )}
@@ -641,10 +641,10 @@ export function DataQueryTab() {
               </div>
             </div>
           ) : (
-            <div className="bg-slate-900/20 border border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3">
-              <Search className="w-12 h-12 text-slate-700 animate-pulse" />
+            <div className="bg-white dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3 shadow-sm">
+              <Search className="w-12 h-12 text-slate-350 dark:text-slate-700 animate-pulse" />
               <div className="text-slate-400 text-xs font-semibold">请输入上方的精灵名称进行检索</div>
-              <div className="text-slate-600 text-[10.5px]">（支持模糊搜索，如输入“mm”或“miaomiao”也可以匹配到“喵喵”哦）</div>
+              <div className="text-slate-500 dark:text-slate-600 text-[10.5px]">（支持模糊搜索，如输入“mm”或“miaomiao”也可以匹配到“喵喵”哦）</div>
             </div>
           )}
         </div>
@@ -654,28 +654,28 @@ export function DataQueryTab() {
       {subTab === "eggGroup" && (
         <div className="flex flex-col gap-6 animate-in fade-in duration-200">
           {/* 输入框 */}
-          <form onSubmit={handleGroupQuery} className="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center">
-            <span className="text-xs text-slate-400 whitespace-nowrap font-bold">输入蛋组名称:</span>
+          <form onSubmit={handleGroupQuery} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center shadow-sm">
+            <span className="text-xs text-slate-550 dark:text-slate-400 whitespace-nowrap font-bold">输入蛋组名称:</span>
             <div className="flex-1 w-full relative">
               <input
                 type="text"
                 value={groupSearchVal}
                 onChange={(e) => setGroupSearchVal(e.target.value)}
                 placeholder="如: 天空、天空 动物、两栖 拟人..."
-                className="w-full pl-9 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-slate-100 text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-950/80 dark:border-slate-800 dark:text-slate-100 dark:placeholder-slate-500"
               />
-              <Layers className="w-4 h-4 text-slate-500 absolute left-3 top-3.5" />
+              <Layers className="w-4 h-4 text-slate-400 dark:text-slate-550 absolute left-3 top-3.5" />
             </div>
             <button
               type="submit"
-              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-md shadow-indigo-950/40 shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-sm shrink-0"
             >
               检索蛋组精灵
             </button>
           </form>
 
           {groupError && (
-            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold rounded-xl text-center">
+            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-455 text-xs font-bold rounded-xl text-center shadow-3xs animate-shake">
               {groupError}
             </div>
           )}
@@ -694,10 +694,10 @@ export function DataQueryTab() {
                       setPetSearchVal(pet.name);
                       handlePetQuery(pet.name);
                     }}
-                    className="bg-slate-900/40 border border-slate-800 hover:border-indigo-500/40 hover:bg-slate-900/60 p-4 rounded-2xl flex items-center gap-3 cursor-pointer group transition-all"
+                    className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 p-4 rounded-2xl flex items-center gap-3 cursor-pointer group transition-all shadow-3xs"
                     title="点击查询精灵图鉴与六围"
                   >
-                    <div className="w-12 h-12 bg-slate-950 border border-slate-850 rounded-xl flex items-center justify-center shrink-0 overflow-hidden relative">
+                    <div className="w-12 h-12 bg-slate-50 border border-slate-200 dark:bg-slate-950 dark:border-slate-850 rounded-xl flex items-center justify-center shrink-0 overflow-hidden relative shadow-3xs">
                       <img
                         src={spritePath}
                         alt={pet.name}
@@ -709,7 +709,7 @@ export function DataQueryTab() {
                     </div>
 
                     <div className="flex-1 min-w-0 text-left">
-                      <span className="text-[12.5px] font-black text-slate-200 group-hover:text-indigo-400 truncate block">
+                      <span className="text-[12.5px] font-black text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate block">
                         {pet.name}
                       </span>
                       <div className="flex items-center gap-1.5 mt-1">
@@ -721,7 +721,7 @@ export function DataQueryTab() {
                             className="w-3.5 h-3.5 object-contain"
                           />
                         ))}
-                        <span className="text-[9px] text-slate-500">
+                        <span className="text-[9px] text-slate-500 dark:text-slate-500 font-medium">
                           {pet.height_min}m / {pet.weight_min}kg
                         </span>
                       </div>
@@ -732,10 +732,10 @@ export function DataQueryTab() {
             </div>
           ) : (
             !groupError && (
-              <div className="bg-slate-900/20 border border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3">
-                <Layers className="w-12 h-12 text-slate-700 animate-pulse" />
+              <div className="bg-white dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3 shadow-sm">
+                <Layers className="w-12 h-12 text-slate-300 dark:text-slate-700 animate-pulse" />
                 <div className="text-slate-400 text-xs font-semibold">请输入上方的蛋组组合进行检索</div>
-                <div className="text-slate-600 text-[10.5px]">（支持多蛋组联合过滤，多个蛋组名之间用空格分隔）</div>
+                <div className="text-slate-500 dark:text-slate-600 text-[10.5px]">（支持多蛋组联合过滤，多个蛋组名之间用空格分隔）</div>
               </div>
             )
           )}
@@ -746,45 +746,45 @@ export function DataQueryTab() {
       {subTab === "eggPredict" && (
         <div className="flex flex-col gap-6 animate-in fade-in duration-200">
           {/* 输入参数 */}
-          <form onSubmit={handleEggQuery} className="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center">
+          <form onSubmit={handleEggQuery} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row gap-3 items-center shadow-sm">
             <div className="flex-1 w-full flex flex-col sm:flex-row items-center gap-3">
-              <span className="text-xs text-slate-400 whitespace-nowrap font-bold shrink-0">输入蛋体积参数:</span>
+              <span className="text-xs text-slate-555 dark:text-slate-400 whitespace-nowrap font-bold shrink-0">输入蛋体积参数:</span>
               <div className="relative w-full">
                 <input
                   type="text"
                   value={eggSearchVal}
                   onChange={(e) => setEggSearchVal(e.target.value)}
                   placeholder="直径(米/厘米) 重量(公斤/克) 加上指令可仅看同乘。如: 0.24 4.8 或 120cm 4500g 同乘"
-                  className="w-full pl-9 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-slate-100 text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-xs placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-950/80 dark:border-slate-800 dark:text-slate-100 dark:placeholder-slate-500"
                 />
-                <Zap className="w-4 h-4 text-slate-500 absolute left-3 top-3.5" />
+                <Zap className="w-4 h-4 text-slate-400 dark:text-slate-550 absolute left-3 top-3.5" />
               </div>
             </div>
             <button
               type="submit"
-              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-md shadow-indigo-950/40 shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-sm shrink-0"
             >
               孵蛋算法预测
             </button>
           </form>
 
           {eggError && (
-            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold rounded-xl text-center">
+            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-455 text-xs font-bold rounded-xl text-center shadow-3xs animate-shake">
               {eggError}
             </div>
           )}
 
           {/* 孵蛋预测预测结果列表 */}
           {eggResult.length > 0 ? (
-            <div className="bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-              <div className="px-4 py-3 bg-slate-950/60 border-b border-slate-800 text-[11px] text-slate-400 font-bold grid grid-cols-12 gap-2 text-center">
+            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+              <div className="px-4 py-3 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-550 dark:text-slate-400 font-bold grid grid-cols-12 gap-2 text-center">
                 <div className="col-span-4 text-left">可能孵出的精灵</div>
                 <div className="col-span-3">匹配概率</div>
                 <div className="col-span-2">极限体型</div>
                 <div className="col-span-3 text-right">理论直径 / 重量范围</div>
               </div>
 
-              <div className="divide-y divide-slate-850">
+              <div className="divide-y divide-slate-100 dark:divide-slate-850">
                 {eggResult.map((egg, idx) => {
                   const fileName = getSpriteFileName(egg.name);
                   const spritePath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${egg.name}.png`);
@@ -796,12 +796,12 @@ export function DataQueryTab() {
                         setPetSearchVal(egg.name);
                         handlePetQuery(egg.name);
                       }}
-                      className="px-4 py-3 hover:bg-slate-800/40 grid grid-cols-12 gap-2 items-center text-center text-xs cursor-pointer group"
+                      className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 grid grid-cols-12 gap-2 items-center text-center text-xs cursor-pointer group transition-colors"
                       title="点击查询精灵图鉴与六围"
                     >
                       {/* 精灵头像与名称 */}
                       <div className="col-span-4 flex items-center gap-3 text-left">
-                        <div className="w-10 h-10 bg-slate-950 border border-slate-850 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                        <div className="w-10 h-10 bg-slate-50 border border-slate-200 dark:bg-slate-950 dark:border-slate-850 rounded-lg flex items-center justify-center shrink-0 overflow-hidden shadow-3xs">
                           <img
                             src={spritePath}
                             alt={egg.name}
@@ -812,18 +812,18 @@ export function DataQueryTab() {
                           />
                         </div>
                         <div className="flex flex-col min-w-0">
-                          <span className="font-extrabold text-slate-200 group-hover:text-indigo-400 truncate">
+                          <span className="font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
                             {egg.name}
                           </span>
-                          <span className="text-[9px] text-slate-500 font-semibold truncate">
+                          <span className="text-[9px] text-slate-450 dark:text-slate-500 font-semibold truncate">
                             {egg.egg_groups.join(" & ")}
                           </span>
                         </div>
                       </div>
 
                       {/* 预测概率 */}
-                      <div className="col-span-3">
-                        <span className="text-sm font-black text-amber-500">{egg.probability}</span>
+                      <div className="col-span-3 font-mono">
+                        <span className="text-sm font-black text-amber-600 dark:text-amber-500">{egg.probability}</span>
                       </div>
 
                       {/* 极限体型标记 */}
@@ -831,10 +831,10 @@ export function DataQueryTab() {
                         <span
                           className={`px-2 py-0.5 rounded text-[9.5px] font-bold ${
                             egg.sizeTag === "大块头"
-                              ? "bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-xs"
+                              ? "bg-amber-50 text-amber-600 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20"
                               : egg.sizeTag === "小不点"
-                              ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-xs"
-                              : "bg-slate-800 text-slate-500 border border-transparent"
+                              ? "bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20"
+                              : "bg-slate-100 text-slate-550 border border-transparent dark:bg-slate-800 dark:text-slate-500"
                           }`}
                         >
                           {egg.sizeTag}
@@ -842,9 +842,9 @@ export function DataQueryTab() {
                       </div>
 
                       {/* 理论直径和重量范围 */}
-                      <div className="col-span-3 text-right text-[11px] text-slate-400 font-semibold">
+                      <div className="col-span-3 text-right text-[11px] text-slate-600 dark:text-slate-400 font-semibold">
                         <div>直: {egg.height_min}m ~ {egg.height_max}m</div>
-                        <div className="text-[10px] text-slate-500">重: {egg.weight_min}kg ~ {egg.weight_max}kg</div>
+                        <div className="text-[10px] text-slate-455 dark:text-slate-550">重: {egg.weight_min}kg ~ {egg.weight_max}kg</div>
                       </div>
                     </div>
                   );
@@ -853,10 +853,10 @@ export function DataQueryTab() {
             </div>
           ) : (
             !eggError && (
-              <div className="bg-slate-900/20 border border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3">
-                <Zap className="w-12 h-12 text-slate-700 animate-pulse" />
+              <div className="bg-white dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800/60 rounded-3xl py-24 text-center flex flex-col items-center justify-center gap-3 shadow-sm">
+                <Zap className="w-12 h-12 text-slate-300 dark:text-slate-700 animate-pulse" />
                 <div className="text-slate-400 text-xs font-semibold">请输入上方的精灵蛋体积参数进行预测</div>
-                <div className="text-slate-600 text-[10.5px]">（体积参数是估计蛋类型的重要指标）</div>
+                <div className="text-slate-550 dark:text-slate-600 text-[10.5px]">（体积参数是估计蛋类型的重要指标）</div>
               </div>
             )
           )}

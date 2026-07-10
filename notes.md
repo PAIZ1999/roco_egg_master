@@ -1,31 +1,14 @@
-# Notes: 精灵/蛋数据查询与行商模块迁移设计笔记
+# Notes: 洛克王国助手 roco_helper 版本兼容与动态拉伸等设计笔记
 
-## 1. 拼音库依赖
-- 迁移自 `rocoqqbot` 的模糊查找依赖 `pinyin-pro` 的全拼和首字母转换。
-- 我们将在项目目录执行 `npm install pinyin-pro`，并在 `queryHelper.ts` 中直接 `import { pinyin } from 'pinyin-pro'`。
+## 1. roco_helper 版本更新文件名变动兼容 (2026-07-10 新增)
+- **问题分析**:
+  - `electron/main.cjs` 内部的多处逻辑（路径探测、运行检测、静默拉起、退出清理）均硬编码了文件名 `"roco_helper-v3.2.2.exe"`。
+  - 当助手版本更新为 `roco_helper-v3.2.4.exe` 等其它版本时，文件名称变动，导致系统找不到文件、拉起失败，并且在退出时无法正确 kill 掉运行的助手。
+- **解决方案**:
+  - **动态目录扫描**：将原先对特定文件路径的直接判断，升级为对搜索目录清单（`dirsToSearch`）的动态扫描。在每个有效目录中寻找以 `"roco_helper-"` 开头且以 `".exe"` 结尾的文件（即支持 `roco_helper-v*.exe` 的模糊匹配）。
+  - **动态进程管理**：一旦扫描到符合规则的助手文件，提取其具体的文件名（如 `"roco_helper-v3.2.4.exe"`）作为当前的进程名，并更新到全局变量 `detectedHelperFileName`。在 `tasklist` 运行检测和 `taskkill` 进程清理中，动态传入该检测到的文件名，彻底废弃硬编码。
+  - **窗口标题前缀匹配**：将 powershell 拉起命令中的 WScript.Shell 激活标题 `'洛克助手 v3.2.2'` 缩短为通用标题前缀 `'洛克助手'`。由于 AppActivate 匹配标题前缀，这样不管未来版本号如何变化，都能完美激活并发送回车关闭初始弹窗，实现无缝静默拉起。
 
-## 2. 预测计算算法与数据
-- 预测算法核心逻辑：马氏距离多元高斯似然算法。
-- 数据依赖：
-  1. `egg_chart_data.json`：高斯分布的均值、方差等参数。
-  2. `pets_data.json`：精灵的形态、进化链、系别和蛋的基础极值。
-  3. `pets_race_data.json`（我们从 `rocoqqbot` 复制过来，以便支持精灵种族资质大表和资质六围展示！等等，在精灵数据查询中展示六围极具观赏性！）。
-- 我们需要将 `rocoqqbot` 的 `pets_race_data.json` 和 `src/egg_chart_data.json` 复制到主项目的 `src` 下。
-
-## 3. 远行商人抓取逻辑
-- 页面：`https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0`
-- 数据格式：HTML
-- 跨域解决方案：主进程中存在 `window.electronAPI.httpGet(url)`。虽然它会尝试 `JSON.parse` 并返回 `success: false`，但它会通过 `raw` 字段原样带回 HTML 内容。
-- 前端解析：在 `merchantHelper.ts` 中解析 `raw` HTML，使用正则表达式提取商品项目，生成商品 JSON 供悬浮窗使用。
-- 悬浮窗设计：
-  - 炫酷毛玻璃卡片（暗色背景，磨砂玻璃效果，带呼吸灯状态）。
-  - 右下角或者侧边浮动按钮，点击可以折叠/展开，并有红点提示（如果数据已更新）。
-  - 展示商品大头像、名称、价格（如 100 洛克钻）、限购情况，以及当前的时段（8-12点，12-16点，16-20点，20-24点）。
-
-## 4. 迁移文件清单
-1. [NEW] `src/egg_chart_data.json` (来自 `rocoqqbot/src/egg_chart_data.json`)
-2. [NEW] `src/pets_race_data.json` (来自 `rocoqqbot/pets_race_data.json`)
-3. [NEW] `src/queryHelper.ts` (基于 `rocoqqbot/src/query.js` 转换的 TypeScript 查询助手)
-4. [NEW] `src/merchantHelper.ts` (前端行商 HTML 解析助手)
-5. [NEW] `src/components/MerchantFloatWidget.tsx` (远行商人悬浮窗组件)
-6. [MODIFY] `src/App.tsx` (添加 Tab "dataQuery"，引入查询组件与悬浮窗组件)
+## 2. 聊天窗口任意方向拉伸与阻断滚动穿透设计 (历史归档)
+- 详见上期设计，使用 `overscroll-behavior: contain` 完美阻断滚动穿透。
+- 使用 `cursor-nw-resize` 阻断聊天框拉伸穿透。

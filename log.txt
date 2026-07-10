@@ -1,0 +1,12 @@
+
+[23792:0708/184813.845:ERROR:net\disk_cache\cache_util_win.cc:25] Unable to move the cache: 拒绝访问。 (0x5)
+[23792:0708/184813.845:ERROR:net\disk_cache\cache_util_win.cc:25] Unable to move the cache: 拒绝访问。 (0x5)
+[23792:0708/184813.845:ERROR:net\disk_cache\cache_util_win.cc:25] Unable to move the cache: 拒绝访问。 (0x5)
+[23792:0708/184813.845:ERROR:net\disk_cache\disk_cache.cc:284] Unable to create cache
+[23792:0708/184813.845:ERROR:gpu\ipc\host\gpu_disk_cache.cc:725] Gpu Cache Creation failed: -2
+[23792:0708/184813.845:ERROR:net\disk_cache\disk_cache.cc:284] Unable to create cache
+[23792:0708/184813.845:ERROR:gpu\ipc\host\gpu_disk_cache.cc:725] Gpu Cache Creation failed: -2
+[23792:0708/184813.845:ERROR:net\disk_cache\disk_cache.cc:284] Unable to create cache
+[23792:0708/184813.845:ERROR:gpu\ipc\host\gpu_disk_cache.cc:725] Gpu Cache Creation failed: -2
+(node:23792) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `洛克王国孵蛋数据管理系统 --trace-deprecation ...` to show where the warning was created)

@@ -1,7 +1,7 @@
-# Task Plan: 迁移精灵/蛋查询与远行商人功能
+# Task Plan: 洛克王国助手 roco_helper 版本兼容与动态拉伸等计划
 
 ## Goal
-从 `rocoqqbot` 迁移精灵数据查询、蛋组查询、孵蛋预测（马氏高斯似然算法）以及远行商人功能（CORS 请求/正则解析+悬浮窗展示）至主项目 `洛克王国孵蛋表-副本` 中，并将查询功能整合在新增的“数据查询”Tab，将远行商人做成可开启/折叠的悬浮窗。
+支持对洛克王国助手文件名变动（如更新至 `roco_helper-v3.2.4.exe` 等）的动态兼容，在保持静默拉起、运行检测、进程清理功能完备的同时，彻底去除对特定版本文件名的硬编码。
 
 ## MCP Status
 - [x] memory 检索完成
@@ -10,25 +10,20 @@
 - [x] memory 知识存储完成
 
 ## Phases
-- [x] Phase 1: 规划与准备 (创建 task_plan.md, notes.md, 安装 pinyin-pro)
-- [x] Phase 2: 编写 queryHelper.ts 核心计算模块 (处理多元高斯对数马氏距离等)
-- [x] Phase 3: 编写 merchantHelper.ts 及相关 Electron IPC 适配 (抓取和解析远行商人 HTML)
-- [x] Phase 4: 在 App.tsx 新增“数据查询”Tab 界面 (包含精灵数据查询、蛋组查询、孵蛋预测)
-- [x] Phase 5: 设计并实现“远行商人”可折叠/隐藏的悬浮窗组件
-- [x] Phase 6: 测试与验证 (TypeScript 编译与 Vite 生产构建全部通过)
-- [x] Phase 7: 最终交付与 PROJECT_KNOWLEDGE.md 更新
+- [x] Phase 1: 规划与准备 (更新 [notes.md](file:///d:/desk/洛克王国孵蛋表-副本/notes.md), [task_plan.md](file:///d:/desk/洛克王国孵蛋表-副本/task_plan.md) 与制定新版本的 [implementation_plan.md](file:///C:/Users/Administrator/.gemini/antigravity-ide/brain/03a5621e-13a5-4df4-8a53-7630d2379f06/implementation_plan.md))
+- [x] Phase 2: 修改 [main.cjs](file:///d:/desk/洛克王国孵蛋表-副本/electron/main.cjs) 以支持 `roco_helper-v*.exe` 模糊匹配与动态进程管理
+- [x] Phase 3: 测试验证 (运行不同版本号的模拟文件，验证拉起和 kill 行为)
+- [x] Phase 4: 最终交付与项目知识库更新
 
 ## Key Questions
-1. 行商图片下载：行商的原图是 remote URL，如果我们在前端悬浮窗显示，可以直接通过 `<img>` 标签引用 remote URL `sourceImage` 吗？
-   - 回答：是的，在渲染进程我们不需要物理下载图片到本地，因为这只是个前端悬浮窗，直接使用网页里的图片链接（如 `https://www.onebiji.com/....`）展示即可，不需要像 QQ 机器人那样本地保存再发送。
+- 无
 
 ## Decisions Made
-- [决策]: 新增 `"dataQuery"` 标签页，并设计精致的 UI 将精灵查询、蛋组查询和孵蛋预测组织为三个独立的子板块或统一搜索入口。
-- [决策]: 远行商人悬浮窗作为一个浮动的 Widget，支持点击展开/折叠，自动每隔 3 分钟通过 `window.electronAPI.httpGet` 刷新数据（防抖与组件卸载时清理定时器）。
-- [决策]: 在 `package.json` 中安装 `pinyin-pro`，以便在前端完美匹配拼音模糊查询。
+- [决策]: 声明一个全局变量 `detectedHelperFileName` 并在 `startRocoHelper()` 中动态赋值，确保关闭退出时也能准确地 kill 对应的进程。
+- [决策]: WScript.Shell 激活标题改为宽泛前缀 `'洛克助手'`，保证任意版本助手的弹框均能被正确激活。
 
 ## Errors Encountered
-- TS2339: Property 'src' does not exist on type 'HTMLElement' (在 `DataQueryTab.tsx` 中强转 `e.target` 为 `HTMLImageElement` 以修复此类型编译错误)。
+- 无
 
 ## Status
-**Currently in Phase 7** - 最终交付。修改均已测试通过并完成 Vite 生产构建验证。
+**Currently in Phase 4** - 最终交付。所有的功能开发与版本兼容模糊匹配已全部通过模拟单元测试和 Vite 生产构建。

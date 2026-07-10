@@ -1,0 +1,3 @@
+
+(node:27440) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `洛克王国孵蛋数据管理系统 --trace-deprecation ...` to show where the warning was created)

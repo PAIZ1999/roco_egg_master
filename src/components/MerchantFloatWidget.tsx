@@ -189,13 +189,13 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
   const glowBorderClass = primaryType ? `border-indigo-500/20` : "border-slate-800";
 
   return (
-    <div className={`w-full max-w-sm rounded-2xl bg-slate-950/80 border ${glowBorderClass} p-4 flex flex-col gap-3.5 relative overflow-hidden select-none text-left`}>
+    <div className={`w-full max-w-sm rounded-2xl bg-white border-slate-250/80 dark:bg-slate-950/80 border ${glowBorderClass} p-4 flex flex-col gap-3.5 relative overflow-hidden select-none text-left shadow-xs`}>
       {/* 顶部流光背景效果 */}
       <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
 
       {/* 头部 (头像 + ID + 名字) */}
       <div className="flex items-center gap-3.5 relative z-10">
-        <div className="w-16 h-16 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="w-16 h-16 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shrink-0">
           <img
             key={activeForm.name}
             src={getSpritePath()}
@@ -207,13 +207,13 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
           />
         </div>
         <div className="flex flex-col gap-1 min-w-0">
-          <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider font-mono">No.{data.id}</span>
-          <h2 className="text-[15px] font-black text-white truncate">{activeForm.name}</h2>
+          <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-wider font-mono">No.{data.id}</span>
+          <h2 className="text-[15px] font-black text-slate-800 dark:text-white truncate">{activeForm.name}</h2>
           <div className="flex items-center gap-1.5 flex-wrap">
             {activeForm.types.map((type: string) => (
               <span
                 key={type}
-                className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border ${typeColorClasses[type] || "border-slate-800 text-slate-400 bg-slate-900"}`}
+                className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded border ${typeColorClasses[type] || "border-slate-250 text-slate-500 bg-slate-100 dark:border-slate-800 dark:text-slate-400 dark:bg-slate-900"}`}
               >
                 {type}
               </span>
@@ -221,7 +221,7 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
             {activeForm.egg_groups.map((group: string) => (
               <span
                 key={group}
-                className={`text-[8.5px] font-semibold px-1.5 py-0.5 rounded border border-white/5 bg-white/5 text-slate-350`}
+                className={`text-[8.5px] font-semibold px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-655 dark:border-white/5 dark:bg-white/5 dark:text-slate-350`}
               >
                 {group}
               </span>
@@ -232,7 +232,7 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
 
       {/* 形态选择画廊 */}
       {data.avatars && data.avatars.length > 1 && (
-        <div className="border-t border-slate-900 pt-2.5">
+        <div className="border-t border-slate-150 dark:border-slate-900 pt-2.5">
           <div className="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto no-scrollbar">
             {data.avatars.map((av, avIdx) => {
               const formItem = data.forms[avIdx];
@@ -241,11 +241,10 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
                 <button
                   key={avIdx}
                   onClick={() => handleSelectForm(formItem)}
-                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded border text-[8.5px] cursor-pointer hover:bg-slate-900 transition-all ${
-                    isSelected
-                      ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold"
-                      : "bg-slate-950 border-slate-900 text-slate-400"
-                  }`}
+                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded border text-[8.5px] cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-all ${isSelected
+                      ? "bg-indigo-50 dark:bg-indigo-600/20 border-indigo-200 dark:border-indigo-500 text-indigo-600 dark:text-indigo-300 font-extrabold"
+                      : "bg-slate-50 border-slate-200 text-slate-500 dark:bg-slate-950 dark:border-slate-900 dark:text-slate-400"
+                    }`}
                 >
                   <img
                     src={getImagePath(av.absolutePath)}
@@ -266,12 +265,12 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
       {/* 体积区间面板 */}
       <div className="grid grid-cols-2 gap-2 text-[10px]">
         {/* 精灵本体体型 */}
-        <div className="bg-white/2 p-2.5 rounded-xl border border-white/5 flex flex-col gap-1.5">
-          <span className="font-extrabold text-slate-300">📏 精灵体型</span>
-          <div className="text-[9.5px] text-slate-400 space-y-0.5">
+        <div className="bg-slate-50/50 dark:bg-white/2 p-2.5 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col gap-1.5">
+          <span className="font-extrabold text-slate-700 dark:text-slate-300">📏 精灵体型</span>
+          <div className="text-[9.5px] text-slate-600 dark:text-slate-400 space-y-0.5">
             <div>身: {activeForm.height_min}m ~ {activeForm.height_max}m</div>
             <div>重: {activeForm.weight_min}kg ~ {activeForm.weight_max}kg</div>
-            <div className="text-[8.5px] text-slate-500 border-t border-white/5 pt-1 mt-1">
+            <div className="text-[8.5px] text-slate-450 dark:text-slate-500 border-t border-slate-150 dark:border-white/5 pt-1 mt-1">
               <div>大块头: ≥{activeForm.giant_weight_line}kg</div>
               <div>小不点: ≤{activeForm.tiny_weight_line}kg</div>
             </div>
@@ -279,41 +278,41 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
         </div>
 
         {/* 精灵蛋体型 */}
-        <div className="bg-white/2 p-2.5 rounded-xl border border-white/5 flex flex-col gap-1.5">
-          <span className="font-extrabold text-slate-300">🥚 精灵蛋</span>
+        <div className="bg-slate-50/50 dark:bg-white/2 p-2.5 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col gap-1.5">
+          <span className="font-extrabold text-slate-700 dark:text-slate-300">🥚 精灵蛋</span>
           {data.egg_data && !data.egg_data.egg_groups.includes("无法孵蛋") ? (
-            <div className="text-[9.5px] text-slate-400 space-y-0.5">
+            <div className="text-[9.5px] text-slate-600 dark:text-slate-400 space-y-0.5">
               <div>直: {data.egg_data.height_min}m ~ {data.egg_data.height_max}m</div>
               <div>重: {data.egg_data.weight_min}kg ~ {data.egg_data.weight_max}kg</div>
-              <div className="text-[8.5px] text-slate-500 border-t border-white/5 pt-1 mt-1">
+              <div className="text-[8.5px] text-slate-450 dark:text-slate-500 border-t border-slate-150 dark:border-white/5 pt-1 mt-1">
                 <div>大块头蛋: ≥{data.egg_data.giant_weight_line}kg</div>
                 <div>小不点蛋: ≤{data.egg_data.tiny_weight_line}kg</div>
               </div>
             </div>
           ) : (
-            <div className="text-[8.5px] text-slate-500 flex items-center justify-center h-full">无法孵蛋</div>
+            <div className="text-[8.5px] text-slate-450 dark:text-slate-500 flex items-center justify-center h-full">无法孵蛋</div>
           )}
         </div>
       </div>
 
       {/* 资质总和与雷达图 */}
       {activeForm.race && (
-        <div className="bg-white/2 border border-white/5 rounded-xl p-2.5 flex items-center gap-3">
+        <div className="bg-slate-50/50 dark:bg-white/2 border border-slate-200 dark:border-white/5 rounded-xl p-2.5 flex items-center gap-3">
           <div className="flex-1 flex flex-col gap-1 text-[10px]">
-            <span className="text-[10.5px] text-slate-300 font-extrabold flex items-center gap-1">
-              <Activity className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="text-[10.5px] text-slate-700 dark:text-slate-300 font-extrabold flex items-center gap-1">
+              <Activity className="w-3.5 h-3.5 text-emerald-650 dark:text-emerald-400 shrink-0" />
               资质六围
             </span>
-            <div className="text-[11.5px] text-slate-200 mt-1 font-bold">
-              总和: <span className="text-emerald-400 text-sm font-black">{activeForm.race.sum}</span>
+            <div className="text-[11.5px] text-slate-800 dark:text-slate-200 mt-1 font-bold">
+              总和: <span className="text-emerald-650 dark:text-emerald-400 text-sm font-black">{activeForm.race.sum}</span>
             </div>
-            <div className="text-[8.5px] text-slate-400 space-y-0.5 mt-1 font-mono">
+            <div className="text-[8.5px] text-slate-500 dark:text-slate-400 space-y-0.5 mt-1 font-mono">
               <div>生命:{activeForm.race.stats.hp} 速度:{activeForm.race.stats.speed}</div>
               <div>物攻:{activeForm.race.stats.atk} 物防:{activeForm.race.stats.def}</div>
               <div>魔攻:{activeForm.race.stats.sp_atk} 魔防:{activeForm.race.stats.sp_def}</div>
             </div>
           </div>
-          <div className="bg-slate-900/60 border border-white/5 rounded-lg">
+          <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-lg shadow-3xs">
             <BubbleRadarChart stats={activeForm.race.stats} />
           </div>
         </div>
@@ -330,16 +329,16 @@ function ChatEggGroupCard({ data, onSelectPet }: { data: { groups: string[], res
   const matchedCount = data.results.length;
 
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-slate-950/80 border border-indigo-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left">
+    <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-indigo-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left shadow-xs">
       <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
 
-      <div className="flex items-center gap-2 border-b border-white/5 pb-2.5">
-        <span className="p-1 bg-indigo-500/20 rounded-md text-indigo-400">🥚</span>
+      <div className="flex items-center gap-2 border-b border-slate-100 dark:border-white/5 pb-2.5">
+        <span className="p-1 bg-indigo-50 dark:bg-indigo-500/20 rounded-md text-indigo-600 dark:text-indigo-400">🥚</span>
         <div className="flex flex-col">
-          <span className="text-[12px] font-black text-white">
+          <span className="text-[12px] font-black text-slate-800 dark:text-white">
             {isSingle ? `${data.groups[0]}精灵画廊` : '双蛋组筛选结果'}
           </span>
-          <span className="text-[9px] text-slate-500 font-medium">共符合 {matchedCount} 只精灵</span>
+          <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium">共符合 {matchedCount} 只精灵</span>
         </div>
       </div>
 
@@ -353,7 +352,7 @@ function ChatEggGroupCard({ data, onSelectPet }: { data: { groups: string[], res
                 <button
                   key={idx}
                   onClick={() => onSelectPet(pet.name)}
-                  className="bg-white/2 border border-white/5 hover:border-indigo-500/40 hover:bg-slate-900 rounded-xl p-1.5 flex flex-col items-center gap-1 cursor-pointer transition-all active:scale-95"
+                  className="bg-slate-50/50 dark:bg-white/2 border border-slate-150 dark:border-white/5 hover:border-indigo-500/40 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-xl p-1.5 flex flex-col items-center gap-1 cursor-pointer transition-all active:scale-95 shadow-3xs"
                   title="点击查询精灵图鉴"
                 >
                   <img
@@ -364,7 +363,7 @@ function ChatEggGroupCard({ data, onSelectPet }: { data: { groups: string[], res
                       (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
                     }}
                   />
-                  <span className="text-[8px] font-bold text-slate-300 truncate w-full text-center">{pet.name}</span>
+                  <span className="text-[8px] font-bold text-slate-600 dark:text-slate-350 truncate w-full text-center">{pet.name}</span>
                 </button>
               );
             })}
@@ -380,10 +379,10 @@ function ChatEggGroupCard({ data, onSelectPet }: { data: { groups: string[], res
                 <button
                   key={idx}
                   onClick={() => onSelectPet(pet.name)}
-                  className="flex items-center gap-3 p-2 rounded-xl bg-white/2 border border-white/5 hover:border-indigo-500/40 hover:bg-slate-900 cursor-pointer text-left transition-all"
+                  className="flex items-center gap-3 p-2 rounded-xl bg-slate-50/50 dark:bg-white/2 border border-slate-150 dark:border-white/5 hover:border-indigo-500/40 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer text-left transition-all shadow-3xs"
                   title="点击查询精灵图鉴"
                 >
-                  <div className="w-10 h-10 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded-lg flex items-center justify-center shrink-0 overflow-hidden shadow-3xs">
                     <img
                       src={spritePath}
                       alt={pet.name}
@@ -395,10 +394,10 @@ function ChatEggGroupCard({ data, onSelectPet }: { data: { groups: string[], res
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11.5px] font-extrabold text-slate-200 truncate">{pet.name}</span>
-                      <span className="text-[8px] text-slate-500 font-mono">No.{pet.id || idx + 1}</span>
+                      <span className="text-[11.5px] font-extrabold text-slate-800 dark:text-slate-250 truncate">{pet.name}</span>
+                      <span className="text-[8px] text-slate-400 dark:text-slate-500 font-mono">No.{pet.id || idx + 1}</span>
                     </div>
-                    <div className="text-[9px] text-slate-400 mt-0.5">
+                    <div className="text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
                       直: {pet.height_min}m ~ {pet.height_max}m | 重: {pet.weight_min}kg ~ {pet.weight_max}kg
                     </div>
                   </div>
@@ -421,26 +420,26 @@ function ChatEggPredictCard({ data, onSelectPet }: { data: { height: number, wei
   const matchedCount = data.results.length;
 
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-slate-950/80 border border-indigo-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left">
+    <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-indigo-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left shadow-xs">
       <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
 
-      <div className="flex items-center gap-2 border-b border-white/5 pb-2.5">
-        <span className="p-1 bg-amber-500/20 rounded-md text-amber-400">🥚</span>
+      <div className="flex items-center gap-2 border-b border-slate-100 dark:border-white/5 pb-2.5">
+        <span className="p-1 bg-amber-50 dark:bg-amber-500/20 rounded-md text-amber-600 dark:text-amber-400">🥚</span>
         <div className="flex flex-col">
-          <span className="text-[12px] font-black text-white">精灵蛋体形体积检测报告</span>
-          <span className="text-[9px] text-slate-500 font-medium">洛克王国宠物繁育实验室</span>
+          <span className="text-[12px] font-black text-slate-800 dark:text-white">精灵蛋体形体积检测报告</span>
+          <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium">洛克王国宠物繁育实验室</span>
         </div>
       </div>
 
       {/* 检测指标看板 */}
-      <div className="grid grid-cols-2 gap-2 bg-slate-900 border border-white/5 p-2 rounded-xl text-center">
+      <div className="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/5 p-2 rounded-xl text-center shadow-3xs">
         <div className="flex flex-col">
-          <span className="text-[8.5px] text-slate-500 font-bold uppercase">检测直径</span>
-          <span className="text-[12px] font-black text-slate-200 mt-0.5">{data.height.toFixed(2)} m</span>
+          <span className="text-[8.5px] text-slate-400 dark:text-slate-500 font-bold uppercase">检测直径</span>
+          <span className="text-[12px] font-black text-slate-700 dark:text-slate-200 mt-0.5">{data.height.toFixed(2)} m</span>
         </div>
-        <div className="flex flex-col border-l border-white/5">
-          <span className="text-[8.5px] text-slate-500 font-bold uppercase">检测重量</span>
-          <span className="text-[12px] font-black text-slate-200 mt-0.5">{data.weight.toFixed(2)} kg</span>
+        <div className="flex flex-col border-l border-slate-200 dark:border-white/5">
+          <span className="text-[8.5px] text-slate-400 dark:text-slate-500 font-bold uppercase">检测重量</span>
+          <span className="text-[12px] font-black text-slate-700 dark:text-slate-200 mt-0.5">{data.weight.toFixed(2)} kg</span>
         </div>
       </div>
 
@@ -453,10 +452,10 @@ function ChatEggPredictCard({ data, onSelectPet }: { data: { height: number, wei
               <button
                 key={idx}
                 onClick={() => onSelectPet(egg.name)}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-white/2 border border-white/5 hover:border-indigo-500/40 hover:bg-slate-900 text-left transition-all cursor-pointer relative"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-slate-50/50 dark:bg-white/2 border border-slate-150 dark:border-white/5 hover:border-indigo-500/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-left transition-all cursor-pointer relative shadow-3xs"
                 title="点击查询精灵图鉴"
               >
-                <div className="w-10 h-10 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded-lg flex items-center justify-center shrink-0 overflow-hidden shadow-3xs">
                   <img
                     src={spritePath}
                     alt={egg.name}
@@ -468,19 +467,18 @@ function ChatEggPredictCard({ data, onSelectPet }: { data: { height: number, wei
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11.5px] font-extrabold text-slate-200 truncate">{egg.name}</span>
-                    <span className="text-[11px] font-black text-amber-500">{egg.probability}</span>
+                    <span className="text-[11.5px] font-extrabold text-slate-800 dark:text-slate-250 truncate">{egg.name}</span>
+                    <span className="text-[11px] font-black text-amber-600 dark:text-amber-500">{egg.probability}</span>
                   </div>
                   <div className="flex items-center gap-1.5 mt-1">
-                    <span className="text-[8.5px] text-slate-400 truncate max-w-28">{egg.egg_groups.join(" & ")}</span>
+                    <span className="text-[8.5px] text-slate-500 dark:text-slate-400 truncate max-w-28">{egg.egg_groups.join(" & ")}</span>
                     <span
-                      className={`px-1 rounded text-[7.5px] font-black ${
-                        egg.sizeTag === "大块头"
-                          ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                      className={`px-1 rounded text-[7.5px] font-black ${egg.sizeTag === "大块头"
+                          ? "bg-amber-50 text-amber-600 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20"
                           : egg.sizeTag === "小不点"
-                          ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                          : "bg-slate-800 text-slate-500 border border-transparent"
-                      }`}
+                            ? "bg-cyan-50 text-cyan-600 border border-cyan-205 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20"
+                            : "bg-slate-100 text-slate-550 border border-transparent dark:bg-slate-800 dark:text-slate-500"
+                        }`}
                     >
                       {egg.sizeTag}
                     </span>
@@ -492,7 +490,7 @@ function ChatEggPredictCard({ data, onSelectPet }: { data: { height: number, wei
         ) : (
           <div className="py-6 text-center text-[10px] text-slate-500 flex flex-col items-center gap-1.5 font-semibold">
             <span>⚠️ 未检测到匹配的精灵蛋</span>
-            <span className="text-[9px] text-slate-600 font-medium">直径与重量未处于现有繁育精灵的标准概率区间内</span>
+            <span className="text-[9px] text-slate-400 dark:text-slate-650 font-medium">直径与重量未处于现有繁育精灵的标准概率区间内</span>
           </div>
         )}
       </div>
@@ -516,22 +514,21 @@ function ChatMerchantCard({ data }: { data: MerchantData | null }) {
   };
 
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-slate-950/80 border border-amber-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left">
+    <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-amber-500/20 p-4 flex flex-col gap-3 relative overflow-hidden select-none text-left shadow-xs">
       <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
 
-      <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
+      <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-2.5">
         <div className="flex flex-col">
-          <h1 className="text-[12.5px] font-black text-white flex items-center gap-1.5">
+          <h1 className="text-[12.5px] font-black text-slate-800 dark:text-white flex items-center gap-1.5">
             🛒 远行商人今日售卖
           </h1>
-          <span className="text-[9px] text-slate-500 mt-0.5">
+          <span className="text-[9px] text-slate-400 dark:text-slate-500 mt-0.5">
             {isResting ? "每日 00:00-08:00 通常打烊休息中" : `${getPeriodText(data.period)} 商品清单`}
           </span>
         </div>
         <span
-          className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold ${
-            isResting ? "bg-slate-800 text-slate-400" : "bg-amber-600/20 text-amber-400 border border-amber-500/20 shadow-xs"
-          }`}
+          className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold ${isResting ? "bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-400" : "bg-amber-50 text-amber-600 border border-amber-200 dark:bg-amber-600/20 dark:text-amber-400 dark:border-amber-500/20 shadow-3xs"
+            }`}
         >
           {isResting ? "打烊中" : "售卖中"}
         </span>
@@ -541,15 +538,15 @@ function ChatMerchantCard({ data }: { data: MerchantData | null }) {
         {isResting || data.items.length === 0 ? (
           <div className="py-8 text-center flex flex-col items-center gap-1.5 text-xs text-slate-500">
             <span>💤 远行商人休息中哦</span>
-            <span className="text-[9.5px] text-slate-600">可以在每日的 08:00 - 24:00 时段查询售卖信息</span>
+            <span className="text-[9.5px] text-slate-400 dark:text-slate-600">可以在每日的 08:00 - 24:00 时段查询售卖信息</span>
           </div>
         ) : (
           data.items.map((item, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 p-2 rounded-xl bg-white/2 border border-white/5 hover:border-amber-500/30 hover:bg-slate-900 transition-all text-left"
+              className="flex items-center gap-3 p-2 rounded-xl bg-slate-50/50 dark:bg-white/2 border border-slate-150 dark:border-white/5 hover:border-amber-500/30 hover:bg-slate-900 transition-all text-left shadow-3xs"
             >
-              <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center shrink-0 overflow-hidden border border-white/5">
+              <div className="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 flex items-center justify-center shrink-0 overflow-hidden border border-slate-200 dark:border-white/5 shadow-3xs">
                 {item.sourceImage ? (
                   <img
                     src={item.sourceImage}
@@ -560,26 +557,26 @@ function ChatMerchantCard({ data }: { data: MerchantData | null }) {
                     }}
                   />
                 ) : (
-                  <Store className="w-5 h-5 text-slate-600" />
+                  <Store className="w-5 h-5 text-slate-400 dark:text-slate-650" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11.5px] font-extrabold text-slate-200 truncate">{item.name}</span>
-                  <span className="text-[11px] font-black text-amber-500 font-mono">💰{item.price}</span>
+                  <span className="text-[11.5px] font-extrabold text-slate-800 dark:text-slate-250 truncate">{item.name}</span>
+                  <span className="text-[11px] font-black text-amber-600 dark:text-amber-500 font-mono">💰{item.price}</span>
                 </div>
-                <div className="text-[9px] text-slate-400 flex items-center gap-2 mt-0.5">
-                  {item.limit && <span className="text-slate-500 font-semibold">{item.limit}</span>}
-                  {item.type && <span className="text-slate-500 font-medium">{item.type}</span>}
+                <div className="text-[9px] text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5">
+                  {item.limit && <span className="text-slate-450 dark:text-slate-500 font-semibold">{item.limit}</span>}
+                  {item.type && <span className="text-slate-450 dark:text-slate-550 font-medium">{item.type}</span>}
                 </div>
-                {item.description && <div className="text-[8px] text-slate-500 truncate mt-0.5">{item.description}</div>}
+                {item.description && <div className="text-[8px] text-slate-450 dark:text-slate-500 truncate mt-0.5">{item.description}</div>}
               </div>
             </div>
           ))
         )}
       </div>
 
-      <div className="text-[8px] text-slate-600 border-t border-white/5 pt-1.5 mt-1 flex justify-between">
+      <div className="text-[8px] text-slate-500 dark:text-slate-600 border-t border-slate-100 dark:border-white/5 pt-1.5 mt-1 flex justify-between">
         <span>数据源: 游民星空/好游快爆</span>
         <span>同步于 {data?.updatedAt}</span>
       </div>
@@ -596,13 +593,28 @@ interface Message {
 }
 
 export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: boolean }) {
+  const [position, setPosition] = useState(() => {
+    const saved = localStorage.getItem("roco_merchant_widget_pos");
+    if (saved) {
+      try {
+        return JSON.parse(saved) as { right: number; bottom: number };
+      } catch (e) { }
+    }
+    return { right: 16, bottom: 96 };
+  });
+
+  const savePosition = (pos: { right: number; bottom: number }) => {
+    setPosition(pos);
+    localStorage.setItem("roco_merchant_widget_pos", JSON.stringify(pos));
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       sender: "myow",
       type: "text",
-      content: "主人您好！我是您的智能桌宠助理喵喵 🐱~ \n\n您可以在这里直接输入以下指令：\n• 精灵名字（如“喵喵”、“鸭吉吉”）查精灵\n• 多个蛋组（如“天空 动物”）筛选蛋组精灵\n• 蛋的直径重量（如“0.24 4.8”）预测孵蛋结果\n• 输入“行商”或“远行商人”查询实时售卖清单"
+      content: "小洛克您好！我是低等精灵喵喵 🐱~ \n\n您可以在这里直接输入以下指令：\n• 精灵名字（如“喵喵”、“鸭吉吉”）查精灵\n• 多个蛋组（如“天空 动物”）筛选蛋组精灵\n• 蛋的直径重量（如“0.24 4.8”）预测孵蛋结果\n• 输入“行商”或“远行商人”查询实时售卖清单"
     }
   ]);
   const [inputText, setInputText] = useState("");
@@ -618,7 +630,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
       if (isOpen) {
         window.electronAPI.resizeFloatWindow({ width: chatWidth, height: chatHeight });
       } else {
-        window.electronAPI.resizeFloatWindow({ width: 70, height: 75 });
+        window.electronAPI.resizeFloatWindow({ width: 70, height: 70 });
       }
     }
   }, [isOpen, isStandalone, chatWidth, chatHeight]);
@@ -627,37 +639,51 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
     if (e.button !== 0 || isOpen) return; // 必须是左键，且只能在折叠态拖动
     e.preventDefault();
     e.stopPropagation();
-    
+
     const startX = e.screenX;
     const startY = e.screenY;
     let lastX = e.screenX;
     let lastY = e.screenY;
     let hasDragged = false;
-    
+
+    const initialRight = position.right;
+    const initialBottom = position.bottom;
+
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = moveEvent.screenX - lastX;
-      const deltaY = moveEvent.screenY - lastY;
-      
+      const currentX = moveEvent.screenX;
+      const currentY = moveEvent.screenY;
+      const totalDeltaX = currentX - startX;
+      const totalDeltaY = currentY - startY;
+      const deltaX = currentX - lastX;
+      const deltaY = currentY - lastY;
+
       // 累计移动距离如果超过 4 像素，标记为拖拽
-      const dist = Math.sqrt(
-        Math.pow(moveEvent.screenX - startX, 2) + Math.pow(moveEvent.screenY - startY, 2)
-      );
+      const dist = Math.sqrt(totalDeltaX * totalDeltaX + totalDeltaY * totalDeltaY);
       if (dist > 4) {
         hasDragged = true;
       }
-      
-      lastX = moveEvent.screenX;
-      lastY = moveEvent.screenY;
-      
-      if (hasDragged && window.electronAPI && window.electronAPI.dragFloatWindow) {
-        window.electronAPI.dragFloatWindow({ deltaX, deltaY });
+
+      lastX = currentX;
+      lastY = currentY;
+
+      if (hasDragged) {
+        if (isStandalone) {
+          if (window.electronAPI && window.electronAPI.dragFloatWindow) {
+            window.electronAPI.dragFloatWindow({ deltaX, deltaY });
+          }
+        } else {
+          // 限制位置在主窗口可视范围内，防止拖出屏幕外找不到
+          const newRight = Math.max(10, Math.min(window.innerWidth - 80, initialRight - totalDeltaX));
+          const newBottom = Math.max(10, Math.min(window.innerHeight - 80, initialBottom - totalDeltaY));
+          savePosition({ right: newRight, bottom: newBottom });
+        }
       }
     };
-    
+
     const handleMouseUp = (upEvent: MouseEvent) => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
-      
+
       // 只有在没发生实质拖拽的情况下，才触发点击逻辑
       if (!hasDragged) {
         if (clickTimerRef.current) {
@@ -676,41 +702,100 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
         }
       }
     };
-    
+
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleResizeMouseDown = (e: React.MouseEvent, direction: "left" | "top") => {
+  // 支持聊天窗口状态下拖拽移动窗口位置的处理器
+  const handleHeaderMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // 必须是左键
+    // 排除关闭按钮及其他交互按钮的触发
+    const target = e.target as HTMLElement;
+    if (target.closest("button") || target.closest("input")) return;
+
     e.preventDefault();
     e.stopPropagation();
-    
+
+    const startX = e.screenX;
+    const startY = e.screenY;
     let lastX = e.screenX;
     let lastY = e.screenY;
-    
+    let hasDragged = false;
+
+    const initialRight = position.right;
+    const initialBottom = position.bottom;
+
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      if (direction === "left") {
-        const deltaX = moveEvent.screenX - lastX;
-        lastX = moveEvent.screenX;
+      const currentX = moveEvent.screenX;
+      const currentY = moveEvent.screenY;
+      const totalDeltaX = currentX - startX;
+      const totalDeltaY = currentY - startY;
+      const deltaX = currentX - lastX;
+      const deltaY = currentY - lastY;
+
+      const dist = Math.sqrt(totalDeltaX * totalDeltaX + totalDeltaY * totalDeltaY);
+      if (dist > 4) {
+        hasDragged = true;
+      }
+
+      lastX = currentX;
+      lastY = currentY;
+
+      if (hasDragged) {
+        if (isStandalone) {
+          if (window.electronAPI && window.electronAPI.dragFloatWindow) {
+            window.electronAPI.dragFloatWindow({ deltaX, deltaY });
+          }
+        } else {
+          const newRight = Math.max(10, Math.min(window.innerWidth - chatWidth, initialRight - totalDeltaX));
+          const newBottom = Math.max(10, Math.min(window.innerHeight - chatHeight, initialBottom - totalDeltaY));
+          savePosition({ right: newRight, bottom: newBottom });
+        }
+      }
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleResizeMouseDown = (e: React.MouseEvent, direction: "left" | "top" | "top-left") => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let lastX = e.screenX;
+    let lastY = e.screenY;
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const deltaX = moveEvent.screenX - lastX;
+      const deltaY = moveEvent.screenY - lastY;
+      lastX = moveEvent.screenX;
+      lastY = moveEvent.screenY;
+
+      if (direction === "left" || direction === "top-left") {
         setChatWidth(prev => {
           const next = prev - deltaX;
           return Math.max(320, Math.min(580, next));
         });
-      } else if (direction === "top") {
-        const deltaY = moveEvent.screenY - lastY;
-        lastY = moveEvent.screenY;
+      }
+      if (direction === "top" || direction === "top-left") {
         setChatHeight(prev => {
           const next = prev - deltaY;
           return Math.max(400, Math.min(780, next));
         });
       }
     };
-    
+
     const handleMouseUp = () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-    
+
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
@@ -867,7 +952,10 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
   };
 
   return (
-    <div className={`${isStandalone ? "w-full h-full p-2" : "fixed right-4 bottom-24 z-50"} flex items-end justify-end select-none`}>
+    <div
+      style={!isStandalone ? { right: `${position.right}px`, bottom: `${position.bottom}px` } : undefined}
+      className={`${isStandalone ? "w-full h-full p-0 flex items-center justify-center" : "fixed z-50 flex items-end justify-end"} select-none`}
+    >
       <style>{`
         @keyframes myowFloat {
           0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
@@ -882,7 +970,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
       {!isOpen && (
         <button
           onMouseDown={handleMouseDown}
-          className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-slate-900/90 to-indigo-950/90 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border border-indigo-500/30 group p-1 animate-myow-float"
+          className="flex items-center justify-center w-14 h-14 bg-white/95 text-slate-800 border-indigo-100 hover:bg-slate-50 dark:bg-gradient-to-tr dark:from-slate-900/90 dark:to-indigo-950/90 dark:text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative border dark:border-indigo-500/30 group p-1 animate-myow-float"
           title="按住左键拖拽位置，单击聊天，双击显示软件主页"
         >
           <img
@@ -901,7 +989,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
           )}
           {/* 悬浮气泡提示 */}
           {!isStandalone && (
-            <span className="absolute right-16 scale-0 group-hover:scale-100 bg-slate-900/90 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-slate-700 transition-all">
+            <span className="absolute right-16 scale-0 group-hover:scale-100 bg-white border-slate-200 text-slate-800 dark:bg-slate-900/90 dark:text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg whitespace-nowrap shadow-lg border dark:border-slate-700 transition-all">
               🐱 喵喵智能助手在线！
             </span>
           )}
@@ -912,7 +1000,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
       {isOpen && (
         <div
           style={{ width: `${chatWidth}px`, height: `${chatHeight}px` }}
-          className="flex flex-col bg-slate-900/95 dark:bg-slate-950/98 backdrop-blur-xl border border-slate-700/80 dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right relative"
+          className="flex flex-col bg-white/98 text-slate-800 border-slate-200/80 dark:bg-slate-950/98 dark:text-slate-100 backdrop-blur-xl border dark:border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 transform scale-100 origin-bottom-right relative"
         >
           {/* 左边缘拉伸把手 */}
           <div
@@ -924,8 +1012,18 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
             className="h-2.5 w-full absolute left-0 top-0 cursor-n-resize z-50 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all"
             onMouseDown={(e) => handleResizeMouseDown(e, "top")}
           />
+          {/* 左上角对角线拉伸把手 */}
+          <div
+            className="w-4.5 h-4.5 absolute left-0 top-0 cursor-nw-resize z-50 hover:bg-indigo-500/20 active:bg-indigo-500/35 transition-all rounded-br-lg"
+            onMouseDown={(e) => handleResizeMouseDown(e, "top-left")}
+          />
+          {/* 左上角折角视觉提示 */}
+          <div className="absolute left-0.5 top-0.5 w-2 h-2 border-l border-t border-slate-500/40 rounded-tl-xs pointer-events-none z-50" />
           {/* 聊天头部 */}
-          <div className="px-4 py-3 bg-gradient-to-r from-indigo-900/40 to-slate-900/20 border-b border-slate-800 flex items-center justify-between">
+          <div 
+            onMouseDown={handleHeaderMouseDown}
+            className="px-4 py-3 bg-gradient-to-r from-indigo-50/60 to-slate-50/30 dark:from-indigo-900/40 dark:to-slate-900/20 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between cursor-move select-none"
+          >
             <div className="flex items-center gap-2">
               <img
                 src={getImagePath("images/sprites/喵喵.png")}
@@ -936,27 +1034,30 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
                 }}
               />
               <div className="flex flex-col">
-                <span className="text-[12px] font-black text-indigo-300">桌面助理：喵喵</span>
-                <span className="text-[9px] text-slate-500 font-bold">洛克王国孵蛋智能百宝箱</span>
+                <span className="text-[12px] font-black text-indigo-650 dark:text-indigo-300">桌面助理：喵喵</span>
+                <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold">洛克王国孵蛋智能百宝箱</span>
               </div>
             </div>
-            
+
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-800/60 active:scale-95 transition-all cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 dark:hover:text-rose-450 dark:hover:bg-slate-800/60 rounded-lg active:scale-95 transition-all cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* 消息历史区 */}
-          <div className="flex-1 overflow-y-auto p-3.5 custom-scrollbar space-y-3.5 bg-slate-900/30">
+          <div
+            style={{ overscrollBehavior: "contain" }}
+            className="flex-1 overflow-y-auto p-3.5 custom-scrollbar space-y-3.5 bg-slate-50/50 dark:bg-slate-900/30 overscroll-contain"
+          >
             {messages.map((msg) => {
               const isMyow = msg.sender === "myow";
               return (
                 <div key={msg.id} className={`flex items-start gap-2.5 ${isMyow ? 'justify-start' : 'justify-end'}`}>
                   {isMyow && (
-                    <div className="w-7.5 h-7.5 rounded-full bg-slate-950 border border-white/5 flex items-center justify-center overflow-hidden shrink-0">
+                    <div className="w-7.5 h-7.5 rounded-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shrink-0 shadow-3xs">
                       <img
                         src={getImagePath("images/sprites/喵喵.png")}
                         alt="喵喵"
@@ -970,11 +1071,10 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
 
                   <div className="max-w-[85%]">
                     {msg.type === "text" && (
-                      <div className={`px-3 py-2 rounded-xl text-xs leading-relaxed font-bold break-all whitespace-pre-line shadow ${
-                        isMyow 
-                          ? "bg-slate-850 border border-white/5 text-slate-200" 
-                          : "bg-indigo-600 border border-indigo-500 text-white"
-                      }`}>
+                      <div className={`px-3 py-2 rounded-xl text-xs leading-relaxed font-bold break-all whitespace-pre-line shadow-xs border ${isMyow
+                          ? "bg-white border-slate-200 text-slate-800 dark:bg-slate-800 dark:border-white/5 dark:text-slate-200"
+                          : "bg-indigo-600 border-transparent text-white dark:bg-indigo-600 dark:border-indigo-500"
+                        }`}>
                         {msg.content}
                       </div>
                     )}
@@ -998,10 +1098,10 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
           </div>
 
           {/* 聊天发送底部 */}
-          <div className="p-3 bg-slate-950/80 border-t border-slate-850 flex gap-2 items-center">
+          <div className="p-3 bg-white dark:bg-slate-950/80 border-t border-slate-150 dark:border-slate-800 flex gap-2 items-center">
             <button
               onClick={() => handleSend("行商")}
-              className="px-2.5 py-1.5 bg-amber-600/10 hover:bg-amber-600/20 border border-amber-500/20 text-amber-400 text-[10px] font-black rounded-lg transition-all active:scale-95 cursor-pointer shrink-0"
+              className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-250 text-amber-650 dark:bg-amber-600/10 dark:hover:bg-amber-600/20 dark:border-amber-500/20 dark:text-amber-400 text-[10px] font-black rounded-lg transition-all active:scale-95 cursor-pointer shrink-0 shadow-3xs"
               title="一键查看远行商人售卖清单"
             >
               💰 行商
@@ -1012,7 +1112,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="问问喵喵精灵、蛋组、体积..."
-              className="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-200 text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 font-bold"
+              className="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 text-xs placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 font-bold"
             />
             <button
               onClick={() => handleSend(inputText)}

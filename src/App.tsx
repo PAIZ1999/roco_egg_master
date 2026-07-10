@@ -175,6 +175,17 @@ export default function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // 跨窗口同步主题（亮/暗色模式）
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+        setTheme(e.newValue as 'light' | 'dark');
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   // 多账号核心状态
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [activeAccountId, setActiveAccountId] = useState<string>("");
@@ -3202,11 +3213,12 @@ export default function App() {
     return pages;
   };
 
-  const isFloatWindow = window.location.hash.includes("float");
+  const isFloatWindow = window.location.hash.includes("float") || 
+                        (window.electronAPI && window.electronAPI.isFloatWindow && window.electronAPI.isFloatWindow());
   if (isFloatWindow) {
     return (
-      <div className="w-screen h-screen bg-transparent overflow-hidden flex items-end justify-end p-2 select-none">
-        <MerchantFloatWidget />
+      <div className="w-screen h-screen bg-transparent overflow-hidden flex items-center justify-center p-0 select-none">
+        <MerchantFloatWidget isStandalone={true} />
       </div>
     );
   }
@@ -4969,7 +4981,10 @@ export default function App() {
               )}
             </div>
 
-            <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
+            <div 
+              style={{ overscrollBehavior: "contain" }}
+              className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar overscroll-contain"
+            >
               {fatherViewMode === "card" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                   {visibleFathers.length === 0 ? (
@@ -5305,7 +5320,10 @@ export default function App() {
               )}
             </div>
 
-            <div className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar">
+            <div 
+              style={{ overscrollBehavior: "contain" }}
+              className="max-h-[680px] overflow-y-auto pr-1.5 custom-scrollbar overscroll-contain"
+            >
               {motherViewMode === "card" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                   {visibleMothers.length === 0 ? (
@@ -7058,6 +7076,35 @@ const handleUnselectAllPairings = () => {
                     <div className="flex items-center gap-2">
                       <span className="text-slate-500 dark:text-slate-400">交流群：</span>
                       <span className="font-mono font-bold text-indigo-600">474567570</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* System Tools */}
+                <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3">
+                  <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">🛠️ 系统工具</p>
+                  <div className="flex flex-col gap-2 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600 dark:text-slate-400">关闭行为选项：</span>
+                      <button
+                        onClick={async () => {
+                          if (window.electronAPI && window.electronAPI.resetCloseChoice) {
+                            try {
+                              const res = await window.electronAPI.resetCloseChoice();
+                              if (res && res.success) {
+                                showToast("已重置关闭行为，下次关闭将重新提示确认！", "success");
+                              }
+                            } catch (err) {
+                              showToast("重置关闭行为失败", "error");
+                            }
+                          } else {
+                            showToast("非桌面打包环境，无需重置关闭行为", "info");
+                          }
+                        }}
+                        className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 rounded-lg transition-colors cursor-pointer font-bold text-[11px]"
+                      >
+                        重置关闭确认提示
+                      </button>
                     </div>
                   </div>
                 </div>
