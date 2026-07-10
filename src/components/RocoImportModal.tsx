@@ -372,9 +372,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         if (confIdVal === 3742001) {
           formSuffix = "蓬松的样子";
         } else if (confIdVal === 410738) {
-          formSuffix = "紧实的样子"; // 即睡帽鸭
+          formSuffix = "起来鸭"; // 即睡帽鸭
         } else if (confIdVal === 300710) {
-          formSuffix = "起来鸭";
+          formSuffix = "紧实的样子";
+        } else if (confIdVal === 300463) {
+          formSuffix = "等一等鸭";
         }
       }
 
