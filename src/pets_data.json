@@ -26,7 +26,7 @@
         "height_min": 0.54,
         "height_max": 0.78,
         "weight_min": 5.5,
-        "weight_max": 7.0,
+        "weight_max": 7,
         "giant_weight_line": 6.97,
         "tiny_weight_line": 5.53,
         "types": [
@@ -100,8 +100,8 @@
         ],
         "height_min": 1.5,
         "height_max": 2.15,
-        "weight_min": 105.0,
-        "weight_max": 125.0,
+        "weight_min": 105,
+        "weight_max": 125,
         "giant_weight_line": 124.6,
         "tiny_weight_line": 105.4,
         "types": [
@@ -159,7 +159,7 @@
         ],
         "height_min": 0.82,
         "height_max": 1.1,
-        "weight_min": 21.0,
+        "weight_min": 21,
         "weight_max": 30.7,
         "giant_weight_line": 30.506,
         "tiny_weight_line": 21.194,
@@ -176,7 +176,7 @@
         "height_min": 1.52,
         "height_max": 2.18,
         "weight_min": 90.5,
-        "weight_max": 110.0,
+        "weight_max": 110,
         "giant_weight_line": 109.61,
         "tiny_weight_line": 90.89,
         "types": [
@@ -232,7 +232,7 @@
         "height_min": 0.72,
         "height_max": 1.03,
         "weight_min": 29.5,
-        "weight_max": 34.0,
+        "weight_max": 34,
         "giant_weight_line": 33.91,
         "tiny_weight_line": 29.59,
         "types": [
@@ -246,7 +246,7 @@
         ],
         "height_min": 1.08,
         "height_max": 1.54,
-        "weight_min": 77.0,
+        "weight_min": 77,
         "weight_max": 85.5,
         "giant_weight_line": 85.33,
         "tiny_weight_line": 77.17,
@@ -502,8 +502,8 @@
         ],
         "height_min": 0.7,
         "height_max": 1.01,
-        "weight_min": 29.0,
-        "weight_max": 36.0,
+        "weight_min": 29,
+        "weight_max": 36,
         "giant_weight_line": 35.86,
         "tiny_weight_line": 29.14,
         "types": [
@@ -518,7 +518,7 @@
         "height_min": 1.42,
         "height_max": 1.92,
         "weight_min": 76.9,
-        "weight_max": 98.0,
+        "weight_max": 98,
         "giant_weight_line": 97.578,
         "tiny_weight_line": 77.322,
         "types": [
@@ -709,8 +709,8 @@
         ],
         "height_min": 0.49,
         "height_max": 0.7,
-        "weight_min": 21.0,
-        "weight_max": 34.0,
+        "weight_min": 21,
+        "weight_max": 34,
         "giant_weight_line": 33.74,
         "tiny_weight_line": 21.26,
         "types": [
@@ -766,7 +766,7 @@
       "height_min": 0.18,
       "height_max": 0.25,
       "weight_min": 6.475,
-      "weight_max": 13.0,
+      "weight_max": 13,
       "giant_weight_line": 12.8695,
       "tiny_weight_line": 6.6055
     },
@@ -801,7 +801,7 @@
         "height_min": 0.93,
         "height_max": 1.34,
         "weight_min": 97.5,
-        "weight_max": 115.0,
+        "weight_max": 115,
         "giant_weight_line": 114.65,
         "tiny_weight_line": 97.85,
         "types": [
@@ -816,8 +816,8 @@
         ],
         "height_min": 1.75,
         "height_max": 2.5,
-        "weight_min": 287.0,
-        "weight_max": 315.0,
+        "weight_min": 287,
+        "weight_max": 315,
         "giant_weight_line": 314.44,
         "tiny_weight_line": 287.56,
         "types": [
@@ -872,8 +872,8 @@
         ],
         "height_min": 0.78,
         "height_max": 1.12,
-        "weight_min": 25.0,
-        "weight_max": 34.0,
+        "weight_min": 25,
+        "weight_max": 34,
         "giant_weight_line": 33.82,
         "tiny_weight_line": 25.18,
         "types": [
@@ -906,9 +906,6 @@
     "evolution_chain": [
       "毛毛",
       "爬爬",
-      "化蝶",
-      "化蝶",
-      "化蝶",
       "化蝶"
     ],
     "forms": [
@@ -920,7 +917,7 @@
         ],
         "height_min": 0.31,
         "height_max": 0.45,
-        "weight_min": 3.0,
+        "weight_min": 3,
         "weight_max": 4.5,
         "giant_weight_line": 4.47,
         "tiny_weight_line": 3.03,
@@ -962,57 +959,6 @@
           "虫",
           "萌"
         ]
-      },
-      {
-        "name": "化蝶",
-        "egg_groups": [
-          "昆虫组",
-          "软体组"
-        ],
-        "height_min": 0.76,
-        "height_max": 1.08,
-        "weight_min": 15.6,
-        "weight_max": 17.8,
-        "giant_weight_line": 17.756,
-        "tiny_weight_line": 15.644,
-        "types": [
-          "虫",
-          "萌"
-        ]
-      },
-      {
-        "name": "化蝶",
-        "egg_groups": [
-          "昆虫组",
-          "软体组"
-        ],
-        "height_min": 0.76,
-        "height_max": 1.08,
-        "weight_min": 15.6,
-        "weight_max": 17.8,
-        "giant_weight_line": 17.756,
-        "tiny_weight_line": 15.644,
-        "types": [
-          "虫",
-          "萌"
-        ]
-      },
-      {
-        "name": "化蝶",
-        "egg_groups": [
-          "昆虫组",
-          "软体组"
-        ],
-        "height_min": 0.76,
-        "height_max": 1.08,
-        "weight_min": 15.6,
-        "weight_max": 17.8,
-        "giant_weight_line": 17.756,
-        "tiny_weight_line": 15.644,
-        "types": [
-          "虫",
-          "萌"
-        ]
       }
     ],
     "types": [
@@ -1032,7 +978,7 @@
       "height_min": 0.27,
       "height_max": 0.38,
       "weight_min": 10.325,
-      "weight_max": 15.0,
+      "weight_max": 15,
       "giant_weight_line": 14.9065,
       "tiny_weight_line": 10.4185
     },
@@ -1075,7 +1021,7 @@
       "height_min": 0.16,
       "height_max": 0.22,
       "weight_min": 2.345,
-      "weight_max": 3.0,
+      "weight_max": 3,
       "giant_weight_line": 2.9869,
       "tiny_weight_line": 2.3581
     },
@@ -1128,7 +1074,7 @@
         "height_min": 0.76,
         "height_max": 1.08,
         "weight_min": 76.5,
-        "weight_max": 90.0,
+        "weight_max": 90,
         "giant_weight_line": 89.73,
         "tiny_weight_line": 76.77,
         "types": [
@@ -1160,11 +1106,6 @@
     },
     "evolution_chain": [
       "矿晶虫",
-      "晶石蜗",
-      "晶石蜗",
-      "晶石蜗",
-      "晶石蜗",
-      "晶石蜗",
       "晶石蜗"
     ],
     "forms": [
@@ -1180,91 +1121,6 @@
         "weight_max": 10.53,
         "giant_weight_line": 10.4354,
         "tiny_weight_line": 5.8946,
-        "types": [
-          "光",
-          "地"
-        ]
-      },
-      {
-        "name": "晶石蜗",
-        "egg_groups": [
-          "大地组",
-          "软体组"
-        ],
-        "height_min": 1.03,
-        "height_max": 1.35,
-        "weight_min": 59.1,
-        "weight_max": 71.05,
-        "giant_weight_line": 70.811,
-        "tiny_weight_line": 59.339,
-        "types": [
-          "光",
-          "地"
-        ]
-      },
-      {
-        "name": "晶石蜗",
-        "egg_groups": [
-          "大地组",
-          "软体组"
-        ],
-        "height_min": 1.03,
-        "height_max": 1.35,
-        "weight_min": 59.1,
-        "weight_max": 71.05,
-        "giant_weight_line": 70.811,
-        "tiny_weight_line": 59.339,
-        "types": [
-          "光",
-          "地"
-        ]
-      },
-      {
-        "name": "晶石蜗",
-        "egg_groups": [
-          "大地组",
-          "软体组"
-        ],
-        "height_min": 1.03,
-        "height_max": 1.35,
-        "weight_min": 59.1,
-        "weight_max": 71.05,
-        "giant_weight_line": 70.811,
-        "tiny_weight_line": 59.339,
-        "types": [
-          "光",
-          "地"
-        ]
-      },
-      {
-        "name": "晶石蜗",
-        "egg_groups": [
-          "大地组",
-          "软体组"
-        ],
-        "height_min": 1.03,
-        "height_max": 1.35,
-        "weight_min": 59.1,
-        "weight_max": 71.05,
-        "giant_weight_line": 70.811,
-        "tiny_weight_line": 59.339,
-        "types": [
-          "光",
-          "地"
-        ]
-      },
-      {
-        "name": "晶石蜗",
-        "egg_groups": [
-          "大地组",
-          "软体组"
-        ],
-        "height_min": 1.03,
-        "height_max": 1.35,
-        "weight_min": 59.1,
-        "weight_max": 71.05,
-        "giant_weight_line": 70.811,
-        "tiny_weight_line": 59.339,
         "types": [
           "光",
           "地"
@@ -1336,8 +1192,8 @@
         ],
         "height_min": 0.62,
         "height_max": 0.89,
-        "weight_min": 24.0,
-        "weight_max": 31.0,
+        "weight_min": 24,
+        "weight_max": 31,
         "giant_weight_line": 30.86,
         "tiny_weight_line": 24.14,
         "types": [
@@ -1351,8 +1207,8 @@
         ],
         "height_min": 1.11,
         "height_max": 1.58,
-        "weight_min": 42.0,
-        "weight_max": 58.0,
+        "weight_min": 42,
+        "weight_max": 58,
         "giant_weight_line": 57.68,
         "tiny_weight_line": 42.32,
         "types": [
@@ -1424,7 +1280,7 @@
         ],
         "height_min": 0.76,
         "height_max": 1.09,
-        "weight_min": 29.0,
+        "weight_min": 29,
         "weight_max": 35.85,
         "giant_weight_line": 35.713,
         "tiny_weight_line": 29.137,
@@ -1450,7 +1306,7 @@
       "height_min": 0.27,
       "height_max": 0.38,
       "weight_min": 4.76,
-      "weight_max": 7.0,
+      "weight_max": 7,
       "giant_weight_line": 6.9552,
       "tiny_weight_line": 4.8048
     },
@@ -1523,7 +1379,7 @@
         "height_min": 0.47,
         "height_max": 0.68,
         "weight_min": 3.5,
-        "weight_max": 6.0,
+        "weight_max": 6,
         "giant_weight_line": 5.95,
         "tiny_weight_line": 3.55,
         "types": [
@@ -1595,7 +1451,7 @@
         "height_min": 0.65,
         "height_max": 0.8,
         "weight_min": 48.5,
-        "weight_max": 56.0,
+        "weight_max": 56,
         "giant_weight_line": 55.85,
         "tiny_weight_line": 48.65,
         "types": [
@@ -1641,8 +1497,6 @@
     "evolution_chain": [
       "小灵面",
       "暗影灵面",
-      "暗影灵面",
-      "幽冥眼",
       "幽冥眼"
     ],
     "forms": [
@@ -1672,36 +1526,6 @@
         "weight_max": 1.16,
         "giant_weight_line": 1.1392,
         "tiny_weight_line": 0.1408,
-        "types": [
-          "幽"
-        ]
-      },
-      {
-        "name": "暗影灵面",
-        "egg_groups": [
-          "魔力组"
-        ],
-        "height_min": 0.75,
-        "height_max": 0.86,
-        "weight_min": 0.12,
-        "weight_max": 1.16,
-        "giant_weight_line": 1.1392,
-        "tiny_weight_line": 0.1408,
-        "types": [
-          "幽"
-        ]
-      },
-      {
-        "name": "幽冥眼",
-        "egg_groups": [
-          "魔力组"
-        ],
-        "height_min": 1.55,
-        "height_max": 1.65,
-        "weight_min": 1.5,
-        "weight_max": 2.86,
-        "giant_weight_line": 2.8328,
-        "tiny_weight_line": 1.5272,
         "types": [
           "幽"
         ]
@@ -1769,7 +1593,7 @@
           "妖精组",
           "魔力组"
         ],
-        "height_min": 1.0,
+        "height_min": 1,
         "height_max": 1.2,
         "weight_min": 1.25,
         "weight_max": 3.1,
@@ -1884,7 +1708,7 @@
         "height_min": 1.52,
         "height_max": 1.79,
         "weight_min": 87.3,
-        "weight_max": 105.0,
+        "weight_max": 105,
         "giant_weight_line": 104.646,
         "tiny_weight_line": 87.654,
         "types": [
@@ -1956,8 +1780,8 @@
         ],
         "height_min": 1.33,
         "height_max": 1.9,
-        "weight_min": 75.0,
-        "weight_max": 86.0,
+        "weight_min": 75,
+        "weight_max": 86,
         "giant_weight_line": 85.78,
         "tiny_weight_line": 75.22,
         "types": [
@@ -2030,7 +1854,7 @@
         "height_min": 1.13,
         "height_max": 1.62,
         "weight_min": 48.6,
-        "weight_max": 58.0,
+        "weight_max": 58,
         "giant_weight_line": 57.812,
         "tiny_weight_line": 48.788,
         "types": [
@@ -2087,7 +1911,7 @@
           "植物组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 0.3,
         "weight_max": 1.35,
         "giant_weight_line": 1.329,
@@ -2303,7 +2127,7 @@
         "height_min": 1.11,
         "height_max": 1.33,
         "weight_min": 98.6,
-        "weight_max": 115.0,
+        "weight_max": 115,
         "giant_weight_line": 114.672,
         "tiny_weight_line": 98.928,
         "types": [
@@ -2444,7 +2268,7 @@
         ],
         "height_min": 0.37,
         "height_max": 0.52,
-        "weight_min": 4.0,
+        "weight_min": 4,
         "weight_max": 5.5,
         "giant_weight_line": 5.47,
         "tiny_weight_line": 4.03,
@@ -2754,8 +2578,8 @@
         ],
         "height_min": 0.74,
         "height_max": 1.05,
-        "weight_min": 29.0,
-        "weight_max": 34.0,
+        "weight_min": 29,
+        "weight_max": 34,
         "giant_weight_line": 33.9,
         "tiny_weight_line": 29.1,
         "types": [
@@ -2796,7 +2620,7 @@
         "height_min": 0.97,
         "height_max": 1.39,
         "weight_min": 90.2,
-        "weight_max": 112.0,
+        "weight_max": 112,
         "giant_weight_line": 111.564,
         "tiny_weight_line": 90.636,
         "types": [
@@ -2867,7 +2691,7 @@
           "天空组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 27.5,
         "weight_max": 33.72,
         "giant_weight_line": 33.5956,
@@ -3088,7 +2912,7 @@
         "height_min": 0.78,
         "height_max": 1.12,
         "weight_min": 94.2,
-        "weight_max": 143.0,
+        "weight_max": 143,
         "giant_weight_line": 142.024,
         "tiny_weight_line": 95.176,
         "types": [
@@ -3103,8 +2927,8 @@
         ],
         "height_min": 1.48,
         "height_max": 2.12,
-        "weight_min": 290.0,
-        "weight_max": 305.0,
+        "weight_min": 290,
+        "weight_max": 305,
         "giant_weight_line": 304.7,
         "tiny_weight_line": 290.3,
         "types": [
@@ -3208,7 +3032,7 @@
       "height_min": 0.15,
       "height_max": 0.21,
       "weight_min": 21.35,
-      "weight_max": 30.0,
+      "weight_max": 30,
       "giant_weight_line": 29.827,
       "tiny_weight_line": 21.523
     },
@@ -3225,8 +3049,8 @@
         ],
         "height_min": 0.35,
         "height_max": 0.5,
-        "weight_min": 61.0,
-        "weight_max": 75.0,
+        "weight_min": 61,
+        "weight_max": 75,
         "giant_weight_line": 74.72,
         "tiny_weight_line": 61.28,
         "types": [
@@ -3241,8 +3065,8 @@
         ],
         "height_min": 1.95,
         "height_max": 2.3,
-        "weight_min": 205.0,
-        "weight_max": 240.0,
+        "weight_min": 205,
+        "weight_max": 240,
         "giant_weight_line": 239.3,
         "tiny_weight_line": 205.7,
         "types": [
@@ -3302,7 +3126,7 @@
         ],
         "height_min": 0.84,
         "height_max": 1.21,
-        "weight_min": 72.0,
+        "weight_min": 72,
         "weight_max": 87.5,
         "giant_weight_line": 87.19,
         "tiny_weight_line": 72.31,
@@ -3381,7 +3205,7 @@
         "height_min": 1.35,
         "height_max": 1.93,
         "weight_min": 94.5,
-        "weight_max": 105.0,
+        "weight_max": 105,
         "giant_weight_line": 104.79,
         "tiny_weight_line": 94.71,
         "types": [
@@ -3763,8 +3587,8 @@
         ],
         "height_min": 1.23,
         "height_max": 1.76,
-        "weight_min": 74.0,
-        "weight_max": 92.0,
+        "weight_min": 74,
+        "weight_max": 92,
         "giant_weight_line": 91.64,
         "tiny_weight_line": 74.36,
         "types": [
@@ -3846,7 +3670,7 @@
       "height_min": 0.37,
       "height_max": 0.51,
       "weight_min": 3.325,
-      "weight_max": 5.0,
+      "weight_max": 5,
       "giant_weight_line": 4.9665,
       "tiny_weight_line": 3.3585
     },
@@ -3880,8 +3704,8 @@
         ],
         "height_min": 1.11,
         "height_max": 1.59,
-        "weight_min": 59.0,
-        "weight_max": 76.0,
+        "weight_min": 59,
+        "weight_max": 76,
         "giant_weight_line": 75.66,
         "tiny_weight_line": 59.34,
         "types": [
@@ -3896,8 +3720,8 @@
         ],
         "height_min": 1.61,
         "height_max": 2.31,
-        "weight_min": 156.0,
-        "weight_max": 187.0,
+        "weight_min": 156,
+        "weight_max": 187,
         "giant_weight_line": 186.38,
         "tiny_weight_line": 156.62,
         "types": [
@@ -4290,8 +4114,8 @@
         ],
         "height_min": 2.1,
         "height_max": 2.55,
-        "weight_min": 195.0,
-        "weight_max": 296.0,
+        "weight_min": 195,
+        "weight_max": 296,
         "giant_weight_line": 293.98,
         "tiny_weight_line": 197.02,
         "types": [
@@ -4516,7 +4340,7 @@
           "妖精组"
         ],
         "height_min": 2.15,
-        "height_max": 3.0,
+        "height_max": 3,
         "weight_min": 71.05,
         "weight_max": 86.05,
         "giant_weight_line": 85.75,
@@ -4583,7 +4407,7 @@
       "height_min": 0.25,
       "height_max": 0.35,
       "weight_min": 6.86,
-      "weight_max": 9.0,
+      "weight_max": 9,
       "giant_weight_line": 8.9572,
       "tiny_weight_line": 6.9028
     },
@@ -4641,7 +4465,7 @@
       "height_min": 0.3,
       "height_max": 0.42,
       "weight_min": 4.025,
-      "weight_max": 7.0,
+      "weight_max": 7,
       "giant_weight_line": 6.9405,
       "tiny_weight_line": 4.0845
     },
@@ -4691,7 +4515,7 @@
         ],
         "height_min": 1.72,
         "height_max": 2.45,
-        "weight_min": 125.0,
+        "weight_min": 125,
         "weight_max": 170.5,
         "giant_weight_line": 169.59,
         "tiny_weight_line": 125.91,
@@ -4715,7 +4539,7 @@
       "height_min": 0.2,
       "height_max": 0.28,
       "weight_min": 1.225,
-      "weight_max": 2.0,
+      "weight_max": 2,
       "giant_weight_line": 1.9845,
       "tiny_weight_line": 1.2405
     },
@@ -4733,7 +4557,7 @@
         "height_min": 0.48,
         "height_max": 0.68,
         "weight_min": 3.5,
-        "weight_max": 5.0,
+        "weight_max": 5,
         "giant_weight_line": 4.97,
         "tiny_weight_line": 3.53,
         "types": [
@@ -4842,7 +4666,7 @@
         "height_min": 1.2,
         "height_max": 1.6,
         "weight_min": 86.8,
-        "weight_max": 113.0,
+        "weight_max": 113,
         "giant_weight_line": 112.476,
         "tiny_weight_line": 87.324,
         "types": [
@@ -4916,8 +4740,8 @@
         ],
         "height_min": 1.55,
         "height_max": 1.65,
-        "weight_min": 42.0,
-        "weight_max": 58.0,
+        "weight_min": 42,
+        "weight_max": 58,
         "giant_weight_line": 57.68,
         "tiny_weight_line": 42.32,
         "types": [
@@ -5091,8 +4915,8 @@
         ],
         "height_min": 1.26,
         "height_max": 1.8,
-        "weight_min": 145.0,
-        "weight_max": 165.0,
+        "weight_min": 145,
+        "weight_max": 165,
         "giant_weight_line": 164.6,
         "tiny_weight_line": 145.4,
         "types": [
@@ -5227,7 +5051,7 @@
           "软体组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 21.4,
         "weight_max": 25.6,
         "giant_weight_line": 25.516,
@@ -5594,7 +5418,7 @@
         "height_min": 0.58,
         "height_max": 0.68,
         "weight_min": 2.9,
-        "weight_max": 4.0,
+        "weight_max": 4,
         "giant_weight_line": 3.978,
         "tiny_weight_line": 2.922,
         "types": [
@@ -5653,7 +5477,7 @@
         "height_min": 0.72,
         "height_max": 0.94,
         "weight_min": 27.2,
-        "weight_max": 34.0,
+        "weight_max": 34,
         "giant_weight_line": 33.864,
         "tiny_weight_line": 27.336,
         "types": [
@@ -5666,9 +5490,9 @@
           "龙组"
         ],
         "height_min": 3.65,
-        "height_max": 4.0,
-        "weight_min": 168.0,
-        "weight_max": 195.0,
+        "height_max": 4,
+        "weight_min": 168,
+        "weight_max": 195,
         "giant_weight_line": 194.46,
         "tiny_weight_line": 168.54,
         "types": [
@@ -5912,9 +5736,9 @@
           "动物组"
         ],
         "height_min": 1.85,
-        "height_max": 2.0,
-        "weight_min": 65.0,
-        "weight_max": 78.0,
+        "height_max": 2,
+        "weight_min": 65,
+        "weight_max": 78,
         "giant_weight_line": 77.74,
         "tiny_weight_line": 65.26,
         "types": [
@@ -5974,7 +5798,7 @@
         "height_min": 1.32,
         "height_max": 1.55,
         "weight_min": 42.5,
-        "weight_max": 62.0,
+        "weight_max": 62,
         "giant_weight_line": 61.61,
         "tiny_weight_line": 42.89,
         "types": [
@@ -6206,8 +6030,8 @@
         ],
         "height_min": 1.43,
         "height_max": 2.05,
-        "weight_min": 265.0,
-        "weight_max": 295.0,
+        "weight_min": 265,
+        "weight_max": 295,
         "giant_weight_line": 294.4,
         "tiny_weight_line": 265.6,
         "types": [
@@ -6267,8 +6091,8 @@
         ],
         "height_min": 1.79,
         "height_max": 1.99,
-        "weight_min": 240.0,
-        "weight_max": 265.0,
+        "weight_min": 240,
+        "weight_max": 265,
         "giant_weight_line": 264.5,
         "tiny_weight_line": 240.5,
         "types": [
@@ -6309,7 +6133,7 @@
           "动物组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 29.8,
         "weight_max": 36.8,
         "giant_weight_line": 36.66,
@@ -6325,7 +6149,7 @@
         ],
         "height_min": 0.85,
         "height_max": 1.22,
-        "weight_min": 68.0,
+        "weight_min": 68,
         "weight_max": 77.5,
         "giant_weight_line": 77.31,
         "tiny_weight_line": 68.19,
@@ -6340,7 +6164,7 @@
         ],
         "height_min": 1.38,
         "height_max": 1.98,
-        "weight_min": 135.0,
+        "weight_min": 135,
         "weight_max": 185.06,
         "giant_weight_line": 184.0588,
         "tiny_weight_line": 136.0012,
@@ -6466,7 +6290,7 @@
         ],
         "height_min": 0.81,
         "height_max": 1.16,
-        "weight_min": 18.0,
+        "weight_min": 18,
         "weight_max": 24.91,
         "giant_weight_line": 24.7718,
         "tiny_weight_line": 18.1382,
@@ -6498,16 +6322,6 @@
     "evolution_chain": [
       "脆筒甜甜",
       "香草甜甜",
-      "香草甜甜",
-      "香草甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
-      "圣代甜甜",
       "圣代甜甜"
     ],
     "forms": [
@@ -6544,173 +6358,13 @@
         ]
       },
       {
-        "name": "香草甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.4,
-        "height_max": 0.6,
-        "weight_min": 5.15,
-        "weight_max": 7.8,
-        "giant_weight_line": 7.747,
-        "tiny_weight_line": 5.203,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "香草甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.4,
-        "height_max": 0.6,
-        "weight_min": 5.15,
-        "weight_max": 7.8,
-        "giant_weight_line": 7.747,
-        "tiny_weight_line": 5.203,
-        "types": [
-          "冰"
-        ]
-      },
-      {
         "name": "圣代甜甜",
         "egg_groups": [
           "软体组",
           "魔力组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
-        "weight_min": 16.5,
-        "weight_max": 22.75,
-        "giant_weight_line": 22.625,
-        "tiny_weight_line": 16.625,
-        "types": [
-          "冰"
-        ]
-      },
-      {
-        "name": "圣代甜甜",
-        "egg_groups": [
-          "软体组",
-          "魔力组"
-        ],
-        "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 16.5,
         "weight_max": 22.75,
         "giant_weight_line": 22.625,
@@ -6735,8 +6389,8 @@
       "height_min": 0.08,
       "height_max": 0.1,
       "weight_min": 0.945,
-      "weight_max": 16000.0,
-      "giant_weight_line": 15869.0,
+      "weight_max": 16000,
+      "giant_weight_line": 15869,
       "tiny_weight_line": 0.9581
     },
     "evolution_chain": [
@@ -6752,7 +6406,7 @@
         "height_min": 0.18,
         "height_max": 0.31,
         "weight_min": 2.7,
-        "weight_max": 4.0,
+        "weight_max": 4,
         "giant_weight_line": 3.974,
         "tiny_weight_line": 2.726,
         "types": [
@@ -6965,8 +6619,8 @@
         ],
         "height_min": 0.9,
         "height_max": 1.28,
-        "weight_min": 48.0,
-        "weight_max": 53.0,
+        "weight_min": 48,
+        "weight_max": 53,
         "giant_weight_line": 52.9,
         "tiny_weight_line": 48.1,
         "types": [
@@ -6992,7 +6646,7 @@
       "height_min": 0.3,
       "height_max": 0.42,
       "weight_min": 2.625,
-      "weight_max": 5.0,
+      "weight_max": 5,
       "giant_weight_line": 4.9525,
       "tiny_weight_line": 2.6725
     },
@@ -7009,7 +6663,7 @@
           "妖精组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 7.5,
         "weight_max": 12.5,
         "giant_weight_line": 12.4,
@@ -7085,7 +6739,7 @@
         ],
         "height_min": 0.69,
         "height_max": 0.98,
-        "weight_min": 21.0,
+        "weight_min": 21,
         "weight_max": 31.5,
         "giant_weight_line": 31.29,
         "tiny_weight_line": 21.21,
@@ -7450,8 +7104,8 @@
         ],
         "height_min": 0.42,
         "height_max": 0.6,
-        "weight_min": 8.0,
-        "weight_max": 11.0,
+        "weight_min": 8,
+        "weight_max": 11,
         "giant_weight_line": 10.94,
         "tiny_weight_line": 8.06,
         "types": [
@@ -7513,29 +7167,12 @@
     },
     "evolution_chain": [
       "可立鸡",
-      "可立鸡",
       "可立鸡-变形测试用",
       "晕晕鸡",
       "绅士鸡",
       "武者鸡"
     ],
     "forms": [
-      {
-        "name": "可立鸡",
-        "egg_groups": [
-          "天空组",
-          "拟人组"
-        ],
-        "height_min": 0.39,
-        "height_max": 0.56,
-        "weight_min": 4.6,
-        "weight_max": 7.4,
-        "giant_weight_line": 7.344,
-        "tiny_weight_line": 4.656,
-        "types": [
-          "火"
-        ]
-      },
       {
         "name": "可立鸡",
         "egg_groups": [
@@ -7677,7 +7314,7 @@
       "height_min": 0.85,
       "height_max": 0.89,
       "weight_min": 31.325,
-      "weight_max": 51.0,
+      "weight_max": 51,
       "giant_weight_line": 50.6065,
       "tiny_weight_line": 31.7185
     },
@@ -7691,7 +7328,7 @@
           "天空组",
           "巨灵组"
         ],
-        "height_min": 2.0,
+        "height_min": 2,
         "height_max": 2.15,
         "weight_min": 89.5,
         "weight_max": 127.5,
@@ -7720,7 +7357,7 @@
       "height_min": 0.85,
       "height_max": 1.1,
       "weight_min": 225.75,
-      "weight_max": 280.0,
+      "weight_max": 280,
       "giant_weight_line": 278.915,
       "tiny_weight_line": 226.835
     },
@@ -7734,10 +7371,10 @@
           "巨灵组",
           "海洋组"
         ],
-        "height_min": 2.0,
+        "height_min": 2,
         "height_max": 2.65,
-        "weight_min": 645.0,
-        "weight_max": 700.0,
+        "weight_min": 645,
+        "weight_max": 700,
         "giant_weight_line": 698.9,
         "tiny_weight_line": 646.1,
         "types": [
@@ -8017,8 +7654,8 @@
         ],
         "height_min": 1.17,
         "height_max": 1.68,
-        "weight_min": 83.0,
-        "weight_max": 96.0,
+        "weight_min": 83,
+        "weight_max": 96,
         "giant_weight_line": 95.74,
         "tiny_weight_line": 83.26,
         "types": [
@@ -8075,8 +7712,8 @@
         ],
         "height_min": 1.83,
         "height_max": 2.07,
-        "weight_min": 481.0,
-        "weight_max": 658.0,
+        "weight_min": 481,
+        "weight_max": 658,
         "giant_weight_line": 654.46,
         "tiny_weight_line": 484.54,
         "types": [
@@ -8100,7 +7737,7 @@
       "height_min": 0.23,
       "height_max": 0.29,
       "weight_min": 3.325,
-      "weight_max": 5.0,
+      "weight_max": 5,
       "giant_weight_line": 4.9665,
       "tiny_weight_line": 3.3585
     },
@@ -8177,7 +7814,7 @@
           "龙组"
         ],
         "height_min": 0.85,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 18.6,
         "weight_max": 33.5,
         "giant_weight_line": 33.202,
@@ -8196,7 +7833,7 @@
         "height_min": 2.25,
         "height_max": 2.45,
         "weight_min": 85.7,
-        "weight_max": 105.0,
+        "weight_max": 105,
         "giant_weight_line": 104.614,
         "tiny_weight_line": 86.086,
         "types": [
@@ -8330,7 +7967,7 @@
         "height_min": 1.93,
         "height_max": 2.4,
         "weight_min": 96.5,
-        "weight_max": 115.0,
+        "weight_max": 115,
         "giant_weight_line": 114.63,
         "tiny_weight_line": 96.87,
         "types": [
@@ -8374,7 +8011,7 @@
         "height_min": 0.3,
         "height_max": 0.45,
         "weight_min": 0.95,
-        "weight_max": 2.0,
+        "weight_max": 2,
         "giant_weight_line": 1.979,
         "tiny_weight_line": 0.971,
         "types": [
@@ -8621,7 +8258,7 @@
       "height_min": 0.12,
       "height_max": 0.15,
       "weight_min": 0.35,
-      "weight_max": 1.0,
+      "weight_max": 1,
       "giant_weight_line": 0.987,
       "tiny_weight_line": 0.363
     },
@@ -8638,7 +8275,7 @@
         ],
         "height_min": 0.29,
         "height_max": 0.35,
-        "weight_min": 1.0,
+        "weight_min": 1,
         "weight_max": 2.5,
         "giant_weight_line": 2.47,
         "tiny_weight_line": 1.03,
@@ -8740,7 +8377,7 @@
         "height_min": 1.75,
         "height_max": 2.1,
         "weight_min": 112.9,
-        "weight_max": 165.0,
+        "weight_max": 165,
         "giant_weight_line": 163.958,
         "tiny_weight_line": 113.942,
         "types": [
@@ -8770,29 +8407,12 @@
     },
     "evolution_chain": [
       "果冻",
-      "果冻",
       "果冻-变形测试用",
       "抹茶布丁",
       "椰浆布丁",
       "熔岩布丁"
     ],
     "forms": [
-      {
-        "name": "果冻",
-        "egg_groups": [
-          "海洋组",
-          "魔力组"
-        ],
-        "height_min": 0.3,
-        "height_max": 0.36,
-        "weight_min": 4.35,
-        "weight_max": 5.6,
-        "giant_weight_line": 5.575,
-        "tiny_weight_line": 4.375,
-        "types": [
-          "水"
-        ]
-      },
       {
         "name": "果冻",
         "egg_groups": [
@@ -9004,7 +8624,7 @@
       "height_min": 0.53,
       "height_max": 0.6,
       "weight_min": 26.775,
-      "weight_max": 37.0,
+      "weight_max": 37,
       "giant_weight_line": 36.7955,
       "tiny_weight_line": 26.9795
     },
@@ -9259,7 +8879,7 @@
         "height_min": 0.53,
         "height_max": 0.76,
         "weight_min": 2.1,
-        "weight_max": 3.0,
+        "weight_max": 3,
         "giant_weight_line": 2.982,
         "tiny_weight_line": 2.118,
         "types": [
@@ -9274,7 +8894,7 @@
           "软体组"
         ],
         "height_min": 0.7,
-        "height_max": 1.0,
+        "height_max": 1,
         "weight_min": 6.4,
         "weight_max": 8.12,
         "giant_weight_line": 8.0856,
@@ -9350,8 +8970,8 @@
         ],
         "height_min": 1.55,
         "height_max": 1.8,
-        "weight_min": 248.0,
-        "weight_max": 286.0,
+        "weight_min": 248,
+        "weight_max": 286,
         "giant_weight_line": 285.24,
         "tiny_weight_line": 248.76,
         "types": [
@@ -9672,7 +9292,7 @@
         ],
         "height_min": 0.88,
         "height_max": 1.05,
-        "weight_min": 3.0,
+        "weight_min": 3,
         "weight_max": 4.5,
         "giant_weight_line": 4.47,
         "tiny_weight_line": 3.03,
@@ -9761,8 +9381,8 @@
         ],
         "height_min": 1.68,
         "height_max": 2.01,
-        "weight_min": 128.0,
-        "weight_max": 237.0,
+        "weight_min": 128,
+        "weight_max": 237,
         "giant_weight_line": 234.82,
         "tiny_weight_line": 130.18,
         "types": [
@@ -9803,7 +9423,7 @@
         "height_min": 0.35,
         "height_max": 0.5,
         "weight_min": 3.08,
-        "weight_max": 6.0,
+        "weight_max": 6,
         "giant_weight_line": 5.9416,
         "tiny_weight_line": 3.1384,
         "types": [
@@ -9856,7 +9476,7 @@
       "height_min": 0.32,
       "height_max": 0.39,
       "weight_min": 15.155,
-      "weight_max": 35.0,
+      "weight_max": 35,
       "giant_weight_line": 34.6031,
       "tiny_weight_line": 15.5519
     },
@@ -9887,7 +9507,7 @@
         ],
         "height_min": 1.75,
         "height_max": 2.33,
-        "weight_min": 120.0,
+        "weight_min": 120,
         "weight_max": 187.4,
         "giant_weight_line": 186.052,
         "tiny_weight_line": 121.348,
@@ -9927,7 +9547,7 @@
         ],
         "height_min": 0.65,
         "height_max": 0.85,
-        "weight_min": 21.0,
+        "weight_min": 21,
         "weight_max": 38.5,
         "giant_weight_line": 38.15,
         "tiny_weight_line": 21.35,
@@ -10034,7 +9654,6 @@
     },
     "evolution_chain": [
       "加油海葵",
-      "加油蟹",
       "加油蟹"
     ],
     "forms": [
@@ -10050,23 +9669,6 @@
         "weight_max": 4.15,
         "giant_weight_line": 4.125,
         "tiny_weight_line": 2.925,
-        "types": [
-          "水",
-          "萌"
-        ]
-      },
-      {
-        "name": "加油蟹",
-        "egg_groups": [
-          "两栖组",
-          "妖精组"
-        ],
-        "height_min": 0.51,
-        "height_max": 0.78,
-        "weight_min": 6.75,
-        "weight_max": 11.7,
-        "giant_weight_line": 11.601,
-        "tiny_weight_line": 6.849,
         "types": [
           "水",
           "萌"
@@ -10315,7 +9917,7 @@
         ],
         "height_min": 0.47,
         "height_max": 0.68,
-        "weight_min": 26.0,
+        "weight_min": 26,
         "weight_max": 37.1,
         "giant_weight_line": 36.878,
         "tiny_weight_line": 26.222,

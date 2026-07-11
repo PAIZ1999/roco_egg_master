@@ -379,7 +379,12 @@ export function DataQueryTab() {
                       <span className="text-[10px] text-slate-455 dark:text-slate-550 font-black text-left block mb-2.5 uppercase tracking-wider">切换形态样式:</span>
                       <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 scrollbar-track-transparent">
                         {petResult.avatars.map((avatar, idx) => {
-                          const formItem = petResult.forms[idx];
+                          const formItem = petResult.forms.find((f: any) => {
+                            if (avatar.styleName === '本来的样子' || avatar.styleName === '默认') {
+                              return f.name === petResult.name || f.name === petResult.currentForm.name;
+                            }
+                            return f.name.includes(avatar.styleName);
+                          }) || petResult.forms[idx] || petResult.currentForm;
                           const isSelected = activeForm && activeForm.name === formItem.name;
                           return (
                             <button
