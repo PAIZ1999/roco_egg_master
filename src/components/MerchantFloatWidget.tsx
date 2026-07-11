@@ -235,9 +235,10 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
         <div className="border-t border-slate-150 dark:border-slate-900 pt-2.5">
           <div className="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto no-scrollbar">
             {data.avatars.map((av, avIdx) => {
+              const formBaseName = data.currentForm.name.split(/[（(]/)[0].trim();
               const formItem = data.forms.find((f: any) => {
                 if (av.styleName === '本来的样子' || av.styleName === '默认') {
-                  return f.name === data.name || f.name === data.currentForm.name;
+                  return f.name === formBaseName;
                 }
                 return f.name.includes(av.styleName);
               }) || data.forms[avIdx] || data.currentForm;

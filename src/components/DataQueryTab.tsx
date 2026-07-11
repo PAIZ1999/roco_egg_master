@@ -242,6 +242,8 @@ export function DataQueryTab() {
     return fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${activeForm.name}.png`);
   };
 
+  const activeFormBase = activeForm ? activeForm.name.split(/[（(]/)[0].trim() : "";
+
   return (
     <div className="flex flex-col gap-6 text-left select-none relative z-10 w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
       {/* 选项卡头部 */}
@@ -379,9 +381,10 @@ export function DataQueryTab() {
                       <span className="text-[10px] text-slate-455 dark:text-slate-550 font-black text-left block mb-2.5 uppercase tracking-wider">切换形态样式:</span>
                       <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 scrollbar-track-transparent">
                         {petResult.avatars.map((avatar, idx) => {
+                          const formBaseName = petResult.currentForm.name.split(/[（(]/)[0].trim();
                           const formItem = petResult.forms.find((f: any) => {
                             if (avatar.styleName === '本来的样子' || avatar.styleName === '默认') {
-                              return f.name === petResult.name || f.name === petResult.currentForm.name;
+                              return f.name === formBaseName;
                             }
                             return f.name.includes(avatar.styleName);
                           }) || petResult.forms[idx] || petResult.currentForm;
@@ -491,7 +494,7 @@ export function DataQueryTab() {
                             <button
                               onClick={() => handlePetQuery(chainItem)}
                               className={`px-4 py-3 rounded-2xl border transition-all flex items-center gap-2.5 hover:scale-103 cursor-pointer ${
-                                cleanName === petResult.name
+                                cleanName === activeFormBase
                                   ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold shadow-lg shadow-indigo-950/40"
                                   : "bg-slate-50 border-slate-200 text-slate-600 dark:bg-slate-950/60 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-slate-100 hover:bg-slate-100"
                               }`}
@@ -525,7 +528,7 @@ export function DataQueryTab() {
                                     key={subIdx}
                                     onClick={() => handlePetQuery(subItem)}
                                     className={`px-3.5 py-2 rounded-xl border transition-all flex items-center gap-2 hover:scale-102 cursor-pointer ${
-                                      cleanSub === petResult.name
+                                      cleanSub === activeFormBase
                                         ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-extrabold shadow-lg shadow-indigo-950/40"
                                         : "bg-slate-50 border-slate-200 text-slate-600 dark:bg-slate-950/60 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-slate-100 hover:bg-slate-100"
                                     }`}
