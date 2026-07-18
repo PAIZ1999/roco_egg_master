@@ -1,0 +1,74 @@
+{
+  "id": 418,
+  "name": "咬咬小子",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": false,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": null,
+    "height_max": null,
+    "weight_min": null,
+    "weight_max": null,
+    "giant_weight_line": null,
+    "tiny_weight_line": null
+  },
+  "evolution_chain": [
+    "咬咬小子",
+    "胡桃王子"
+  ],
+  "stats": {
+    "hp": 102,
+    "atk": 102,
+    "def": 48,
+    "sp_atk": 17,
+    "sp_def": 92,
+    "speed": 76,
+    "sum": 437
+  },
+  "height_min": 0.87,
+  "height_max": 1.23,
+  "weight_min": 18.7,
+  "weight_max": 27.3,
+  "giant_weight_line": 27.128,
+  "tiny_weight_line": 18.872,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "胡桃王子",
+      "id": 419,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.42,
+      "height_max": 1.71,
+      "weight_min": 41.5,
+      "weight_max": 65,
+      "giant_weight_line": 64.53,
+      "tiny_weight_line": 41.97,
+      "stats": {
+        "hp": 128,
+        "atk": 127,
+        "def": 60,
+        "sp_atk": 21,
+        "sp_def": 115,
+        "speed": 95,
+        "sum": 546
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/419-胡桃王子.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/418-咬咬小子.png"
+}

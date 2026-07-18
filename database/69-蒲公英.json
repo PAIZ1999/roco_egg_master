@@ -1,0 +1,79 @@
+{
+  "id": 69,
+  "name": "蒲公英",
+  "types": [
+    "草",
+    "萌"
+  ],
+  "egg_groups": [
+    "植物组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "天空组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.21,
+    "weight_min": 0.035,
+    "weight_max": 0.12,
+    "giant_weight_line": 0.1183,
+    "tiny_weight_line": 0.0367
+  },
+  "evolution_chain": [
+    "蒲公英",
+    "蒲公英娃娃"
+  ],
+  "stats": {
+    "hp": 89,
+    "atk": 99,
+    "def": 103,
+    "sp_atk": 94,
+    "sp_def": 78,
+    "speed": 52,
+    "sum": 515
+  },
+  "height_min": 0.3,
+  "height_max": 0.5,
+  "weight_min": 0.1,
+  "weight_max": 0.6,
+  "giant_weight_line": 0.59,
+  "tiny_weight_line": 0.11,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "蒲公英娃娃",
+      "id": 70,
+      "types": [
+        "草",
+        "萌"
+      ],
+      "egg_groups": [
+        "植物组",
+        "天空组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 0.3,
+      "weight_max": 1.35,
+      "giant_weight_line": 1.329,
+      "tiny_weight_line": 0.321,
+      "stats": {
+        "hp": 111,
+        "atk": 123,
+        "def": 129,
+        "sp_atk": 117,
+        "sp_def": 97,
+        "speed": 65,
+        "sum": 642
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/70-蒲公英娃娃.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/69-蒲公英.png"
+}

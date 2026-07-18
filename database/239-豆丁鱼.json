@@ -1,0 +1,110 @@
+{
+  "id": 239,
+  "name": "豆丁鱼",
+  "types": [
+    "水",
+    "龙"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "飞龙组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "飞龙组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.18,
+    "weight_min": 0.42,
+    "weight_max": 0.6,
+    "giant_weight_line": 0.5964,
+    "tiny_weight_line": 0.4236
+  },
+  "evolution_chain": [
+    "豆丁鱼",
+    "快鳍鱼",
+    "龙鱼"
+  ],
+  "stats": {
+    "hp": 53,
+    "atk": 62,
+    "def": 60,
+    "sp_atk": 65,
+    "sp_def": 62,
+    "speed": 81,
+    "sum": 383
+  },
+  "height_min": 0.31,
+  "height_max": 0.44,
+  "weight_min": 1.2,
+  "weight_max": 3.4,
+  "giant_weight_line": 3.356,
+  "tiny_weight_line": 1.244,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "快鳍鱼",
+      "id": 240,
+      "types": [
+        "水",
+        "龙"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "飞龙组"
+      ],
+      "height_min": 0.27,
+      "height_max": 0.39,
+      "weight_min": 14.5,
+      "weight_max": 16.8,
+      "giant_weight_line": 16.754,
+      "tiny_weight_line": 14.546,
+      "stats": {
+        "hp": 71,
+        "atk": 82,
+        "def": 80,
+        "sp_atk": 87,
+        "sp_def": 83,
+        "speed": 108,
+        "sum": 511
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/240-快鳍鱼.png"
+    },
+    {
+      "name": "龙鱼",
+      "id": 241,
+      "types": [
+        "水",
+        "龙"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "飞龙组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.99,
+      "weight_min": 39.5,
+      "weight_max": 44.5,
+      "giant_weight_line": 44.4,
+      "tiny_weight_line": 39.6,
+      "stats": {
+        "hp": 89,
+        "atk": 103,
+        "def": 100,
+        "sp_atk": 109,
+        "sp_def": 104,
+        "speed": 135,
+        "sum": 640
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/241-龙鱼.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/239-豆丁鱼.png"
+}

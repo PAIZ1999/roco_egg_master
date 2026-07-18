@@ -1,0 +1,47 @@
+{
+  "id": 322,
+  "name": "月牙雪熊",
+  "types": [
+    "冰",
+    "幻"
+  ],
+  "egg_groups": [
+    "动物组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "巨灵组"
+    ],
+    "height_min": 0.53,
+    "height_max": 0.6,
+    "weight_min": 26.775,
+    "weight_max": 37,
+    "giant_weight_line": 36.7955,
+    "tiny_weight_line": 26.9795
+  },
+  "evolution_chain": [
+    "月牙雪熊"
+  ],
+  "stats": {
+    "hp": 126,
+    "atk": 97,
+    "def": 141,
+    "sp_atk": 39,
+    "sp_def": 103,
+    "speed": 80,
+    "sum": 586
+  },
+  "height_min": 1.25,
+  "height_max": 1.45,
+  "weight_min": 76.5,
+  "weight_max": 92.5,
+  "giant_weight_line": 92.18,
+  "tiny_weight_line": 76.82,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/322-月牙雪熊.png"
+}

@@ -1,0 +1,139 @@
+{
+  "id": 198,
+  "name": "逗逗",
+  "types": [
+    "萌"
+  ],
+  "egg_groups": [
+    "动物组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "巨灵组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.17,
+    "weight_min": 0.21,
+    "weight_max": 0.32,
+    "giant_weight_line": 0.3178,
+    "tiny_weight_line": 0.2122
+  },
+  "evolution_chain": [
+    "逗逗",
+    "气球猫",
+    "梦想三三",
+    [
+      "奇梦咪"
+    ]
+  ],
+  "stats": {
+    "hp": 48,
+    "atk": 70,
+    "def": 68,
+    "sp_atk": 64,
+    "sp_def": 68,
+    "speed": 66,
+    "sum": 384
+  },
+  "height_min": 0.3,
+  "height_max": 0.4,
+  "weight_min": 0.45,
+  "weight_max": 1.53,
+  "giant_weight_line": 1.5084,
+  "tiny_weight_line": 0.4716,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "奇梦咪",
+      "id": 200,
+      "types": [
+        "萌"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.29,
+      "height_max": 2.75,
+      "weight_min": 38.7,
+      "weight_max": 55,
+      "giant_weight_line": 54.674,
+      "tiny_weight_line": 39.026,
+      "stats": {
+        "hp": 81,
+        "atk": 128,
+        "def": 123,
+        "sp_atk": 119,
+        "sp_def": 123,
+        "speed": 110,
+        "sum": 684
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/200-奇梦咪.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "气球猫",
+      "id": 199,
+      "types": [
+        "萌"
+      ],
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ],
+      "height_min": 0.41,
+      "height_max": 0.59,
+      "weight_min": 0.95,
+      "weight_max": 2.15,
+      "giant_weight_line": 2.126,
+      "tiny_weight_line": 0.974,
+      "stats": {
+        "hp": 64,
+        "atk": 93,
+        "def": 90,
+        "sp_atk": 86,
+        "sp_def": 90,
+        "speed": 88,
+        "sum": 511
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/199-气球猫.png"
+    },
+    {
+      "name": "梦想三三",
+      "id": 200,
+      "types": [
+        "萌"
+      ],
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ],
+      "height_min": 1.18,
+      "height_max": 1.45,
+      "weight_min": 12.04,
+      "weight_max": 19.04,
+      "giant_weight_line": 18.9,
+      "tiny_weight_line": 12.18,
+      "stats": {
+        "hp": 81,
+        "atk": 117,
+        "def": 113,
+        "sp_atk": 107,
+        "sp_def": 113,
+        "speed": 110,
+        "sum": 641
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/200-梦想三三.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/198-逗逗.png"
+}

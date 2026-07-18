@@ -1,0 +1,135 @@
+{
+  "id": 8,
+  "name": "水蓝蓝",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.27,
+    "weight_min": 0.998,
+    "weight_max": 1.36,
+    "giant_weight_line": 1.3528,
+    "tiny_weight_line": 1.0052
+  },
+  "evolution_chain": [
+    "水蓝蓝",
+    "波波拉",
+    "水灵",
+    [
+      "圣水守护"
+    ]
+  ],
+  "stats": {
+    "hp": 75,
+    "atk": 35,
+    "def": 56,
+    "sp_atk": 76,
+    "sp_def": 79,
+    "speed": 51,
+    "sum": 372
+  },
+  "height_min": 0.45,
+  "height_max": 0.65,
+  "weight_min": 2.85,
+  "weight_max": 4.21,
+  "giant_weight_line": 4.1828,
+  "tiny_weight_line": 2.8772,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "圣水守护",
+      "id": 10,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.72,
+      "height_max": 1.94,
+      "weight_min": 137,
+      "weight_max": 172,
+      "giant_weight_line": 171.3,
+      "tiny_weight_line": 137.7,
+      "stats": {
+        "hp": 125,
+        "atk": 67,
+        "def": 104,
+        "sp_atk": 141,
+        "sp_def": 145,
+        "speed": 85,
+        "sum": 667
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/10-圣水守护.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "水灵",
+      "id": 10,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 1.08,
+      "height_max": 1.54,
+      "weight_min": 77,
+      "weight_max": 85.5,
+      "giant_weight_line": 85.33,
+      "tiny_weight_line": 77.17,
+      "stats": {
+        "hp": 125,
+        "atk": 58,
+        "def": 94,
+        "sp_atk": 127,
+        "sp_def": 132,
+        "speed": 85,
+        "sum": 621
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/10-水灵.png"
+    },
+    {
+      "name": "波波拉",
+      "id": 9,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 0.72,
+      "height_max": 1.03,
+      "weight_min": 29.5,
+      "weight_max": 34,
+      "giant_weight_line": 33.91,
+      "tiny_weight_line": 29.59,
+      "stats": {
+        "hp": 100,
+        "atk": 46,
+        "def": 75,
+        "sp_atk": 102,
+        "sp_def": 106,
+        "speed": 68,
+        "sum": 497
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/9-波波拉.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/8-水蓝蓝.png"
+}

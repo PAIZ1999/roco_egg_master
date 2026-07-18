@@ -1,0 +1,107 @@
+{
+  "id": 263,
+  "name": "机械方方",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "机械组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "拟人组"
+    ],
+    "height_min": 0.18,
+    "height_max": 0.25,
+    "weight_min": 2.8,
+    "weight_max": 4.4,
+    "giant_weight_line": 4.368,
+    "tiny_weight_line": 2.832
+  },
+  "evolution_chain": [
+    "机械方方",
+    "多彩方方",
+    "立方人"
+  ],
+  "stats": {
+    "hp": 62,
+    "atk": 81,
+    "def": 76,
+    "sp_atk": 32,
+    "sp_def": 60,
+    "speed": 51,
+    "sum": 362
+  },
+  "height_min": 0.42,
+  "height_max": 0.6,
+  "weight_min": 8,
+  "weight_max": 11,
+  "giant_weight_line": 10.94,
+  "tiny_weight_line": 8.06,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "多彩方方",
+      "id": 264,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "机械组",
+        "拟人组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.97,
+      "weight_min": 23.77,
+      "weight_max": 34.6,
+      "giant_weight_line": 34.3834,
+      "tiny_weight_line": 23.9866,
+      "stats": {
+        "hp": 82,
+        "atk": 108,
+        "def": 101,
+        "sp_atk": 43,
+        "sp_def": 80,
+        "speed": 68,
+        "sum": 482
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/264-多彩方方.png"
+    },
+    {
+      "name": "立方人",
+      "id": 265,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "机械组",
+        "拟人组"
+      ],
+      "height_min": 1.78,
+      "height_max": 2.01,
+      "weight_min": 106.5,
+      "weight_max": 139.07,
+      "giant_weight_line": 138.4186,
+      "tiny_weight_line": 107.1514,
+      "stats": {
+        "hp": 103,
+        "atk": 135,
+        "def": 127,
+        "sp_atk": 54,
+        "sp_def": 101,
+        "speed": 85,
+        "sum": 605
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/265-立方人.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/263-机械方方.png"
+}

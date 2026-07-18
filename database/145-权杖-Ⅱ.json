@@ -1,0 +1,74 @@
+{
+  "id": 145,
+  "name": "权杖-Ⅱ",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.23,
+    "weight_min": 9.975,
+    "weight_max": 14.28,
+    "giant_weight_line": 14.1939,
+    "tiny_weight_line": 10.0611
+  },
+  "evolution_chain": [
+    "权杖-Ⅱ",
+    "权杖-V"
+  ],
+  "stats": {
+    "hp": 82,
+    "atk": 84,
+    "def": 109,
+    "sp_atk": 78,
+    "sp_def": 109,
+    "speed": 60,
+    "sum": 522
+  },
+  "height_min": 0.45,
+  "height_max": 0.55,
+  "weight_min": 28.5,
+  "weight_max": 35.7,
+  "giant_weight_line": 35.556,
+  "tiny_weight_line": 28.644,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "权杖-V",
+      "id": 146,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "机械组"
+      ],
+      "height_min": 0.95,
+      "height_max": 1.05,
+      "weight_min": 98,
+      "weight_max": 108,
+      "giant_weight_line": 107.8,
+      "tiny_weight_line": 98.2,
+      "stats": {
+        "hp": 103,
+        "atk": 105,
+        "def": 136,
+        "sp_atk": 97,
+        "sp_def": 136,
+        "speed": 75,
+        "sum": 652
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/146-权杖-V.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/145-权杖-Ⅱ.png"
+}

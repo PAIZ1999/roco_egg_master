@@ -1,0 +1,110 @@
+{
+  "id": 195,
+  "name": "呆小路",
+  "types": [
+    "草",
+    "萌"
+  ],
+  "egg_groups": [
+    "动物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "拟人组"
+    ],
+    "height_min": 0.25,
+    "height_max": 0.34,
+    "weight_min": 1.575,
+    "weight_max": 2.32,
+    "giant_weight_line": 2.3051,
+    "tiny_weight_line": 1.5899
+  },
+  "evolution_chain": [
+    "呆小路",
+    "舞动路路",
+    "白发路路"
+  ],
+  "stats": {
+    "hp": 52,
+    "atk": 60,
+    "def": 68,
+    "sp_atk": 64,
+    "sp_def": 79,
+    "speed": 57,
+    "sum": 380
+  },
+  "height_min": 0.58,
+  "height_max": 0.83,
+  "weight_min": 4.5,
+  "weight_max": 5.8,
+  "giant_weight_line": 5.774,
+  "tiny_weight_line": 4.526,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "舞动路路",
+      "id": 196,
+      "types": [
+        "草",
+        "萌"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.99,
+      "weight_min": 7.4,
+      "weight_max": 9.1,
+      "giant_weight_line": 9.066,
+      "tiny_weight_line": 7.434,
+      "stats": {
+        "hp": 69,
+        "atk": 80,
+        "def": 91,
+        "sp_atk": 86,
+        "sp_def": 105,
+        "speed": 76,
+        "sum": 507
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/196-舞动路路.png"
+    },
+    {
+      "name": "白发路路",
+      "id": 197,
+      "types": [
+        "草",
+        "萌"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 0.89,
+      "height_max": 1.27,
+      "weight_min": 15.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.478,
+      "tiny_weight_line": 15.622,
+      "stats": {
+        "hp": 86,
+        "atk": 100,
+        "def": 113,
+        "sp_atk": 107,
+        "sp_def": 132,
+        "speed": 95,
+        "sum": 633
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/197-白发路路.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/195-呆小路.png"
+}

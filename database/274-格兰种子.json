@@ -1,0 +1,107 @@
+{
+  "id": 274,
+  "name": "格兰种子",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "植物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "妖精组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.24,
+    "weight_min": 1.225,
+    "weight_max": 2.16,
+    "giant_weight_line": 2.1413,
+    "tiny_weight_line": 1.2437
+  },
+  "evolution_chain": [
+    "格兰种子",
+    "格兰花",
+    "格兰球"
+  ],
+  "stats": {
+    "hp": 65,
+    "atk": 31,
+    "def": 48,
+    "sp_atk": 74,
+    "sp_def": 67,
+    "speed": 36,
+    "sum": 321
+  },
+  "height_min": 0.4,
+  "height_max": 0.57,
+  "weight_min": 3.5,
+  "weight_max": 5.4,
+  "giant_weight_line": 5.362,
+  "tiny_weight_line": 3.538,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "格兰花",
+      "id": 275,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "妖精组"
+      ],
+      "height_min": 0.48,
+      "height_max": 0.68,
+      "weight_min": 6.5,
+      "weight_max": 7.8,
+      "giant_weight_line": 7.774,
+      "tiny_weight_line": 6.526,
+      "stats": {
+        "hp": 86,
+        "atk": 42,
+        "def": 64,
+        "sp_atk": 99,
+        "sp_def": 90,
+        "speed": 48,
+        "sum": 429
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/275-格兰花.png"
+    },
+    {
+      "name": "格兰球",
+      "id": 276,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "妖精组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 12.5,
+      "weight_max": 16.5,
+      "giant_weight_line": 16.42,
+      "tiny_weight_line": 12.58,
+      "stats": {
+        "hp": 108,
+        "atk": 52,
+        "def": 80,
+        "sp_atk": 124,
+        "sp_def": 112,
+        "speed": 60,
+        "sum": 536
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/276-格兰球.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/274-格兰种子.png"
+}

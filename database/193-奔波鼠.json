@@ -1,0 +1,77 @@
+{
+  "id": 193,
+  "name": "奔波鼠",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "动物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "拟人组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.25,
+    "weight_min": 1.299,
+    "weight_max": 2.56,
+    "giant_weight_line": 2.5348,
+    "tiny_weight_line": 1.3242
+  },
+  "evolution_chain": [
+    "奔波鼠",
+    "流浪鼠"
+  ],
+  "stats": {
+    "hp": 82,
+    "atk": 37,
+    "def": 74,
+    "sp_atk": 93,
+    "sp_def": 98,
+    "speed": 92,
+    "sum": 476
+  },
+  "height_min": 0.46,
+  "height_max": 0.6,
+  "weight_min": 3.71,
+  "weight_max": 6.4,
+  "giant_weight_line": 6.3462,
+  "tiny_weight_line": 3.7638,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "流浪鼠",
+      "id": 194,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 0.88,
+      "height_max": 1.23,
+      "weight_min": 59.6,
+      "weight_max": 74.3,
+      "giant_weight_line": 74.006,
+      "tiny_weight_line": 59.894,
+      "stats": {
+        "hp": 103,
+        "atk": 46,
+        "def": 92,
+        "sp_atk": 116,
+        "sp_def": 122,
+        "speed": 115,
+        "sum": 594
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/194-流浪鼠.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/193-奔波鼠.png"
+}

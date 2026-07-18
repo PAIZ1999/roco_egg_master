@@ -1,0 +1,79 @@
+{
+  "id": 369,
+  "name": "炫光迪迪",
+  "types": [
+    "电",
+    "光"
+  ],
+  "egg_groups": [
+    "动物组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "大地组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 9.1,
+    "weight_max": 14.84,
+    "giant_weight_line": 14.7252,
+    "tiny_weight_line": 9.2148
+  },
+  "evolution_chain": [
+    "炫光迪迪",
+    "霹雳迪迪"
+  ],
+  "stats": {
+    "hp": 83,
+    "atk": 95,
+    "def": 52,
+    "sp_atk": 111,
+    "sp_def": 106,
+    "speed": 104,
+    "sum": 551
+  },
+  "height_min": 0.47,
+  "height_max": 0.68,
+  "weight_min": 26,
+  "weight_max": 37.1,
+  "giant_weight_line": 36.878,
+  "tiny_weight_line": 26.222,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "霹雳迪迪",
+      "id": 370,
+      "types": [
+        "电",
+        "光"
+      ],
+      "egg_groups": [
+        "动物组",
+        "大地组"
+      ],
+      "height_min": 1.6,
+      "height_max": 1.87,
+      "weight_min": 66.8,
+      "weight_max": 89.3,
+      "giant_weight_line": 88.85,
+      "tiny_weight_line": 67.25,
+      "stats": {
+        "hp": 104,
+        "atk": 119,
+        "def": 65,
+        "sp_atk": 139,
+        "sp_def": 133,
+        "speed": 130,
+        "sum": 690
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/370-霹雳迪迪.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/369-炫光迪迪.png"
+}

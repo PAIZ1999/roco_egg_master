@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Store, X, RotateCw, HelpCircle, ChevronRight, Send, ArrowRight, Activity } from "lucide-react";
 import { getLiveMerchantData, MerchantData } from "../merchantHelper";
-import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult, petsRaceMap } from "../queryHelper";
+import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult } from "../queryHelper";
 import { getImagePath, getSpriteFileName } from "../petHelper";
 
 // 1. 原生六边形内联雷达图组件 (适配气泡卡片宽度)
@@ -135,7 +135,7 @@ function BubbleRadarChart({ stats }: { stats: { hp: number; speed: number; atk: 
 }
 
 // 2. 精灵卡片消息气泡组件 (1:1 还原 card.html)
-function ChatPetCard({ data }: { data: QueryPetResult }) {
+function ChatPetCard({ data, onSelectPet }: { data: QueryPetResult; onSelectPet: (name: string) => void }) {
   const [activeForm, setActiveForm] = useState<any>(null);
 
   useEffect(() => {
@@ -147,15 +147,9 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
   if (!data || !activeForm) return null;
 
   const handleSelectForm = (formItem: any) => {
-    const raceInfo = petsRaceMap[formItem.name.trim()];
-    const race = raceInfo && raceInfo.stats ? {
-      sum: raceInfo.sum,
-      stats: raceInfo.stats
-    } : null;
-
     setActiveForm({
       ...formItem,
-      race
+      race: formItem.stats || null
     });
   };
 
@@ -235,12 +229,12 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
         <div className="border-t border-slate-150 dark:border-slate-900 pt-2.5">
           <div className="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto no-scrollbar">
             {data.avatars.map((av, avIdx) => {
-              const formBaseName = data.currentForm.name.split(/[（(]/)[0].trim();
+              const parts = av.absolutePath.split('/');
+              const fileBase = parts[parts.length - 1].replace(/^\d+-/, '').slice(0, -4).trim().toLowerCase();
+              
               const formItem = data.forms.find((f: any) => {
-                if (av.styleName === '本来的样子' || av.styleName === '默认') {
-                  return f.name === formBaseName;
-                }
-                return f.name.includes(av.styleName);
+                const cleanName = f.name.replace(/[（(]/g, "_").replace(/[）)]/g, "").trim().toLowerCase();
+                return cleanName === fileBase;
               }) || data.forms[avIdx] || data.currentForm;
               const isSelected = activeForm.name === formItem.name;
               return (
@@ -320,6 +314,89 @@ function ChatPetCard({ data }: { data: QueryPetResult }) {
           </div>
           <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 rounded-lg shadow-3xs">
             <BubbleRadarChart stats={activeForm.race.stats} />
+          </div>
+        </div>
+      )}
+
+      {/* 🧬 进化链走向 (点击跳转) */}
+      {data.evolution_chain && data.evolution_chain.length > 0 && (
+        <div className="border-t border-slate-150 dark:border-slate-900 pt-2.5 flex flex-col gap-1.5">
+          <span className="text-[9px] text-slate-400 dark:text-slate-550 font-black block uppercase tracking-wider">🧬 进化链走向 (点击可跳转查询):</span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {data.evolution_chain.map((chainItem: any, idx: number) => {
+              if (typeof chainItem === "string") {
+                const cleanName = chainItem.split(/[（(]/)[0].trim();
+                const matchedForm = data.forms.find((f: any) => f.name.startsWith(cleanName));
+                const spriteName = matchedForm ? matchedForm.name : cleanName;
+                const fileName = getSpriteFileName(spriteName);
+                const iconPath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${cleanName}.png`);
+                const activeFormBase = activeForm.name.split(/[（(]/)[0].trim();
+                
+                return (
+                  <React.Fragment key={idx}>
+                    {idx > 0 && <span className="text-slate-400 dark:text-slate-600 text-[10px] shrink-0 font-bold">→</span>}
+                    <button
+                      onClick={() => onSelectPet(chainItem)}
+                      className={`px-2 py-1 rounded-lg border transition-all flex items-center gap-1.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 text-[9px] ${
+                        cleanName === activeFormBase
+                          ? "bg-indigo-50 dark:bg-indigo-600/20 border-indigo-200 dark:border-indigo-500 text-indigo-600 dark:text-indigo-300 font-extrabold shadow-3xs"
+                          : "bg-slate-50 border-slate-200 text-slate-655 dark:bg-slate-950 dark:border-slate-900 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-700"
+                      }`}
+                    >
+                      <img
+                        src={iconPath}
+                        alt={cleanName}
+                        className="w-4 h-4 object-contain filter drop-shadow"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                        }}
+                      />
+                      <span className="font-extrabold">{chainItem}</span>
+                    </button>
+                  </React.Fragment>
+                );
+              } else if (Array.isArray(chainItem)) {
+                // 分支进化
+                return (
+                  <React.Fragment key={idx}>
+                    {idx > 0 && <span className="text-slate-400 dark:text-slate-600 text-[10px] shrink-0 font-bold">→</span>}
+                    <div className="flex flex-col gap-1">
+                      {chainItem.map((subItem: string, subIdx: number) => {
+                        const cleanSub = subItem.split(/[（(]/)[0].trim();
+                        const matchedForm = data.forms.find((f: any) => f.name.startsWith(cleanSub));
+                        const spriteName = matchedForm ? matchedForm.name : cleanSub;
+                        const fileName = getSpriteFileName(spriteName);
+                        const iconPath = fileName ? getImagePath(`images/sprites/${fileName}`) : getImagePath(`images/sprites/${cleanSub}.png`);
+                        const activeFormBase = activeForm.name.split(/[（(]/)[0].trim();
+                        
+                        return (
+                          <button
+                            key={subIdx}
+                            onClick={() => onSelectPet(subItem)}
+                            className={`px-1.5 py-0.5 rounded-lg border transition-all flex items-center gap-1 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 text-[8.5px] ${
+                              cleanSub === activeFormBase
+                                ? "bg-indigo-50 dark:bg-indigo-600/20 border-indigo-200 dark:border-indigo-500 text-indigo-600 dark:text-indigo-300 font-extrabold shadow-3xs"
+                                : "bg-slate-50 border-slate-200 text-slate-655 dark:bg-slate-950 dark:border-slate-900 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-700"
+                            }`}
+                          >
+                            <img
+                              src={iconPath}
+                              alt={cleanSub}
+                              className="w-3.5 h-3.5 object-contain filter drop-shadow"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = getImagePath("images/egg-icon.png");
+                              }}
+                            />
+                            <span className="font-bold">{subItem}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </React.Fragment>
+                );
+              }
+              return null;
+            })}
           </div>
         </div>
       )}
@@ -599,6 +676,9 @@ interface Message {
 }
 
 export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: boolean }) {
+  const miaomiaoFileName = getSpriteFileName("喵喵") || "喵喵.png";
+  const miaomiaoPath = getImagePath(`images/sprites/${miaomiaoFileName}`);
+
   const [position, setPosition] = useState(() => {
     const saved = localStorage.getItem("roco_merchant_widget_pos");
     if (saved) {
@@ -980,7 +1060,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
           title="按住左键拖拽位置，单击聊天，双击显示软件主页"
         >
           <img
-            src={getImagePath("images/sprites/喵喵.png")}
+            src={miaomiaoPath}
             alt="喵喵"
             draggable={false}
             className="w-12 h-12 object-contain pointer-events-none select-none"
@@ -1032,7 +1112,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
           >
             <div className="flex items-center gap-2">
               <img
-                src={getImagePath("images/sprites/喵喵.png")}
+                src={miaomiaoPath}
                 alt="喵喵"
                 className="w-7 h-7 object-contain"
                 onError={(e) => {
@@ -1065,7 +1145,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
                   {isMyow && (
                     <div className="w-7.5 h-7.5 rounded-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shrink-0 shadow-3xs">
                       <img
-                        src={getImagePath("images/sprites/喵喵.png")}
+                        src={miaomiaoPath}
                         alt="喵喵"
                         className="w-6.5 h-6.5 object-contain"
                         onError={(e) => {
@@ -1085,7 +1165,7 @@ export function MerchantFloatWidget({ isStandalone = false }: { isStandalone?: b
                       </div>
                     )}
                     {msg.type === "petCard" && (
-                      <ChatPetCard data={msg.data} />
+                      <ChatPetCard data={msg.data} onSelectPet={handleSend} />
                     )}
                     {msg.type === "eggGroupCard" && (
                       <ChatEggGroupCard data={msg.data} onSelectPet={handleSend} />

@@ -1,0 +1,103 @@
+{
+  "id": 150,
+  "name": "里奥",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.19,
+    "weight_min": 1.68,
+    "weight_max": 2.36,
+    "giant_weight_line": 2.3464,
+    "tiny_weight_line": 1.6936
+  },
+  "evolution_chain": [
+    "里奥",
+    "灵羽勇士",
+    "圣羽翼王"
+  ],
+  "stats": {
+    "hp": 79,
+    "atk": 65,
+    "def": 77,
+    "sp_atk": 65,
+    "sp_def": 50,
+    "speed": 75,
+    "sum": 411
+  },
+  "height_min": 0.35,
+  "height_max": 0.45,
+  "weight_min": 4.8,
+  "weight_max": 5.9,
+  "giant_weight_line": 5.878,
+  "tiny_weight_line": 4.822,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "灵羽勇士",
+      "id": 151,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.55,
+      "height_max": 0.65,
+      "weight_min": 11.5,
+      "weight_max": 14.2,
+      "giant_weight_line": 14.146,
+      "tiny_weight_line": 11.554,
+      "stats": {
+        "hp": 105,
+        "atk": 87,
+        "def": 102,
+        "sp_atk": 87,
+        "sp_def": 66,
+        "speed": 100,
+        "sum": 547
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/151-灵羽勇士.png"
+    },
+    {
+      "name": "圣羽翼王",
+      "id": 152,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.1,
+      "height_max": 2.55,
+      "weight_min": 195,
+      "weight_max": 296,
+      "giant_weight_line": 293.98,
+      "tiny_weight_line": 197.02,
+      "stats": {
+        "hp": 132,
+        "atk": 109,
+        "def": 128,
+        "sp_atk": 109,
+        "sp_def": 83,
+        "speed": 125,
+        "sum": 686
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/152-圣羽翼王.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/150-里奥.png"
+}

@@ -1,0 +1,77 @@
+{
+  "id": 396,
+  "name": "友爱天天",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "天空组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "妖精组"
+    ],
+    "height_min": 0.12,
+    "height_max": 0.17,
+    "weight_min": 1.04,
+    "weight_max": 1.676,
+    "giant_weight_line": 1.6633,
+    "tiny_weight_line": 1.0527
+  },
+  "evolution_chain": [
+    "友爱天天",
+    "友爱星飞"
+  ],
+  "stats": {
+    "hp": 113,
+    "atk": 26,
+    "def": 70,
+    "sp_atk": 81,
+    "sp_def": 80,
+    "speed": 76,
+    "sum": 446
+  },
+  "height_min": 0.28,
+  "height_max": 0.41,
+  "weight_min": 2.97,
+  "weight_max": 4.19,
+  "giant_weight_line": 4.1656,
+  "tiny_weight_line": 2.9944,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "友爱星飞",
+      "id": 397,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组",
+        "妖精组"
+      ],
+      "height_min": 0.45,
+      "height_max": 0.69,
+      "weight_min": 7.65,
+      "weight_max": 11.08,
+      "giant_weight_line": 11.0114,
+      "tiny_weight_line": 7.7186,
+      "stats": {
+        "hp": 108,
+        "atk": 32,
+        "def": 88,
+        "sp_atk": 102,
+        "sp_def": 100,
+        "speed": 95,
+        "sum": 525
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/397-友爱星飞.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/396-友爱天天.png"
+}

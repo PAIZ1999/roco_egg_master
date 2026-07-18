@@ -1,0 +1,79 @@
+{
+  "id": 224,
+  "name": "小翼龙",
+  "types": [
+    "龙",
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组",
+    "飞龙组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "飞龙组"
+    ],
+    "height_min": 0.26,
+    "height_max": 0.36,
+    "weight_min": 8.785,
+    "weight_max": 14.6,
+    "giant_weight_line": 14.4837,
+    "tiny_weight_line": 8.9013
+  },
+  "evolution_chain": [
+    "小翼龙",
+    "翼龙"
+  ],
+  "stats": {
+    "hp": 66,
+    "atk": 91,
+    "def": 73,
+    "sp_atk": 24,
+    "sp_def": 63,
+    "speed": 92,
+    "sum": 409
+  },
+  "height_min": 0.61,
+  "height_max": 0.87,
+  "weight_min": 25.1,
+  "weight_max": 36.5,
+  "giant_weight_line": 36.272,
+  "tiny_weight_line": 25.328,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "翼龙",
+      "id": 225,
+      "types": [
+        "龙",
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组",
+        "飞龙组"
+      ],
+      "height_min": 1.79,
+      "height_max": 1.99,
+      "weight_min": 240,
+      "weight_max": 265,
+      "giant_weight_line": 264.5,
+      "tiny_weight_line": 240.5,
+      "stats": {
+        "hp": 83,
+        "atk": 114,
+        "def": 91,
+        "sp_atk": 31,
+        "sp_def": 79,
+        "speed": 115,
+        "sum": 513
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/225-翼龙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/224-小翼龙.png"
+}

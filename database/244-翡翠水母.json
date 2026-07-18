@@ -1,0 +1,79 @@
+{
+  "id": 244,
+  "name": "翡翠水母",
+  "types": [
+    "水",
+    "毒"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "软体组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.29,
+    "weight_min": 11.025,
+    "weight_max": 14.72,
+    "giant_weight_line": 14.6461,
+    "tiny_weight_line": 11.0989
+  },
+  "evolution_chain": [
+    "翡翠水母",
+    "琉璃水母"
+  ],
+  "stats": {
+    "hp": 108,
+    "atk": 30,
+    "def": 75,
+    "sp_atk": 68,
+    "sp_def": 109,
+    "speed": 76,
+    "sum": 466
+  },
+  "height_min": 0.49,
+  "height_max": 0.7,
+  "weight_min": 31.5,
+  "weight_max": 36.8,
+  "giant_weight_line": 36.694,
+  "tiny_weight_line": 31.606,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "琉璃水母",
+      "id": 245,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ],
+      "height_min": 0.9,
+      "height_max": 1.28,
+      "weight_min": 48,
+      "weight_max": 53,
+      "giant_weight_line": 52.9,
+      "tiny_weight_line": 48.1,
+      "stats": {
+        "hp": 134,
+        "atk": 37,
+        "def": 93,
+        "sp_atk": 85,
+        "sp_def": 136,
+        "speed": 95,
+        "sum": 580
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/245-琉璃水母.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/244-翡翠水母.png"
+}

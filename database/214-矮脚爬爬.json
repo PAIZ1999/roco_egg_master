@@ -1,0 +1,78 @@
+{
+  "id": 214,
+  "name": "矮脚爬爬",
+  "types": [
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "巨灵组"
+    ],
+    "height_min": 0.12,
+    "height_max": 0.18,
+    "weight_min": 1.155,
+    "weight_max": 1.68,
+    "giant_weight_line": 1.6695,
+    "tiny_weight_line": 1.1655
+  },
+  "evolution_chain": [
+    "矮脚爬爬",
+    "恶魔红钻"
+  ],
+  "stats": {
+    "hp": 80,
+    "atk": 118,
+    "def": 86,
+    "sp_atk": 109,
+    "sp_def": 71,
+    "speed": 92,
+    "sum": 556
+  },
+  "height_min": 0.28,
+  "height_max": 0.44,
+  "weight_min": 3.3,
+  "weight_max": 4.2,
+  "giant_weight_line": 4.182,
+  "tiny_weight_line": 3.318,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "恶魔红钻",
+      "id": 215,
+      "types": [
+        "虫",
+        "恶"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "巨灵组"
+      ],
+      "height_min": 1.32,
+      "height_max": 1.55,
+      "weight_min": 42.5,
+      "weight_max": 62,
+      "giant_weight_line": 61.61,
+      "tiny_weight_line": 42.89,
+      "stats": {
+        "hp": 100,
+        "atk": 147,
+        "def": 108,
+        "sp_atk": 137,
+        "sp_def": 89,
+        "speed": 115,
+        "sum": 696
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/215-恶魔红钻.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/214-矮脚爬爬.png"
+}

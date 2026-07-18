@@ -1,0 +1,143 @@
+{
+  "id": 142,
+  "name": "大耳帽兜",
+  "types": [
+    "冰",
+    "萌"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "拟人组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.2,
+    "weight_min": 2.937,
+    "weight_max": 4.28,
+    "giant_weight_line": 4.2531,
+    "tiny_weight_line": 2.9639
+  },
+  "evolution_chain": [
+    "大耳帽兜",
+    "帽兜娃娃",
+    "雪影娃娃",
+    [
+      "雪影冰灵"
+    ]
+  ],
+  "stats": {
+    "hp": 78,
+    "atk": 62,
+    "def": 39,
+    "sp_atk": 59,
+    "sp_def": 78,
+    "speed": 54,
+    "sum": 370
+  },
+  "height_min": 0.39,
+  "height_max": 0.42,
+  "weight_min": 8.39,
+  "weight_max": 10.7,
+  "giant_weight_line": 10.6538,
+  "tiny_weight_line": 8.4362,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "雪影冰灵",
+      "id": 144,
+      "types": [
+        "冰",
+        "萌"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.04,
+      "weight_min": 58.06,
+      "weight_max": 76.02,
+      "giant_weight_line": 75.6608,
+      "tiny_weight_line": 58.4192,
+      "stats": {
+        "hp": 130,
+        "atk": 120,
+        "def": 66,
+        "sp_atk": 114,
+        "sp_def": 130,
+        "speed": 90,
+        "sum": 650
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/144-雪影冰灵.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "帽兜娃娃",
+      "id": 143,
+      "types": [
+        "冰",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 0.4,
+      "height_max": 0.57,
+      "weight_min": 19.05,
+      "weight_max": 26.8,
+      "giant_weight_line": 26.645,
+      "tiny_weight_line": 19.205,
+      "stats": {
+        "hp": 104,
+        "atk": 83,
+        "def": 52,
+        "sp_atk": 78,
+        "sp_def": 104,
+        "speed": 72,
+        "sum": 493
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/143-帽兜娃娃.png"
+    },
+    {
+      "name": "雪影娃娃",
+      "id": 144,
+      "types": [
+        "冰",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.92,
+      "weight_min": 31.8,
+      "weight_max": 36.6,
+      "giant_weight_line": 36.504,
+      "tiny_weight_line": 31.896,
+      "stats": {
+        "hp": 130,
+        "atk": 103,
+        "def": 66,
+        "sp_atk": 98,
+        "sp_def": 130,
+        "speed": 90,
+        "sum": 617
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/144-雪影娃娃.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/142-大耳帽兜.png"
+}

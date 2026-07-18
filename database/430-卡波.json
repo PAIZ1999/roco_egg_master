@@ -1,0 +1,74 @@
+{
+  "id": 430,
+  "name": "卡波",
+  "types": [
+    "恶"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 0.91,
+    "weight_max": 1.508,
+    "giant_weight_line": 1.496,
+    "tiny_weight_line": 0.922
+  },
+  "evolution_chain": [
+    "卡波",
+    "卡拉波斯"
+  ],
+  "stats": {
+    "hp": 82,
+    "atk": 86,
+    "def": 52,
+    "sp_atk": 27,
+    "sp_def": 41,
+    "speed": 80,
+    "sum": 368
+  },
+  "height_min": 0.47,
+  "height_max": 0.67,
+  "weight_min": 2.6,
+  "weight_max": 3.77,
+  "giant_weight_line": 3.7466,
+  "tiny_weight_line": 2.6234,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "卡拉波斯",
+      "id": 431,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.83,
+      "height_max": 1.19,
+      "weight_min": 4.9,
+      "weight_max": 5.7,
+      "giant_weight_line": 5.684,
+      "tiny_weight_line": 4.916,
+      "stats": {
+        "hp": 103,
+        "atk": 107,
+        "def": 65,
+        "sp_atk": 34,
+        "sp_def": 51,
+        "speed": 100,
+        "sum": 460
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/431-卡拉波斯.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/430-卡波.png"
+}

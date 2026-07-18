@@ -1,0 +1,139 @@
+{
+  "id": 5,
+  "name": "火花",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "魔力组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组",
+      "巨灵组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.29,
+    "weight_min": 2.66,
+    "weight_max": 3.4,
+    "giant_weight_line": 3.3852,
+    "tiny_weight_line": 2.6748
+  },
+  "evolution_chain": [
+    "火花",
+    "焰火",
+    "火神",
+    [
+      "烈火战神"
+    ]
+  ],
+  "stats": {
+    "hp": 70,
+    "atk": 84,
+    "def": 56,
+    "sp_atk": 37,
+    "sp_def": 43,
+    "speed": 78,
+    "sum": 368
+  },
+  "height_min": 0.53,
+  "height_max": 0.71,
+  "weight_min": 7.6,
+  "weight_max": 8.5,
+  "giant_weight_line": 8.482,
+  "tiny_weight_line": 7.618,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "烈火战神",
+      "id": 7,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.47,
+      "height_max": 3.01,
+      "weight_min": 183,
+      "weight_max": 267,
+      "giant_weight_line": 265.32,
+      "tiny_weight_line": 184.68,
+      "stats": {
+        "hp": 117,
+        "atk": 175,
+        "def": 94,
+        "sp_atk": 84,
+        "sp_def": 72,
+        "speed": 130,
+        "sum": 672
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/7-烈火战神.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "火神",
+      "id": 7,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "巨灵组"
+      ],
+      "height_min": 1.52,
+      "height_max": 2.18,
+      "weight_min": 90.5,
+      "weight_max": 110,
+      "giant_weight_line": 109.61,
+      "tiny_weight_line": 90.89,
+      "stats": {
+        "hp": 117,
+        "atk": 139,
+        "def": 94,
+        "sp_atk": 61,
+        "sp_def": 72,
+        "speed": 130,
+        "sum": 613
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/7-火神.png"
+    },
+    {
+      "name": "焰火",
+      "id": 6,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "巨灵组"
+      ],
+      "height_min": 0.82,
+      "height_max": 1.1,
+      "weight_min": 21,
+      "weight_max": 30.7,
+      "giant_weight_line": 30.506,
+      "tiny_weight_line": 21.194,
+      "stats": {
+        "hp": 93,
+        "atk": 111,
+        "def": 75,
+        "sp_atk": 49,
+        "sp_def": 58,
+        "speed": 104,
+        "sum": 490
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/6-焰火.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/5-火花.png"
+}

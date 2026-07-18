@@ -1,0 +1,166 @@
+{
+  "id": 57,
+  "name": "梦游",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "魔力组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组",
+      "妖精组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.25,
+    "weight_min": 0.298,
+    "weight_max": 0.42,
+    "giant_weight_line": 0.4176,
+    "tiny_weight_line": 0.3004
+  },
+  "evolution_chain": [
+    "梦游",
+    "梦悠悠"
+  ],
+  "stats": {
+    "hp": 90,
+    "atk": 52,
+    "def": 60,
+    "sp_atk": 125,
+    "sp_def": 74,
+    "speed": 92,
+    "sum": 493
+  },
+  "height_min": 0.5,
+  "height_max": 0.6,
+  "weight_min": 0.6,
+  "weight_max": 1.87,
+  "giant_weight_line": 1.8446,
+  "tiny_weight_line": 0.6254,
+  "regional_forms": [
+    {
+      "name": "梦游（穿旧睡衣的样子）",
+      "id": 57,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "妖精组"
+      ],
+      "height_min": 0.5,
+      "height_max": 0.6,
+      "weight_min": 0.6,
+      "weight_max": 1.87,
+      "giant_weight_line": 1.8446,
+      "tiny_weight_line": 0.6254,
+      "stats": {
+        "hp": 90,
+        "atk": 52,
+        "def": 60,
+        "sp_atk": 125,
+        "sp_def": 74,
+        "speed": 92,
+        "sum": 493
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/57-梦游（穿旧睡衣的样子）.png"
+    },
+    {
+      "name": "梦悠悠（穿旧睡衣的样子）",
+      "id": 58,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "妖精组"
+      ],
+      "height_min": 1,
+      "height_max": 1.2,
+      "weight_min": 1.25,
+      "weight_max": 3.1,
+      "giant_weight_line": 3.063,
+      "tiny_weight_line": 1.287,
+      "stats": {
+        "hp": 113,
+        "atk": 65,
+        "def": 75,
+        "sp_atk": 157,
+        "sp_def": 93,
+        "speed": 115,
+        "sum": 618
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/58-梦悠悠（穿旧睡衣的样子）.png"
+    },
+    {
+      "name": "梦游（穿星星睡衣的样子）",
+      "id": 57,
+      "types": [
+        "幽",
+        "光"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ],
+      "height_min": 0.5,
+      "height_max": 0.6,
+      "weight_min": 0.6,
+      "weight_max": 1.87,
+      "giant_weight_line": 1.8446,
+      "tiny_weight_line": 0.6254,
+      "stats": {
+        "hp": 90,
+        "atk": 62,
+        "def": 56,
+        "sp_atk": 120,
+        "sp_def": 90,
+        "speed": 88,
+        "sum": 506
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/57-梦游（穿星星睡衣的样子）.png"
+    },
+    {
+      "name": "梦悠悠（穿星星睡衣的样子）",
+      "id": 58,
+      "types": [
+        "幽",
+        "光"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ],
+      "height_min": 1,
+      "height_max": 1.2,
+      "weight_min": 1.25,
+      "weight_max": 3.1,
+      "giant_weight_line": 3.063,
+      "tiny_weight_line": 1.287,
+      "stats": {
+        "hp": 112,
+        "atk": 78,
+        "def": 70,
+        "sp_atk": 150,
+        "sp_def": 112,
+        "speed": 110,
+        "sum": 632
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/58-梦悠悠（穿星星睡衣的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/57-梦游（穿旧睡衣的样子）.png"
+}

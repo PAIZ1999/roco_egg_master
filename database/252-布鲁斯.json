@@ -1,0 +1,107 @@
+{
+  "id": 252,
+  "name": "布鲁斯",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "软体组",
+    "海洋组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "软体组",
+      "海洋组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.32,
+    "weight_min": 0.84,
+    "weight_max": 1.84,
+    "giant_weight_line": 1.82,
+    "tiny_weight_line": 0.86
+  },
+  "evolution_chain": [
+    "布鲁斯",
+    "雪顶布鲁斯",
+    "冰钻布鲁斯"
+  ],
+  "stats": {
+    "hp": 44,
+    "atk": 60,
+    "def": 68,
+    "sp_atk": 16,
+    "sp_def": 53,
+    "speed": 54,
+    "sum": 295
+  },
+  "height_min": 0.53,
+  "height_max": 0.76,
+  "weight_min": 2.4,
+  "weight_max": 4.6,
+  "giant_weight_line": 4.556,
+  "tiny_weight_line": 2.444,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "雪顶布鲁斯",
+      "id": 253,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "海洋组"
+      ],
+      "height_min": 0.58,
+      "height_max": 0.83,
+      "weight_min": 12.8,
+      "weight_max": 15.6,
+      "giant_weight_line": 15.544,
+      "tiny_weight_line": 12.856,
+      "stats": {
+        "hp": 58,
+        "atk": 81,
+        "def": 91,
+        "sp_atk": 22,
+        "sp_def": 70,
+        "speed": 72,
+        "sum": 394
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/253-雪顶布鲁斯.png"
+    },
+    {
+      "name": "冰钻布鲁斯",
+      "id": 254,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "海洋组"
+      ],
+      "height_min": 1.21,
+      "height_max": 1.72,
+      "weight_min": 49.5,
+      "weight_max": 58.6,
+      "giant_weight_line": 58.418,
+      "tiny_weight_line": 49.682,
+      "stats": {
+        "hp": 73,
+        "atk": 101,
+        "def": 114,
+        "sp_atk": 27,
+        "sp_def": 88,
+        "speed": 90,
+        "sum": 493
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/254-冰钻布鲁斯.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/252-布鲁斯.png"
+}

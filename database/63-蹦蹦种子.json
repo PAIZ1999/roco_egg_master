@@ -1,0 +1,516 @@
+{
+  "id": 63,
+  "name": "蹦蹦种子",
+  "types": [
+    "草",
+    "毒"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 1.505,
+    "weight_max": 2.24,
+    "giant_weight_line": 2.2253,
+    "tiny_weight_line": 1.5197
+  },
+  "evolution_chain": [
+    "蹦蹦种子",
+    "蹦蹦草",
+    "蹦蹦花",
+    [
+      "蹦蹦果"
+    ]
+  ],
+  "stats": {
+    "hp": 60,
+    "atk": 64,
+    "def": 44,
+    "sp_atk": 66,
+    "sp_def": 63,
+    "speed": 51,
+    "sum": 348
+  },
+  "height_min": 0.46,
+  "height_max": 0.67,
+  "weight_min": 4.3,
+  "weight_max": 5.6,
+  "giant_weight_line": 5.574,
+  "tiny_weight_line": 4.326,
+  "regional_forms": [
+    {
+      "name": "蹦蹦种子（海神球形态）",
+      "id": 63,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.67,
+      "weight_min": 4.3,
+      "weight_max": 5.6,
+      "giant_weight_line": 5.574,
+      "tiny_weight_line": 4.326,
+      "stats": {
+        "hp": 60,
+        "atk": 64,
+        "def": 44,
+        "sp_atk": 66,
+        "sp_def": 63,
+        "speed": 51,
+        "sum": 348
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/63-蹦蹦种子（海神球形态）.png"
+    },
+    {
+      "name": "蹦蹦草（海神球形态）",
+      "id": 64,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.59,
+      "height_max": 0.85,
+      "weight_min": 34.3,
+      "weight_max": 42.9,
+      "giant_weight_line": 42.728,
+      "tiny_weight_line": 34.472,
+      "stats": {
+        "hp": 80,
+        "atk": 85,
+        "def": 59,
+        "sp_atk": 88,
+        "sp_def": 84,
+        "speed": 68,
+        "sum": 464
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/64-蹦蹦草（海神球形态）.png"
+    },
+    {
+      "name": "蹦蹦花（海神球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.9,
+      "weight_min": 75,
+      "weight_max": 86,
+      "giant_weight_line": 85.78,
+      "tiny_weight_line": 75.22,
+      "stats": {
+        "hp": 100,
+        "atk": 107,
+        "def": 73,
+        "sp_atk": 110,
+        "sp_def": 105,
+        "speed": 85,
+        "sum": 580
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/65-蹦蹦花（海神球形态）.png"
+    },
+    {
+      "name": "蹦蹦种子（彩玉球形态）",
+      "id": 63,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.67,
+      "weight_min": 4.3,
+      "weight_max": 5.6,
+      "giant_weight_line": 5.574,
+      "tiny_weight_line": 4.326,
+      "stats": {
+        "hp": 62,
+        "atk": 61,
+        "def": 44,
+        "sp_atk": 66,
+        "sp_def": 63,
+        "speed": 51,
+        "sum": 347
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/63-蹦蹦种子（彩玉球形态）.png"
+    },
+    {
+      "name": "蹦蹦种子（短毛球形态）",
+      "id": 63,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.67,
+      "weight_min": 4.3,
+      "weight_max": 5.6,
+      "giant_weight_line": 5.574,
+      "tiny_weight_line": 4.326,
+      "stats": {
+        "hp": 57,
+        "atk": 62,
+        "def": 48,
+        "sp_atk": 66,
+        "sp_def": 67,
+        "speed": 48,
+        "sum": 348
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/63-蹦蹦种子（短毛球形态）.png"
+    },
+    {
+      "name": "蹦蹦种子（象牙球形态）",
+      "id": 63,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.67,
+      "weight_min": 4.3,
+      "weight_max": 5.6,
+      "giant_weight_line": 5.574,
+      "tiny_weight_line": 4.326,
+      "stats": {
+        "hp": 59,
+        "atk": 60,
+        "def": 44,
+        "sp_atk": 66,
+        "sp_def": 63,
+        "speed": 54,
+        "sum": 346
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/63-蹦蹦种子（象牙球形态）.png"
+    },
+    {
+      "name": "蹦蹦草（彩玉球形态）",
+      "id": 64,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.59,
+      "height_max": 0.85,
+      "weight_min": 34.3,
+      "weight_max": 42.9,
+      "giant_weight_line": 42.728,
+      "tiny_weight_line": 34.472,
+      "stats": {
+        "hp": 83,
+        "atk": 81,
+        "def": 59,
+        "sp_atk": 87,
+        "sp_def": 84,
+        "speed": 68,
+        "sum": 462
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/64-蹦蹦草（彩玉球形态）.png"
+    },
+    {
+      "name": "蹦蹦草（短毛球形态）",
+      "id": 64,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.59,
+      "height_max": 0.85,
+      "weight_min": 34.3,
+      "weight_max": 42.9,
+      "giant_weight_line": 42.728,
+      "tiny_weight_line": 34.472,
+      "stats": {
+        "hp": 76,
+        "atk": 82,
+        "def": 64,
+        "sp_atk": 87,
+        "sp_def": 90,
+        "speed": 64,
+        "sum": 463
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/64-蹦蹦草（短毛球形态）.png"
+    },
+    {
+      "name": "蹦蹦草（象牙球形态）",
+      "id": 64,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.59,
+      "height_max": 0.85,
+      "weight_min": 34.3,
+      "weight_max": 42.9,
+      "giant_weight_line": 42.728,
+      "tiny_weight_line": 34.472,
+      "stats": {
+        "hp": 79,
+        "atk": 80,
+        "def": 59,
+        "sp_atk": 88,
+        "sp_def": 84,
+        "speed": 72,
+        "sum": 462
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/64-蹦蹦草（象牙球形态）.png"
+    },
+    {
+      "name": "蹦蹦花（彩玉球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.9,
+      "weight_min": 75,
+      "weight_max": 86,
+      "giant_weight_line": 85.78,
+      "tiny_weight_line": 75.22,
+      "stats": {
+        "hp": 103,
+        "atk": 101,
+        "def": 73,
+        "sp_atk": 109,
+        "sp_def": 105,
+        "speed": 85,
+        "sum": 576
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/65-蹦蹦花（彩玉球形态）.png"
+    },
+    {
+      "name": "蹦蹦花（短毛球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.9,
+      "weight_min": 75,
+      "weight_max": 86,
+      "giant_weight_line": 85.78,
+      "tiny_weight_line": 75.22,
+      "stats": {
+        "hp": 95,
+        "atk": 103,
+        "def": 80,
+        "sp_atk": 109,
+        "sp_def": 112,
+        "speed": 80,
+        "sum": 579
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/65-蹦蹦花（短毛球形态）.png"
+    },
+    {
+      "name": "蹦蹦花（象牙球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.9,
+      "weight_min": 75,
+      "weight_max": 86,
+      "giant_weight_line": 85.78,
+      "tiny_weight_line": 75.22,
+      "stats": {
+        "hp": 99,
+        "atk": 100,
+        "def": 73,
+        "sp_atk": 110,
+        "sp_def": 106,
+        "speed": 90,
+        "sum": 578
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/65-蹦蹦花（象牙球形态）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "蹦蹦果（海神球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.94,
+      "height_max": 2.51,
+      "weight_min": 167,
+      "weight_max": 191,
+      "giant_weight_line": 190.52,
+      "tiny_weight_line": 167.48,
+      "stats": {
+        "hp": 100,
+        "atk": 107,
+        "def": 73,
+        "sp_atk": 110,
+        "sp_def": 105,
+        "speed": 85,
+        "sum": 580
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/65-蹦蹦果（海神球形态）.png"
+    },
+    {
+      "name": "蹦蹦果（彩玉球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.94,
+      "height_max": 2.51,
+      "weight_min": 167,
+      "weight_max": 191,
+      "giant_weight_line": 190.52,
+      "tiny_weight_line": 167.48,
+      "stats": {
+        "hp": 103,
+        "atk": 101,
+        "def": 73,
+        "sp_atk": 109,
+        "sp_def": 105,
+        "speed": 85,
+        "sum": 576
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/65-蹦蹦果（彩玉球形态）.png"
+    },
+    {
+      "name": "蹦蹦果（短毛球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.94,
+      "height_max": 2.51,
+      "weight_min": 167,
+      "weight_max": 191,
+      "giant_weight_line": 190.52,
+      "tiny_weight_line": 167.48,
+      "stats": {
+        "hp": 95,
+        "atk": 103,
+        "def": 80,
+        "sp_atk": 109,
+        "sp_def": 112,
+        "speed": 80,
+        "sum": 579
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/65-蹦蹦果（短毛球形态）.png"
+    },
+    {
+      "name": "蹦蹦果（象牙球形态）",
+      "id": 65,
+      "types": [
+        "草",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.94,
+      "height_max": 2.51,
+      "weight_min": 167,
+      "weight_max": 191,
+      "giant_weight_line": 190.52,
+      "tiny_weight_line": 167.48,
+      "stats": {
+        "hp": 99,
+        "atk": 100,
+        "def": 73,
+        "sp_atk": 110,
+        "sp_def": 106,
+        "speed": 90,
+        "sum": 578
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/65-蹦蹦果（象牙球形态）.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/63-蹦蹦种子（彩玉球形态）.png"
+}

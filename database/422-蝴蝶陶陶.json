@@ -1,0 +1,109 @@
+{
+  "id": 422,
+  "name": "蝴蝶陶陶",
+  "types": [
+    "萌"
+  ],
+  "egg_groups": [
+    "动物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "拟人组"
+    ],
+    "height_min": 0.25,
+    "height_max": 0.33,
+    "weight_min": 1.4,
+    "weight_max": 2.452,
+    "giant_weight_line": 2.431,
+    "tiny_weight_line": 1.421
+  },
+  "evolution_chain": [
+    "蝴蝶陶陶",
+    "铆钉毛毛",
+    "徘徊爪爪"
+  ],
+  "stats": {
+    "hp": 57,
+    "atk": 47,
+    "def": 65,
+    "sp_atk": 8,
+    "sp_def": 57,
+    "speed": 75,
+    "sum": 309
+  },
+  "height_min": 0.58,
+  "height_max": 0.79,
+  "weight_min": 4,
+  "weight_max": 6.13,
+  "giant_weight_line": 6.0874,
+  "tiny_weight_line": 4.0426,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "铆钉毛毛",
+      "id": 423,
+      "types": [
+        "萌",
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.08,
+      "weight_min": 27.5,
+      "weight_max": 40,
+      "giant_weight_line": 39.75,
+      "tiny_weight_line": 27.75,
+      "stats": {
+        "hp": 76,
+        "atk": 62,
+        "def": 87,
+        "sp_atk": 11,
+        "sp_def": 76,
+        "speed": 100,
+        "sum": 412
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/423-铆钉毛毛.png"
+    },
+    {
+      "name": "徘徊爪爪",
+      "id": 424,
+      "types": [
+        "萌",
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 1.55,
+      "height_max": 1.71,
+      "weight_min": 40.5,
+      "weight_max": 67.3,
+      "giant_weight_line": 66.764,
+      "tiny_weight_line": 41.036,
+      "stats": {
+        "hp": 95,
+        "atk": 78,
+        "def": 109,
+        "sp_atk": 14,
+        "sp_def": 95,
+        "speed": 125,
+        "sum": 516
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/424-徘徊爪爪.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/422-蝴蝶陶陶.png"
+}

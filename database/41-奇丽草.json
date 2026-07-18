@@ -1,0 +1,135 @@
+{
+  "id": 41,
+  "name": "奇丽草",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.23,
+    "weight_min": 1.435,
+    "weight_max": 2.28,
+    "giant_weight_line": 2.2631,
+    "tiny_weight_line": 1.4519
+  },
+  "evolution_chain": [
+    "奇丽草",
+    "奇丽叶",
+    "奇丽花",
+    [
+      "奇丽果"
+    ]
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 69,
+    "def": 73,
+    "sp_atk": 69,
+    "sp_def": 57,
+    "speed": 48,
+    "sum": 383
+  },
+  "height_min": 0.38,
+  "height_max": 0.55,
+  "weight_min": 4.1,
+  "weight_max": 5.7,
+  "giant_weight_line": 5.668,
+  "tiny_weight_line": 4.132,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "奇丽果",
+      "id": 43,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.68,
+      "height_max": 2.2,
+      "weight_min": 72.4,
+      "weight_max": 105,
+      "giant_weight_line": 104.348,
+      "tiny_weight_line": 73.052,
+      "stats": {
+        "hp": 112,
+        "atk": 128,
+        "def": 133,
+        "sp_atk": 128,
+        "sp_def": 105,
+        "speed": 80,
+        "sum": 686
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/43-奇丽果.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "奇丽叶",
+      "id": 42,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.89,
+      "weight_min": 24,
+      "weight_max": 31,
+      "giant_weight_line": 30.86,
+      "tiny_weight_line": 24.14,
+      "stats": {
+        "hp": 90,
+        "atk": 92,
+        "def": 97,
+        "sp_atk": 92,
+        "sp_def": 76,
+        "speed": 64,
+        "sum": 511
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/42-奇丽叶.png"
+    },
+    {
+      "name": "奇丽花",
+      "id": 43,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.11,
+      "height_max": 1.58,
+      "weight_min": 42,
+      "weight_max": 58,
+      "giant_weight_line": 57.68,
+      "tiny_weight_line": 42.32,
+      "stats": {
+        "hp": 112,
+        "atk": 115,
+        "def": 121,
+        "sp_atk": 115,
+        "sp_def": 95,
+        "speed": 80,
+        "sum": 638
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/43-奇丽花.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/41-奇丽草.png"
+}

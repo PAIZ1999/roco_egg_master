@@ -1,0 +1,140 @@
+{
+  "id": 313,
+  "name": "果冻",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "魔力组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.15,
+    "weight_min": 1.523,
+    "weight_max": 2.24,
+    "giant_weight_line": 2.2257,
+    "tiny_weight_line": 1.5373
+  },
+  "evolution_chain": [
+    "果冻",
+    [
+      "抹茶布丁",
+      "椰浆布丁",
+      "熔岩布丁"
+    ]
+  ],
+  "stats": {
+    "hp": 81,
+    "atk": 26,
+    "def": 75,
+    "sp_atk": 81,
+    "sp_def": 78,
+    "speed": 96,
+    "sum": 437
+  },
+  "height_min": 0.3,
+  "height_max": 0.36,
+  "weight_min": 4.35,
+  "weight_max": 5.6,
+  "giant_weight_line": 5.575,
+  "tiny_weight_line": 4.375,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "抹茶布丁",
+      "id": 314,
+      "types": [
+        "水",
+        "草"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "魔力组"
+      ],
+      "height_min": 0.39,
+      "height_max": 0.51,
+      "weight_min": 6.21,
+      "weight_max": 7.9,
+      "giant_weight_line": 7.8662,
+      "tiny_weight_line": 6.2438,
+      "stats": {
+        "hp": 101,
+        "atk": 32,
+        "def": 94,
+        "sp_atk": 101,
+        "sp_def": 98,
+        "speed": 120,
+        "sum": 546
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/314-抹茶布丁.png"
+    },
+    {
+      "name": "椰浆布丁",
+      "id": 315,
+      "types": [
+        "水",
+        "冰"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.39,
+      "height_max": 0.51,
+      "weight_min": 6.21,
+      "weight_max": 7.9,
+      "giant_weight_line": 7.8662,
+      "tiny_weight_line": 6.2438,
+      "stats": {
+        "hp": 133,
+        "atk": 34,
+        "def": 81,
+        "sp_atk": 89,
+        "sp_def": 105,
+        "speed": 120,
+        "sum": 562
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/315-椰浆布丁.png"
+    },
+    {
+      "name": "熔岩布丁",
+      "id": 316,
+      "types": [
+        "水",
+        "火"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.39,
+      "height_max": 0.51,
+      "weight_min": 6.21,
+      "weight_max": 7.9,
+      "giant_weight_line": 7.8662,
+      "tiny_weight_line": 6.2438,
+      "stats": {
+        "hp": 128,
+        "atk": 87,
+        "def": 112,
+        "sp_atk": 33,
+        "sp_def": 84,
+        "speed": 120,
+        "sum": 564
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/316-熔岩布丁.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/313-果冻.png"
+}

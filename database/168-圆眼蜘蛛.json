@@ -1,0 +1,105 @@
+{
+  "id": 168,
+  "name": "圆眼蜘蛛",
+  "types": [
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 1.225,
+    "weight_max": 2,
+    "giant_weight_line": 1.9845,
+    "tiny_weight_line": 1.2405
+  },
+  "evolution_chain": [
+    "圆眼蜘蛛",
+    "尖角蜘蛛",
+    "芋香巨角蛛"
+  ],
+  "stats": {
+    "hp": 55,
+    "atk": 53,
+    "def": 55,
+    "sp_atk": 53,
+    "sp_def": 55,
+    "speed": 66,
+    "sum": 337
+  },
+  "height_min": 0.48,
+  "height_max": 0.68,
+  "weight_min": 3.5,
+  "weight_max": 5,
+  "giant_weight_line": 4.97,
+  "tiny_weight_line": 3.53,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "尖角蜘蛛",
+      "id": 169,
+      "types": [
+        "虫",
+        "毒"
+      ],
+      "egg_groups": [
+        "昆虫组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.98,
+      "weight_min": 7.75,
+      "weight_max": 9.6,
+      "giant_weight_line": 9.563,
+      "tiny_weight_line": 7.787,
+      "stats": {
+        "hp": 74,
+        "atk": 70,
+        "def": 73,
+        "sp_atk": 70,
+        "sp_def": 73,
+        "speed": 88,
+        "sum": 448
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/169-尖角蜘蛛.png"
+    },
+    {
+      "name": "芋香巨角蛛",
+      "id": 170,
+      "types": [
+        "虫",
+        "毒"
+      ],
+      "egg_groups": [
+        "昆虫组"
+      ],
+      "height_min": 0.9,
+      "height_max": 1.29,
+      "weight_min": 31.75,
+      "weight_max": 43.6,
+      "giant_weight_line": 43.363,
+      "tiny_weight_line": 31.987,
+      "stats": {
+        "hp": 92,
+        "atk": 88,
+        "def": 91,
+        "sp_atk": 88,
+        "sp_def": 91,
+        "speed": 110,
+        "sum": 560
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/170-芋香巨角蛛.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/168-圆眼蜘蛛.png"
+}

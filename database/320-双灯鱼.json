@@ -1,0 +1,76 @@
+{
+  "id": 320,
+  "name": "双灯鱼",
+  "types": [
+    "水",
+    "电"
+  ],
+  "egg_groups": [
+    "海洋组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.3,
+    "weight_min": 5.215,
+    "weight_max": 7.12,
+    "giant_weight_line": 7.0819,
+    "tiny_weight_line": 5.2531
+  },
+  "evolution_chain": [
+    "双灯鱼",
+    "利灯鱼"
+  ],
+  "stats": {
+    "hp": 102,
+    "atk": 55,
+    "def": 57,
+    "sp_atk": 111,
+    "sp_def": 93,
+    "speed": 84,
+    "sum": 502
+  },
+  "height_min": 0.5,
+  "height_max": 0.72,
+  "weight_min": 14.9,
+  "weight_max": 17.8,
+  "giant_weight_line": 17.742,
+  "tiny_weight_line": 14.958,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "利灯鱼",
+      "id": 321,
+      "types": [
+        "水",
+        "电"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.89,
+      "weight_min": 26.8,
+      "weight_max": 31.5,
+      "giant_weight_line": 31.406,
+      "tiny_weight_line": 26.894,
+      "stats": {
+        "hp": 128,
+        "atk": 68,
+        "def": 71,
+        "sp_atk": 138,
+        "sp_def": 116,
+        "speed": 105,
+        "sum": 626
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/321-利灯鱼.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/320-双灯鱼.png"
+}

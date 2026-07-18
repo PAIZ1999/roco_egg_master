@@ -1,0 +1,74 @@
+{
+  "id": 177,
+  "name": "斑斑",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.25,
+    "weight_min": 1.677,
+    "weight_max": 2.468,
+    "giant_weight_line": 2.4522,
+    "tiny_weight_line": 1.6928
+  },
+  "evolution_chain": [
+    "斑斑",
+    "斑枭"
+  ],
+  "stats": {
+    "hp": 87,
+    "atk": 90,
+    "def": 82,
+    "sp_atk": 90,
+    "sp_def": 91,
+    "speed": 92,
+    "sum": 532
+  },
+  "height_min": 0.47,
+  "height_max": 0.6,
+  "weight_min": 4.79,
+  "weight_max": 6.17,
+  "giant_weight_line": 6.1424,
+  "tiny_weight_line": 4.8176,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "斑枭",
+      "id": 178,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.81,
+      "weight_min": 15.9,
+      "weight_max": 23.8,
+      "giant_weight_line": 23.642,
+      "tiny_weight_line": 16.058,
+      "stats": {
+        "hp": 109,
+        "atk": 112,
+        "def": 102,
+        "sp_atk": 112,
+        "sp_def": 114,
+        "speed": 115,
+        "sum": 664
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/178-斑枭.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/177-斑斑.png"
+}

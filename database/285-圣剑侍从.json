@@ -1,0 +1,109 @@
+{
+  "id": 285,
+  "name": "圣剑侍从",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "机械组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "巨灵组"
+    ],
+    "height_min": 0.4,
+    "height_max": 0.49,
+    "weight_min": 40.495,
+    "weight_max": 69.44,
+    "giant_weight_line": 68.8611,
+    "tiny_weight_line": 41.0739
+  },
+  "evolution_chain": [
+    "圣剑侍从",
+    "圣剑-X",
+    [
+      "圣剑骑士"
+    ]
+  ],
+  "stats": {
+    "hp": 139,
+    "atk": 116,
+    "def": 139,
+    "sp_atk": 111,
+    "sp_def": 139,
+    "speed": 52,
+    "sum": 696
+  },
+  "height_min": 0.94,
+  "height_max": 1.18,
+  "weight_min": 115.7,
+  "weight_max": 173.6,
+  "giant_weight_line": 172.442,
+  "tiny_weight_line": 116.858,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "圣剑骑士",
+      "id": 286,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.44,
+      "height_max": 2.92,
+      "weight_min": 865,
+      "weight_max": 1100,
+      "giant_weight_line": 1095.3,
+      "tiny_weight_line": 869.7,
+      "stats": {
+        "hp": 187,
+        "atk": 154,
+        "def": 183,
+        "sp_atk": 148,
+        "sp_def": 183,
+        "speed": 65,
+        "sum": 920
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/286-圣剑骑士.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "圣剑-X",
+      "id": 286,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "机械组",
+        "巨灵组"
+      ],
+      "height_min": 1.83,
+      "height_max": 2.07,
+      "weight_min": 481,
+      "weight_max": 658,
+      "giant_weight_line": 654.46,
+      "tiny_weight_line": 484.54,
+      "stats": {
+        "hp": 174,
+        "atk": 144,
+        "def": 173,
+        "sp_atk": 139,
+        "sp_def": 173,
+        "speed": 65,
+        "sum": 868
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/286-圣剑-X.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/285-圣剑侍从.png"
+}

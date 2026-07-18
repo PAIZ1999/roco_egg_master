@@ -1,0 +1,76 @@
+{
+  "id": 137,
+  "name": "呼呼猪",
+  "types": [
+    "冰",
+    "地"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.22,
+    "height_max": 0.31,
+    "weight_min": 2.38,
+    "weight_max": 3.56,
+    "giant_weight_line": 3.5364,
+    "tiny_weight_line": 2.4036
+  },
+  "evolution_chain": [
+    "呼呼猪",
+    "獠牙猪"
+  ],
+  "stats": {
+    "hp": 98,
+    "atk": 95,
+    "def": 88,
+    "sp_atk": 33,
+    "sp_def": 81,
+    "speed": 68,
+    "sum": 463
+  },
+  "height_min": 0.52,
+  "height_max": 0.75,
+  "weight_min": 6.8,
+  "weight_max": 8.9,
+  "giant_weight_line": 8.858,
+  "tiny_weight_line": 6.842,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "獠牙猪",
+      "id": 138,
+      "types": [
+        "冰",
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.77,
+      "height_max": 1.1,
+      "weight_min": 52.8,
+      "weight_max": 67.4,
+      "giant_weight_line": 67.108,
+      "tiny_weight_line": 53.092,
+      "stats": {
+        "hp": 123,
+        "atk": 119,
+        "def": 110,
+        "sp_atk": 41,
+        "sp_def": 101,
+        "speed": 85,
+        "sum": 579
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/138-獠牙猪.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/137-呼呼猪.png"
+}

@@ -1,0 +1,110 @@
+{
+  "id": 159,
+  "name": "水滴蛇",
+  "types": [
+    "水",
+    "武"
+  ],
+  "egg_groups": [
+    "两栖组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组",
+      "妖精组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.29,
+    "weight_min": 0.788,
+    "weight_max": 1.64,
+    "giant_weight_line": 1.623,
+    "tiny_weight_line": 0.805
+  },
+  "evolution_chain": [
+    "水滴蛇",
+    "水蛇锁",
+    "游蛇魔使"
+  ],
+  "stats": {
+    "hp": 63,
+    "atk": 66,
+    "def": 62,
+    "sp_atk": 62,
+    "sp_def": 62,
+    "speed": 63,
+    "sum": 378
+  },
+  "height_min": 0.53,
+  "height_max": 0.69,
+  "weight_min": 2.25,
+  "weight_max": 4.1,
+  "giant_weight_line": 4.063,
+  "tiny_weight_line": 2.287,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "水蛇锁",
+      "id": 160,
+      "types": [
+        "水",
+        "武"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ],
+      "height_min": 0.94,
+      "height_max": 1.2,
+      "weight_min": 18.07,
+      "weight_max": 27.05,
+      "giant_weight_line": 26.8704,
+      "tiny_weight_line": 18.2496,
+      "stats": {
+        "hp": 84,
+        "atk": 88,
+        "def": 83,
+        "sp_atk": 83,
+        "sp_def": 83,
+        "speed": 84,
+        "sum": 505
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/160-水蛇锁.png"
+    },
+    {
+      "name": "游蛇魔使",
+      "id": 161,
+      "types": [
+        "水",
+        "武"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "妖精组"
+      ],
+      "height_min": 2.15,
+      "height_max": 3,
+      "weight_min": 71.05,
+      "weight_max": 86.05,
+      "giant_weight_line": 85.75,
+      "tiny_weight_line": 71.35,
+      "stats": {
+        "hp": 105,
+        "atk": 110,
+        "def": 103,
+        "sp_atk": 104,
+        "sp_def": 103,
+        "speed": 105,
+        "sum": 630
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/161-游蛇魔使.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/159-水滴蛇.png"
+}

@@ -1,0 +1,103 @@
+{
+  "id": 60,
+  "name": "伏地兽",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.22,
+    "height_max": 0.31,
+    "weight_min": 4.34,
+    "weight_max": 6.32,
+    "giant_weight_line": 6.2804,
+    "tiny_weight_line": 4.3796
+  },
+  "evolution_chain": [
+    "伏地兽",
+    "贪食鼹",
+    "巨噬针鼹"
+  ],
+  "stats": {
+    "hp": 95,
+    "atk": 56,
+    "def": 70,
+    "sp_atk": 25,
+    "sp_def": 41,
+    "speed": 51,
+    "sum": 338
+  },
+  "height_min": 0.52,
+  "height_max": 0.74,
+  "weight_min": 12.4,
+  "weight_max": 15.8,
+  "giant_weight_line": 15.732,
+  "tiny_weight_line": 12.468,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "贪食鼹",
+      "id": 61,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.21,
+      "weight_min": 21.6,
+      "weight_max": 35.84,
+      "giant_weight_line": 35.5552,
+      "tiny_weight_line": 21.8848,
+      "stats": {
+        "hp": 126,
+        "atk": 74,
+        "def": 94,
+        "sp_atk": 33,
+        "sp_def": 54,
+        "speed": 68,
+        "sum": 449
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/61-贪食鼹.png"
+    },
+    {
+      "name": "巨噬针鼹",
+      "id": 62,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.52,
+      "height_max": 1.79,
+      "weight_min": 87.3,
+      "weight_max": 105,
+      "giant_weight_line": 104.646,
+      "tiny_weight_line": 87.654,
+      "stats": {
+        "hp": 158,
+        "atk": 93,
+        "def": 117,
+        "sp_atk": 41,
+        "sp_def": 68,
+        "speed": 85,
+        "sum": 562
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/62-巨噬针鼹.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/60-伏地兽.png"
+}

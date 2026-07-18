@@ -1,0 +1,163 @@
+{
+  "id": 237,
+  "name": "刺轮砣",
+  "types": [
+    "毒",
+    "萌"
+  ],
+  "egg_groups": [
+    "海洋组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组"
+    ],
+    "height_min": 0.08,
+    "height_max": 0.13,
+    "weight_min": 0.945,
+    "weight_max": 1.6,
+    "giant_weight_line": 1.5869,
+    "tiny_weight_line": 0.9581
+  },
+  "evolution_chain": [
+    "刺轮砣",
+    "月亮砣"
+  ],
+  "stats": {
+    "hp": 100,
+    "atk": 80,
+    "def": 80,
+    "sp_atk": 78,
+    "sp_def": 65,
+    "speed": 84,
+    "sum": 487
+  },
+  "height_min": 0.18,
+  "height_max": 0.31,
+  "weight_min": 2.7,
+  "weight_max": 4,
+  "giant_weight_line": 3.974,
+  "tiny_weight_line": 2.726,
+  "regional_forms": [
+    {
+      "name": "刺轮砣（上弦的样子）",
+      "id": 237,
+      "types": [
+        "毒",
+        "萌"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.18,
+      "height_max": 0.31,
+      "weight_min": 2.7,
+      "weight_max": 4,
+      "giant_weight_line": 3.974,
+      "tiny_weight_line": 2.726,
+      "stats": {
+        "hp": 100,
+        "atk": 80,
+        "def": 80,
+        "sp_atk": 78,
+        "sp_def": 65,
+        "speed": 84,
+        "sum": 487
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/237-刺轮砣（上弦的样子）.png"
+    },
+    {
+      "name": "月亮砣（上弦的样子）",
+      "id": 238,
+      "types": [
+        "毒",
+        "萌"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.1,
+      "weight_min": 137.5,
+      "weight_max": 182.4,
+      "giant_weight_line": 181.502,
+      "tiny_weight_line": 138.398,
+      "stats": {
+        "hp": 125,
+        "atk": 100,
+        "def": 100,
+        "sp_atk": 98,
+        "sp_def": 81,
+        "speed": 105,
+        "sum": 609
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/238-月亮砣（上弦的样子）.png"
+    },
+    {
+      "name": "刺轮砣（下弦的样子）",
+      "id": 237,
+      "types": [
+        "毒",
+        "萌"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.18,
+      "height_max": 0.31,
+      "weight_min": 2.7,
+      "weight_max": 4,
+      "giant_weight_line": 3.974,
+      "tiny_weight_line": 2.726,
+      "stats": {
+        "hp": 100,
+        "atk": 78,
+        "def": 65,
+        "sp_atk": 80,
+        "sp_def": 80,
+        "speed": 84,
+        "sum": 487
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/237-刺轮砣（下弦的样子）.png"
+    },
+    {
+      "name": "月亮砣（下弦的样子）",
+      "id": 238,
+      "types": [
+        "毒",
+        "萌"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.1,
+      "weight_min": 128,
+      "weight_max": 184.4,
+      "giant_weight_line": 183.272,
+      "tiny_weight_line": 129.128,
+      "stats": {
+        "hp": 125,
+        "atk": 98,
+        "def": 81,
+        "sp_atk": 100,
+        "sp_def": 100,
+        "speed": 105,
+        "sum": 609
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/238-月亮砣（下弦的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/237-刺轮砣（上弦的样子）.png"
+}

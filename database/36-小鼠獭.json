@@ -1,0 +1,110 @@
+{
+  "id": 36,
+  "name": "小鼠獭",
+  "types": [
+    "普通",
+    "水"
+  ],
+  "egg_groups": [
+    "动物组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "两栖组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.22,
+    "weight_min": 2.345,
+    "weight_max": 3,
+    "giant_weight_line": 2.9869,
+    "tiny_weight_line": 2.3581
+  },
+  "evolution_chain": [
+    "小鼠獭",
+    "燕尾獭",
+    "卷胡巨獭"
+  ],
+  "stats": {
+    "hp": 73,
+    "atk": 57,
+    "def": 60,
+    "sp_atk": 57,
+    "sp_def": 60,
+    "speed": 48,
+    "sum": 355
+  },
+  "height_min": 0.37,
+  "height_max": 0.53,
+  "weight_min": 6.7,
+  "weight_max": 7.5,
+  "giant_weight_line": 7.484,
+  "tiny_weight_line": 6.716,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "燕尾獭",
+      "id": 37,
+      "types": [
+        "普通",
+        "水"
+      ],
+      "egg_groups": [
+        "动物组",
+        "两栖组"
+      ],
+      "height_min": 0.61,
+      "height_max": 0.88,
+      "weight_min": 28.6,
+      "weight_max": 31.5,
+      "giant_weight_line": 31.442,
+      "tiny_weight_line": 28.658,
+      "stats": {
+        "hp": 97,
+        "atk": 77,
+        "def": 81,
+        "sp_atk": 77,
+        "sp_def": 81,
+        "speed": 64,
+        "sum": 477
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/37-燕尾獭.png"
+    },
+    {
+      "name": "卷胡巨獭",
+      "id": 38,
+      "types": [
+        "普通",
+        "水"
+      ],
+      "egg_groups": [
+        "动物组",
+        "两栖组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.08,
+      "weight_min": 76.5,
+      "weight_max": 90,
+      "giant_weight_line": 89.73,
+      "tiny_weight_line": 76.77,
+      "stats": {
+        "hp": 121,
+        "atk": 96,
+        "def": 101,
+        "sp_atk": 96,
+        "sp_def": 101,
+        "speed": 80,
+        "sum": 595
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/38-卷胡巨獭.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/36-小鼠獭.png"
+}

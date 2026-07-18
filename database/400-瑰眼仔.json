@@ -1,0 +1,110 @@
+{
+  "id": 400,
+  "name": "瑰眼仔",
+  "types": [
+    "恶",
+    "虫"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "昆虫组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "昆虫组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.24,
+    "weight_min": 1.397,
+    "weight_max": 2.2,
+    "giant_weight_line": 2.1839,
+    "tiny_weight_line": 1.4131
+  },
+  "evolution_chain": [
+    "瑰眼仔",
+    "耳翎瑰魅",
+    "邪眼巨魔"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 59,
+    "def": 59,
+    "sp_atk": 60,
+    "sp_def": 71,
+    "speed": 57,
+    "sum": 373
+  },
+  "height_min": 0.4,
+  "height_max": 0.58,
+  "weight_min": 3.99,
+  "weight_max": 5.5,
+  "giant_weight_line": 5.4698,
+  "tiny_weight_line": 4.0202,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "耳翎瑰魅",
+      "id": 401,
+      "types": [
+        "恶",
+        "虫"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "昆虫组"
+      ],
+      "height_min": 0.89,
+      "height_max": 1.08,
+      "weight_min": 13.4,
+      "weight_max": 19.1,
+      "giant_weight_line": 18.986,
+      "tiny_weight_line": 13.514,
+      "stats": {
+        "hp": 89,
+        "atk": 78,
+        "def": 79,
+        "sp_atk": 80,
+        "sp_def": 95,
+        "speed": 76,
+        "sum": 497
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/401-耳翎瑰魅.png"
+    },
+    {
+      "name": "邪眼巨魔",
+      "id": 402,
+      "types": [
+        "恶",
+        "虫"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "昆虫组"
+      ],
+      "height_min": 1.35,
+      "height_max": 1.58,
+      "weight_min": 49,
+      "weight_max": 56,
+      "giant_weight_line": 55.86,
+      "tiny_weight_line": 49.14,
+      "stats": {
+        "hp": 111,
+        "atk": 98,
+        "def": 99,
+        "sp_atk": 99,
+        "sp_def": 119,
+        "speed": 95,
+        "sum": 621
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/402-邪眼巨魔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/400-瑰眼仔.png"
+}

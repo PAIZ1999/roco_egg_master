@@ -1,0 +1,109 @@
+{
+  "id": 30,
+  "name": "恶魔叮",
+  "types": [
+    "恶",
+    "翼"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.23,
+    "weight_min": 1.26,
+    "weight_max": 1.64,
+    "giant_weight_line": 1.6324,
+    "tiny_weight_line": 1.2676
+  },
+  "evolution_chain": [
+    "恶魔叮",
+    "叮叮恶魔",
+    [
+      "恶魔男爵"
+    ]
+  ],
+  "stats": {
+    "hp": 90,
+    "atk": 100,
+    "def": 80,
+    "sp_atk": 42,
+    "sp_def": 56,
+    "speed": 84,
+    "sum": 452
+  },
+  "height_min": 0.39,
+  "height_max": 0.56,
+  "weight_min": 3.6,
+  "weight_max": 5.2,
+  "giant_weight_line": 5.168,
+  "tiny_weight_line": 3.632,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "恶魔男爵",
+      "id": 31,
+      "types": [
+        "恶",
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.35,
+      "height_max": 1.6,
+      "weight_min": 40,
+      "weight_max": 60,
+      "giant_weight_line": 59.6,
+      "tiny_weight_line": 40.4,
+      "stats": {
+        "hp": 117,
+        "atk": 128,
+        "def": 103,
+        "sp_atk": 55,
+        "sp_def": 73,
+        "speed": 120,
+        "sum": 596
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/31-恶魔男爵.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "叮叮恶魔",
+      "id": 31,
+      "types": [
+        "恶",
+        "翼"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.78,
+      "height_max": 1.12,
+      "weight_min": 25,
+      "weight_max": 34,
+      "giant_weight_line": 33.82,
+      "tiny_weight_line": 25.18,
+      "stats": {
+        "hp": 117,
+        "atk": 125,
+        "def": 103,
+        "sp_atk": 53,
+        "sp_def": 73,
+        "speed": 105,
+        "sum": 576
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/31-叮叮恶魔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/30-恶魔叮.png"
+}

@@ -1,0 +1,74 @@
+{
+  "id": 367,
+  "name": "咕咕帽",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.23,
+    "weight_min": 2.304,
+    "weight_max": 7.63,
+    "giant_weight_line": 7.5235,
+    "tiny_weight_line": 2.4105
+  },
+  "evolution_chain": [
+    "咕咕帽",
+    "咕德帽帽"
+  ],
+  "stats": {
+    "hp": 103,
+    "atk": 74,
+    "def": 110,
+    "sp_atk": 72,
+    "sp_def": 76,
+    "speed": 80,
+    "sum": 515
+  },
+  "height_min": 0.38,
+  "height_max": 0.55,
+  "weight_min": 2.18,
+  "weight_max": 5.76,
+  "giant_weight_line": 5.6884,
+  "tiny_weight_line": 2.2516,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "咕德帽帽",
+      "id": 368,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.96,
+      "weight_min": 7.68,
+      "weight_max": 14.3,
+      "giant_weight_line": 14.1676,
+      "tiny_weight_line": 7.8124,
+      "stats": {
+        "hp": 128,
+        "atk": 92,
+        "def": 137,
+        "sp_atk": 90,
+        "sp_def": 95,
+        "speed": 100,
+        "sum": 642
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/368-咕德帽帽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/367-咕咕帽.png"
+}

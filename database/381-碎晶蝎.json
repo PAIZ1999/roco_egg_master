@@ -1,0 +1,110 @@
+{
+  "id": 381,
+  "name": "碎晶蝎",
+  "types": [
+    "恶",
+    "地"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "大地组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.22,
+    "weight_min": 3.262,
+    "weight_max": 5.8,
+    "giant_weight_line": 5.7492,
+    "tiny_weight_line": 3.3128
+  },
+  "evolution_chain": [
+    "碎晶蝎",
+    "晶尾蝎",
+    "蝎子王"
+  ],
+  "stats": {
+    "hp": 65,
+    "atk": 76,
+    "def": 71,
+    "sp_atk": 70,
+    "sp_def": 47,
+    "speed": 57,
+    "sum": 386
+  },
+  "height_min": 0.4,
+  "height_max": 0.54,
+  "weight_min": 9.32,
+  "weight_max": 14.5,
+  "giant_weight_line": 14.3964,
+  "tiny_weight_line": 9.4236,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "晶尾蝎",
+      "id": 382,
+      "types": [
+        "恶",
+        "地"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "大地组"
+      ],
+      "height_min": 0.48,
+      "height_max": 0.59,
+      "weight_min": 15.5,
+      "weight_max": 25.5,
+      "giant_weight_line": 25.3,
+      "tiny_weight_line": 15.7,
+      "stats": {
+        "hp": 86,
+        "atk": 101,
+        "def": 95,
+        "sp_atk": 94,
+        "sp_def": 63,
+        "speed": 76,
+        "sum": 515
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/382-晶尾蝎.png"
+    },
+    {
+      "name": "蝎子王",
+      "id": 383,
+      "types": [
+        "恶",
+        "地"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "大地组"
+      ],
+      "height_min": 0.61,
+      "height_max": 0.82,
+      "weight_min": 33,
+      "weight_max": 45,
+      "giant_weight_line": 44.76,
+      "tiny_weight_line": 33.24,
+      "stats": {
+        "hp": 108,
+        "atk": 126,
+        "def": 119,
+        "sp_atk": 117,
+        "sp_def": 79,
+        "speed": 95,
+        "sum": 644
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/383-蝎子王.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/381-碎晶蝎.png"
+}

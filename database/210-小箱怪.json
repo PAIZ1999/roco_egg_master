@@ -1,0 +1,79 @@
+{
+  "id": 210,
+  "name": "小箱怪",
+  "types": [
+    "机械",
+    "幻"
+  ],
+  "egg_groups": [
+    "机械组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "妖精组"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.19,
+    "weight_min": 1.558,
+    "weight_max": 2.724,
+    "giant_weight_line": 2.7007,
+    "tiny_weight_line": 1.5813
+  },
+  "evolution_chain": [
+    "小箱怪",
+    "迷迷箱怪"
+  ],
+  "stats": {
+    "hp": 111,
+    "atk": 103,
+    "def": 122,
+    "sp_atk": 103,
+    "sp_def": 122,
+    "speed": 64,
+    "sum": 625
+  },
+  "height_min": 0.34,
+  "height_max": 0.46,
+  "weight_min": 4.45,
+  "weight_max": 6.81,
+  "giant_weight_line": 6.7628,
+  "tiny_weight_line": 4.4972,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "迷迷箱怪",
+      "id": 211,
+      "types": [
+        "机械",
+        "幻"
+      ],
+      "egg_groups": [
+        "机械组",
+        "妖精组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.72,
+      "weight_min": 18.02,
+      "weight_max": 24.4,
+      "giant_weight_line": 24.2724,
+      "tiny_weight_line": 18.1476,
+      "stats": {
+        "hp": 138,
+        "atk": 129,
+        "def": 153,
+        "sp_atk": 129,
+        "sp_def": 153,
+        "speed": 80,
+        "sum": 782
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/211-迷迷箱怪.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/210-小箱怪.png"
+}

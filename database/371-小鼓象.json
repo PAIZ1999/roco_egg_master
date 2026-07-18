@@ -1,0 +1,77 @@
+{
+  "id": 371,
+  "name": "小鼓象",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "动物组",
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "机械组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.34,
+    "weight_min": 1.806,
+    "weight_max": 3.32,
+    "giant_weight_line": 3.2897,
+    "tiny_weight_line": 1.8363
+  },
+  "evolution_chain": [
+    "小鼓象",
+    "巨鼓象"
+  ],
+  "stats": {
+    "hp": 104,
+    "atk": 86,
+    "def": 139,
+    "sp_atk": 56,
+    "sp_def": 64,
+    "speed": 64,
+    "sum": 513
+  },
+  "height_min": 0.64,
+  "height_max": 0.83,
+  "weight_min": 5.16,
+  "weight_max": 8.3,
+  "giant_weight_line": 8.2372,
+  "tiny_weight_line": 5.2228,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "巨鼓象",
+      "id": 372,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ],
+      "height_min": 0.93,
+      "height_max": 1.2,
+      "weight_min": 35.6,
+      "weight_max": 59.1,
+      "giant_weight_line": 58.63,
+      "tiny_weight_line": 36.07,
+      "stats": {
+        "hp": 130,
+        "atk": 107,
+        "def": 173,
+        "sp_atk": 70,
+        "sp_def": 80,
+        "speed": 80,
+        "sum": 640
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/372-巨鼓象.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/371-小鼓象.png"
+}

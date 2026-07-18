@@ -1,0 +1,79 @@
+{
+  "id": 412,
+  "name": "不咕钟",
+  "types": [
+    "机械",
+    "幻"
+  ],
+  "egg_groups": [
+    "天空组",
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "机械组"
+    ],
+    "height_min": 0.1,
+    "height_max": 0.15,
+    "weight_min": 0.536,
+    "weight_max": 1.216,
+    "giant_weight_line": 1.2024,
+    "tiny_weight_line": 0.5496
+  },
+  "evolution_chain": [
+    "不咕钟",
+    "溯源钟"
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 67,
+    "def": 58,
+    "sp_atk": 68,
+    "sp_def": 93,
+    "speed": 76,
+    "sum": 430
+  },
+  "height_min": 0.23,
+  "height_max": 0.35,
+  "weight_min": 1.53,
+  "weight_max": 3.04,
+  "giant_weight_line": 3.0098,
+  "tiny_weight_line": 1.5602,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "溯源钟",
+      "id": 413,
+      "types": [
+        "机械",
+        "幻"
+      ],
+      "egg_groups": [
+        "天空组",
+        "机械组"
+      ],
+      "height_min": 0.34,
+      "height_max": 0.68,
+      "weight_min": 4.07,
+      "weight_max": 7.6,
+      "giant_weight_line": 7.5294,
+      "tiny_weight_line": 4.1406,
+      "stats": {
+        "hp": 85,
+        "atk": 84,
+        "def": 72,
+        "sp_atk": 86,
+        "sp_def": 116,
+        "speed": 95,
+        "sum": 538
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/413-溯源钟.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/412-不咕钟.png"
+}

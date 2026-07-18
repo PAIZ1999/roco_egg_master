@@ -1,0 +1,201 @@
+{
+  "id": 171,
+  "name": "波波螺",
+  "types": [
+    "地",
+    "水"
+  ],
+  "egg_groups": [
+    "两栖组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组",
+      "大地组"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.17,
+    "weight_min": 1.698,
+    "weight_max": 2.26,
+    "giant_weight_line": 2.2488,
+    "tiny_weight_line": 1.7092
+  },
+  "evolution_chain": [
+    "波波螺",
+    "消波螺",
+    "嗜波螺"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 59,
+    "def": 87,
+    "sp_atk": 59,
+    "sp_def": 66,
+    "speed": 42,
+    "sum": 380
+  },
+  "height_min": 0.32,
+  "height_max": 0.42,
+  "weight_min": 4.85,
+  "weight_max": 5.65,
+  "giant_weight_line": 5.634,
+  "tiny_weight_line": 4.866,
+  "regional_forms": [
+    {
+      "name": "波波螺（被污染的样子）",
+      "id": 171,
+      "types": [
+        "地",
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.32,
+      "height_max": 0.42,
+      "weight_min": 4.85,
+      "weight_max": 5.65,
+      "giant_weight_line": 5.634,
+      "tiny_weight_line": 4.866,
+      "stats": {
+        "hp": 64,
+        "atk": 57,
+        "def": 64,
+        "sp_atk": 57,
+        "sp_def": 86,
+        "speed": 42,
+        "sum": 370
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/171-波波螺（被污染的样子）.png"
+    },
+    {
+      "name": "消波螺（被污染的样子）",
+      "id": 172,
+      "types": [
+        "地",
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.82,
+      "weight_min": 46.5,
+      "weight_max": 69.9,
+      "giant_weight_line": 69.432,
+      "tiny_weight_line": 46.968,
+      "stats": {
+        "hp": 85,
+        "atk": 76,
+        "def": 85,
+        "sp_atk": 76,
+        "sp_def": 115,
+        "speed": 56,
+        "sum": 493
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/172-消波螺（被污染的样子）.png"
+    },
+    {
+      "name": "嗜波螺（被污染的样子）",
+      "id": 173,
+      "types": [
+        "地",
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 1.2,
+      "height_max": 1.6,
+      "weight_min": 86.8,
+      "weight_max": 113,
+      "giant_weight_line": 112.476,
+      "tiny_weight_line": 87.324,
+      "stats": {
+        "hp": 107,
+        "atk": 95,
+        "def": 106,
+        "sp_atk": 95,
+        "sp_def": 144,
+        "speed": 70,
+        "sum": 617
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/173-嗜波螺（被污染的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "消波螺",
+      "id": 172,
+      "types": [
+        "地",
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.82,
+      "weight_min": 46.5,
+      "weight_max": 69.9,
+      "giant_weight_line": 69.432,
+      "tiny_weight_line": 46.968,
+      "stats": {
+        "hp": 89,
+        "atk": 78,
+        "def": 116,
+        "sp_atk": 78,
+        "sp_def": 88,
+        "speed": 56,
+        "sum": 505
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/172-消波螺.png"
+    },
+    {
+      "name": "嗜波螺",
+      "id": 173,
+      "types": [
+        "地",
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 1.2,
+      "height_max": 1.6,
+      "weight_min": 86.8,
+      "weight_max": 113,
+      "giant_weight_line": 112.476,
+      "tiny_weight_line": 87.324,
+      "stats": {
+        "hp": 112,
+        "atk": 98,
+        "def": 146,
+        "sp_atk": 98,
+        "sp_def": 110,
+        "speed": 70,
+        "sum": 634
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/173-嗜波螺.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/171-波波螺.png"
+}

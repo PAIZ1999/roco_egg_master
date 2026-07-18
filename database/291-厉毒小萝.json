@@ -1,0 +1,79 @@
+{
+  "id": 291,
+  "name": "厉毒小萝",
+  "types": [
+    "毒",
+    "恶"
+  ],
+  "egg_groups": [
+    "拟人组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "拟人组",
+      "天空组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.27,
+    "weight_min": 3.056,
+    "weight_max": 5.968,
+    "giant_weight_line": 5.9098,
+    "tiny_weight_line": 3.1142
+  },
+  "evolution_chain": [
+    "厉毒小萝",
+    "厉毒修萝"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 64,
+    "def": 81,
+    "sp_atk": 17,
+    "sp_def": 59,
+    "speed": 108,
+    "sum": 396
+  },
+  "height_min": 0.55,
+  "height_max": 0.65,
+  "weight_min": 8.73,
+  "weight_max": 14.92,
+  "giant_weight_line": 14.7962,
+  "tiny_weight_line": 8.8538,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "厉毒修萝",
+      "id": 292,
+      "types": [
+        "毒",
+        "恶"
+      ],
+      "egg_groups": [
+        "拟人组",
+        "天空组"
+      ],
+      "height_min": 1.45,
+      "height_max": 1.55,
+      "weight_min": 33.75,
+      "weight_max": 41.6,
+      "giant_weight_line": 41.443,
+      "tiny_weight_line": 33.907,
+      "stats": {
+        "hp": 84,
+        "atk": 80,
+        "def": 101,
+        "sp_atk": 21,
+        "sp_def": 74,
+        "speed": 135,
+        "sum": 495
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/292-厉毒修萝.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/291-厉毒小萝.png"
+}

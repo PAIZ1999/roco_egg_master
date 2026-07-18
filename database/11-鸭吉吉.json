@@ -1,0 +1,385 @@
+{
+  "id": 11,
+  "name": "鸭吉吉",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.39,
+    "weight_min": 5.11,
+    "weight_max": 7.04,
+    "giant_weight_line": 7.0014,
+    "tiny_weight_line": 5.1486
+  },
+  "evolution_chain": [
+    "鸭吉吉",
+    [
+      "鸭吉吉国王"
+    ]
+  ],
+  "stats": {
+    "hp": 136,
+    "atk": 95,
+    "def": 55,
+    "sp_atk": 35,
+    "sp_def": 45,
+    "speed": 105,
+    "sum": 471
+  },
+  "height_min": 0.65,
+  "height_max": 0.94,
+  "weight_min": 14.6,
+  "weight_max": 17.6,
+  "giant_weight_line": 17.54,
+  "tiny_weight_line": 14.66,
+  "regional_forms": [
+    {
+      "name": "鸭吉吉（蓬松的样子）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.94,
+      "weight_min": 14.6,
+      "weight_max": 17.6,
+      "giant_weight_line": 17.54,
+      "tiny_weight_line": 14.66,
+      "stats": {
+        "hp": 136,
+        "atk": 95,
+        "def": 55,
+        "sp_atk": 35,
+        "sp_def": 45,
+        "speed": 105,
+        "sum": 471
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（蓬松的样子）.png"
+    },
+    {
+      "name": "鸭吉吉（紧实的样子）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.94,
+      "weight_min": 5.6,
+      "weight_max": 8.2,
+      "giant_weight_line": 8.148,
+      "tiny_weight_line": 5.652,
+      "stats": {
+        "hp": 136,
+        "atk": 35,
+        "def": 45,
+        "sp_atk": 95,
+        "sp_def": 55,
+        "speed": 105,
+        "sum": 471
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（紧实的样子）.png"
+    },
+    {
+      "name": "鸭吉吉（急急急鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.94,
+      "weight_min": 5.6,
+      "weight_max": 8.2,
+      "giant_weight_line": 8.148,
+      "tiny_weight_line": 5.652,
+      "stats": {
+        "hp": 130,
+        "atk": 95,
+        "def": 55,
+        "sp_atk": 35,
+        "sp_def": 45,
+        "speed": 110,
+        "sum": 470
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（急急急鸭）.png"
+    },
+    {
+      "name": "鸭吉吉（等一等鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.94,
+      "weight_min": 15.8,
+      "weight_max": 19.2,
+      "giant_weight_line": 19.132,
+      "tiny_weight_line": 15.868,
+      "stats": {
+        "hp": 137,
+        "atk": 35,
+        "def": 46,
+        "sp_atk": 94,
+        "sp_def": 57,
+        "speed": 100,
+        "sum": 469
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（等一等鸭）.png"
+    },
+    {
+      "name": "鸭吉吉（燃了鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.98,
+      "weight_min": 14.3,
+      "weight_max": 18.2,
+      "giant_weight_line": 18.122,
+      "tiny_weight_line": 14.378,
+      "stats": {
+        "hp": 108,
+        "atk": 89,
+        "def": 74,
+        "sp_atk": 41,
+        "sp_def": 48,
+        "speed": 115,
+        "sum": 475
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（燃了鸭）.png"
+    },
+    {
+      "name": "鸭吉吉（起来鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.94,
+      "weight_min": 15.8,
+      "weight_max": 19.2,
+      "giant_weight_line": 19.132,
+      "tiny_weight_line": 15.868,
+      "stats": {
+        "hp": 107,
+        "atk": 53,
+        "def": 80,
+        "sp_atk": 125,
+        "sp_def": 113,
+        "speed": 100,
+        "sum": 578
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/11-鸭吉吉（起来鸭）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "鸭吉吉国王（蓬松的样子）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 136,
+        "atk": 159,
+        "def": 79,
+        "sp_atk": 64,
+        "sp_def": 64,
+        "speed": 105,
+        "sum": 607
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（蓬松的样子）.png"
+    },
+    {
+      "name": "鸭吉吉国王（紧实的样子）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 136,
+        "atk": 64,
+        "def": 64,
+        "sp_atk": 159,
+        "sp_def": 79,
+        "speed": 105,
+        "sum": 607
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（紧实的样子）.png"
+    },
+    {
+      "name": "鸭吉吉国王（急急急鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 130,
+        "atk": 160,
+        "def": 79,
+        "sp_atk": 64,
+        "sp_def": 64,
+        "speed": 110,
+        "sum": 607
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（急急急鸭）.png"
+    },
+    {
+      "name": "鸭吉吉国王（等一等鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 137,
+        "atk": 64,
+        "def": 66,
+        "sp_atk": 157,
+        "sp_def": 82,
+        "speed": 100,
+        "sum": 606
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（等一等鸭）.png"
+    },
+    {
+      "name": "鸭吉吉国王（燃了鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 108,
+        "atk": 150,
+        "def": 105,
+        "sp_atk": 73,
+        "sp_def": 69,
+        "speed": 115,
+        "sum": 620
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（燃了鸭）.png"
+    },
+    {
+      "name": "鸭吉吉国王（起来鸭）",
+      "id": 11,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 2.07,
+      "weight_min": 93.7,
+      "weight_max": 140,
+      "giant_weight_line": 139.074,
+      "tiny_weight_line": 94.626,
+      "stats": {
+        "hp": 107,
+        "atk": 77,
+        "def": 80,
+        "sp_atk": 163,
+        "sp_def": 113,
+        "speed": 100,
+        "sum": 640
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/11-鸭吉吉国王（起来鸭）.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/11-鸭吉吉（蓬松的样子）.png"
+}

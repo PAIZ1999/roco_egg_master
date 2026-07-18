@@ -1,0 +1,407 @@
+{
+  "id": 39,
+  "name": "矿晶虫",
+  "types": [
+    "光",
+    "地"
+  ],
+  "egg_groups": [
+    "软体组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "软体组",
+      "大地组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.32,
+    "weight_min": 2.03,
+    "weight_max": 2.52,
+    "giant_weight_line": 2.5102,
+    "tiny_weight_line": 2.0398
+  },
+  "evolution_chain": [
+    "矿晶虫",
+    "晶石蜗",
+    [
+      "钻石蜗"
+    ]
+  ],
+  "stats": {
+    "hp": 79,
+    "atk": 77,
+    "def": 102,
+    "sp_atk": 81,
+    "sp_def": 75,
+    "speed": 52,
+    "sum": 466
+  },
+  "height_min": 0.54,
+  "height_max": 0.77,
+  "weight_min": 5.8,
+  "weight_max": 10.53,
+  "giant_weight_line": 10.4354,
+  "tiny_weight_line": 5.8946,
+  "regional_forms": [
+    {
+      "name": "晶石蜗（西瓜碧玺的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 99,
+        "atk": 96,
+        "def": 128,
+        "sp_atk": 101,
+        "sp_def": 94,
+        "speed": 65,
+        "sum": 583
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（西瓜碧玺的样子）.png"
+    },
+    {
+      "name": "晶石蜗（莲花刚玉的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 94,
+        "atk": 97,
+        "def": 137,
+        "sp_atk": 101,
+        "sp_def": 91,
+        "speed": 65,
+        "sum": 585
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（莲花刚玉的样子）.png"
+    },
+    {
+      "name": "晶石蜗（星彩榴石的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 97,
+        "atk": 101,
+        "def": 128,
+        "sp_atk": 101,
+        "sp_def": 91,
+        "speed": 65,
+        "sum": 583
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（星彩榴石的样子）.png"
+    },
+    {
+      "name": "晶石蜗（火山琉璃的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 97,
+        "atk": 97,
+        "def": 132,
+        "sp_atk": 101,
+        "sp_def": 91,
+        "speed": 65,
+        "sum": 583
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（火山琉璃的样子）.png"
+    },
+    {
+      "name": "晶石蜗（蓝锥矿的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 99,
+        "atk": 97,
+        "def": 124,
+        "sp_atk": 107,
+        "sp_def": 91,
+        "speed": 65,
+        "sum": 583
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（蓝锥矿的样子）.png"
+    },
+    {
+      "name": "晶石蜗（烧蓝黄金的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "软体组",
+        "大地组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.35,
+      "weight_min": 59.1,
+      "weight_max": 71.05,
+      "giant_weight_line": 70.811,
+      "tiny_weight_line": 59.339,
+      "stats": {
+        "hp": 95,
+        "atk": 97,
+        "def": 130,
+        "sp_atk": 102,
+        "sp_def": 91,
+        "speed": 70,
+        "sum": 585
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/40-晶石蜗（烧蓝黄金的样子）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "钻石蜗（西瓜碧玺的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 93,
+        "atk": 96,
+        "def": 124,
+        "sp_atk": 101,
+        "sp_def": 91,
+        "speed": 65,
+        "sum": 570
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（西瓜碧玺的样子）.png"
+    },
+    {
+      "name": "钻石蜗（莲花刚玉的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 89,
+        "atk": 97,
+        "def": 133,
+        "sp_atk": 101,
+        "sp_def": 88,
+        "speed": 65,
+        "sum": 573
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（莲花刚玉的样子）.png"
+    },
+    {
+      "name": "钻石蜗（星彩榴石的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 92,
+        "atk": 101,
+        "def": 124,
+        "sp_atk": 101,
+        "sp_def": 88,
+        "speed": 65,
+        "sum": 571
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（星彩榴石的样子）.png"
+    },
+    {
+      "name": "钻石蜗（火山琉璃的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 92,
+        "atk": 97,
+        "def": 128,
+        "sp_atk": 101,
+        "sp_def": 88,
+        "speed": 65,
+        "sum": 571
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（火山琉璃的样子）.png"
+    },
+    {
+      "name": "钻石蜗（蓝锥矿的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 94,
+        "atk": 97,
+        "def": 121,
+        "sp_atk": 107,
+        "sp_def": 88,
+        "speed": 65,
+        "sum": 572
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（蓝锥矿的样子）.png"
+    },
+    {
+      "name": "钻石蜗（烧蓝黄金的样子）",
+      "id": 40,
+      "types": [
+        "光",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.69,
+      "height_max": 1.91,
+      "weight_min": 84.4,
+      "weight_max": 110.2,
+      "giant_weight_line": 109.684,
+      "tiny_weight_line": 84.916,
+      "stats": {
+        "hp": 89,
+        "atk": 97,
+        "def": 126,
+        "sp_atk": 102,
+        "sp_def": 88,
+        "speed": 70,
+        "sum": 572
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/40-钻石蜗（烧蓝黄金的样子）.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/39-矿晶虫.png"
+}

@@ -1,0 +1,110 @@
+{
+  "id": 335,
+  "name": "粉星仔",
+  "types": [
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "天空组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.21,
+    "weight_min": 3.43,
+    "weight_max": 5.12,
+    "giant_weight_line": 5.0862,
+    "tiny_weight_line": 3.4638
+  },
+  "evolution_chain": [
+    "粉星仔",
+    [
+      "粉耳星兔",
+      "落陨星兔"
+    ]
+  ],
+  "stats": {
+    "hp": 80,
+    "atk": 63,
+    "def": 58,
+    "sp_atk": 119,
+    "sp_def": 102,
+    "speed": 92,
+    "sum": 514
+  },
+  "height_min": 0.39,
+  "height_max": 0.5,
+  "weight_min": 9.8,
+  "weight_max": 12.8,
+  "giant_weight_line": 12.74,
+  "tiny_weight_line": 9.86,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "粉耳星兔",
+      "id": 336,
+      "types": [
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "天空组"
+      ],
+      "height_min": 0.55,
+      "height_max": 0.75,
+      "weight_min": 16.82,
+      "weight_max": 23.81,
+      "giant_weight_line": 23.6702,
+      "tiny_weight_line": 16.9598,
+      "stats": {
+        "hp": 100,
+        "atk": 79,
+        "def": 73,
+        "sp_atk": 148,
+        "sp_def": 127,
+        "speed": 115,
+        "sum": 642
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/336-粉耳星兔.png"
+    },
+    {
+      "name": "落陨星兔",
+      "id": 337,
+      "types": [
+        "幻",
+        "幽"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "天空组"
+      ],
+      "height_min": 0.55,
+      "height_max": 0.75,
+      "weight_min": 16.82,
+      "weight_max": 23.81,
+      "giant_weight_line": 23.6702,
+      "tiny_weight_line": 16.9598,
+      "stats": {
+        "hp": 93,
+        "atk": 61,
+        "def": 87,
+        "sp_atk": 125,
+        "sp_def": 141,
+        "speed": 130,
+        "sum": 637
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/337-落陨星兔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/335-粉星仔.png"
+}

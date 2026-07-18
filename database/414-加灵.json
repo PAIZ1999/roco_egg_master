@@ -1,0 +1,139 @@
+{
+  "id": 414,
+  "name": "加灵",
+  "types": [
+    "普通",
+    "萌"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.29,
+    "weight_min": 2.03,
+    "weight_max": 2.56,
+    "giant_weight_line": 2.5494,
+    "tiny_weight_line": 2.0406
+  },
+  "evolution_chain": [
+    "加灵",
+    "加益",
+    [
+      "加尔",
+      "黑化加尔"
+    ]
+  ],
+  "stats": {
+    "hp": 39,
+    "atk": 22,
+    "def": 50,
+    "sp_atk": 57,
+    "sp_def": 74,
+    "speed": 66,
+    "sum": 308
+  },
+  "height_min": 0.48,
+  "height_max": 0.69,
+  "weight_min": 5.8,
+  "weight_max": 6.4,
+  "giant_weight_line": 6.388,
+  "tiny_weight_line": 5.812,
+  "regional_forms": [
+    {
+      "name": "黑化加尔",
+      "id": 417,
+      "types": [
+        "普通",
+        "幽"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.71,
+      "height_max": 1.01,
+      "weight_min": 19.2,
+      "weight_max": 21.5,
+      "giant_weight_line": 21.454,
+      "tiny_weight_line": 19.246,
+      "stats": {
+        "hp": 84,
+        "atk": 35,
+        "def": 94,
+        "sp_atk": 104,
+        "sp_def": 124,
+        "speed": 110,
+        "sum": 551
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/417-黑化加尔.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "加益",
+      "id": 415,
+      "types": [
+        "普通",
+        "萌"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.57,
+      "height_max": 0.82,
+      "weight_min": 8.6,
+      "weight_max": 10.2,
+      "giant_weight_line": 10.168,
+      "tiny_weight_line": 8.632,
+      "stats": {
+        "hp": 52,
+        "atk": 29,
+        "def": 67,
+        "sp_atk": 75,
+        "sp_def": 99,
+        "speed": 88,
+        "sum": 410
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/415-加益.png"
+    },
+    {
+      "name": "加尔",
+      "id": 416,
+      "types": [
+        "普通",
+        "萌"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.71,
+      "height_max": 1.01,
+      "weight_min": 19.2,
+      "weight_max": 21.5,
+      "giant_weight_line": 21.454,
+      "tiny_weight_line": 19.246,
+      "stats": {
+        "hp": 103,
+        "atk": 36,
+        "def": 84,
+        "sp_atk": 94,
+        "sp_def": 124,
+        "speed": 110,
+        "sum": 551
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/416-加尔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/414-加灵.png"
+}

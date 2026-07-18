@@ -1,0 +1,79 @@
+{
+  "id": 325,
+  "name": "柴渣虫",
+  "types": [
+    "火",
+    "草"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "植物组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.23,
+    "weight_min": 5.075,
+    "weight_max": 7.44,
+    "giant_weight_line": 7.3927,
+    "tiny_weight_line": 5.1223
+  },
+  "evolution_chain": [
+    "柴渣虫",
+    "燃薪虫"
+  ],
+  "stats": {
+    "hp": 108,
+    "atk": 96,
+    "def": 82,
+    "sp_atk": 38,
+    "sp_def": 58,
+    "speed": 80,
+    "sum": 462
+  },
+  "height_min": 0.45,
+  "height_max": 0.55,
+  "weight_min": 14.5,
+  "weight_max": 18.6,
+  "giant_weight_line": 18.518,
+  "tiny_weight_line": 14.582,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "燃薪虫",
+      "id": 326,
+      "types": [
+        "火",
+        "草"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 1.1,
+      "height_max": 1.25,
+      "weight_min": 72.5,
+      "weight_max": 87.5,
+      "giant_weight_line": 87.2,
+      "tiny_weight_line": 72.8,
+      "stats": {
+        "hp": 135,
+        "atk": 120,
+        "def": 103,
+        "sp_atk": 48,
+        "sp_def": 73,
+        "speed": 100,
+        "sum": 579
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/326-燃薪虫.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/325-柴渣虫.png"
+}

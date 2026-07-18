@@ -1,0 +1,79 @@
+{
+  "id": 212,
+  "name": "古钟蛇",
+  "types": [
+    "萌",
+    "毒"
+  ],
+  "egg_groups": [
+    "动物组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "两栖组"
+    ],
+    "height_min": 0.4,
+    "height_max": 0.46,
+    "weight_min": 2.415,
+    "weight_max": 3.12,
+    "giant_weight_line": 3.1059,
+    "tiny_weight_line": 2.4291
+  },
+  "evolution_chain": [
+    "古钟蛇",
+    "寒音蛇"
+  ],
+  "stats": {
+    "hp": 85,
+    "atk": 69,
+    "def": 64,
+    "sp_atk": 69,
+    "sp_def": 91,
+    "speed": 80,
+    "sum": 458
+  },
+  "height_min": 0.95,
+  "height_max": 1.1,
+  "weight_min": 6.9,
+  "weight_max": 7.8,
+  "giant_weight_line": 7.782,
+  "tiny_weight_line": 6.918,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "寒音蛇",
+      "id": 213,
+      "types": [
+        "萌",
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "两栖组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2,
+      "weight_min": 65,
+      "weight_max": 78,
+      "giant_weight_line": 77.74,
+      "tiny_weight_line": 65.26,
+      "stats": {
+        "hp": 106,
+        "atk": 87,
+        "def": 80,
+        "sp_atk": 87,
+        "sp_def": 114,
+        "speed": 100,
+        "sum": 574
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/213-寒音蛇.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/212-古钟蛇.png"
+}

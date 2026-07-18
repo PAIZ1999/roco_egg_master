@@ -1,0 +1,107 @@
+{
+  "id": 384,
+  "name": "森豆丁",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "拟人组"
+    ],
+    "height_min": 0.31,
+    "height_max": 0.46,
+    "weight_min": 5.6,
+    "weight_max": 11.08,
+    "giant_weight_line": 10.9704,
+    "tiny_weight_line": 5.7096
+  },
+  "evolution_chain": [
+    "森豆丁",
+    "森蛮人",
+    "森巨人"
+  ],
+  "stats": {
+    "hp": 87,
+    "atk": 93,
+    "def": 79,
+    "sp_atk": 42,
+    "sp_def": 53,
+    "speed": 42,
+    "sum": 396
+  },
+  "height_min": 0.72,
+  "height_max": 1.1,
+  "weight_min": 16,
+  "weight_max": 27.7,
+  "giant_weight_line": 27.466,
+  "tiny_weight_line": 16.234,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "森蛮人",
+      "id": 385,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 1.05,
+      "height_max": 1.39,
+      "weight_min": 71,
+      "weight_max": 100,
+      "giant_weight_line": 99.42,
+      "tiny_weight_line": 71.58,
+      "stats": {
+        "hp": 115,
+        "atk": 124,
+        "def": 106,
+        "sp_atk": 56,
+        "sp_def": 70,
+        "speed": 56,
+        "sum": 527
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/385-森蛮人.png"
+    },
+    {
+      "name": "森巨人",
+      "id": 386,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 1.41,
+      "height_max": 1.69,
+      "weight_min": 160.7,
+      "weight_max": 200,
+      "giant_weight_line": 199.214,
+      "tiny_weight_line": 161.486,
+      "stats": {
+        "hp": 144,
+        "atk": 155,
+        "def": 132,
+        "sp_atk": 70,
+        "sp_def": 88,
+        "speed": 70,
+        "sum": 659
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/386-森巨人.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/384-森豆丁.png"
+}

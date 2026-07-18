@@ -1,0 +1,584 @@
+{
+  "id": 18,
+  "name": "雪绒鸟",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.21,
+    "weight_min": 0.97,
+    "weight_max": 1.8,
+    "giant_weight_line": 1.7834,
+    "tiny_weight_line": 0.9866
+  },
+  "evolution_chain": [
+    "雪绒鸟",
+    "冬羽雀",
+    "岚鸟",
+    [
+      "霜翼领主"
+    ]
+  ],
+  "stats": {
+    "hp": 54,
+    "atk": 77,
+    "def": 65,
+    "sp_atk": 33,
+    "sp_def": 44,
+    "speed": 69,
+    "sum": 342
+  },
+  "height_min": 0.38,
+  "height_max": 0.51,
+  "weight_min": 2.77,
+  "weight_max": 4.5,
+  "giant_weight_line": 4.4654,
+  "tiny_weight_line": 2.8046,
+  "regional_forms": [
+    {
+      "name": "雪绒鸟（冬天的样子）",
+      "id": 18,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.51,
+      "weight_min": 2.77,
+      "weight_max": 4.5,
+      "giant_weight_line": 4.4654,
+      "tiny_weight_line": 2.8046,
+      "stats": {
+        "hp": 54,
+        "atk": 77,
+        "def": 65,
+        "sp_atk": 33,
+        "sp_def": 44,
+        "speed": 69,
+        "sum": 342
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/18-雪绒鸟（冬天的样子）.png"
+    },
+    {
+      "name": "雪绒鸟（春天的样子）",
+      "id": 18,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.51,
+      "weight_min": 2.77,
+      "weight_max": 4.5,
+      "giant_weight_line": 4.4654,
+      "tiny_weight_line": 2.8046,
+      "stats": {
+        "hp": 56,
+        "atk": 77,
+        "def": 58,
+        "sp_atk": 26,
+        "sp_def": 49,
+        "speed": 69,
+        "sum": 335
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/18-雪绒鸟（春天的样子）.png"
+    },
+    {
+      "name": "雪绒鸟（夏天的样子）",
+      "id": 18,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.51,
+      "weight_min": 2.77,
+      "weight_max": 4.5,
+      "giant_weight_line": 4.4654,
+      "tiny_weight_line": 2.8046,
+      "stats": {
+        "hp": 59,
+        "atk": 80,
+        "def": 58,
+        "sp_atk": 32,
+        "sp_def": 41,
+        "speed": 69,
+        "sum": 339
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/18-雪绒鸟（夏天的样子）.png"
+    },
+    {
+      "name": "雪绒鸟（秋天的样子）",
+      "id": 18,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.51,
+      "weight_min": 2.77,
+      "weight_max": 4.5,
+      "giant_weight_line": 4.4654,
+      "tiny_weight_line": 2.8046,
+      "stats": {
+        "hp": 54,
+        "atk": 76,
+        "def": 59,
+        "sp_atk": 25,
+        "sp_def": 51,
+        "speed": 69,
+        "sum": 334
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/18-雪绒鸟（秋天的样子）.png"
+    },
+    {
+      "name": "冬羽雀（冬天的样子）",
+      "id": 19,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.71,
+      "weight_min": 8.92,
+      "weight_max": 12.7,
+      "giant_weight_line": 12.6244,
+      "tiny_weight_line": 8.9956,
+      "stats": {
+        "hp": 72,
+        "atk": 103,
+        "def": 86,
+        "sp_atk": 44,
+        "sp_def": 59,
+        "speed": 92,
+        "sum": 456
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/19-冬羽雀（冬天的样子）.png"
+    },
+    {
+      "name": "冬羽雀（春天的样子）",
+      "id": 19,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.71,
+      "weight_min": 8.92,
+      "weight_max": 12.7,
+      "giant_weight_line": 12.6244,
+      "tiny_weight_line": 8.9956,
+      "stats": {
+        "hp": 75,
+        "atk": 103,
+        "def": 78,
+        "sp_atk": 35,
+        "sp_def": 65,
+        "speed": 92,
+        "sum": 448
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/19-冬羽雀（春天的样子）.png"
+    },
+    {
+      "name": "冬羽雀（夏天的样子）",
+      "id": 19,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.71,
+      "weight_min": 8.92,
+      "weight_max": 12.7,
+      "giant_weight_line": 12.6244,
+      "tiny_weight_line": 8.9956,
+      "stats": {
+        "hp": 79,
+        "atk": 107,
+        "def": 77,
+        "sp_atk": 43,
+        "sp_def": 55,
+        "speed": 92,
+        "sum": 453
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/19-冬羽雀（夏天的样子）.png"
+    },
+    {
+      "name": "冬羽雀（秋天的样子）",
+      "id": 19,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.71,
+      "weight_min": 8.92,
+      "weight_max": 12.7,
+      "giant_weight_line": 12.6244,
+      "tiny_weight_line": 8.9956,
+      "stats": {
+        "hp": 72,
+        "atk": 102,
+        "def": 78,
+        "sp_atk": 34,
+        "sp_def": 68,
+        "speed": 92,
+        "sum": 446
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/19-冬羽雀（秋天的样子）.png"
+    },
+    {
+      "name": "岚鸟（冬天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.04,
+      "weight_min": 27.08,
+      "weight_max": 32.7,
+      "giant_weight_line": 32.5876,
+      "tiny_weight_line": 27.1924,
+      "stats": {
+        "hp": 90,
+        "atk": 128,
+        "def": 108,
+        "sp_atk": 55,
+        "sp_def": 74,
+        "speed": 115,
+        "sum": 570
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/20-岚鸟（冬天的样子）.png"
+    },
+    {
+      "name": "岚鸟（春天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.04,
+      "weight_min": 27.08,
+      "weight_max": 32.7,
+      "giant_weight_line": 32.5876,
+      "tiny_weight_line": 27.1924,
+      "stats": {
+        "hp": 93,
+        "atk": 128,
+        "def": 97,
+        "sp_atk": 44,
+        "sp_def": 81,
+        "speed": 115,
+        "sum": 558
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/20-岚鸟（春天的样子）.png"
+    },
+    {
+      "name": "岚鸟（夏天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.04,
+      "weight_min": 27.08,
+      "weight_max": 32.7,
+      "giant_weight_line": 32.5876,
+      "tiny_weight_line": 27.1924,
+      "stats": {
+        "hp": 99,
+        "atk": 133,
+        "def": 96,
+        "sp_atk": 54,
+        "sp_def": 69,
+        "speed": 115,
+        "sum": 566
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/20-岚鸟（夏天的样子）.png"
+    },
+    {
+      "name": "岚鸟（秋天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.04,
+      "weight_min": 27.08,
+      "weight_max": 32.7,
+      "giant_weight_line": 32.5876,
+      "tiny_weight_line": 27.1924,
+      "stats": {
+        "hp": 90,
+        "atk": 127,
+        "def": 98,
+        "sp_atk": 42,
+        "sp_def": 85,
+        "speed": 115,
+        "sum": 557
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/20-岚鸟（秋天的样子）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "霜翼领主（冬天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2,
+      "height_max": 2.68,
+      "weight_min": 59,
+      "weight_max": 71.09,
+      "giant_weight_line": 70.8482,
+      "tiny_weight_line": 59.2418,
+      "stats": {
+        "hp": 90,
+        "atk": 142,
+        "def": 108,
+        "sp_atk": 63,
+        "sp_def": 74,
+        "speed": 115,
+        "sum": 592
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/20-霜翼领主（冬天的样子）.png"
+    },
+    {
+      "name": "霜翼领主",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2,
+      "height_max": 2.68,
+      "weight_min": 59,
+      "weight_max": 71.09,
+      "giant_weight_line": 70.8482,
+      "tiny_weight_line": 59.2418,
+      "stats": {
+        "hp": 90,
+        "atk": 142,
+        "def": 108,
+        "sp_atk": 63,
+        "sp_def": 74,
+        "speed": 115,
+        "sum": 592
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/20-霜翼领主.png"
+    },
+    {
+      "name": "霜翼领主（春天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2,
+      "height_max": 2.68,
+      "weight_min": 59,
+      "weight_max": 71.09,
+      "giant_weight_line": 70.8482,
+      "tiny_weight_line": 59.2418,
+      "stats": {
+        "hp": 93,
+        "atk": 142,
+        "def": 97,
+        "sp_atk": 52,
+        "sp_def": 81,
+        "speed": 115,
+        "sum": 580
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/20-霜翼领主（春天的样子）.png"
+    },
+    {
+      "name": "霜翼领主（夏天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2,
+      "height_max": 2.68,
+      "weight_min": 59,
+      "weight_max": 71.09,
+      "giant_weight_line": 70.8482,
+      "tiny_weight_line": 59.2418,
+      "stats": {
+        "hp": 99,
+        "atk": 147,
+        "def": 96,
+        "sp_atk": 62,
+        "sp_def": 69,
+        "speed": 115,
+        "sum": 588
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/20-霜翼领主（夏天的样子）.png"
+    },
+    {
+      "name": "霜翼领主（秋天的样子）",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2,
+      "height_max": 2.68,
+      "weight_min": 59,
+      "weight_max": 71.09,
+      "giant_weight_line": 70.8482,
+      "tiny_weight_line": 59.2418,
+      "stats": {
+        "hp": 90,
+        "atk": 141,
+        "def": 98,
+        "sp_atk": 50,
+        "sp_def": 85,
+        "speed": 115,
+        "sum": 579
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/20-霜翼领主（秋天的样子）.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "冬羽雀",
+      "id": 19,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.62,
+      "height_max": 0.71,
+      "weight_min": 8.92,
+      "weight_max": 12.7,
+      "giant_weight_line": 12.6244,
+      "tiny_weight_line": 8.9956,
+      "stats": {
+        "hp": 72,
+        "atk": 103,
+        "def": 86,
+        "sp_atk": 44,
+        "sp_def": 59,
+        "speed": 92,
+        "sum": 456
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/19-冬羽雀（冬天的样子）.png"
+    },
+    {
+      "name": "岚鸟",
+      "id": 20,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.04,
+      "weight_min": 27.08,
+      "weight_max": 32.7,
+      "giant_weight_line": 32.5876,
+      "tiny_weight_line": 27.1924,
+      "stats": {
+        "hp": 90,
+        "atk": 128,
+        "def": 108,
+        "sp_atk": 55,
+        "sp_def": 74,
+        "speed": 115,
+        "sum": 570
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/20-岚鸟.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/18-雪绒鸟.png"
+}

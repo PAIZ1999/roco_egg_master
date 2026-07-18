@@ -1,0 +1,46 @@
+{
+  "id": 219,
+  "name": "里拉鳐",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "妖精组"
+    ],
+    "height_min": 0.4,
+    "height_max": 0.46,
+    "weight_min": 13.51,
+    "weight_max": 19.8,
+    "giant_weight_line": 19.6742,
+    "tiny_weight_line": 13.6358
+  },
+  "evolution_chain": [
+    "里拉鳐"
+  ],
+  "stats": {
+    "hp": 118,
+    "atk": 82,
+    "def": 103,
+    "sp_atk": 89,
+    "sp_def": 147,
+    "speed": 105,
+    "sum": 644
+  },
+  "height_min": 0.94,
+  "height_max": 1.1,
+  "weight_min": 38.6,
+  "weight_max": 49.5,
+  "giant_weight_line": 49.282,
+  "tiny_weight_line": 38.818,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/219-里拉鳐.png"
+}

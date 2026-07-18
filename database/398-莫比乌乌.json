@@ -1,0 +1,79 @@
+{
+  "id": 398,
+  "name": "莫比乌乌",
+  "types": [
+    "龙",
+    "萌"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "飞龙组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "飞龙组"
+    ],
+    "height_min": 0.25,
+    "height_max": 0.32,
+    "weight_min": 0.98,
+    "weight_max": 1.92,
+    "giant_weight_line": 1.9012,
+    "tiny_weight_line": 0.9988
+  },
+  "evolution_chain": [
+    "莫比乌乌",
+    "克莱因龙"
+  ],
+  "stats": {
+    "hp": 72,
+    "atk": 36,
+    "def": 66,
+    "sp_atk": 98,
+    "sp_def": 84,
+    "speed": 80,
+    "sum": 436
+  },
+  "height_min": 0.58,
+  "height_max": 0.78,
+  "weight_min": 2.8,
+  "weight_max": 4.8,
+  "giant_weight_line": 4.76,
+  "tiny_weight_line": 2.84,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "克莱因龙",
+      "id": 399,
+      "types": [
+        "龙",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "飞龙组"
+      ],
+      "height_min": 1.38,
+      "height_max": 1.68,
+      "weight_min": 28,
+      "weight_max": 48,
+      "giant_weight_line": 47.6,
+      "tiny_weight_line": 28.4,
+      "stats": {
+        "hp": 90,
+        "atk": 45,
+        "def": 83,
+        "sp_atk": 122,
+        "sp_def": 105,
+        "speed": 100,
+        "sum": 545
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/399-克莱因龙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/398-莫比乌乌.png"
+}

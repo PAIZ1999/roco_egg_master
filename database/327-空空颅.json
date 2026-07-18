@@ -1,0 +1,139 @@
+{
+  "id": 327,
+  "name": "空空颅",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "魔力组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组",
+      "巨灵组"
+    ],
+    "height_min": 0.18,
+    "height_max": 0.25,
+    "weight_min": 1.96,
+    "weight_max": 3.48,
+    "giant_weight_line": 3.4496,
+    "tiny_weight_line": 1.9904
+  },
+  "evolution_chain": [
+    "空空颅",
+    "夜宿颅",
+    "夜枭",
+    [
+      "暗夜颅主"
+    ]
+  ],
+  "stats": {
+    "hp": 70,
+    "atk": 7,
+    "def": 54,
+    "sp_atk": 37,
+    "sp_def": 64,
+    "speed": 48,
+    "sum": 280
+  },
+  "height_min": 0.43,
+  "height_max": 0.61,
+  "weight_min": 5.6,
+  "weight_max": 8.7,
+  "giant_weight_line": 8.638,
+  "tiny_weight_line": 5.662,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "暗夜颅主",
+      "id": 329,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.34,
+      "height_max": 3.01,
+      "weight_min": 96.6,
+      "weight_max": 150,
+      "giant_weight_line": 148.932,
+      "tiny_weight_line": 97.668,
+      "stats": {
+        "hp": 117,
+        "atk": 5,
+        "def": 95,
+        "sp_atk": 66,
+        "sp_def": 112,
+        "speed": 80,
+        "sum": 475
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/329-暗夜颅主.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "夜宿颅",
+      "id": 328,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "巨灵组"
+      ],
+      "height_min": 0.82,
+      "height_max": 1.18,
+      "weight_min": 27.6,
+      "weight_max": 34.3,
+      "giant_weight_line": 34.166,
+      "tiny_weight_line": 27.734,
+      "stats": {
+        "hp": 94,
+        "atk": 9,
+        "def": 72,
+        "sp_atk": 49,
+        "sp_def": 85,
+        "speed": 64,
+        "sum": 373
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/328-夜宿颅.png"
+    },
+    {
+      "name": "夜枭",
+      "id": 329,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组",
+        "巨灵组"
+      ],
+      "height_min": 1.45,
+      "height_max": 2.07,
+      "weight_min": 58.6,
+      "weight_max": 66.5,
+      "giant_weight_line": 66.342,
+      "tiny_weight_line": 58.758,
+      "stats": {
+        "hp": 117,
+        "atk": 10,
+        "def": 90,
+        "sp_atk": 61,
+        "sp_def": 106,
+        "speed": 80,
+        "sum": 464
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/329-夜枭.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/327-空空颅.png"
+}

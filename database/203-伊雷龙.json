@@ -1,0 +1,106 @@
+{
+  "id": 203,
+  "name": "伊雷龙",
+  "types": [
+    "龙"
+  ],
+  "egg_groups": [
+    "飞龙组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "飞龙组"
+    ],
+    "height_min": 0.31,
+    "height_max": 0.39,
+    "weight_min": 9.52,
+    "weight_max": 13.6,
+    "giant_weight_line": 13.5184,
+    "tiny_weight_line": 9.6016
+  },
+  "evolution_chain": [
+    "伊雷龙",
+    "伊兰亚龙",
+    [
+      "伊兰龙"
+    ]
+  ],
+  "stats": {
+    "hp": 90,
+    "atk": 73,
+    "def": 55,
+    "sp_atk": 152,
+    "sp_def": 79,
+    "speed": 72,
+    "sum": 521
+  },
+  "height_min": 0.72,
+  "height_max": 0.94,
+  "weight_min": 27.2,
+  "weight_max": 34,
+  "giant_weight_line": 33.864,
+  "tiny_weight_line": 27.336,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "伊兰龙",
+      "id": 204,
+      "types": [
+        "龙"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 5.5,
+      "height_max": 7,
+      "weight_min": 228,
+      "weight_max": 342,
+      "giant_weight_line": 339.72,
+      "tiny_weight_line": 230.28,
+      "stats": {
+        "hp": 112,
+        "atk": 91,
+        "def": 69,
+        "sp_atk": 190,
+        "sp_def": 99,
+        "speed": 90,
+        "sum": 651
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/204-伊兰龙.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "伊兰亚龙",
+      "id": 204,
+      "types": [
+        "龙"
+      ],
+      "egg_groups": [
+        "飞龙组"
+      ],
+      "height_min": 3.65,
+      "height_max": 4,
+      "weight_min": 168,
+      "weight_max": 195,
+      "giant_weight_line": 194.46,
+      "tiny_weight_line": 168.54,
+      "stats": {
+        "hp": 112,
+        "atk": 91,
+        "def": 69,
+        "sp_atk": 190,
+        "sp_def": 99,
+        "speed": 90,
+        "sum": 651
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/204-伊兰亚龙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/203-伊雷龙.png"
+}

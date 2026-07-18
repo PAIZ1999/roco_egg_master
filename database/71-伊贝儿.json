@@ -1,0 +1,77 @@
+{
+  "id": 71,
+  "name": "伊贝儿",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "植物组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "软体组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.26,
+    "weight_min": 1.155,
+    "weight_max": 1.68,
+    "giant_weight_line": 1.6695,
+    "tiny_weight_line": 1.1655
+  },
+  "evolution_chain": [
+    "伊贝儿",
+    "伊贝粉粉"
+  ],
+  "stats": {
+    "hp": 94,
+    "atk": 73,
+    "def": 88,
+    "sp_atk": 72,
+    "sp_def": 88,
+    "speed": 72,
+    "sum": 487
+  },
+  "height_min": 0.44,
+  "height_max": 0.62,
+  "weight_min": 3.3,
+  "weight_max": 4.2,
+  "giant_weight_line": 4.182,
+  "tiny_weight_line": 3.318,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "伊贝粉粉",
+      "id": 72,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "软体组"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.47,
+      "weight_min": 9.3,
+      "weight_max": 12.5,
+      "giant_weight_line": 12.436,
+      "tiny_weight_line": 9.364,
+      "stats": {
+        "hp": 117,
+        "atk": 91,
+        "def": 110,
+        "sp_atk": 89,
+        "sp_def": 110,
+        "speed": 90,
+        "sum": 607
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/72-伊贝粉粉.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/71-伊贝儿.png"
+}

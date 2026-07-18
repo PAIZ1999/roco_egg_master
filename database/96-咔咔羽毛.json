@@ -1,0 +1,106 @@
+{
+  "id": 96,
+  "name": "咔咔羽毛",
+  "types": [
+    "翼",
+    "普通"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.26,
+    "height_max": 0.37,
+    "weight_min": 0.917,
+    "weight_max": 1.56,
+    "giant_weight_line": 1.5471,
+    "tiny_weight_line": 0.9299
+  },
+  "evolution_chain": [
+    "咔咔羽毛",
+    "咔咔雀",
+    "咔咔鸟"
+  ],
+  "stats": {
+    "hp": 58,
+    "atk": 68,
+    "def": 61,
+    "sp_atk": 66,
+    "sp_def": 53,
+    "speed": 72,
+    "sum": 378
+  },
+  "height_min": 0.62,
+  "height_max": 0.89,
+  "weight_min": 2.62,
+  "weight_max": 3.9,
+  "giant_weight_line": 3.8744,
+  "tiny_weight_line": 2.6456,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "咔咔雀",
+      "id": 97,
+      "types": [
+        "翼",
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.66,
+      "height_max": 0.95,
+      "weight_min": 13.8,
+      "weight_max": 18.5,
+      "giant_weight_line": 18.406,
+      "tiny_weight_line": 13.894,
+      "stats": {
+        "hp": 78,
+        "atk": 91,
+        "def": 81,
+        "sp_atk": 88,
+        "sp_def": 71,
+        "speed": 96,
+        "sum": 505
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/97-咔咔雀.png"
+    },
+    {
+      "name": "咔咔鸟",
+      "id": 98,
+      "types": [
+        "翼",
+        "普通"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 27.5,
+      "weight_max": 33.72,
+      "giant_weight_line": 33.5956,
+      "tiny_weight_line": 27.6244,
+      "stats": {
+        "hp": 97,
+        "atk": 114,
+        "def": 101,
+        "sp_atk": 110,
+        "sp_def": 89,
+        "speed": 120,
+        "sum": 631
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/98-咔咔鸟.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/96-咔咔羽毛.png"
+}

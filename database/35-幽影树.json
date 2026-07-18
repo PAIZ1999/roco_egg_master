@@ -1,0 +1,111 @@
+{
+  "id": 35,
+  "name": "幽影树",
+  "types": [
+    "幽",
+    "草"
+  ],
+  "egg_groups": [
+    "植物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "妖精组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 10.325,
+    "weight_max": 15,
+    "giant_weight_line": 14.9065,
+    "tiny_weight_line": 10.4185
+  },
+  "evolution_chain": [
+    "幽影树",
+    [
+      "幻影荆棘"
+    ]
+  ],
+  "stats": {
+    "hp": 111,
+    "atk": 96,
+    "def": 65,
+    "sp_atk": 96,
+    "sp_def": 123,
+    "speed": 80,
+    "sum": 571
+  },
+  "height_min": 0.64,
+  "height_max": 0.92,
+  "weight_min": 29.5,
+  "weight_max": 37.5,
+  "giant_weight_line": 37.34,
+  "tiny_weight_line": 29.66,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "幻影荆棘",
+      "id": 35,
+      "types": [
+        "幽",
+        "草"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.01,
+      "height_max": 1.45,
+      "weight_min": 55.7,
+      "weight_max": 72.7,
+      "giant_weight_line": 72.36,
+      "tiny_weight_line": 56.04,
+      "stats": {
+        "hp": 113,
+        "atk": 96,
+        "def": 66,
+        "sp_atk": 96,
+        "sp_def": 125,
+        "speed": 80,
+        "sum": 576
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/35-幻影荆棘.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "幽影树（突变的样子）",
+      "id": 35,
+      "types": [
+        "幽",
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "妖精组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.92,
+      "weight_min": 29.5,
+      "weight_max": 37.5,
+      "giant_weight_line": 37.34,
+      "tiny_weight_line": 29.66,
+      "stats": {
+        "hp": 111,
+        "atk": 96,
+        "def": 65,
+        "sp_atk": 96,
+        "sp_def": 123,
+        "speed": 80,
+        "sum": 571
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/35-幽影树.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/35-幽影树.png"
+}

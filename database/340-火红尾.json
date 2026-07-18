@@ -1,0 +1,74 @@
+{
+  "id": 340,
+  "name": "火红尾",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.4,
+    "height_max": 0.61,
+    "weight_min": 8.016,
+    "weight_max": 15.92,
+    "giant_weight_line": 15.7619,
+    "tiny_weight_line": 8.1741
+  },
+  "evolution_chain": [
+    "火红尾",
+    "雅丹鬃"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 56,
+    "def": 70,
+    "sp_atk": 129,
+    "sp_def": 89,
+    "speed": 100,
+    "sum": 511
+  },
+  "height_min": 0.72,
+  "height_max": 0.98,
+  "weight_min": 17.5,
+  "weight_max": 30.5,
+  "giant_weight_line": 30.24,
+  "tiny_weight_line": 17.76,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "雅丹鬃",
+      "id": 341,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.7,
+      "height_max": 2.06,
+      "weight_min": 49.5,
+      "weight_max": 71.2,
+      "giant_weight_line": 70.766,
+      "tiny_weight_line": 49.934,
+      "stats": {
+        "hp": 83,
+        "atk": 70,
+        "def": 88,
+        "sp_atk": 162,
+        "sp_def": 111,
+        "speed": 125,
+        "sum": 639
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/341-雅丹鬃.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/340-火红尾.png"
+}

@@ -1,0 +1,76 @@
+{
+  "id": 270,
+  "name": "优优",
+  "types": [
+    "地",
+    "光"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.23,
+    "weight_min": 1.061,
+    "weight_max": 1.64,
+    "giant_weight_line": 1.6284,
+    "tiny_weight_line": 1.0726
+  },
+  "evolution_chain": [
+    "优优",
+    "绒光优优"
+  ],
+  "stats": {
+    "hp": 81,
+    "atk": 35,
+    "def": 84,
+    "sp_atk": 89,
+    "sp_def": 104,
+    "speed": 92,
+    "sum": 485
+  },
+  "height_min": 0.38,
+  "height_max": 0.56,
+  "weight_min": 3.03,
+  "weight_max": 4.1,
+  "giant_weight_line": 4.0786,
+  "tiny_weight_line": 3.0514,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "绒光优优",
+      "id": 271,
+      "types": [
+        "地",
+        "光"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.85,
+      "weight_min": 13.5,
+      "weight_max": 19.6,
+      "giant_weight_line": 19.478,
+      "tiny_weight_line": 13.622,
+      "stats": {
+        "hp": 101,
+        "atk": 43,
+        "def": 105,
+        "sp_atk": 111,
+        "sp_def": 130,
+        "speed": 115,
+        "sum": 605
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/271-绒光优优.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/270-优优.png"
+}

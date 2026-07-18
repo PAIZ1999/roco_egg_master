@@ -1,0 +1,135 @@
+{
+  "id": 226,
+  "name": "电动长颈鹿",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.3,
+    "height_max": 0.42,
+    "weight_min": 10.43,
+    "weight_max": 14.72,
+    "giant_weight_line": 14.6342,
+    "tiny_weight_line": 10.5158
+  },
+  "evolution_chain": [
+    "电动长颈鹿",
+    "奔乐鹿",
+    "爵士鹿",
+    [
+      "波普鹿"
+    ]
+  ],
+  "stats": {
+    "hp": 55,
+    "atk": 46,
+    "def": 65,
+    "sp_atk": 12,
+    "sp_def": 47,
+    "speed": 72,
+    "sum": 297
+  },
+  "height_min": 0.7,
+  "height_max": 1,
+  "weight_min": 29.8,
+  "weight_max": 36.8,
+  "giant_weight_line": 36.66,
+  "tiny_weight_line": 29.94,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "波普鹿",
+      "id": 228,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 3.3,
+      "height_max": 3.72,
+      "weight_min": 210.5,
+      "weight_max": 300,
+      "giant_weight_line": 298.21,
+      "tiny_weight_line": 212.29,
+      "stats": {
+        "hp": 92,
+        "atk": 79,
+        "def": 108,
+        "sp_atk": 21,
+        "sp_def": 79,
+        "speed": 120,
+        "sum": 499
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/228-波普鹿.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "奔乐鹿",
+      "id": 227,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.85,
+      "height_max": 1.22,
+      "weight_min": 68,
+      "weight_max": 77.5,
+      "giant_weight_line": 77.31,
+      "tiny_weight_line": 68.19,
+      "stats": {
+        "hp": 73,
+        "atk": 61,
+        "def": 86,
+        "sp_atk": 16,
+        "sp_def": 63,
+        "speed": 96,
+        "sum": 395
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/227-奔乐鹿.png"
+    },
+    {
+      "name": "爵士鹿",
+      "id": 228,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.38,
+      "height_max": 1.98,
+      "weight_min": 135,
+      "weight_max": 185.06,
+      "giant_weight_line": 184.0588,
+      "tiny_weight_line": 136.0012,
+      "stats": {
+        "hp": 92,
+        "atk": 77,
+        "def": 108,
+        "sp_atk": 20,
+        "sp_def": 79,
+        "speed": 120,
+        "sum": 496
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/228-爵士鹿.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/226-电动长颈鹿.png"
+}

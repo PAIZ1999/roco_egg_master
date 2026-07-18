@@ -1,0 +1,110 @@
+{
+  "id": 185,
+  "name": "甜田螺",
+  "types": [
+    "水",
+    "萌"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "软体组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.24,
+    "weight_min": 2.625,
+    "weight_max": 3.76,
+    "giant_weight_line": 3.7373,
+    "tiny_weight_line": 2.6477
+  },
+  "evolution_chain": [
+    "甜田螺",
+    "壳乙螺",
+    "卡洛儿"
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 67,
+    "def": 54,
+    "sp_atk": 70,
+    "sp_def": 80,
+    "speed": 54,
+    "sum": 393
+  },
+  "height_min": 0.41,
+  "height_max": 0.58,
+  "weight_min": 7.5,
+  "weight_max": 9.4,
+  "giant_weight_line": 9.362,
+  "tiny_weight_line": 7.538,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "壳乙螺",
+      "id": 186,
+      "types": [
+        "水",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.97,
+      "weight_min": 11.05,
+      "weight_max": 19.04,
+      "giant_weight_line": 18.8802,
+      "tiny_weight_line": 11.2098,
+      "stats": {
+        "hp": 91,
+        "atk": 89,
+        "def": 72,
+        "sp_atk": 94,
+        "sp_def": 107,
+        "speed": 72,
+        "sum": 525
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/186-壳乙螺.png"
+    },
+    {
+      "name": "卡洛儿",
+      "id": 187,
+      "types": [
+        "水",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 21.4,
+      "weight_max": 25.6,
+      "giant_weight_line": 25.516,
+      "tiny_weight_line": 21.484,
+      "stats": {
+        "hp": 114,
+        "atk": 112,
+        "def": 90,
+        "sp_atk": 117,
+        "sp_def": 134,
+        "speed": 90,
+        "sum": 657
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/187-卡洛儿.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/185-甜田螺.png"
+}

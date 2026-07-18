@@ -1,12 +1,12 @@
 {
   "name": "react-example",
   "private": true,
-  "version": "6.0.0",
+  "version": "7.0.0",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && node copy-images.js",
+    "dev": "node scripts/update-all.cjs && vite --port=3000 --host=0.0.0.0",
+    "build": "node scripts/update-all.cjs && vite build && node copy-images.js",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js dist-electron",
     "lint": "tsc --noEmit",

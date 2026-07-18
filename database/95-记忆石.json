@@ -1,0 +1,44 @@
+{
+  "id": 95,
+  "name": "记忆石",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "大地组"
+    ],
+    "height_min": 0.41,
+    "height_max": 0.58,
+    "weight_min": 31.57,
+    "weight_max": 44.8,
+    "giant_weight_line": 44.5354,
+    "tiny_weight_line": 31.8346
+  },
+  "evolution_chain": [
+    "记忆石"
+  ],
+  "stats": {
+    "hp": 112,
+    "atk": 108,
+    "def": 141,
+    "sp_atk": 97,
+    "sp_def": 79,
+    "speed": 70,
+    "sum": 607
+  },
+  "height_min": 0.97,
+  "height_max": 1.39,
+  "weight_min": 90.2,
+  "weight_max": 112,
+  "giant_weight_line": 111.564,
+  "tiny_weight_line": 90.636,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/95-记忆石.png"
+}

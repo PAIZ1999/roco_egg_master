@@ -1,0 +1,44 @@
+{
+  "id": 162,
+  "name": "公平鸽",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.25,
+    "weight_min": 0.875,
+    "weight_max": 1.576,
+    "giant_weight_line": 1.562,
+    "tiny_weight_line": 0.889
+  },
+  "evolution_chain": [
+    "公平鸽"
+  ],
+  "stats": {
+    "hp": 113,
+    "atk": 93,
+    "def": 125,
+    "sp_atk": 93,
+    "sp_def": 125,
+    "speed": 100,
+    "sum": 649
+  },
+  "height_min": 0.45,
+  "height_max": 0.6,
+  "weight_min": 2.5,
+  "weight_max": 3.94,
+  "giant_weight_line": 3.9112,
+  "tiny_weight_line": 2.5288,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/162-公平鸽.png"
+}

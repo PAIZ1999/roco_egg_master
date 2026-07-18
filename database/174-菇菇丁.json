@@ -1,0 +1,106 @@
+{
+  "id": 174,
+  "name": "菇菇丁",
+  "types": [
+    "地",
+    "草"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.11,
+    "height_max": 0.15,
+    "weight_min": 0.385,
+    "weight_max": 0.5,
+    "giant_weight_line": 0.4977,
+    "tiny_weight_line": 0.3873
+  },
+  "evolution_chain": [
+    "菇菇丁",
+    "多菇丁",
+    "九幽菇"
+  ],
+  "stats": {
+    "hp": 89,
+    "atk": 66,
+    "def": 75,
+    "sp_atk": 62,
+    "sp_def": 62,
+    "speed": 42,
+    "sum": 396
+  },
+  "height_min": 0.25,
+  "height_max": 0.35,
+  "weight_min": 1.1,
+  "weight_max": 2.76,
+  "giant_weight_line": 2.7268,
+  "tiny_weight_line": 1.1332,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "多菇丁",
+      "id": 175,
+      "types": [
+        "地",
+        "草"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.7,
+      "weight_min": 5.4,
+      "weight_max": 6.8,
+      "giant_weight_line": 6.772,
+      "tiny_weight_line": 5.428,
+      "stats": {
+        "hp": 119,
+        "atk": 88,
+        "def": 100,
+        "sp_atk": 83,
+        "sp_def": 82,
+        "speed": 56,
+        "sum": 528
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/175-多菇丁.png"
+    },
+    {
+      "name": "九幽菇",
+      "id": 176,
+      "types": [
+        "地",
+        "草"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.55,
+      "height_max": 1.65,
+      "weight_min": 42,
+      "weight_max": 58,
+      "giant_weight_line": 57.68,
+      "tiny_weight_line": 42.32,
+      "stats": {
+        "hp": 149,
+        "atk": 110,
+        "def": 125,
+        "sp_atk": 103,
+        "sp_def": 103,
+        "speed": 70,
+        "sum": 660
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/176-九幽菇.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/174-菇菇丁.png"
+}

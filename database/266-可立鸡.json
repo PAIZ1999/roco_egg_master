@@ -1,0 +1,141 @@
+{
+  "id": 266,
+  "name": "可立鸡",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "天空组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "拟人组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.23,
+    "weight_min": 1.61,
+    "weight_max": 2.96,
+    "giant_weight_line": 2.933,
+    "tiny_weight_line": 1.637
+  },
+  "evolution_chain": [
+    "可立鸡",
+    "晕晕鸡",
+    [
+      "绅士鸡",
+      "武者鸡"
+    ]
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 72,
+    "def": 61,
+    "sp_atk": 72,
+    "sp_def": 52,
+    "speed": 66,
+    "sum": 390
+  },
+  "height_min": 0.39,
+  "height_max": 0.56,
+  "weight_min": 4.6,
+  "weight_max": 7.4,
+  "giant_weight_line": 7.344,
+  "tiny_weight_line": 4.656,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "晕晕鸡",
+      "id": 267,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ],
+      "height_min": 0.68,
+      "height_max": 0.91,
+      "weight_min": 12.03,
+      "weight_max": 18.06,
+      "giant_weight_line": 17.9394,
+      "tiny_weight_line": 12.1506,
+      "stats": {
+        "hp": 89,
+        "atk": 96,
+        "def": 82,
+        "sp_atk": 96,
+        "sp_def": 70,
+        "speed": 88,
+        "sum": 521
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/267-晕晕鸡.png"
+    },
+    {
+      "name": "绅士鸡",
+      "id": 268,
+      "types": [
+        "火",
+        "武"
+      ],
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ],
+      "height_min": 1.31,
+      "height_max": 1.87,
+      "weight_min": 46.8,
+      "weight_max": 58.2,
+      "giant_weight_line": 57.972,
+      "tiny_weight_line": 47.028,
+      "stats": {
+        "hp": 112,
+        "atk": 120,
+        "def": 102,
+        "sp_atk": 120,
+        "sp_def": 87,
+        "speed": 110,
+        "sum": 651
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/268-绅士鸡.png"
+    },
+    {
+      "name": "武者鸡",
+      "id": 269,
+      "types": [
+        "火",
+        "武"
+      ],
+      "egg_groups": [
+        "天空组",
+        "拟人组"
+      ],
+      "height_min": 1.46,
+      "height_max": 2.09,
+      "weight_min": 46.8,
+      "weight_max": 58.2,
+      "giant_weight_line": 57.972,
+      "tiny_weight_line": 47.028,
+      "stats": {
+        "hp": 116,
+        "atk": 137,
+        "def": 111,
+        "sp_atk": 66,
+        "sp_def": 70,
+        "speed": 95,
+        "sum": 595
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/269-武者鸡.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/266-可立鸡.png"
+}

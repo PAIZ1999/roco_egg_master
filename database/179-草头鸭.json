@@ -1,0 +1,78 @@
+{
+  "id": 179,
+  "name": "草头鸭",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "两栖组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组",
+      "天空组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.3,
+    "weight_min": 1.715,
+    "weight_max": 2.628,
+    "giant_weight_line": 2.6097,
+    "tiny_weight_line": 1.7333
+  },
+  "evolution_chain": [
+    "草头鸭",
+    "卷毛鸭"
+  ],
+  "stats": {
+    "hp": 92,
+    "atk": 79,
+    "def": 66,
+    "sp_atk": 24,
+    "sp_def": 50,
+    "speed": 92,
+    "sum": 403
+  },
+  "height_min": 0.5,
+  "height_max": 0.72,
+  "weight_min": 4.9,
+  "weight_max": 6.57,
+  "giant_weight_line": 6.5366,
+  "tiny_weight_line": 4.9334,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "卷毛鸭",
+      "id": 180,
+      "types": [
+        "草",
+        "武"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "天空组"
+      ],
+      "height_min": 0.9,
+      "height_max": 1.29,
+      "weight_min": 35.8,
+      "weight_max": 48.06,
+      "giant_weight_line": 47.8148,
+      "tiny_weight_line": 36.0452,
+      "stats": {
+        "hp": 116,
+        "atk": 98,
+        "def": 83,
+        "sp_atk": 29,
+        "sp_def": 63,
+        "speed": 115,
+        "sum": 504
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/180-卷毛鸭.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/179-草头鸭.png"
+}

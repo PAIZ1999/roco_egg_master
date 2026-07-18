@@ -1,0 +1,46 @@
+{
+  "id": 273,
+  "name": "深蓝鲸",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "巨灵组"
+    ],
+    "height_min": 0.85,
+    "height_max": 1.1,
+    "weight_min": 2.2575,
+    "weight_max": 2.8,
+    "giant_weight_line": 2.7891,
+    "tiny_weight_line": 2.2683
+  },
+  "evolution_chain": [
+    "深蓝鲸"
+  ],
+  "stats": {
+    "hp": 137,
+    "atk": 44,
+    "def": 125,
+    "sp_atk": 121,
+    "sp_def": 141,
+    "speed": 50,
+    "sum": 618
+  },
+  "height_min": 2,
+  "height_max": 2.65,
+  "weight_min": 645,
+  "weight_max": 700,
+  "giant_weight_line": 698.9,
+  "tiny_weight_line": 646.1,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/273-深蓝鲸.png"
+}

@@ -1,0 +1,44 @@
+{
+  "id": 79,
+  "name": "菊花梨",
+  "types": [
+    "萌"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.37,
+    "weight_min": 1.47,
+    "weight_max": 2.32,
+    "giant_weight_line": 2.303,
+    "tiny_weight_line": 1.487
+  },
+  "evolution_chain": [
+    "菊花梨"
+  ],
+  "stats": {
+    "hp": 120,
+    "atk": 56,
+    "def": 84,
+    "sp_atk": 127,
+    "sp_def": 125,
+    "speed": 60,
+    "sum": 572
+  },
+  "height_min": 0.63,
+  "height_max": 0.9,
+  "weight_min": 4.2,
+  "weight_max": 5.8,
+  "giant_weight_line": 5.768,
+  "tiny_weight_line": 4.232,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/79-菊花梨.png"
+}

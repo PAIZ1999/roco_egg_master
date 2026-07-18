@@ -1,12 +1,10 @@
 import { pinyin } from "pinyin-pro";
 import eggChartDataRaw from "./egg_chart_data.json";
 import petsDataRaw from "./pets_data.json";
-import petsRaceData from "./pets_race_data.json";
 import spriteFilesRaw from "./sprite_files.json";
 import { getSpriteFileName } from "./petHelper";
 
 const spriteFiles = spriteFilesRaw as string[];
-
 
 // 类型定义
 export interface PetRaceStat {
@@ -65,26 +63,8 @@ export interface PredictedEggResult {
 
 const eggChartData = eggChartDataRaw as Record<string, any>;
 
-// 深拷贝并清洗 petsDataRaw
-const petsData: any[] = JSON.parse(JSON.stringify(petsDataRaw));
-const ylt = petsData.find((p: any) => p.id === 238 || p.name === "月亮砣");
-if (ylt && ylt.egg_data) {
-  ylt.egg_data.egg_groups = ["海洋组"];
-  if (ylt.egg_data.weight_max > 1000) {
-    ylt.egg_data.weight_max = ylt.egg_data.weight_max / 10000;
-  }
-  if (ylt.egg_data.giant_weight_line > 1000) {
-    ylt.egg_data.giant_weight_line = ylt.egg_data.giant_weight_line / 10000;
-  }
-}
-
-// 种族值 Map
-export const petsRaceMap: Record<string, any> = {};
-petsRaceData.forEach((item: any) => {
-  if (item.name) {
-    petsRaceMap[item.name.trim()] = item;
-  }
-});
+// 直接引用静态 pets_data.json
+const petsData: any[] = petsDataRaw;
 
 // 常数与哈希表
 const precomputedChartData: Record<string, any> = {};
@@ -188,69 +168,12 @@ function initEggGroupMap() {
 function findAvatarPath(formName: string, petName: string): string | null {
   const nameToUse = formName || petName;
   const fileName = getSpriteFileName(nameToUse);
-  return fileName ? `./images/sprites/${fileName}` : `./images/sprites/${nameToUse}.png`;
-}
-
-function initFormsAndRegional() {
-  const allRaceKeys = Object.keys(petsRaceMap);
-  let tempIdCounter = 10000;
-  for (const formName of allRaceKeys) {
-    if (formName.includes('（') || formName.includes('(')) {
-      const mainName = formName.split(/[（(]/)[0].trim();
-      
-      let parentPet = petsData.find((p: any) => p.name === mainName);
-      let baseForm: any = null;
-      
-      if (!parentPet) {
-        // 如果主精灵列表中找不到，尝试在子形态名字中匹配主精灵
-        parentPet = petsData.find((p: any) => p.forms && p.forms.some((f: any) => f.name === mainName));
-        if (parentPet) {
-          baseForm = parentPet.forms.find((f: any) => f.name === mainName);
-        }
-      } else {
-        baseForm = parentPet.forms && parentPet.forms[0] ? parentPet.forms[0] : null;
-      }
-
-      if (!parentPet) {
-        parentPet = {
-          id: tempIdCounter++,
-          name: mainName,
-          types: ["普通"],
-          evolution_chain: [mainName],
-          forms: []
-        };
-        petsData.push(parentPet);
-      }
-
-      if (parentPet) {
-        if (!parentPet.forms) {
-          parentPet.forms = [];
-        }
-        const hasForm = parentPet.forms.some((f: any) => f.name === formName);
-        if (!hasForm) {
-          const raceItem = petsRaceMap[formName];
-          const newForm = {
-            name: formName,
-            types: (raceItem && raceItem.type_name) ? [raceItem.type_name] : (baseForm ? [...baseForm.types] : (parentPet.types ? [...parentPet.types] : ["普通"])),
-            egg_groups: baseForm && baseForm.egg_groups ? [...baseForm.egg_groups] : (parentPet.egg_data && parentPet.egg_data.egg_groups ? [...parentPet.egg_data.egg_groups] : ["无法孵蛋"]),
-            height_min: baseForm ? baseForm.height_min : (parentPet.egg_data ? parentPet.egg_data.height_min : null),
-            height_max: baseForm ? baseForm.height_max : (parentPet.egg_data ? parentPet.egg_data.height_max : null),
-            weight_min: baseForm ? baseForm.weight_min : (parentPet.egg_data ? parentPet.egg_data.weight_min : null),
-            weight_max: baseForm ? baseForm.weight_max : (parentPet.egg_data ? parentPet.egg_data.weight_max : null),
-            giant_weight_line: baseForm ? baseForm.giant_weight_line : (parentPet.egg_data ? parentPet.egg_data.giant_weight_line : null),
-            tiny_weight_line: baseForm ? baseForm.tiny_weight_line : (parentPet.egg_data ? parentPet.egg_data.tiny_weight_line : null)
-          };
-          parentPet.forms.push(newForm);
-        }
-      }
-    }
-  }
+  return fileName ? `./images/sprites/${fileName}` : null;
 }
 
 // 初始化
 precomputeChart();
 initEggGroupMap();
-initFormsAndRegional();
 
 // 归一化名字
 function normalizeName(name: string): string {
@@ -396,7 +319,7 @@ export function queryPet(queryText: string): QueryPetResult | null {
       weight_max: (form && form.weight_max !== undefined) ? form.weight_max : (pet.egg_data ? pet.egg_data.weight_max : null),
       giant_weight_line: (form && form.giant_weight_line !== undefined) ? form.giant_weight_line : (pet.egg_data ? pet.egg_data.giant_weight_line : null),
       tiny_weight_line: (form && form.tiny_weight_line !== undefined) ? form.tiny_weight_line : (pet.egg_data ? pet.egg_data.tiny_weight_line : null),
-      race: null
+      race: (form && form.stats) ? form.stats : null
     },
     forms: pet.forms || [],
     egg_data: pet.egg_data || null,
@@ -404,109 +327,28 @@ export function queryPet(queryText: string): QueryPetResult | null {
     avatars: []
   };
 
-  let currentFormName = result.currentForm.name.trim();
-  const allRaceForms = Object.keys(petsRaceMap).filter(k => 
-    k.startsWith(pet.name + '（') || k.startsWith(pet.name + '(')
-  );
-  const isAlreadyRegional = result.currentForm.name.includes('（') || result.currentForm.name.includes('(');
-  if (!isAlreadyRegional && allRaceForms.length > 0) {
-    const pureQueryKeyword = normalizedQuery.replace(normalizeName(pet.name), '').trim();
-    
-    if (pureQueryKeyword) {
-      let matchedForm = null;
-      for (const formKey of allRaceForms) {
-        const bracketContent = normalizeName(formKey.replace(pet.name, ''));
-        if (bracketContent && (bracketContent.includes(pureQueryKeyword) || pureQueryKeyword.includes(bracketContent))) {
-          matchedForm = formKey;
-          break;
-        }
-      }
-      if (matchedForm) {
-        result.currentForm.name = matchedForm;
-        currentFormName = matchedForm;
-      }
-    }
-  }
+  // 获取当前形态头像路径
+  result.avatarPath = findAvatarPath(result.currentForm.name, result.name);
 
-  const bracketMatch = result.currentForm.name.match(/[（(].+?[）)]/);
-  if (bracketMatch) {
-    const suffix = bracketMatch[0];
-    const mapChain = (item: any): any => {
-      if (Array.isArray(item)) {
-        return item.map(mapChain);
-      } else if (typeof item === 'string') {
-        const baseName = item.split(/[（(]/)[0].trim();
-        const suffixedName = baseName + suffix;
-        if (petsRaceMap[suffixedName]) {
-          return suffixedName;
-        }
-        return item;
-      }
-      return item;
-    };
-    result.evolution_chain = result.evolution_chain.map(mapChain);
-  }
-
-  let raceInfo = petsRaceMap[currentFormName];
-  if (!raceInfo) {
-    const possibleKeys = Object.keys(petsRaceMap).filter(k => 
-      k.startsWith(currentFormName + '（') || k.startsWith(currentFormName + '(')
-    );
-    if (possibleKeys.length > 0) {
-      raceInfo = petsRaceMap[possibleKeys[0]];
-      result.currentForm.name = possibleKeys[0];
-    }
-  }
-
-  if (raceInfo && raceInfo.stats) {
-    result.currentForm.race = {
-      sum: raceInfo.sum,
-      stats: raceInfo.stats
-    };
-  }
-
-  const avatarPath = findAvatarPath(result.currentForm.name, result.name);
-  result.avatarPath = avatarPath;
-
+  // 物理组装不同样子毛玻璃卡片画廊 associatedAvatars 列表
   const associatedAvatars: Array<{ styleName: string; absolutePath: string }> = [];
-  const formBaseName = result.currentForm.name.split(/[（(]/)[0].trim();
-  const searchNames = [result.currentForm.name, formBaseName, pet.name];
-
-  let found = false;
-  for (const name of searchNames) {
-    if (!name) continue;
-    
-    for (const file of spriteFiles) {
-      const cleanFileName = file.replace(/^\d+-/, ''); // 去除 "313-" 等前导数字
-      
-      if (cleanFileName.toLowerCase() === `${name.toLowerCase()}.png`) {
-        associatedAvatars.push({
-          styleName: '本来的样子',
-          absolutePath: `./images/sprites/${file}`
-        });
-        found = true;
-      } else if (cleanFileName.toLowerCase().startsWith(`${name.toLowerCase()}_`) && cleanFileName.endsWith('.png')) {
-        const styleName = cleanFileName.substring(name.length + 1, cleanFileName.length - 4);
+  if (pet.forms && pet.forms.length > 0) {
+    pet.forms.forEach((f: any) => {
+      const fileName = getSpriteFileName(f.name);
+      if (fileName) {
+        // 主形态显示为“本来的样子”
+        const styleName = f.name === pet.name 
+          ? "本来的样子" 
+          : f.name.replace(pet.name, "").replace(/[（()）]/g, "").trim() || f.name;
         associatedAvatars.push({
           styleName: styleName,
-          absolutePath: `./images/sprites/${file}`
+          absolutePath: `./images/sprites/${fileName}`
         });
-        found = true;
       }
-    }
-    if (found && associatedAvatars.length > 0) {
-      break;
-    }
-  }
-
-  if (associatedAvatars.length === 0 && avatarPath) {
-    associatedAvatars.push({
-      styleName: result.currentForm.name === result.name ? '本来的样子' : result.currentForm.name,
-      absolutePath: avatarPath
     });
   }
 
-  // 去重处理，防止因为名字重合导致同一个样子选择出现两次
+  // 头像相对路径去重，防冗余项
   const seenPaths = new Set<string>();
   result.avatars = associatedAvatars.filter(av => {
     if (seenPaths.has(av.absolutePath)) return false;

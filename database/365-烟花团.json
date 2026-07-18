@@ -1,0 +1,79 @@
+{
+  "id": 365,
+  "name": "烟花团",
+  "types": [
+    "火",
+    "毒"
+  ],
+  "egg_groups": [
+    "机械组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "魔力组"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.21,
+    "weight_min": 1.768,
+    "weight_max": 2.528,
+    "giant_weight_line": 2.5128,
+    "tiny_weight_line": 1.7832
+  },
+  "evolution_chain": [
+    "烟花团",
+    "烟花伯爵"
+  ],
+  "stats": {
+    "hp": 61,
+    "atk": 35,
+    "def": 50,
+    "sp_atk": 89,
+    "sp_def": 78,
+    "speed": 76,
+    "sum": 389
+  },
+  "height_min": 0.33,
+  "height_max": 0.5,
+  "weight_min": 5.05,
+  "weight_max": 6.32,
+  "giant_weight_line": 6.2946,
+  "tiny_weight_line": 5.0754,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "烟花伯爵",
+      "id": 366,
+      "types": [
+        "火",
+        "毒"
+      ],
+      "egg_groups": [
+        "机械组",
+        "魔力组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.88,
+      "weight_min": 10.5,
+      "weight_max": 22.5,
+      "giant_weight_line": 22.26,
+      "tiny_weight_line": 10.74,
+      "stats": {
+        "hp": 76,
+        "atk": 44,
+        "def": 62,
+        "sp_atk": 111,
+        "sp_def": 97,
+        "speed": 95,
+        "sum": 485
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/366-烟花伯爵.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/365-烟花团.png"
+}

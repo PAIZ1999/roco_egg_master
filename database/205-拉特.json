@@ -1,0 +1,106 @@
+{
+  "id": 205,
+  "name": "拉特",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.25,
+    "weight_min": 2.695,
+    "weight_max": 3.44,
+    "giant_weight_line": 3.4251,
+    "tiny_weight_line": 2.7099
+  },
+  "evolution_chain": [
+    "拉特",
+    "酷拉",
+    [
+      "风暴酷拉"
+    ]
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 80,
+    "def": 62,
+    "sp_atk": 80,
+    "sp_def": 78,
+    "speed": 100,
+    "sum": 467
+  },
+  "height_min": 0.49,
+  "height_max": 0.61,
+  "weight_min": 7.7,
+  "weight_max": 8.6,
+  "giant_weight_line": 8.582,
+  "tiny_weight_line": 7.718,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "风暴酷拉",
+      "id": 206,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.31,
+      "height_max": 1.63,
+      "weight_min": 32,
+      "weight_max": 50,
+      "giant_weight_line": 49.64,
+      "tiny_weight_line": 32.36,
+      "stats": {
+        "hp": 83,
+        "atk": 100,
+        "def": 78,
+        "sp_atk": 100,
+        "sp_def": 97,
+        "speed": 125,
+        "sum": 583
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/206-风暴酷拉.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "酷拉",
+      "id": 206,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.99,
+      "height_max": 1.24,
+      "weight_min": 19.5,
+      "weight_max": 23.5,
+      "giant_weight_line": 23.42,
+      "tiny_weight_line": 19.58,
+      "stats": {
+        "hp": 83,
+        "atk": 100,
+        "def": 78,
+        "sp_atk": 100,
+        "sp_def": 97,
+        "speed": 125,
+        "sum": 583
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/206-酷拉.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/205-拉特.png"
+}

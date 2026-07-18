@@ -1,0 +1,110 @@
+{
+  "id": 221,
+  "name": "多西",
+  "types": [
+    "机械",
+    "地"
+  ],
+  "egg_groups": [
+    "机械组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "巨灵组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.39,
+    "weight_min": 1.995,
+    "weight_max": 2.84,
+    "giant_weight_line": 2.8231,
+    "tiny_weight_line": 2.0119
+  },
+  "evolution_chain": [
+    "多西",
+    "库多西",
+    "波多西"
+  ],
+  "stats": {
+    "hp": 64,
+    "atk": 73,
+    "def": 82,
+    "sp_atk": 26,
+    "sp_def": 70,
+    "speed": 30,
+    "sum": 345
+  },
+  "height_min": 0.65,
+  "height_max": 0.94,
+  "weight_min": 5.7,
+  "weight_max": 7.1,
+  "giant_weight_line": 7.072,
+  "tiny_weight_line": 5.728,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "库多西",
+      "id": 222,
+      "types": [
+        "机械",
+        "地"
+      ],
+      "egg_groups": [
+        "机械组",
+        "巨灵组"
+      ],
+      "height_min": 0.99,
+      "height_max": 1.42,
+      "weight_min": 115.8,
+      "weight_max": 175.02,
+      "giant_weight_line": 173.8356,
+      "tiny_weight_line": 116.9844,
+      "stats": {
+        "hp": 85,
+        "atk": 98,
+        "def": 109,
+        "sp_atk": 34,
+        "sp_def": 93,
+        "speed": 40,
+        "sum": 459
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/222-库多西.png"
+    },
+    {
+      "name": "波多西",
+      "id": 223,
+      "types": [
+        "机械",
+        "地"
+      ],
+      "egg_groups": [
+        "机械组",
+        "巨灵组"
+      ],
+      "height_min": 1.43,
+      "height_max": 2.05,
+      "weight_min": 265,
+      "weight_max": 295,
+      "giant_weight_line": 294.4,
+      "tiny_weight_line": 265.6,
+      "stats": {
+        "hp": 106,
+        "atk": 122,
+        "def": 136,
+        "sp_atk": 43,
+        "sp_def": 116,
+        "speed": 50,
+        "sum": 573
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/223-波多西.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/221-多西.png"
+}

@@ -1,0 +1,143 @@
+{
+  "id": 82,
+  "name": "一窝蜂",
+  "types": [
+    "虫",
+    "翼"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "天空组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.22,
+    "weight_min": 1.4,
+    "weight_max": 2.2,
+    "giant_weight_line": 2.184,
+    "tiny_weight_line": 1.416
+  },
+  "evolution_chain": [
+    "一窝蜂",
+    "黄蜂后",
+    "花魁蜂后",
+    [
+      "女王蜂"
+    ]
+  ],
+  "stats": {
+    "hp": 87,
+    "atk": 32,
+    "def": 27,
+    "sp_atk": 29,
+    "sp_def": 27,
+    "speed": 26,
+    "sum": 228
+  },
+  "height_min": 0.37,
+  "height_max": 0.52,
+  "weight_min": 4,
+  "weight_max": 5.5,
+  "giant_weight_line": 5.47,
+  "tiny_weight_line": 4.03,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "女王蜂",
+      "id": 84,
+      "types": [
+        "虫",
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.54,
+      "height_max": 2.12,
+      "weight_min": 98.5,
+      "weight_max": 137,
+      "giant_weight_line": 136.23,
+      "tiny_weight_line": 99.27,
+      "stats": {
+        "hp": 145,
+        "atk": 50,
+        "def": 42,
+        "sp_atk": 45,
+        "sp_def": 42,
+        "speed": 40,
+        "sum": 364
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/84-女王蜂.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "黄蜂后",
+      "id": 83,
+      "types": [
+        "虫",
+        "翼"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "天空组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 31.7,
+      "weight_max": 39.21,
+      "giant_weight_line": 39.0598,
+      "tiny_weight_line": 31.8502,
+      "stats": {
+        "hp": 116,
+        "atk": 43,
+        "def": 36,
+        "sp_atk": 39,
+        "sp_def": 36,
+        "speed": 35,
+        "sum": 305
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/83-黄蜂后.png"
+    },
+    {
+      "name": "花魁蜂后",
+      "id": 84,
+      "types": [
+        "虫",
+        "翼"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "天空组"
+      ],
+      "height_min": 0.83,
+      "height_max": 1.19,
+      "weight_min": 61.5,
+      "weight_max": 78.4,
+      "giant_weight_line": 78.062,
+      "tiny_weight_line": 61.838,
+      "stats": {
+        "hp": 145,
+        "atk": 54,
+        "def": 45,
+        "sp_atk": 49,
+        "sp_def": 45,
+        "speed": 44,
+        "sum": 382
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/84-花魁蜂后.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/82-一窝蜂.png"
+}

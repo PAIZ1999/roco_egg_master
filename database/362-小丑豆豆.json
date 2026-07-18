@@ -1,0 +1,107 @@
+{
+  "id": 362,
+  "name": "小丑豆豆",
+  "types": [
+    "恶"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "拟人组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.27,
+    "weight_min": 1.698,
+    "weight_max": 2.54,
+    "giant_weight_line": 2.5232,
+    "tiny_weight_line": 1.7148
+  },
+  "evolution_chain": [
+    "小丑豆豆",
+    "小丑兔",
+    "小丑公爵"
+  ],
+  "stats": {
+    "hp": 66,
+    "atk": 87,
+    "def": 49,
+    "sp_atk": 88,
+    "sp_def": 74,
+    "speed": 72,
+    "sum": 436
+  },
+  "height_min": 0.48,
+  "height_max": 0.65,
+  "weight_min": 4.85,
+  "weight_max": 6.35,
+  "giant_weight_line": 6.32,
+  "tiny_weight_line": 4.88,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "小丑兔",
+      "id": 363,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 0.78,
+      "height_max": 0.96,
+      "weight_min": 11.75,
+      "weight_max": 14.75,
+      "giant_weight_line": 14.69,
+      "tiny_weight_line": 11.81,
+      "stats": {
+        "hp": 88,
+        "atk": 116,
+        "def": 66,
+        "sp_atk": 118,
+        "sp_def": 99,
+        "speed": 96,
+        "sum": 583
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/363-小丑兔.png"
+    },
+    {
+      "name": "小丑公爵",
+      "id": 364,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 1.24,
+      "height_max": 1.63,
+      "weight_min": 38.5,
+      "weight_max": 47.6,
+      "giant_weight_line": 47.418,
+      "tiny_weight_line": 38.682,
+      "stats": {
+        "hp": 111,
+        "atk": 145,
+        "def": 82,
+        "sp_atk": 147,
+        "sp_def": 124,
+        "speed": 120,
+        "sum": 729
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/364-小丑公爵.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/362-小丑豆豆.png"
+}

@@ -1,0 +1,106 @@
+{
+  "id": 47,
+  "name": "护主犬",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 4.76,
+    "weight_max": 7,
+    "giant_weight_line": 6.9552,
+    "tiny_weight_line": 4.8048
+  },
+  "evolution_chain": [
+    "护主犬",
+    "音速犬",
+    [
+      "风暴战犬"
+    ]
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 103,
+    "def": 81,
+    "sp_atk": 37,
+    "sp_def": 66,
+    "speed": 96,
+    "sum": 451
+  },
+  "height_min": 0.64,
+  "height_max": 0.92,
+  "weight_min": 13.6,
+  "weight_max": 17.5,
+  "giant_weight_line": 17.422,
+  "tiny_weight_line": 13.678,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "风暴战犬",
+      "id": 48,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.75,
+      "height_max": 1.91,
+      "weight_min": 61.03,
+      "weight_max": 79.06,
+      "giant_weight_line": 78.6994,
+      "tiny_weight_line": 61.3906,
+      "stats": {
+        "hp": 85,
+        "atk": 128,
+        "def": 101,
+        "sp_atk": 46,
+        "sp_def": 82,
+        "speed": 120,
+        "sum": 562
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/48-风暴战犬.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "音速犬",
+      "id": 48,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.13,
+      "height_max": 1.62,
+      "weight_min": 39.5,
+      "weight_max": 51.5,
+      "giant_weight_line": 51.26,
+      "tiny_weight_line": 39.74,
+      "stats": {
+        "hp": 85,
+        "atk": 128,
+        "def": 101,
+        "sp_atk": 46,
+        "sp_def": 82,
+        "speed": 120,
+        "sum": 562
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/48-音速犬.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/47-护主犬.png"
+}

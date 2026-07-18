@@ -1,0 +1,74 @@
+{
+  "id": 229,
+  "name": "缇塔",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.31,
+    "weight_min": 13.37,
+    "weight_max": 18.08,
+    "giant_weight_line": 17.9858,
+    "tiny_weight_line": 13.4642
+  },
+  "evolution_chain": [
+    "缇塔",
+    "声波缇塔"
+  ],
+  "stats": {
+    "hp": 73,
+    "atk": 99,
+    "def": 98,
+    "sp_atk": 38,
+    "sp_def": 74,
+    "speed": 72,
+    "sum": 454
+  },
+  "height_min": 0.65,
+  "height_max": 0.75,
+  "weight_min": 38.2,
+  "weight_max": 45.2,
+  "giant_weight_line": 45.06,
+  "tiny_weight_line": 38.34,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "声波缇塔",
+      "id": 230,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "机械组"
+      ],
+      "height_min": 1.05,
+      "height_max": 1.2,
+      "weight_min": 71.5,
+      "weight_max": 78.5,
+      "giant_weight_line": 78.36,
+      "tiny_weight_line": 71.64,
+      "stats": {
+        "hp": 92,
+        "atk": 124,
+        "def": 122,
+        "sp_atk": 48,
+        "sp_def": 92,
+        "speed": 90,
+        "sum": 568
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/230-声波缇塔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/229-缇塔.png"
+}

@@ -1,0 +1,77 @@
+{
+  "id": 283,
+  "name": "小甲虫",
+  "types": [
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "天空组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 2.275,
+    "weight_max": 3.36,
+    "giant_weight_line": 3.3383,
+    "tiny_weight_line": 2.2967
+  },
+  "evolution_chain": [
+    "小甲虫",
+    "铠甲虫"
+  ],
+  "stats": {
+    "hp": 98,
+    "atk": 71,
+    "def": 97,
+    "sp_atk": 31,
+    "sp_def": 61,
+    "speed": 60,
+    "sum": 418
+  },
+  "height_min": 0.48,
+  "height_max": 0.68,
+  "weight_min": 6.5,
+  "weight_max": 8.4,
+  "giant_weight_line": 8.362,
+  "tiny_weight_line": 6.538,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "铠甲虫",
+      "id": 284,
+      "types": [
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "天空组"
+      ],
+      "height_min": 1.17,
+      "height_max": 1.68,
+      "weight_min": 83,
+      "weight_max": 96,
+      "giant_weight_line": 95.74,
+      "tiny_weight_line": 83.26,
+      "stats": {
+        "hp": 122,
+        "atk": 88,
+        "def": 121,
+        "sp_atk": 39,
+        "sp_def": 77,
+        "speed": 75,
+        "sum": 522
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/284-铠甲虫.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/283-小甲虫.png"
+}

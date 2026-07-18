@@ -1,0 +1,103 @@
+{
+  "id": 49,
+  "name": "绿耳松鼠",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 1.225,
+    "weight_max": 2.4,
+    "giant_weight_line": 2.3765,
+    "tiny_weight_line": 1.2485
+  },
+  "evolution_chain": [
+    "绿耳松鼠",
+    "抱枕松鼠",
+    "蹦床松鼠"
+  ],
+  "stats": {
+    "hp": 69,
+    "atk": 50,
+    "def": 67,
+    "sp_atk": 47,
+    "sp_def": 52,
+    "speed": 48,
+    "sum": 333
+  },
+  "height_min": 0.47,
+  "height_max": 0.68,
+  "weight_min": 3.5,
+  "weight_max": 6,
+  "giant_weight_line": 5.95,
+  "tiny_weight_line": 3.55,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "抱枕松鼠",
+      "id": 50,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.84,
+      "weight_min": 21.05,
+      "weight_max": 27.08,
+      "giant_weight_line": 26.9594,
+      "tiny_weight_line": 21.1706,
+      "stats": {
+        "hp": 92,
+        "atk": 67,
+        "def": 89,
+        "sp_atk": 63,
+        "sp_def": 70,
+        "speed": 64,
+        "sum": 445
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/50-抱枕松鼠.png"
+    },
+    {
+      "name": "蹦床松鼠",
+      "id": 51,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.78,
+      "height_max": 1.12,
+      "weight_min": 47.5,
+      "weight_max": 68.4,
+      "giant_weight_line": 67.982,
+      "tiny_weight_line": 47.918,
+      "stats": {
+        "hp": 114,
+        "atk": 84,
+        "def": 111,
+        "sp_atk": 79,
+        "sp_def": 87,
+        "speed": 80,
+        "sum": 555
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/51-蹦床松鼠.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/49-绿耳松鼠.png"
+}

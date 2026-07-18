@@ -1,0 +1,74 @@
+{
+  "id": 338,
+  "name": "布瓜蝌",
+  "types": [
+    "幻"
+  ],
+  "egg_groups": [
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.21,
+    "weight_min": 0.298,
+    "weight_max": 0.42,
+    "giant_weight_line": 0.4176,
+    "tiny_weight_line": 0.3004
+  },
+  "evolution_chain": [
+    "布瓜蝌",
+    "上岸蛙"
+  ],
+  "stats": {
+    "hp": 91,
+    "atk": 84,
+    "def": 81,
+    "sp_atk": 35,
+    "sp_def": 55,
+    "speed": 96,
+    "sum": 442
+  },
+  "height_min": 0.32,
+  "height_max": 0.51,
+  "weight_min": 0.45,
+  "weight_max": 1.65,
+  "giant_weight_line": 1.626,
+  "tiny_weight_line": 0.474,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "上岸蛙",
+      "id": 339,
+      "types": [
+        "幻"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.87,
+      "weight_min": 5.8,
+      "weight_max": 8.1,
+      "giant_weight_line": 8.054,
+      "tiny_weight_line": 5.846,
+      "stats": {
+        "hp": 114,
+        "atk": 106,
+        "def": 101,
+        "sp_atk": 44,
+        "sp_def": 69,
+        "speed": 120,
+        "sum": 554
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/339-上岸蛙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/338-布瓜蝌.png"
+}

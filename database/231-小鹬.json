@@ -1,0 +1,135 @@
+{
+  "id": 231,
+  "name": "小鹬",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.11,
+    "height_max": 0.15,
+    "weight_min": 0.49,
+    "weight_max": 0.88,
+    "giant_weight_line": 0.8722,
+    "tiny_weight_line": 0.4978
+  },
+  "evolution_chain": [
+    "小鹬",
+    "鄙目鹬",
+    "高脚鹬",
+    [
+      "高帽鹬者"
+    ]
+  ],
+  "stats": {
+    "hp": 58,
+    "atk": 59,
+    "def": 67,
+    "sp_atk": 59,
+    "sp_def": 52,
+    "speed": 69,
+    "sum": 364
+  },
+  "height_min": 0.25,
+  "height_max": 0.36,
+  "weight_min": 1.4,
+  "weight_max": 2.2,
+  "giant_weight_line": 2.184,
+  "tiny_weight_line": 1.416,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "高帽鹬者",
+      "id": 233,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 18,
+      "weight_max": 24.91,
+      "giant_weight_line": 24.7718,
+      "tiny_weight_line": 18.1382,
+      "stats": {
+        "hp": 96,
+        "atk": 106,
+        "def": 119,
+        "sp_atk": 106,
+        "sp_def": 93,
+        "speed": 115,
+        "sum": 635
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/233-高帽鹬者.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "鄙目鹬",
+      "id": 232,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.67,
+      "height_max": 0.96,
+      "weight_min": 6.75,
+      "weight_max": 8.9,
+      "giant_weight_line": 8.857,
+      "tiny_weight_line": 6.793,
+      "stats": {
+        "hp": 77,
+        "atk": 79,
+        "def": 90,
+        "sp_atk": 79,
+        "sp_def": 70,
+        "speed": 92,
+        "sum": 487
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/232-鄙目鹬.png"
+    },
+    {
+      "name": "高脚鹬",
+      "id": 233,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 18,
+      "weight_max": 24.91,
+      "giant_weight_line": 24.7718,
+      "tiny_weight_line": 18.1382,
+      "stats": {
+        "hp": 96,
+        "atk": 98,
+        "def": 112,
+        "sp_atk": 98,
+        "sp_def": 87,
+        "speed": 115,
+        "sum": 606
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/233-高脚鹬.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/231-小鹬.png"
+}

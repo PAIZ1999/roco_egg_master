@@ -1,0 +1,103 @@
+{
+  "id": 216,
+  "name": "火尾瓦特",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 6.475,
+    "weight_max": 8.48,
+    "giant_weight_line": 8.4399,
+    "tiny_weight_line": 6.5151
+  },
+  "evolution_chain": [
+    "火尾瓦特",
+    "火尾战士",
+    "烈火守护"
+  ],
+  "stats": {
+    "hp": 63,
+    "atk": 70,
+    "def": 81,
+    "sp_atk": 29,
+    "sp_def": 56,
+    "speed": 39,
+    "sum": 338
+  },
+  "height_min": 0.64,
+  "height_max": 0.92,
+  "weight_min": 18.5,
+  "weight_max": 21.2,
+  "giant_weight_line": 21.146,
+  "tiny_weight_line": 18.554,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "火尾战士",
+      "id": 217,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.09,
+      "weight_min": 48.5,
+      "weight_max": 58.6,
+      "giant_weight_line": 58.398,
+      "tiny_weight_line": 48.702,
+      "stats": {
+        "hp": 84,
+        "atk": 94,
+        "def": 108,
+        "sp_atk": 39,
+        "sp_def": 74,
+        "speed": 52,
+        "sum": 451
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/217-火尾战士.png"
+    },
+    {
+      "name": "烈火守护",
+      "id": 218,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.99,
+      "height_max": 1.42,
+      "weight_min": 76.5,
+      "weight_max": 87.5,
+      "giant_weight_line": 87.28,
+      "tiny_weight_line": 76.72,
+      "stats": {
+        "hp": 105,
+        "atk": 117,
+        "def": 135,
+        "sp_atk": 49,
+        "sp_def": 93,
+        "speed": 65,
+        "sum": 564
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/218-烈火守护.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/216-火尾瓦特.png"
+}

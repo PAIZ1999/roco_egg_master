@@ -1,0 +1,143 @@
+{
+  "id": 88,
+  "name": "乖乖鹄",
+  "types": [
+    "翼",
+    "水"
+  ],
+  "egg_groups": [
+    "天空组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "两栖组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 1.47,
+    "weight_max": 2.2,
+    "giant_weight_line": 2.1854,
+    "tiny_weight_line": 1.4846
+  },
+  "evolution_chain": [
+    "乖乖鹄",
+    "蓝珠天鹅",
+    [
+      "翠顶夫人",
+      "黑羽夫人"
+    ]
+  ],
+  "stats": {
+    "hp": 75,
+    "atk": 57,
+    "def": 83,
+    "sp_atk": 52,
+    "sp_def": 58,
+    "speed": 69,
+    "sum": 394
+  },
+  "height_min": 0.46,
+  "height_max": 0.67,
+  "weight_min": 4.2,
+  "weight_max": 5.5,
+  "giant_weight_line": 5.474,
+  "tiny_weight_line": 4.226,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "蓝珠天鹅",
+      "id": 89,
+      "types": [
+        "翼",
+        "水"
+      ],
+      "egg_groups": [
+        "天空组",
+        "两栖组"
+      ],
+      "height_min": 0.88,
+      "height_max": 1.03,
+      "weight_min": 14.08,
+      "weight_max": 18.1,
+      "giant_weight_line": 18.0196,
+      "tiny_weight_line": 14.1604,
+      "stats": {
+        "hp": 100,
+        "atk": 76,
+        "def": 110,
+        "sp_atk": 69,
+        "sp_def": 78,
+        "speed": 92,
+        "sum": 525
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/89-蓝珠天鹅.png"
+    },
+    {
+      "name": "翠顶夫人",
+      "id": 90,
+      "types": [
+        "翼",
+        "水"
+      ],
+      "egg_groups": [
+        "天空组",
+        "两栖组"
+      ],
+      "height_min": 1.2,
+      "height_max": 1.34,
+      "weight_min": 19.05,
+      "weight_max": 25.04,
+      "giant_weight_line": 24.9202,
+      "tiny_weight_line": 19.1698,
+      "stats": {
+        "hp": 125,
+        "atk": 95,
+        "def": 138,
+        "sp_atk": 86,
+        "sp_def": 97,
+        "speed": 115,
+        "sum": 656
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/90-翠顶夫人.png"
+    },
+    {
+      "name": "黑羽夫人",
+      "id": 91,
+      "types": [
+        "翼",
+        "恶"
+      ],
+      "egg_groups": [
+        "天空组",
+        "两栖组"
+      ],
+      "height_min": 1.25,
+      "height_max": 1.4,
+      "weight_min": 20.5,
+      "weight_max": 28.06,
+      "giant_weight_line": 27.9088,
+      "tiny_weight_line": 20.6512,
+      "stats": {
+        "hp": 132,
+        "atk": 93,
+        "def": 130,
+        "sp_atk": 87,
+        "sp_def": 90,
+        "speed": 120,
+        "sum": 652
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/91-黑羽夫人.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/88-乖乖鹄.png"
+}

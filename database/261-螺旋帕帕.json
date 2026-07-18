@@ -1,0 +1,79 @@
+{
+  "id": 261,
+  "name": "螺旋帕帕",
+  "types": [
+    "机械",
+    "翼"
+  ],
+  "egg_groups": [
+    "机械组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组",
+      "天空组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.19,
+    "weight_min": 1.74,
+    "weight_max": 7.28,
+    "giant_weight_line": 7.1692,
+    "tiny_weight_line": 1.8508
+  },
+  "evolution_chain": [
+    "螺旋帕帕",
+    "帕帕斯卡"
+  ],
+  "stats": {
+    "hp": 88,
+    "atk": 55,
+    "def": 79,
+    "sp_atk": 8,
+    "sp_def": 67,
+    "speed": 80,
+    "sum": 377
+  },
+  "height_min": 0.35,
+  "height_max": 0.45,
+  "weight_min": 2.08,
+  "weight_max": 4.35,
+  "giant_weight_line": 4.3046,
+  "tiny_weight_line": 2.1254,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "帕帕斯卡",
+      "id": 262,
+      "types": [
+        "机械",
+        "翼"
+      ],
+      "egg_groups": [
+        "机械组",
+        "天空组"
+      ],
+      "height_min": 1.05,
+      "height_max": 1.47,
+      "weight_min": 48.7,
+      "weight_max": 60.1,
+      "giant_weight_line": 59.872,
+      "tiny_weight_line": 48.928,
+      "stats": {
+        "hp": 110,
+        "atk": 68,
+        "def": 99,
+        "sp_atk": 10,
+        "sp_def": 84,
+        "speed": 100,
+        "sum": 471
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/262-帕帕斯卡.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/261-螺旋帕帕.png"
+}

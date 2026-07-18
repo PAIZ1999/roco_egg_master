@@ -12,7 +12,8 @@ release/
 # AI and test temporary files
 artifacts/
 scratch/
-视频/
-images/test_chain.js
-bugfix/
-
+# Local S3 raw data source packages
+洛克精灵数据打包/
+抓取数据/
+*.code-workspace
+backup/

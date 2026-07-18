@@ -1,0 +1,143 @@
+{
+  "id": 108,
+  "name": "风铃鲨",
+  "types": [
+    "水",
+    "翼"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "天空组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.24,
+    "weight_min": 4.575,
+    "weight_max": 6.72,
+    "giant_weight_line": 6.6771,
+    "tiny_weight_line": 4.6179
+  },
+  "evolution_chain": [
+    "风铃鲨",
+    "蓝蝶鲨",
+    "彩蝶鲨",
+    [
+      "神谕鲨"
+    ]
+  ],
+  "stats": {
+    "hp": 54,
+    "atk": 59,
+    "def": 63,
+    "sp_atk": 59,
+    "sp_def": 63,
+    "speed": 75,
+    "sum": 373
+  },
+  "height_min": 0.41,
+  "height_max": 0.59,
+  "weight_min": 13.07,
+  "weight_max": 16.8,
+  "giant_weight_line": 16.7254,
+  "tiny_weight_line": 13.1446,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "神谕鲨",
+      "id": 110,
+      "types": [
+        "水",
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.79,
+      "height_max": 2.26,
+      "weight_min": 107.6,
+      "weight_max": 165.5,
+      "giant_weight_line": 164.342,
+      "tiny_weight_line": 108.758,
+      "stats": {
+        "hp": 90,
+        "atk": 98,
+        "def": 105,
+        "sp_atk": 98,
+        "sp_def": 105,
+        "speed": 125,
+        "sum": 621
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/110-神谕鲨.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "蓝蝶鲨",
+      "id": 109,
+      "types": [
+        "水",
+        "翼"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "天空组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 34.82,
+      "weight_max": 48.6,
+      "giant_weight_line": 48.3244,
+      "tiny_weight_line": 35.0956,
+      "stats": {
+        "hp": 72,
+        "atk": 78,
+        "def": 84,
+        "sp_atk": 78,
+        "sp_def": 84,
+        "speed": 100,
+        "sum": 496
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/109-蓝蝶鲨.png"
+    },
+    {
+      "name": "彩蝶鲨",
+      "id": 110,
+      "types": [
+        "水",
+        "翼"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "天空组"
+      ],
+      "height_min": 1.18,
+      "height_max": 1.68,
+      "weight_min": 80.5,
+      "weight_max": 96.5,
+      "giant_weight_line": 96.18,
+      "tiny_weight_line": 80.82,
+      "stats": {
+        "hp": 90,
+        "atk": 98,
+        "def": 105,
+        "sp_atk": 98,
+        "sp_def": 105,
+        "speed": 125,
+        "sum": 621
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/110-彩蝶鲨.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/108-风铃鲨.png"
+}

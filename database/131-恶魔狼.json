@@ -1,0 +1,76 @@
+{
+  "id": 131,
+  "name": "恶魔狼",
+  "types": [
+    "恶"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.52,
+    "height_max": 0.73,
+    "weight_min": 25.9,
+    "weight_max": 36.8,
+    "giant_weight_line": 36.582,
+    "tiny_weight_line": 26.118
+  },
+  "evolution_chain": [
+    "恶魔狼",
+    [
+      "恶魔狼王"
+    ]
+  ],
+  "stats": {
+    "hp": 115,
+    "atk": 114,
+    "def": 91,
+    "sp_atk": 45,
+    "sp_def": 63,
+    "speed": 120,
+    "sum": 548
+  },
+  "height_min": 1.23,
+  "height_max": 1.76,
+  "weight_min": 74,
+  "weight_max": 92,
+  "giant_weight_line": 91.64,
+  "tiny_weight_line": 74.36,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "恶魔狼王",
+      "id": 131,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.04,
+      "height_max": 2.6,
+      "weight_min": 168,
+      "weight_max": 227.5,
+      "giant_weight_line": 226.31,
+      "tiny_weight_line": 169.19,
+      "stats": {
+        "hp": 115,
+        "atk": 121,
+        "def": 91,
+        "sp_atk": 50,
+        "sp_def": 63,
+        "speed": 120,
+        "sum": 560
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/131-恶魔狼王.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/131-恶魔狼.png"
+}

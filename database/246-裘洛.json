@@ -1,0 +1,107 @@
+{
+  "id": 246,
+  "name": "裘洛",
+  "types": [
+    "毒"
+  ],
+  "egg_groups": [
+    "动物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "妖精组"
+    ],
+    "height_min": 0.3,
+    "height_max": 0.42,
+    "weight_min": 2.625,
+    "weight_max": 5,
+    "giant_weight_line": 4.9525,
+    "tiny_weight_line": 2.6725
+  },
+  "evolution_chain": [
+    "裘洛",
+    "裘力",
+    "裘卡"
+  ],
+  "stats": {
+    "hp": 44,
+    "atk": 56,
+    "def": 39,
+    "sp_atk": 50,
+    "sp_def": 48,
+    "speed": 75,
+    "sum": 312
+  },
+  "height_min": 0.7,
+  "height_max": 1,
+  "weight_min": 7.5,
+  "weight_max": 12.5,
+  "giant_weight_line": 12.4,
+  "tiny_weight_line": 7.6,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "裘力",
+      "id": 247,
+      "types": [
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 0.81,
+      "height_max": 1.16,
+      "weight_min": 14.07,
+      "weight_max": 18.02,
+      "giant_weight_line": 17.941,
+      "tiny_weight_line": 14.149,
+      "stats": {
+        "hp": 59,
+        "atk": 74,
+        "def": 52,
+        "sp_atk": 67,
+        "sp_def": 64,
+        "speed": 100,
+        "sum": 416
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/247-裘力.png"
+    },
+    {
+      "name": "裘卡",
+      "id": 248,
+      "types": [
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 1.25,
+      "height_max": 1.79,
+      "weight_min": 49.5,
+      "weight_max": 58.6,
+      "giant_weight_line": 58.418,
+      "tiny_weight_line": 49.682,
+      "stats": {
+        "hp": 73,
+        "atk": 93,
+        "def": 65,
+        "sp_atk": 83,
+        "sp_def": 81,
+        "speed": 125,
+        "sum": 520
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/248-裘卡.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/246-裘洛.png"
+}

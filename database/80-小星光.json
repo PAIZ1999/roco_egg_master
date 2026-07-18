@@ -1,0 +1,160 @@
+{
+  "id": 80,
+  "name": "小星光",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.33,
+    "height_max": 0.46,
+    "weight_min": 9.625,
+    "weight_max": 14.48,
+    "giant_weight_line": 14.3829,
+    "tiny_weight_line": 9.7221
+  },
+  "evolution_chain": [
+    "小星光",
+    "星光狮"
+  ],
+  "stats": {
+    "hp": 60,
+    "atk": 81,
+    "def": 72,
+    "sp_atk": 85,
+    "sp_def": 88,
+    "speed": 108,
+    "sum": 494
+  },
+  "height_min": 0.78,
+  "height_max": 1.12,
+  "weight_min": 27.5,
+  "weight_max": 36.2,
+  "giant_weight_line": 36.026,
+  "tiny_weight_line": 27.674,
+  "regional_forms": [
+    {
+      "name": "小星光（星光能量的样子）",
+      "id": 80,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.78,
+      "height_max": 1.12,
+      "weight_min": 27.5,
+      "weight_max": 36.2,
+      "giant_weight_line": 36.026,
+      "tiny_weight_line": 27.674,
+      "stats": {
+        "hp": 60,
+        "atk": 81,
+        "def": 72,
+        "sp_atk": 85,
+        "sp_def": 88,
+        "speed": 108,
+        "sum": 494
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/80-小星光（星光能量的样子）.png"
+    },
+    {
+      "name": "星光狮（星光能量的样子）",
+      "id": 81,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.08,
+      "height_max": 1.54,
+      "weight_min": 49.5,
+      "weight_max": 58.1,
+      "giant_weight_line": 57.928,
+      "tiny_weight_line": 49.672,
+      "stats": {
+        "hp": 75,
+        "atk": 101,
+        "def": 90,
+        "sp_atk": 106,
+        "sp_def": 110,
+        "speed": 135,
+        "sum": 617
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/81-星光狮（星光能量的样子）.png"
+    },
+    {
+      "name": "小星光（月光能量的样子）",
+      "id": 80,
+      "types": [
+        "电",
+        "光"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.78,
+      "height_max": 1.12,
+      "weight_min": 27.5,
+      "weight_max": 36.2,
+      "giant_weight_line": 36.026,
+      "tiny_weight_line": 27.674,
+      "stats": {
+        "hp": 64,
+        "atk": 76,
+        "def": 72,
+        "sp_atk": 85,
+        "sp_def": 96,
+        "speed": 100,
+        "sum": 493
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/80-小星光（月光能量的样子）.png"
+    },
+    {
+      "name": "星光狮（月光能量的样子）",
+      "id": 81,
+      "types": [
+        "电",
+        "光"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.08,
+      "height_max": 1.54,
+      "weight_min": 49.5,
+      "weight_max": 58.1,
+      "giant_weight_line": 57.928,
+      "tiny_weight_line": 49.672,
+      "stats": {
+        "hp": 80,
+        "atk": 95,
+        "def": 90,
+        "sp_atk": 107,
+        "sp_def": 120,
+        "speed": 125,
+        "sum": 617
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/81-星光狮（月光能量的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/80-小星光（星光能量的样子）.png"
+}

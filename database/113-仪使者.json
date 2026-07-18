@@ -1,0 +1,143 @@
+{
+  "id": 113,
+  "name": "仪使者",
+  "types": [
+    "地",
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "大地组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.24,
+    "weight_min": 6.668,
+    "weight_max": 14.02,
+    "giant_weight_line": 13.873,
+    "tiny_weight_line": 6.815
+  },
+  "evolution_chain": [
+    "仪使者",
+    "仪式之星",
+    "仪式巨像",
+    [
+      "祭礼巨像"
+    ]
+  ],
+  "stats": {
+    "hp": 64,
+    "atk": 50,
+    "def": 69,
+    "sp_atk": 54,
+    "sp_def": 71,
+    "speed": 51,
+    "sum": 359
+  },
+  "height_min": 0.45,
+  "height_max": 0.58,
+  "weight_min": 19.05,
+  "weight_max": 35.05,
+  "giant_weight_line": 34.73,
+  "tiny_weight_line": 19.37,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "祭礼巨像",
+      "id": 115,
+      "types": [
+        "地",
+        "幻"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.91,
+      "height_max": 2.37,
+      "weight_min": 468,
+      "weight_max": 694,
+      "giant_weight_line": 689.48,
+      "tiny_weight_line": 472.52,
+      "stats": {
+        "hp": 106,
+        "atk": 96,
+        "def": 115,
+        "sp_atk": 101,
+        "sp_def": 119,
+        "speed": 85,
+        "sum": 622
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/115-祭礼巨像.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "仪式之星",
+      "id": 114,
+      "types": [
+        "地",
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "大地组"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.21,
+      "weight_min": 72,
+      "weight_max": 87.5,
+      "giant_weight_line": 87.19,
+      "tiny_weight_line": 72.31,
+      "stats": {
+        "hp": 85,
+        "atk": 67,
+        "def": 92,
+        "sp_atk": 71,
+        "sp_def": 95,
+        "speed": 68,
+        "sum": 478
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/114-仪式之星.png"
+    },
+    {
+      "name": "仪式巨像",
+      "id": 115,
+      "types": [
+        "地",
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "大地组"
+      ],
+      "height_min": 1.44,
+      "height_max": 1.79,
+      "weight_min": 198.05,
+      "weight_max": 253.07,
+      "giant_weight_line": 251.9696,
+      "tiny_weight_line": 199.1504,
+      "stats": {
+        "hp": 106,
+        "atk": 84,
+        "def": 115,
+        "sp_atk": 89,
+        "sp_def": 119,
+        "speed": 85,
+        "sum": 598
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/115-仪式巨像.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/113-仪使者.png"
+}

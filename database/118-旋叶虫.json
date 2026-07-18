@@ -1,0 +1,292 @@
+{
+  "id": 118,
+  "name": "旋叶虫",
+  "types": [
+    "普通",
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "植物组"
+    ],
+    "height_min": 0.04,
+    "height_max": 0.06,
+    "weight_min": 0.053,
+    "weight_max": 0.1,
+    "giant_weight_line": 0.0991,
+    "tiny_weight_line": 0.0539
+  },
+  "evolution_chain": [
+    "旋叶虫",
+    "蓬叶虫",
+    "风滚暮虫",
+    [
+      "暮风隐者"
+    ]
+  ],
+  "stats": {
+    "hp": 56,
+    "atk": 15,
+    "def": 63,
+    "sp_atk": 65,
+    "sp_def": 55,
+    "speed": 72,
+    "sum": 326
+  },
+  "height_min": 0.1,
+  "height_max": 0.15,
+  "weight_min": 0.1,
+  "weight_max": 0.85,
+  "giant_weight_line": 0.835,
+  "tiny_weight_line": 0.115,
+  "regional_forms": [
+    {
+      "name": "旋叶虫（金黄的样子）",
+      "id": 118,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.1,
+      "height_max": 0.15,
+      "weight_min": 0.1,
+      "weight_max": 0.85,
+      "giant_weight_line": 0.835,
+      "tiny_weight_line": 0.115,
+      "stats": {
+        "hp": 56,
+        "atk": 15,
+        "def": 63,
+        "sp_atk": 65,
+        "sp_def": 55,
+        "speed": 72,
+        "sum": 326
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/118-旋叶虫（金黄的样子）.png"
+    },
+    {
+      "name": "风滚暮虫（金黄的样子）",
+      "id": 120,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.7,
+      "weight_min": 1.45,
+      "weight_max": 3.43,
+      "giant_weight_line": 3.3904,
+      "tiny_weight_line": 1.4896,
+      "stats": {
+        "hp": 93,
+        "atk": 24,
+        "def": 105,
+        "sp_atk": 109,
+        "sp_def": 91,
+        "speed": 120,
+        "sum": 542
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/120-风滚暮虫（金黄的样子）.png"
+    },
+    {
+      "name": "蓬叶虫（金黄的样子）",
+      "id": 119,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 0.65,
+      "weight_max": 1.68,
+      "giant_weight_line": 1.6594,
+      "tiny_weight_line": 0.6706,
+      "stats": {
+        "hp": 74,
+        "atk": 19,
+        "def": 84,
+        "sp_atk": 87,
+        "sp_def": 73,
+        "speed": 96,
+        "sum": 433
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/119-蓬叶虫（金黄的样子）.png"
+    },
+    {
+      "name": "旋叶虫（枯叶的样子）",
+      "id": 118,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.1,
+      "height_max": 0.15,
+      "weight_min": 0.1,
+      "weight_max": 0.85,
+      "giant_weight_line": 0.835,
+      "tiny_weight_line": 0.115,
+      "stats": {
+        "hp": 57,
+        "atk": 15,
+        "def": 61,
+        "sp_atk": 67,
+        "sp_def": 52,
+        "speed": 72,
+        "sum": 324
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/118-旋叶虫（枯叶的样子）.png"
+    },
+    {
+      "name": "蓬叶虫（枯叶的样子）",
+      "id": 119,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 0.65,
+      "weight_max": 1.68,
+      "giant_weight_line": 1.6594,
+      "tiny_weight_line": 0.6706,
+      "stats": {
+        "hp": 76,
+        "atk": 20,
+        "def": 82,
+        "sp_atk": 89,
+        "sp_def": 70,
+        "speed": 96,
+        "sum": 433
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/119-蓬叶虫（枯叶的样子）.png"
+    },
+    {
+      "name": "风滚暮虫（枯叶的样子）",
+      "id": 120,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.7,
+      "weight_min": 1.45,
+      "weight_max": 3.43,
+      "giant_weight_line": 3.3904,
+      "tiny_weight_line": 1.4896,
+      "stats": {
+        "hp": 95,
+        "atk": 25,
+        "def": 102,
+        "sp_atk": 111,
+        "sp_def": 87,
+        "speed": 120,
+        "sum": 540
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/120-风滚暮虫（枯叶的样子）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "暮风隐者（金黄的样子）",
+      "id": 120,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.25,
+      "weight_min": 5,
+      "weight_max": 9,
+      "giant_weight_line": 8.92,
+      "tiny_weight_line": 5.08,
+      "stats": {
+        "hp": 105,
+        "atk": 30,
+        "def": 105,
+        "sp_atk": 119,
+        "sp_def": 91,
+        "speed": 125,
+        "sum": 575
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/120-暮风隐者（金黄的样子）.png"
+    },
+    {
+      "name": "暮风隐者（枯叶的样子）",
+      "id": 120,
+      "types": [
+        "普通",
+        "虫"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.25,
+      "weight_min": 5,
+      "weight_max": 9,
+      "giant_weight_line": 8.92,
+      "tiny_weight_line": 5.08,
+      "stats": {
+        "hp": 107,
+        "atk": 31,
+        "def": 102,
+        "sp_atk": 122,
+        "sp_def": 87,
+        "speed": 125,
+        "sum": 574
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/120-暮风隐者（枯叶的样子）.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/118-旋叶虫（金黄的样子）.png"
+}

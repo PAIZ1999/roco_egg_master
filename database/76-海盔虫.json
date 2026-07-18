@@ -1,0 +1,263 @@
+{
+  "id": 76,
+  "name": "海盔虫",
+  "types": [
+    "水",
+    "毒"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "巨灵组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.29,
+    "weight_min": 2.59,
+    "weight_max": 3.44,
+    "giant_weight_line": 3.423,
+    "tiny_weight_line": 2.607
+  },
+  "evolution_chain": [
+    "海盔虫",
+    "刺盔虫",
+    "千棘盔",
+    [
+      "千棘海针"
+    ]
+  ],
+  "stats": {
+    "hp": 71,
+    "atk": 25,
+    "def": 46,
+    "sp_atk": 59,
+    "sp_def": 66,
+    "speed": 60,
+    "sum": 327
+  },
+  "height_min": 0.55,
+  "height_max": 0.7,
+  "weight_min": 7.4,
+  "weight_max": 8.6,
+  "giant_weight_line": 8.576,
+  "tiny_weight_line": 7.424,
+  "regional_forms": [
+    {
+      "name": "海盔虫（磨损的样子）",
+      "id": 76,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "巨灵组"
+      ],
+      "height_min": 0.55,
+      "height_max": 0.7,
+      "weight_min": 7.4,
+      "weight_max": 8.6,
+      "giant_weight_line": 8.576,
+      "tiny_weight_line": 7.424,
+      "stats": {
+        "hp": 70,
+        "atk": 25,
+        "def": 44,
+        "sp_atk": 60,
+        "sp_def": 64,
+        "speed": 63,
+        "sum": 326
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/76-海盔虫（磨损的样子）.png"
+    },
+    {
+      "name": "刺盔虫（磨损的样子）",
+      "id": 77,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "巨灵组"
+      ],
+      "height_min": 0.83,
+      "height_max": 1.19,
+      "weight_min": 22.5,
+      "weight_max": 29.8,
+      "giant_weight_line": 29.654,
+      "tiny_weight_line": 22.646,
+      "stats": {
+        "hp": 94,
+        "atk": 33,
+        "def": 59,
+        "sp_atk": 80,
+        "sp_def": 85,
+        "speed": 84,
+        "sum": 435
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/77-刺盔虫（磨损的样子）.png"
+    },
+    {
+      "name": "千棘盔（磨损的样子）",
+      "id": 78,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "巨灵组"
+      ],
+      "height_min": 1.11,
+      "height_max": 1.33,
+      "weight_min": 98.6,
+      "weight_max": 115,
+      "giant_weight_line": 114.672,
+      "tiny_weight_line": 98.928,
+      "stats": {
+        "hp": 117,
+        "atk": 41,
+        "def": 74,
+        "sp_atk": 100,
+        "sp_def": 107,
+        "speed": 105,
+        "sum": 544
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/78-千棘盔（磨损的样子）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "千棘海针",
+      "id": 78,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.73,
+      "height_max": 2.14,
+      "weight_min": 192.5,
+      "weight_max": 252,
+      "giant_weight_line": 250.81,
+      "tiny_weight_line": 193.69,
+      "stats": {
+        "hp": 118,
+        "atk": 32,
+        "def": 94,
+        "sp_atk": 85,
+        "sp_def": 133,
+        "speed": 100,
+        "sum": 562
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/78-千棘海针.png"
+    },
+    {
+      "name": "千棘海针（磨损的样子）",
+      "id": 78,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.73,
+      "height_max": 2.14,
+      "weight_min": 192.5,
+      "weight_max": 252,
+      "giant_weight_line": 250.81,
+      "tiny_weight_line": 193.69,
+      "stats": {
+        "hp": 117,
+        "atk": 32,
+        "def": 91,
+        "sp_atk": 86,
+        "sp_def": 129,
+        "speed": 105,
+        "sum": 560
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/78-千棘海针（磨损的样子）.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "刺盔虫",
+      "id": 77,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "巨灵组"
+      ],
+      "height_min": 0.83,
+      "height_max": 1.19,
+      "weight_min": 22.5,
+      "weight_max": 29.8,
+      "giant_weight_line": 29.654,
+      "tiny_weight_line": 22.646,
+      "stats": {
+        "hp": 94,
+        "atk": 33,
+        "def": 61,
+        "sp_atk": 79,
+        "sp_def": 88,
+        "speed": 80,
+        "sum": 435
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/77-刺盔虫.png"
+    },
+    {
+      "name": "千棘盔",
+      "id": 78,
+      "types": [
+        "水",
+        "毒"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "巨灵组"
+      ],
+      "height_min": 1.11,
+      "height_max": 1.33,
+      "weight_min": 98.6,
+      "weight_max": 115,
+      "giant_weight_line": 114.672,
+      "tiny_weight_line": 98.928,
+      "stats": {
+        "hp": 118,
+        "atk": 41,
+        "def": 76,
+        "sp_atk": 99,
+        "sp_def": 111,
+        "speed": 100,
+        "sum": 545
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/78-千棘盔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/76-海盔虫.png"
+}

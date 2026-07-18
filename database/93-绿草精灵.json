@@ -1,0 +1,79 @@
+{
+  "id": 93,
+  "name": "绿草精灵",
+  "types": [
+    "草",
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "拟人组"
+    ],
+    "height_min": 0.3,
+    "height_max": 0.42,
+    "weight_min": 3.255,
+    "weight_max": 4.12,
+    "giant_weight_line": 4.1027,
+    "tiny_weight_line": 3.2723
+  },
+  "evolution_chain": [
+    "绿草精灵",
+    "魔草巫灵"
+  ],
+  "stats": {
+    "hp": 87,
+    "atk": 39,
+    "def": 92,
+    "sp_atk": 96,
+    "sp_def": 118,
+    "speed": 72,
+    "sum": 504
+  },
+  "height_min": 0.71,
+  "height_max": 1.01,
+  "weight_min": 9.3,
+  "weight_max": 10.3,
+  "giant_weight_line": 10.28,
+  "tiny_weight_line": 9.32,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "魔草巫灵",
+      "id": 94,
+      "types": [
+        "草",
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 0.74,
+      "height_max": 1.05,
+      "weight_min": 29,
+      "weight_max": 34,
+      "giant_weight_line": 33.9,
+      "tiny_weight_line": 29.1,
+      "stats": {
+        "hp": 109,
+        "atk": 48,
+        "def": 115,
+        "sp_atk": 120,
+        "sp_def": 147,
+        "speed": 90,
+        "sum": 629
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/94-魔草巫灵.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/93-绿草精灵.png"
+}

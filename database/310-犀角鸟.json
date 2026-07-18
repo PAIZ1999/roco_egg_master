@@ -1,0 +1,103 @@
+{
+  "id": 310,
+  "name": "犀角鸟",
+  "types": [
+    "光"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.17,
+    "weight_min": 3.36,
+    "weight_max": 4.6,
+    "giant_weight_line": 4.5752,
+    "tiny_weight_line": 3.3848
+  },
+  "evolution_chain": [
+    "犀角鸟",
+    "光纤兽",
+    "疾光千兽"
+  ],
+  "stats": {
+    "hp": 63,
+    "atk": 88,
+    "def": 67,
+    "sp_atk": 40,
+    "sp_def": 44,
+    "speed": 66,
+    "sum": 368
+  },
+  "height_min": 0.32,
+  "height_max": 0.4,
+  "weight_min": 9.6,
+  "weight_max": 11.5,
+  "giant_weight_line": 11.462,
+  "tiny_weight_line": 9.638,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "光纤兽",
+      "id": 311,
+      "types": [
+        "光"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.7,
+      "height_max": 0.85,
+      "weight_min": 31.5,
+      "weight_max": 37.8,
+      "giant_weight_line": 37.674,
+      "tiny_weight_line": 31.626,
+      "stats": {
+        "hp": 83,
+        "atk": 117,
+        "def": 90,
+        "sp_atk": 54,
+        "sp_def": 58,
+        "speed": 88,
+        "sum": 490
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/311-光纤兽.png"
+    },
+    {
+      "name": "疾光千兽",
+      "id": 312,
+      "types": [
+        "光"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.75,
+      "height_max": 2.1,
+      "weight_min": 112.9,
+      "weight_max": 165,
+      "giant_weight_line": 163.958,
+      "tiny_weight_line": 113.942,
+      "stats": {
+        "hp": 104,
+        "atk": 146,
+        "def": 112,
+        "sp_atk": 67,
+        "sp_def": 73,
+        "speed": 110,
+        "sum": 612
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/312-疾光千兽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/310-犀角鸟.png"
+}

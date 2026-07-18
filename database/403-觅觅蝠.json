@@ -1,0 +1,108 @@
+{
+  "id": 403,
+  "name": "觅觅蝠",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "天空组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.33,
+    "weight_min": 2.321,
+    "weight_max": 3.748,
+    "giant_weight_line": 3.7195,
+    "tiny_weight_line": 2.3495
+  },
+  "evolution_chain": [
+    "觅觅蝠",
+    "翻翻蝠",
+    "夜游魔"
+  ],
+  "stats": {
+    "hp": 76,
+    "atk": 60,
+    "def": 58,
+    "sp_atk": 59,
+    "sp_def": 74,
+    "speed": 33,
+    "sum": 360
+  },
+  "height_min": 0.65,
+  "height_max": 0.79,
+  "weight_min": 6.63,
+  "weight_max": 9.37,
+  "giant_weight_line": 9.3152,
+  "tiny_weight_line": 6.6848,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "翻翻蝠",
+      "id": 404,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "天空组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.98,
+      "weight_min": 16.9,
+      "weight_max": 24.7,
+      "giant_weight_line": 24.544,
+      "tiny_weight_line": 17.056,
+      "stats": {
+        "hp": 101,
+        "atk": 79,
+        "def": 78,
+        "sp_atk": 78,
+        "sp_def": 98,
+        "speed": 44,
+        "sum": 478
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/404-翻翻蝠.png"
+    },
+    {
+      "name": "夜游魔",
+      "id": 405,
+      "types": [
+        "翼",
+        "恶"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "天空组"
+      ],
+      "height_min": 1.38,
+      "height_max": 1.75,
+      "weight_min": 49.3,
+      "weight_max": 71.3,
+      "giant_weight_line": 70.86,
+      "tiny_weight_line": 49.74,
+      "stats": {
+        "hp": 126,
+        "atk": 99,
+        "def": 97,
+        "sp_atk": 98,
+        "sp_def": 123,
+        "speed": 55,
+        "sum": 598
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/405-夜游魔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/403-觅觅蝠.png"
+}

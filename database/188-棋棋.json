@@ -1,0 +1,578 @@
+{
+  "id": 188,
+  "name": "棋棋",
+  "types": [
+    "武",
+    "地"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.2,
+    "weight_min": 3.745,
+    "weight_max": 5.8,
+    "giant_weight_line": 5.7589,
+    "tiny_weight_line": 3.7861
+  },
+  "evolution_chain": [
+    "棋棋",
+    [
+      "棋骑士",
+      "棋绮后",
+      "棋齐垒",
+      "棋祈督"
+    ],
+    [
+      "棋契陛下"
+    ]
+  ],
+  "stats": {
+    "hp": 72,
+    "atk": 100,
+    "def": 70,
+    "sp_atk": 36,
+    "sp_def": 56,
+    "speed": 100,
+    "sum": 434
+  },
+  "height_min": 0.35,
+  "height_max": 0.47,
+  "weight_min": 10.7,
+  "weight_max": 14.5,
+  "giant_weight_line": 14.424,
+  "tiny_weight_line": 10.776,
+  "regional_forms": [
+    {
+      "name": "棋棋（白子）",
+      "id": 188,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.47,
+      "weight_min": 10.7,
+      "weight_max": 14.5,
+      "giant_weight_line": 14.424,
+      "tiny_weight_line": 10.776,
+      "stats": {
+        "hp": 72,
+        "atk": 100,
+        "def": 70,
+        "sp_atk": 36,
+        "sp_def": 56,
+        "speed": 100,
+        "sum": 434
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/188-棋棋（白子）.png"
+    },
+    {
+      "name": "棋骑士（白子）",
+      "id": 189,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.35,
+      "weight_min": 43.06,
+      "weight_max": 60.09,
+      "giant_weight_line": 59.7494,
+      "tiny_weight_line": 43.4006,
+      "stats": {
+        "hp": 90,
+        "atk": 126,
+        "def": 88,
+        "sp_atk": 45,
+        "sp_def": 69,
+        "speed": 125,
+        "sum": 543
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/189-棋骑士（白子）.png"
+    },
+    {
+      "name": "棋绮后（白子）",
+      "id": 192,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.66,
+      "height_max": 1.81,
+      "weight_min": 30.01,
+      "weight_max": 41.02,
+      "giant_weight_line": 40.7998,
+      "tiny_weight_line": 30.2302,
+      "stats": {
+        "hp": 93,
+        "atk": 84,
+        "def": 82,
+        "sp_atk": 84,
+        "sp_def": 75,
+        "speed": 90,
+        "sum": 508
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/192-棋绮后（白子）.png"
+    },
+    {
+      "name": "棋齐垒（白子）",
+      "id": 190,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.45,
+      "height_max": 1.71,
+      "weight_min": 58.01,
+      "weight_max": 70.05,
+      "giant_weight_line": 69.8092,
+      "tiny_weight_line": 58.2508,
+      "stats": {
+        "hp": 89,
+        "atk": 94,
+        "def": 116,
+        "sp_atk": 38,
+        "sp_def": 77,
+        "speed": 75,
+        "sum": 489
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/190-棋齐垒（白子）.png"
+    },
+    {
+      "name": "棋祈督（白子）",
+      "id": 191,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.35,
+      "weight_min": 38.07,
+      "weight_max": 47.05,
+      "giant_weight_line": 46.8704,
+      "tiny_weight_line": 38.2496,
+      "stats": {
+        "hp": 126,
+        "atk": 87,
+        "def": 90,
+        "sp_atk": 87,
+        "sp_def": 72,
+        "speed": 85,
+        "sum": 547
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/191-棋祈督（白子）.png"
+    },
+    {
+      "name": "棋棋（黑子）",
+      "id": 188,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.47,
+      "weight_min": 10.7,
+      "weight_max": 14.5,
+      "giant_weight_line": 14.424,
+      "tiny_weight_line": 10.776,
+      "stats": {
+        "hp": 66,
+        "atk": 97,
+        "def": 67,
+        "sp_atk": 35,
+        "sp_def": 53,
+        "speed": 100,
+        "sum": 418
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/188-棋棋（黑子）.png"
+    },
+    {
+      "name": "棋骑士（黑子）",
+      "id": 189,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.35,
+      "weight_min": 43.06,
+      "weight_max": 60.09,
+      "giant_weight_line": 59.7494,
+      "tiny_weight_line": 43.4006,
+      "stats": {
+        "hp": 83,
+        "atk": 121,
+        "def": 84,
+        "sp_atk": 43,
+        "sp_def": 66,
+        "speed": 125,
+        "sum": 522
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/189-棋骑士（黑子）.png"
+    },
+    {
+      "name": "棋绮后（黑子）",
+      "id": 192,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.66,
+      "height_max": 1.81,
+      "weight_min": 30.01,
+      "weight_max": 41.02,
+      "giant_weight_line": 40.7998,
+      "tiny_weight_line": 30.2302,
+      "stats": {
+        "hp": 93,
+        "atk": 84,
+        "def": 82,
+        "sp_atk": 84,
+        "sp_def": 75,
+        "speed": 90,
+        "sum": 508
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/192-棋绮后（黑子）.png"
+    },
+    {
+      "name": "棋齐垒（黑子）",
+      "id": 190,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.45,
+      "height_max": 1.71,
+      "weight_min": 58.01,
+      "weight_max": 70.05,
+      "giant_weight_line": 69.8092,
+      "tiny_weight_line": 58.2508,
+      "stats": {
+        "hp": 89,
+        "atk": 94,
+        "def": 116,
+        "sp_atk": 38,
+        "sp_def": 77,
+        "speed": 75,
+        "sum": 489
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/190-棋齐垒（黑子）.png"
+    },
+    {
+      "name": "棋祈督（黑子）",
+      "id": 191,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.98,
+      "height_max": 1.35,
+      "weight_min": 38.07,
+      "weight_max": 47.05,
+      "giant_weight_line": 46.8704,
+      "tiny_weight_line": 38.2496,
+      "stats": {
+        "hp": 126,
+        "atk": 87,
+        "def": 90,
+        "sp_atk": 87,
+        "sp_def": 72,
+        "speed": 85,
+        "sum": 547
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/191-棋祈督（黑子）.png"
+    }
+  ],
+  "lord_forms": [
+    {
+      "name": "棋契陛下（白棋棋骑士分支）",
+      "id": 189,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 90,
+        "atk": 200,
+        "def": 140,
+        "sp_atk": 91,
+        "sp_def": 115,
+        "speed": 125,
+        "sum": 761
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/189-棋契陛下（白棋棋骑士分支）.png"
+    },
+    {
+      "name": "棋契陛下（白棋棋绮后分支）",
+      "id": 190,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 93,
+        "atk": 143,
+        "def": 133,
+        "sp_atk": 143,
+        "sp_def": 123,
+        "speed": 90,
+        "sum": 725
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/190-棋契陛下（白棋棋绮后分支）.png"
+    },
+    {
+      "name": "棋契陛下（白棋棋齐垒分支）",
+      "id": 191,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 89,
+        "atk": 157,
+        "def": 179,
+        "sp_atk": 80,
+        "sp_def": 125,
+        "speed": 75,
+        "sum": 705
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/191-棋契陛下（白棋棋齐垒分支）.png"
+    },
+    {
+      "name": "棋契陛下（白棋棋祈督分支）",
+      "id": 192,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 126,
+        "atk": 147,
+        "def": 143,
+        "sp_atk": 147,
+        "sp_def": 118,
+        "speed": 85,
+        "sum": 766
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/192-棋契陛下（白棋棋祈督分支）.png"
+    },
+    {
+      "name": "棋契陛下（黑棋棋骑士分支）",
+      "id": 189,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 83,
+        "atk": 194,
+        "def": 135,
+        "sp_atk": 88,
+        "sp_def": 111,
+        "speed": 125,
+        "sum": 736
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/189-棋契陛下（黑棋棋骑士分支）.png"
+    },
+    {
+      "name": "棋契陛下（黑棋棋绮后分支）",
+      "id": 190,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 93,
+        "atk": 143,
+        "def": 133,
+        "sp_atk": 143,
+        "sp_def": 123,
+        "speed": 90,
+        "sum": 725
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/190-棋契陛下（黑棋棋绮后分支）.png"
+    },
+    {
+      "name": "棋契陛下（黑棋棋齐垒分支）",
+      "id": 191,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 89,
+        "atk": 157,
+        "def": 179,
+        "sp_atk": 80,
+        "sp_def": 125,
+        "speed": 75,
+        "sum": 705
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/191-棋契陛下（黑棋棋齐垒分支）.png"
+    },
+    {
+      "name": "棋契陛下（黑棋棋祈督分支）",
+      "id": 192,
+      "types": [
+        "武",
+        "地"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.77,
+      "height_max": 2.04,
+      "weight_min": 122.05,
+      "weight_max": 175.2,
+      "giant_weight_line": 174.137,
+      "tiny_weight_line": 123.113,
+      "stats": {
+        "hp": 126,
+        "atk": 147,
+        "def": 143,
+        "sp_atk": 147,
+        "sp_def": 118,
+        "speed": 85,
+        "sum": 766
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/192-棋契陛下（黑棋棋祈督分支）.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/188-棋棋（白子）.png"
+}

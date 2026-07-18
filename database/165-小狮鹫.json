@@ -1,0 +1,223 @@
+{
+  "id": 165,
+  "name": "小狮鹫",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "动物组",
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "天空组"
+    ],
+    "height_min": 0.3,
+    "height_max": 0.42,
+    "weight_min": 4.025,
+    "weight_max": 7,
+    "giant_weight_line": 6.9405,
+    "tiny_weight_line": 4.0845
+  },
+  "evolution_chain": [
+    "小狮鹫",
+    "神圣狮鹫",
+    "皇家狮鹫"
+  ],
+  "stats": {
+    "hp": 64,
+    "atk": 70,
+    "def": 76,
+    "sp_atk": 41,
+    "sp_def": 39,
+    "speed": 72,
+    "sum": 362
+  },
+  "height_min": 0.71,
+  "height_max": 1.02,
+  "weight_min": 11.5,
+  "weight_max": 17.5,
+  "giant_weight_line": 17.38,
+  "tiny_weight_line": 11.62,
+  "regional_forms": [
+    {
+      "name": "小狮鹫（崖间地的样子）",
+      "id": 165,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 0.71,
+      "height_max": 1.02,
+      "weight_min": 11.5,
+      "weight_max": 17.5,
+      "giant_weight_line": 17.38,
+      "tiny_weight_line": 11.62,
+      "stats": {
+        "hp": 64,
+        "atk": 70,
+        "def": 76,
+        "sp_atk": 41,
+        "sp_def": 39,
+        "speed": 72,
+        "sum": 362
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/165-小狮鹫（崖间地的样子）.png"
+    },
+    {
+      "name": "神圣狮鹫（崖间地的样子）",
+      "id": 166,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 1.01,
+      "height_max": 1.44,
+      "weight_min": 49.5,
+      "weight_max": 56.8,
+      "giant_weight_line": 56.654,
+      "tiny_weight_line": 49.646,
+      "stats": {
+        "hp": 85,
+        "atk": 93,
+        "def": 102,
+        "sp_atk": 55,
+        "sp_def": 52,
+        "speed": 96,
+        "sum": 483
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/166-神圣狮鹫（崖间地的样子）.png"
+    },
+    {
+      "name": "皇家狮鹫（崖间地的样子）",
+      "id": 167,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 1.72,
+      "height_max": 2.45,
+      "weight_min": 125,
+      "weight_max": 170.5,
+      "giant_weight_line": 169.59,
+      "tiny_weight_line": 125.91,
+      "stats": {
+        "hp": 107,
+        "atk": 116,
+        "def": 127,
+        "sp_atk": 69,
+        "sp_def": 65,
+        "speed": 120,
+        "sum": 604
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/167-皇家狮鹫（崖间地的样子）.png"
+    },
+    {
+      "name": "小狮鹫（高山地的样子）",
+      "id": 165,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 0.71,
+      "height_max": 1.02,
+      "weight_min": 11.5,
+      "weight_max": 17.5,
+      "giant_weight_line": 17.38,
+      "tiny_weight_line": 11.62,
+      "stats": {
+        "hp": 65,
+        "atk": 66,
+        "def": 74,
+        "sp_atk": 35,
+        "sp_def": 42,
+        "speed": 75,
+        "sum": 357
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/165-小狮鹫（高山地的样子）.png"
+    },
+    {
+      "name": "神圣狮鹫（高山地的样子）",
+      "id": 166,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 1.01,
+      "height_max": 1.44,
+      "weight_min": 49.5,
+      "weight_max": 56.8,
+      "giant_weight_line": 56.654,
+      "tiny_weight_line": 49.646,
+      "stats": {
+        "hp": 87,
+        "atk": 88,
+        "def": 98,
+        "sp_atk": 47,
+        "sp_def": 56,
+        "speed": 100,
+        "sum": 476
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/166-神圣狮鹫（高山地的样子）.png"
+    },
+    {
+      "name": "皇家狮鹫（高山地的样子）",
+      "id": 167,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": 1.72,
+      "height_max": 2.45,
+      "weight_min": 125,
+      "weight_max": 170.5,
+      "giant_weight_line": 169.59,
+      "tiny_weight_line": 125.91,
+      "stats": {
+        "hp": 109,
+        "atk": 110,
+        "def": 123,
+        "sp_atk": 59,
+        "sp_def": 70,
+        "speed": 125,
+        "sum": 596
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/167-皇家狮鹫（高山地的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/165-小狮鹫（崖间地的样子）.png"
+}

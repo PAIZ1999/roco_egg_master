@@ -1,82 +1,17 @@
 import petsData from "./pets_data.json";
 import spriteFiles from "./sprite_files.json";
-import petsRaceData from "./pets_race_data.json";
 import { EggData } from "./types";
 
-// 深拷贝以纠正原始 JSON 中错误录入的小数点放大及蛋组信息 (如月亮砣 ID 238)
-const cleanedPetsData = JSON.parse(JSON.stringify(petsData));
-const ylt = cleanedPetsData.find((p: any) => p.id === 238 || p.name === "月亮砣");
-if (ylt && ylt.egg_data) {
-  ylt.egg_data.egg_groups = ["海洋组"];
-  if (ylt.egg_data.weight_max > 1000) {
-    ylt.egg_data.weight_max = ylt.egg_data.weight_max / 10000;
-  }
-  if (ylt.egg_data.giant_weight_line > 1000) {
-    ylt.egg_data.giant_weight_line = ylt.egg_data.giant_weight_line / 10000;
-  }
-}
+// cleanedPetsData 直接引用合并好且物理去重后的 pets_data.json
+const cleanedPetsData = petsData;
 
-// 种族值 Map 用于装载形态
-const petsRaceMap: Record<string, any> = {};
-petsRaceData.forEach((item: any) => {
-  if (item.name) {
-    petsRaceMap[item.name.trim()] = item;
-  }
-});
-
-// 装载从 pets_race_data.json 中提取出的多形态/变体形态进入 cleanedPetsData
-const allRaceKeys = Object.keys(petsRaceMap);
-let tempIdCounter = 10000;
-for (const formName of allRaceKeys) {
-  if (formName.includes('（') || formName.includes('(')) {
-    const mainName = formName.split(/[（(]/)[0].trim();
-    
-    let parentPet = cleanedPetsData.find((p: any) => p.name === mainName);
-    let baseForm: any = null;
-    
-    if (!parentPet) {
-      parentPet = cleanedPetsData.find((p: any) => p.forms && p.forms.some((f: any) => f.name === mainName));
-      if (parentPet) {
-        baseForm = parentPet.forms.find((f: any) => f.name === mainName);
-      }
-    } else {
-      baseForm = parentPet.forms && parentPet.forms[0] ? parentPet.forms[0] : null;
-    }
-
-    if (!parentPet) {
-      parentPet = {
-        id: tempIdCounter++,
-        name: mainName,
-        types: ["普通"],
-        evolution_chain: [mainName],
-        forms: []
-      };
-      cleanedPetsData.push(parentPet);
-    }
-
-    if (parentPet) {
-      if (!parentPet.forms) {
-        parentPet.forms = [];
-      }
-      const hasForm = parentPet.forms.some((f: any) => f.name === formName);
-      if (!hasForm) {
-        const raceItem = petsRaceMap[formName];
-        const newForm = {
-          name: formName,
-          types: (raceItem && raceItem.type_name) ? [raceItem.type_name] : (baseForm ? [...baseForm.types] : (parentPet.types ? [...parentPet.types] : ["普通"])),
-          egg_groups: baseForm && baseForm.egg_groups ? [...baseForm.egg_groups] : (parentPet.egg_data && parentPet.egg_data.egg_groups ? [...parentPet.egg_data.egg_groups] : ["无法孵蛋"]),
-          height_min: baseForm ? baseForm.height_min : (parentPet.egg_data ? parentPet.egg_data.height_min : null),
-          height_max: baseForm ? baseForm.height_max : (parentPet.egg_data ? parentPet.egg_data.height_max : null),
-          weight_min: baseForm ? baseForm.weight_min : (parentPet.egg_data ? parentPet.egg_data.weight_min : null),
-          weight_max: baseForm ? baseForm.weight_max : (parentPet.egg_data ? parentPet.egg_data.weight_max : null),
-          giant_weight_line: baseForm ? baseForm.giant_weight_line : (parentPet.egg_data ? parentPet.egg_data.giant_weight_line : null),
-          tiny_weight_line: baseForm ? baseForm.tiny_weight_line : (parentPet.egg_data ? parentPet.egg_data.tiny_weight_line : null)
-        };
-        parentPet.forms.push(newForm);
-      }
-    }
-  }
-}
+/**
+ * 归一化名称，剥离中英文括号并统一转为下划线连接，去除空格和大小写差异
+ */
+export const normalizeName = (name: string): string => {
+  if (!name) return "";
+  return name.replace(/[（(]/g, "_").replace(/[）)]/g, "").trim().toLowerCase();
+};
 
 export interface PetData {
   display_name: string;
@@ -162,11 +97,11 @@ cleanedPetsData.forEach((pet: any) => {
 export const ALL_PET_NAMES = Object.keys(petDataMap).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 
 /**
- * Extracts the base pet name by stripping any trailing variation suffixes starting with "_".
+ * Extracts the base pet name by stripping any trailing variation suffixes starting with "_" or bracket variations.
  */
 export const getBasePetName = (name: string): string => {
   if (!name) return "";
-  return name.split("_")[0];
+  return name.split(/[（(_]/)[0].trim();
 };
 
 /**
@@ -174,23 +109,17 @@ export const getBasePetName = (name: string): string => {
  */
 const findForm = (spriteName: string): any => {
   if (!spriteName) return null;
-  const cleanName = spriteName.replace(/[（(]/g, "_").replace(/[）)]/g, "");
-  const bracketName = spriteName.includes("_") 
-    ? `${spriteName.split("_")[0]}（${spriteName.split("_")[1]}）` 
-    : spriteName;
+  const cleanTarget = normalizeName(spriteName);
 
   for (const pet of cleanedPetsData) {
-    let form = pet.forms.find((f: any) => 
-      f.name === spriteName || 
-      f.name === cleanName || 
-      f.name === bracketName
-    );
+    let form = pet.forms.find((f: any) => normalizeName(f.name) === cleanTarget);
     if (form) return form;
   }
   
   const baseName = getBasePetName(spriteName);
+  const cleanBase = normalizeName(baseName);
   for (const pet of cleanedPetsData) {
-    let form = pet.forms.find((f: any) => f.name === baseName);
+    let form = pet.forms.find((f: any) => normalizeName(f.name) === cleanBase);
     if (form) return form;
   }
   return null;
@@ -320,20 +249,24 @@ export const getAvailableSprites = (petName: string): string[] => {
 export const getSpriteFileName = (petName: string): string | null => {
   if (!petName) return null;
   const baseName = getBasePetName(petName);
-  
-  // 转换括号为下划线以兼容 regional forms (如 "鸭吉吉（蓬松的样子）" -> "鸭吉吉_蓬松的样子")
-  const cleanName = petName
-    .replace(/[（(]/g, "_")
-    .replace(/[）)]/g, "");
+  const cleanTarget = normalizeName(petName);
 
-  // 1. Try exact match (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
-  const exactMatch = cleanName + ".png";
-  if (spriteFiles.includes(exactMatch)) {
+  // 1. 精确归一化匹配 (剥离 spriteFiles 文件名中可能含有的 ID 前缀和 .png 后缀进行强对比)
+  const exactMatch = spriteFiles.find(file => {
+    const fileBase = file.replace(/^\d+-/, '').slice(0, -4).trim();
+    return normalizeName(fileBase) === cleanTarget;
+  });
+  if (exactMatch) {
     return exactMatch;
   }
 
-  // 2. Try prefix match (e.g. "冬羽雀_夏天的样子" -> "冬羽雀_夏天的样子.png")
-  const prefixMatches = spriteFiles.filter(file => file.startsWith(petName + "_") && file.endsWith(".png"));
+  // 2. 前缀模糊匹配并根据特显样子进行兜底
+  const prefixTarget = normalizeName(baseName);
+  const prefixMatches = spriteFiles.filter(file => {
+    const fileBase = file.replace(/^\d+-/, '').slice(0, -4).trim();
+    return normalizeName(fileBase).startsWith(prefixTarget);
+  });
+
   if (prefixMatches.length > 0) {
     const originalMatch = prefixMatches.find(file => 
       file.includes("本来的样子") || 
@@ -346,28 +279,8 @@ export const getSpriteFileName = (petName: string): string | null => {
     return prefixMatches[0];
   }
   
-  // 3. Try base name exact match
-  const baseExactMatch = baseName + ".png";
-  if (spriteFiles.includes(baseExactMatch)) {
-    return baseExactMatch;
-  }
-  
-  // 4. Try base name prefix match
-  const basePrefixMatches = spriteFiles.filter(file => file.startsWith(baseName + "_") && file.endsWith(".png"));
-  if (basePrefixMatches.length > 0) {
-    const originalMatch = basePrefixMatches.find(file => 
-      file.includes("本来的样子") || 
-      file.includes("平常的样子") ||
-      (baseName === "鸭吉吉" && file.includes("蓬松的样子"))
-    );
-    if (originalMatch) {
-      return originalMatch;
-    }
-    return basePrefixMatches[0];
-  }
-  
-  // 5. Try substring match
-  const containsMatch = spriteFiles.find(file => file.includes(petName) && file.endsWith(".png"));
+  // 3. 子字符串模糊匹配
+  const containsMatch = spriteFiles.find(file => file.includes(baseName));
   if (containsMatch) {
     return containsMatch;
   }

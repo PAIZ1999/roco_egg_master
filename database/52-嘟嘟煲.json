@@ -1,0 +1,77 @@
+{
+  "id": 52,
+  "name": "嘟嘟煲",
+  "types": [
+    "毒"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "大地组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.33,
+    "weight_min": 16.975,
+    "weight_max": 22.4,
+    "giant_weight_line": 22.2915,
+    "tiny_weight_line": 17.0835
+  },
+  "evolution_chain": [
+    "嘟嘟煲",
+    "嘟嘟锅"
+  ],
+  "stats": {
+    "hp": 110,
+    "atk": 29,
+    "def": 71,
+    "sp_atk": 82,
+    "sp_def": 83,
+    "speed": 84,
+    "sum": 459
+  },
+  "height_min": 0.65,
+  "height_max": 0.8,
+  "weight_min": 48.5,
+  "weight_max": 56,
+  "giant_weight_line": 55.85,
+  "tiny_weight_line": 48.65,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "嘟嘟锅",
+      "id": 53,
+      "types": [
+        "毒"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "大地组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.91,
+      "weight_min": 67.9,
+      "weight_max": 89.2,
+      "giant_weight_line": 88.774,
+      "tiny_weight_line": 68.326,
+      "stats": {
+        "hp": 137,
+        "atk": 36,
+        "def": 89,
+        "sp_atk": 102,
+        "sp_def": 104,
+        "speed": 105,
+        "sum": 573
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/53-嘟嘟锅.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/52-嘟嘟煲.png"
+}

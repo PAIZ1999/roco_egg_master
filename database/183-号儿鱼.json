@@ -1,0 +1,77 @@
+{
+  "id": 183,
+  "name": "号儿鱼",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "妖精组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.17,
+    "weight_min": 1.365,
+    "weight_max": 2.1,
+    "giant_weight_line": 2.0853,
+    "tiny_weight_line": 1.3797
+  },
+  "evolution_chain": [
+    "号儿鱼",
+    "圆号鱼"
+  ],
+  "stats": {
+    "hp": 90,
+    "atk": 24,
+    "def": 76,
+    "sp_atk": 76,
+    "sp_def": 88,
+    "speed": 84,
+    "sum": 438
+  },
+  "height_min": 0.31,
+  "height_max": 0.42,
+  "weight_min": 3.9,
+  "weight_max": 5.25,
+  "giant_weight_line": 5.223,
+  "tiny_weight_line": 3.927,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "圆号鱼",
+      "id": 184,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "妖精组"
+      ],
+      "height_min": 0.79,
+      "height_max": 0.98,
+      "weight_min": 10.9,
+      "weight_max": 15.8,
+      "giant_weight_line": 15.702,
+      "tiny_weight_line": 10.998,
+      "stats": {
+        "hp": 113,
+        "atk": 31,
+        "def": 95,
+        "sp_atk": 95,
+        "sp_def": 110,
+        "speed": 105,
+        "sum": 549
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/184-圆号鱼.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/183-号儿鱼.png"
+}

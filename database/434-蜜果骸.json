@@ -1,0 +1,79 @@
+{
+  "id": 434,
+  "name": "蜜果骸",
+  "types": [
+    "幽",
+    "草"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "植物组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.18,
+    "weight_min": 0.074,
+    "weight_max": 0.356,
+    "giant_weight_line": 0.3504,
+    "tiny_weight_line": 0.0796
+  },
+  "evolution_chain": [
+    "蜜果骸",
+    "半朽蜜果灵"
+  ],
+  "stats": {
+    "hp": 92,
+    "atk": 34,
+    "def": 68,
+    "sp_atk": 96,
+    "sp_def": 85,
+    "speed": 88,
+    "sum": 463
+  },
+  "height_min": 0.35,
+  "height_max": 0.44,
+  "weight_min": 0.21,
+  "weight_max": 0.89,
+  "giant_weight_line": 0.8764,
+  "tiny_weight_line": 0.2236,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "半朽蜜果灵",
+      "id": 435,
+      "types": [
+        "幽",
+        "草"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "植物组"
+      ],
+      "height_min": 0.56,
+      "height_max": 0.78,
+      "weight_min": 1.06,
+      "weight_max": 2.09,
+      "giant_weight_line": 2.0694,
+      "tiny_weight_line": 1.0806,
+      "stats": {
+        "hp": 115,
+        "atk": 43,
+        "def": 84,
+        "sp_atk": 120,
+        "sp_def": 106,
+        "speed": 110,
+        "sum": 578
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/435-半朽蜜果灵.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/434-蜜果骸.png"
+}

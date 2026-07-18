@@ -1,0 +1,47 @@
+{
+  "id": 409,
+  "name": "星云旅者",
+  "types": [
+    "翼",
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "魔力组"
+    ],
+    "height_min": 0.79,
+    "height_max": 0.95,
+    "weight_min": 20.475,
+    "weight_max": 32,
+    "giant_weight_line": 31.7695,
+    "tiny_weight_line": 20.7055
+  },
+  "evolution_chain": [
+    "星云旅者"
+  ],
+  "stats": {
+    "hp": 104,
+    "atk": 32,
+    "def": 104,
+    "sp_atk": 129,
+    "sp_def": 83,
+    "speed": 120,
+    "sum": 572
+  },
+  "height_min": 1.85,
+  "height_max": 2.3,
+  "weight_min": 58.5,
+  "weight_max": 80,
+  "giant_weight_line": 79.57,
+  "tiny_weight_line": 58.93,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/409-星云旅者.png"
+}

@@ -1,0 +1,103 @@
+{
+  "id": 293,
+  "name": "小帕尔",
+  "types": [
+    "恶"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 3.29,
+    "weight_max": 5.44,
+    "giant_weight_line": 5.397,
+    "tiny_weight_line": 3.333
+  },
+  "evolution_chain": [
+    "小帕尔",
+    "帕尔萨斯",
+    "龙息帕尔"
+  ],
+  "stats": {
+    "hp": 78,
+    "atk": 76,
+    "def": 79,
+    "sp_atk": 34,
+    "sp_def": 52,
+    "speed": 60,
+    "sum": 379
+  },
+  "height_min": 0.64,
+  "height_max": 0.92,
+  "weight_min": 9.4,
+  "weight_max": 13.6,
+  "giant_weight_line": 13.516,
+  "tiny_weight_line": 9.484,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "帕尔萨斯",
+      "id": 294,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.58,
+      "weight_min": 46.5,
+      "weight_max": 61.5,
+      "giant_weight_line": 61.2,
+      "tiny_weight_line": 46.8,
+      "stats": {
+        "hp": 104,
+        "atk": 102,
+        "def": 105,
+        "sp_atk": 46,
+        "sp_def": 70,
+        "speed": 80,
+        "sum": 507
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/294-帕尔萨斯.png"
+    },
+    {
+      "name": "龙息帕尔",
+      "id": 295,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.93,
+      "height_max": 2.4,
+      "weight_min": 96.5,
+      "weight_max": 115,
+      "giant_weight_line": 114.63,
+      "tiny_weight_line": 96.87,
+      "stats": {
+        "hp": 130,
+        "atk": 127,
+        "def": 131,
+        "sp_atk": 57,
+        "sp_def": 87,
+        "speed": 100,
+        "sum": 632
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/295-龙息帕尔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/293-小帕尔.png"
+}

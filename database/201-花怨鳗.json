@@ -1,0 +1,79 @@
+{
+  "id": 201,
+  "name": "花怨鳗",
+  "types": [
+    "地",
+    "草"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "两栖组"
+    ],
+    "height_min": 0.25,
+    "height_max": 0.28,
+    "weight_min": 1.015,
+    "weight_max": 1.6,
+    "giant_weight_line": 1.5883,
+    "tiny_weight_line": 1.0267
+  },
+  "evolution_chain": [
+    "花怨鳗",
+    "鳗尾兽"
+  ],
+  "stats": {
+    "hp": 232,
+    "atk": 73,
+    "def": 110,
+    "sp_atk": 73,
+    "sp_def": 90,
+    "speed": 52,
+    "sum": 630
+  },
+  "height_min": 0.58,
+  "height_max": 0.68,
+  "weight_min": 2.9,
+  "weight_max": 4,
+  "giant_weight_line": 3.978,
+  "tiny_weight_line": 2.922,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "鳗尾兽",
+      "id": 202,
+      "types": [
+        "地",
+        "草"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "两栖组"
+      ],
+      "height_min": 0.79,
+      "height_max": 0.92,
+      "weight_min": 19.8,
+      "weight_max": 36.5,
+      "giant_weight_line": 36.166,
+      "tiny_weight_line": 20.134,
+      "stats": {
+        "hp": 290,
+        "atk": 91,
+        "def": 138,
+        "sp_atk": 91,
+        "sp_def": 113,
+        "speed": 65,
+        "sum": 788
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/202-鳗尾兽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/201-花怨鳗.png"
+}

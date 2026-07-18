@@ -1,0 +1,103 @@
+{
+  "id": 317,
+  "name": "星尘虫",
+  "types": [
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组"
+    ],
+    "height_min": 0.06,
+    "height_max": 0.08,
+    "weight_min": 0.263,
+    "weight_max": 0.34,
+    "giant_weight_line": 0.3385,
+    "tiny_weight_line": 0.2645
+  },
+  "evolution_chain": [
+    "星尘虫",
+    "落星虫",
+    "陨星虫"
+  ],
+  "stats": {
+    "hp": 49,
+    "atk": 47,
+    "def": 46,
+    "sp_atk": 47,
+    "sp_def": 58,
+    "speed": 60,
+    "sum": 307
+  },
+  "height_min": 0.15,
+  "height_max": 0.2,
+  "weight_min": 0.45,
+  "weight_max": 1.4,
+  "giant_weight_line": 1.381,
+  "tiny_weight_line": 0.469,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "落星虫",
+      "id": 318,
+      "types": [
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.4,
+      "weight_min": 1.25,
+      "weight_max": 2.25,
+      "giant_weight_line": 2.23,
+      "tiny_weight_line": 1.27,
+      "stats": {
+        "hp": 65,
+        "atk": 62,
+        "def": 61,
+        "sp_atk": 62,
+        "sp_def": 77,
+        "speed": 80,
+        "sum": 407
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/318-落星虫.png"
+    },
+    {
+      "name": "陨星虫",
+      "id": 319,
+      "types": [
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.8,
+      "weight_min": 5.6,
+      "weight_max": 6.8,
+      "giant_weight_line": 6.776,
+      "tiny_weight_line": 5.624,
+      "stats": {
+        "hp": 81,
+        "atk": 78,
+        "def": 76,
+        "sp_atk": 78,
+        "sp_def": 96,
+        "speed": 100,
+        "sum": 509
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/319-陨星虫.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/317-星尘虫.png"
+}

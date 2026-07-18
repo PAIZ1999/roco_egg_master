@@ -1,0 +1,76 @@
+{
+  "id": 356,
+  "name": "爆焰仔",
+  "types": [
+    "火",
+    "龙"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.35,
+    "weight_min": 7.35,
+    "weight_max": 15.4,
+    "giant_weight_line": 15.239,
+    "tiny_weight_line": 7.511
+  },
+  "evolution_chain": [
+    "爆焰仔",
+    "爆焰喷喷"
+  ],
+  "stats": {
+    "hp": 89,
+    "atk": 101,
+    "def": 105,
+    "sp_atk": 50,
+    "sp_def": 65,
+    "speed": 88,
+    "sum": 498
+  },
+  "height_min": 0.65,
+  "height_max": 0.85,
+  "weight_min": 21,
+  "weight_max": 38.5,
+  "giant_weight_line": 38.15,
+  "tiny_weight_line": 21.35,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "爆焰喷喷",
+      "id": 357,
+      "types": [
+        "火",
+        "龙"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.65,
+      "height_max": 1.81,
+      "weight_min": 47.5,
+      "weight_max": 69.5,
+      "giant_weight_line": 69.06,
+      "tiny_weight_line": 47.94,
+      "stats": {
+        "hp": 112,
+        "atk": 127,
+        "def": 131,
+        "sp_atk": 63,
+        "sp_def": 81,
+        "speed": 110,
+        "sum": 624
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/357-爆焰喷喷.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/356-爆焰仔.png"
+}

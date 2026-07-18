@@ -1,0 +1,110 @@
+{
+  "id": 99,
+  "name": "小草虫",
+  "types": [
+    "虫",
+    "草"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "拟人组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.28,
+    "weight_min": 1.36,
+    "weight_max": 7.35,
+    "giant_weight_line": 7.2302,
+    "tiny_weight_line": 1.4798
+  },
+  "evolution_chain": [
+    "小草虫",
+    "草衣虫",
+    "花衣蝶"
+  ],
+  "stats": {
+    "hp": 73,
+    "atk": 40,
+    "def": 50,
+    "sp_atk": 43,
+    "sp_def": 57,
+    "speed": 60,
+    "sum": 323
+  },
+  "height_min": 0.47,
+  "height_max": 0.67,
+  "weight_min": 2.1,
+  "weight_max": 3.4,
+  "giant_weight_line": 3.374,
+  "tiny_weight_line": 2.126,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "草衣虫",
+      "id": 100,
+      "types": [
+        "虫",
+        "草"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "拟人组"
+      ],
+      "height_min": 0.6,
+      "height_max": 0.87,
+      "weight_min": 7.2,
+      "weight_max": 8.6,
+      "giant_weight_line": 8.572,
+      "tiny_weight_line": 7.228,
+      "stats": {
+        "hp": 97,
+        "atk": 53,
+        "def": 67,
+        "sp_atk": 57,
+        "sp_def": 75,
+        "speed": 80,
+        "sum": 429
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/100-草衣虫.png"
+    },
+    {
+      "name": "花衣蝶",
+      "id": 101,
+      "types": [
+        "虫",
+        "草"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "拟人组"
+      ],
+      "height_min": 0.92,
+      "height_max": 1.32,
+      "weight_min": 19.6,
+      "weight_max": 23.4,
+      "giant_weight_line": 23.324,
+      "tiny_weight_line": 19.676,
+      "stats": {
+        "hp": 122,
+        "atk": 67,
+        "def": 84,
+        "sp_atk": 72,
+        "sp_def": 94,
+        "speed": 100,
+        "sum": 539
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/101-花衣蝶.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/99-小草虫.png"
+}

@@ -1,0 +1,47 @@
+{
+  "id": 92,
+  "name": "锤头鹳",
+  "types": [
+    "翼",
+    "水"
+  ],
+  "egg_groups": [
+    "天空组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "两栖组"
+    ],
+    "height_min": 0.46,
+    "height_max": 0.65,
+    "weight_min": 17.955,
+    "weight_max": 26.32,
+    "giant_weight_line": 26.1527,
+    "tiny_weight_line": 18.1223
+  },
+  "evolution_chain": [
+    "锤头鹳"
+  ],
+  "stats": {
+    "hp": 128,
+    "atk": 77,
+    "def": 101,
+    "sp_atk": 75,
+    "sp_def": 81,
+    "speed": 105,
+    "sum": 567
+  },
+  "height_min": 1.09,
+  "height_max": 1.56,
+  "weight_min": 51.3,
+  "weight_max": 65.8,
+  "giant_weight_line": 65.51,
+  "tiny_weight_line": 51.59,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/92-锤头鹳.png"
+}

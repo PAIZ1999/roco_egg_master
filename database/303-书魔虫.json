@@ -1,0 +1,141 @@
+{
+  "id": 303,
+  "name": "书魔虫",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "巨灵组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.17,
+    "weight_min": 0.798,
+    "weight_max": 1.544,
+    "giant_weight_line": 1.5291,
+    "tiny_weight_line": 0.8129
+  },
+  "evolution_chain": [
+    "书魔虫",
+    "书卷守护",
+    [
+      "古卷执政官",
+      "古卷匣魔像"
+    ]
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 69,
+    "def": 48,
+    "sp_atk": 69,
+    "sp_def": 73,
+    "speed": 57,
+    "sum": 383
+  },
+  "height_min": 0.3,
+  "height_max": 0.41,
+  "weight_min": 2.28,
+  "weight_max": 3.86,
+  "giant_weight_line": 3.8284,
+  "tiny_weight_line": 2.3116,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "书卷守护",
+      "id": 304,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ],
+      "height_min": 0.82,
+      "height_max": 1.01,
+      "weight_min": 9.8,
+      "weight_max": 14.8,
+      "giant_weight_line": 14.7,
+      "tiny_weight_line": 9.9,
+      "stats": {
+        "hp": 89,
+        "atk": 92,
+        "def": 64,
+        "sp_atk": 92,
+        "sp_def": 98,
+        "speed": 76,
+        "sum": 511
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/304-书卷守护.png"
+    },
+    {
+      "name": "古卷执政官",
+      "id": 305,
+      "types": [
+        "普通",
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ],
+      "height_min": 1.91,
+      "height_max": 2.21,
+      "weight_min": 98.8,
+      "weight_max": 135.5,
+      "giant_weight_line": 134.766,
+      "tiny_weight_line": 99.534,
+      "stats": {
+        "hp": 111,
+        "atk": 115,
+        "def": 80,
+        "sp_atk": 115,
+        "sp_def": 122,
+        "speed": 95,
+        "sum": 638
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/305-古卷执政官.png"
+    },
+    {
+      "name": "古卷匣魔像",
+      "id": 306,
+      "types": [
+        "普通",
+        "武"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ],
+      "height_min": 1.87,
+      "height_max": 2.15,
+      "weight_min": 119.5,
+      "weight_max": 180.5,
+      "giant_weight_line": 179.28,
+      "tiny_weight_line": 120.72,
+      "stats": {
+        "hp": 109,
+        "atk": 109,
+        "def": 130,
+        "sp_atk": 109,
+        "sp_def": 86,
+        "speed": 95,
+        "sum": 638
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/306-古卷匣魔像.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/303-书魔虫.png"
+}

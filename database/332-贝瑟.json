@@ -1,0 +1,106 @@
+{
+  "id": 332,
+  "name": "贝瑟",
+  "types": [
+    "机械",
+    "火"
+  ],
+  "egg_groups": [
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "机械组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.34,
+    "weight_min": 8.575,
+    "weight_max": 13.84,
+    "giant_weight_line": 13.7347,
+    "tiny_weight_line": 8.6803
+  },
+  "evolution_chain": [
+    "贝瑟",
+    "贝加尔",
+    "贝古斯"
+  ],
+  "stats": {
+    "hp": 79,
+    "atk": 46,
+    "def": 51,
+    "sp_atk": 78,
+    "sp_def": 98,
+    "speed": 33,
+    "sum": 385
+  },
+  "height_min": 0.57,
+  "height_max": 0.82,
+  "weight_min": 24.5,
+  "weight_max": 34.6,
+  "giant_weight_line": 34.398,
+  "tiny_weight_line": 24.702,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "贝加尔",
+      "id": 333,
+      "types": [
+        "机械",
+        "火"
+      ],
+      "egg_groups": [
+        "机械组"
+      ],
+      "height_min": 0.9,
+      "height_max": 1.2,
+      "weight_min": 87.6,
+      "weight_max": 97.5,
+      "giant_weight_line": 97.302,
+      "tiny_weight_line": 87.798,
+      "stats": {
+        "hp": 105,
+        "atk": 61,
+        "def": 68,
+        "sp_atk": 104,
+        "sp_def": 130,
+        "speed": 44,
+        "sum": 512
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/333-贝加尔.png"
+    },
+    {
+      "name": "贝古斯",
+      "id": 334,
+      "types": [
+        "机械",
+        "火"
+      ],
+      "egg_groups": [
+        "机械组"
+      ],
+      "height_min": 1.55,
+      "height_max": 1.8,
+      "weight_min": 248,
+      "weight_max": 286,
+      "giant_weight_line": 285.24,
+      "tiny_weight_line": 248.76,
+      "stats": {
+        "hp": 132,
+        "atk": 76,
+        "def": 85,
+        "sp_atk": 130,
+        "sp_def": 163,
+        "speed": 55,
+        "sum": 641
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/334-贝古斯.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/332-贝瑟.png"
+}

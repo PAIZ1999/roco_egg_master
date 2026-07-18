@@ -1,0 +1,188 @@
+{
+  "id": 12,
+  "name": "板板壳",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.32,
+    "weight_min": 2.625,
+    "weight_max": 4.2,
+    "giant_weight_line": 4.1685,
+    "tiny_weight_line": 2.6565
+  },
+  "evolution_chain": [
+    "板板壳",
+    "咔咔壳",
+    "水泡壳"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 28,
+    "def": 64,
+    "sp_atk": 72,
+    "sp_def": 81,
+    "speed": 45,
+    "sum": 357
+  },
+  "height_min": 0.53,
+  "height_max": 0.76,
+  "weight_min": 7.5,
+  "weight_max": 10.5,
+  "giant_weight_line": 10.44,
+  "tiny_weight_line": 7.56,
+  "regional_forms": [
+    {
+      "name": "板板壳（蜕皮时的样子）",
+      "id": 12,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 6.8,
+      "weight_max": 9.5,
+      "giant_weight_line": 9.446,
+      "tiny_weight_line": 6.854,
+      "stats": {
+        "hp": 88,
+        "atk": 24,
+        "def": 56,
+        "sp_atk": 72,
+        "sp_def": 59,
+        "speed": 48,
+        "sum": 347
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/12-板板壳（蜕皮时的样子）.png"
+    },
+    {
+      "name": "咔咔壳（蜕皮时的样子）",
+      "id": 13,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.92,
+      "weight_min": 17.5,
+      "weight_max": 22.5,
+      "giant_weight_line": 22.4,
+      "tiny_weight_line": 17.6,
+      "stats": {
+        "hp": 117,
+        "atk": 31,
+        "def": 75,
+        "sp_atk": 96,
+        "sp_def": 79,
+        "speed": 64,
+        "sum": 462
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/13-咔咔壳（蜕皮时的样子）.png"
+    },
+    {
+      "name": "水泡壳（蜕皮时的样子）",
+      "id": 14,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 1.23,
+      "height_max": 1.75,
+      "weight_min": 79.5,
+      "weight_max": 90.5,
+      "giant_weight_line": 90.28,
+      "tiny_weight_line": 79.72,
+      "stats": {
+        "hp": 146,
+        "atk": 39,
+        "def": 93,
+        "sp_atk": 121,
+        "sp_def": 98,
+        "speed": 80,
+        "sum": 577
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/14-水泡壳（蜕皮时的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "咔咔壳",
+      "id": 13,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.92,
+      "weight_min": 19.5,
+      "weight_max": 24.5,
+      "giant_weight_line": 24.4,
+      "tiny_weight_line": 19.6,
+      "stats": {
+        "hp": 90,
+        "atk": 37,
+        "def": 85,
+        "sp_atk": 96,
+        "sp_def": 107,
+        "speed": 60,
+        "sum": 475
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/13-咔咔壳.png"
+    },
+    {
+      "name": "水泡壳",
+      "id": 14,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 1.23,
+      "height_max": 1.75,
+      "weight_min": 83.5,
+      "weight_max": 94.5,
+      "giant_weight_line": 94.28,
+      "tiny_weight_line": 83.72,
+      "stats": {
+        "hp": 112,
+        "atk": 46,
+        "def": 107,
+        "sp_atk": 120,
+        "sp_def": 134,
+        "speed": 75,
+        "sum": 594
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/14-水泡壳.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/12-板板壳.png"
+}

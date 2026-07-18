@@ -1,0 +1,76 @@
+{
+  "id": 436,
+  "name": "稻草人",
+  "types": [
+    "萌",
+    "武"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.31,
+    "height_max": 0.44,
+    "weight_min": 6.335,
+    "weight_max": 15.84,
+    "giant_weight_line": 15.6499,
+    "tiny_weight_line": 6.5251
+  },
+  "evolution_chain": [
+    "稻草人",
+    "稻草守护者"
+  ],
+  "stats": {
+    "hp": 93,
+    "atk": 70,
+    "def": 90,
+    "sp_atk": 70,
+    "sp_def": 90,
+    "speed": 44,
+    "sum": 457
+  },
+  "height_min": 0.74,
+  "height_max": 1.05,
+  "weight_min": 18.1,
+  "weight_max": 39.6,
+  "giant_weight_line": 39.17,
+  "tiny_weight_line": 18.53,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "稻草守护者",
+      "id": 437,
+      "types": [
+        "萌",
+        "武"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.47,
+      "height_max": 1.81,
+      "weight_min": 63.9,
+      "weight_max": 85,
+      "giant_weight_line": 84.578,
+      "tiny_weight_line": 64.322,
+      "stats": {
+        "hp": 116,
+        "atk": 88,
+        "def": 112,
+        "sp_atk": 88,
+        "sp_def": 112,
+        "speed": 55,
+        "sum": 571
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/437-稻草守护者.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/436-稻草人.png"
+}

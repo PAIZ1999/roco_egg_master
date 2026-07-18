@@ -1,0 +1,106 @@
+{
+  "id": 147,
+  "name": "灵狐",
+  "types": [
+    "火",
+    "冰"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.33,
+    "weight_min": 2.59,
+    "weight_max": 3.56,
+    "giant_weight_line": 3.5406,
+    "tiny_weight_line": 2.6094
+  },
+  "evolution_chain": [
+    "灵狐",
+    "九尾狐",
+    "尖嘴狐仙"
+  ],
+  "stats": {
+    "hp": 69,
+    "atk": 52,
+    "def": 50,
+    "sp_atk": 52,
+    "sp_def": 64,
+    "speed": 60,
+    "sum": 347
+  },
+  "height_min": 0.56,
+  "height_max": 0.8,
+  "weight_min": 7.4,
+  "weight_max": 8.9,
+  "giant_weight_line": 8.87,
+  "tiny_weight_line": 7.43,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "九尾狐",
+      "id": 148,
+      "types": [
+        "火",
+        "冰"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.77,
+      "height_max": 1.11,
+      "weight_min": 13.08,
+      "weight_max": 21.05,
+      "giant_weight_line": 20.8906,
+      "tiny_weight_line": 13.2394,
+      "stats": {
+        "hp": 92,
+        "atk": 70,
+        "def": 67,
+        "sp_atk": 70,
+        "sp_def": 86,
+        "speed": 80,
+        "sum": 465
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/148-九尾狐.png"
+    },
+    {
+      "name": "尖嘴狐仙",
+      "id": 149,
+      "types": [
+        "火",
+        "冰"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.34,
+      "height_max": 1.92,
+      "weight_min": 69.5,
+      "weight_max": 78.5,
+      "giant_weight_line": 78.32,
+      "tiny_weight_line": 69.68,
+      "stats": {
+        "hp": 115,
+        "atk": 87,
+        "def": 84,
+        "sp_atk": 87,
+        "sp_def": 107,
+        "speed": 100,
+        "sum": 580
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/149-尖嘴狐仙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/147-灵狐.png"
+}

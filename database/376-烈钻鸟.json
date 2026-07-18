@@ -1,0 +1,110 @@
+{
+  "id": 376,
+  "name": "烈钻鸟",
+  "types": [
+    "火",
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组",
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "动物组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.39,
+    "weight_min": 1.645,
+    "weight_max": 2.32,
+    "giant_weight_line": 2.3065,
+    "tiny_weight_line": 1.6585
+  },
+  "evolution_chain": [
+    "烈钻鸟",
+    "长尾火鸟",
+    "火羽"
+  ],
+  "stats": {
+    "hp": 56,
+    "atk": 49,
+    "def": 43,
+    "sp_atk": 60,
+    "sp_def": 73,
+    "speed": 72,
+    "sum": 353
+  },
+  "height_min": 0.67,
+  "height_max": 0.95,
+  "weight_min": 4.7,
+  "weight_max": 5.8,
+  "giant_weight_line": 5.778,
+  "tiny_weight_line": 4.722,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "长尾火鸟",
+      "id": 377,
+      "types": [
+        "火",
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组",
+        "动物组"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.2,
+      "weight_min": 15.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.478,
+      "tiny_weight_line": 15.622,
+      "stats": {
+        "hp": 75,
+        "atk": 65,
+        "def": 58,
+        "sp_atk": 80,
+        "sp_def": 97,
+        "speed": 96,
+        "sum": 471
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/377-长尾火鸟.png"
+    },
+    {
+      "name": "火羽",
+      "id": 378,
+      "types": [
+        "火",
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组",
+        "动物组"
+      ],
+      "height_min": 1.33,
+      "height_max": 1.91,
+      "weight_min": 79.6,
+      "weight_max": 87.5,
+      "giant_weight_line": 87.342,
+      "tiny_weight_line": 79.758,
+      "stats": {
+        "hp": 94,
+        "atk": 82,
+        "def": 72,
+        "sp_atk": 100,
+        "sp_def": 121,
+        "speed": 120,
+        "sum": 589
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/378-火羽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/376-烈钻鸟.png"
+}

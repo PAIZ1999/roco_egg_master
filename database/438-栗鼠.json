@@ -1,0 +1,76 @@
+{
+  "id": 438,
+  "name": "栗鼠",
+  "types": [
+    "毒",
+    "普通"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.21,
+    "weight_min": 2.013,
+    "weight_max": 3.04,
+    "giant_weight_line": 3.0195,
+    "tiny_weight_line": 2.0335
+  },
+  "evolution_chain": [
+    "栗鼠",
+    "壳栗丝鼠"
+  ],
+  "stats": {
+    "hp": 91,
+    "atk": 61,
+    "def": 62,
+    "sp_atk": 63,
+    "sp_def": 89,
+    "speed": 80,
+    "sum": 446
+  },
+  "height_min": 0.38,
+  "height_max": 0.51,
+  "weight_min": 5.75,
+  "weight_max": 7.6,
+  "giant_weight_line": 7.563,
+  "tiny_weight_line": 5.787,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "壳栗丝鼠",
+      "id": 439,
+      "types": [
+        "毒",
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.67,
+      "height_max": 0.71,
+      "weight_min": 19.01,
+      "weight_max": 28.3,
+      "giant_weight_line": 28.1142,
+      "tiny_weight_line": 19.1958,
+      "stats": {
+        "hp": 114,
+        "atk": 77,
+        "def": 77,
+        "sp_atk": 79,
+        "sp_def": 111,
+        "speed": 100,
+        "sum": 558
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/439-壳栗丝鼠.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/438-栗鼠.png"
+}

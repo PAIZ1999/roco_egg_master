@@ -1,0 +1,109 @@
+{
+  "id": 121,
+  "name": "小黑猫",
+  "types": [
+    "普通"
+  ],
+  "egg_groups": [
+    "动物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "妖精组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.27,
+    "weight_min": 1.085,
+    "weight_max": 1.8,
+    "giant_weight_line": 1.7857,
+    "tiny_weight_line": 1.0993
+  },
+  "evolution_chain": [
+    "小黑猫",
+    "黑猫巫师",
+    [
+      "黑猫密探"
+    ]
+  ],
+  "stats": {
+    "hp": 119,
+    "atk": 42,
+    "def": 72,
+    "sp_atk": 99,
+    "sp_def": 103,
+    "speed": 56,
+    "sum": 491
+  },
+  "height_min": 0.55,
+  "height_max": 0.65,
+  "weight_min": 3.1,
+  "weight_max": 4.5,
+  "giant_weight_line": 4.472,
+  "tiny_weight_line": 3.128,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "黑猫密探",
+      "id": 122,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.94,
+      "height_max": 1.08,
+      "weight_min": 11.07,
+      "weight_max": 15.06,
+      "giant_weight_line": 14.9802,
+      "tiny_weight_line": 11.1498,
+      "stats": {
+        "hp": 149,
+        "atk": 65,
+        "def": 90,
+        "sp_atk": 143,
+        "sp_def": 129,
+        "speed": 70,
+        "sum": 646
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/122-黑猫密探.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "黑猫巫师",
+      "id": 122,
+      "types": [
+        "普通"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 0.85,
+      "height_max": 0.97,
+      "weight_min": 8.1,
+      "weight_max": 9.5,
+      "giant_weight_line": 9.472,
+      "tiny_weight_line": 8.128,
+      "stats": {
+        "hp": 149,
+        "atk": 53,
+        "def": 90,
+        "sp_atk": 124,
+        "sp_def": 129,
+        "speed": 70,
+        "sum": 615
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/122-黑猫巫师.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/121-小黑猫.png"
+}

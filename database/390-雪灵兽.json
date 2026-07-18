@@ -1,0 +1,103 @@
+{
+  "id": 390,
+  "name": "雪灵兽",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.2,
+    "height_max": 0.24,
+    "weight_min": 1.75,
+    "weight_max": 2.76,
+    "giant_weight_line": 2.7398,
+    "tiny_weight_line": 1.7702
+  },
+  "evolution_chain": [
+    "雪灵兽",
+    "幻雪兽",
+    "饮雪狂兽"
+  ],
+  "stats": {
+    "hp": 62,
+    "atk": 59,
+    "def": 67,
+    "sp_atk": 19,
+    "sp_def": 62,
+    "speed": 75,
+    "sum": 344
+  },
+  "height_min": 0.47,
+  "height_max": 0.59,
+  "weight_min": 5,
+  "weight_max": 6.9,
+  "giant_weight_line": 6.862,
+  "tiny_weight_line": 5.038,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "幻雪兽",
+      "id": 391,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.66,
+      "height_max": 0.91,
+      "weight_min": 9.8,
+      "weight_max": 19.1,
+      "giant_weight_line": 18.914,
+      "tiny_weight_line": 9.986,
+      "stats": {
+        "hp": 83,
+        "atk": 78,
+        "def": 89,
+        "sp_atk": 26,
+        "sp_def": 82,
+        "speed": 100,
+        "sum": 458
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/391-幻雪兽.png"
+    },
+    {
+      "name": "饮雪狂兽",
+      "id": 392,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.45,
+      "height_max": 1.9,
+      "weight_min": 61.3,
+      "weight_max": 84.3,
+      "giant_weight_line": 83.84,
+      "tiny_weight_line": 61.76,
+      "stats": {
+        "hp": 104,
+        "atk": 98,
+        "def": 111,
+        "sp_atk": 32,
+        "sp_def": 103,
+        "speed": 125,
+        "sum": 573
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/392-饮雪狂兽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/390-雪灵兽.png"
+}

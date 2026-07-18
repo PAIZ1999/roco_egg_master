@@ -1,0 +1,79 @@
+{
+  "id": 181,
+  "name": "海豹战士",
+  "types": [
+    "武",
+    "水"
+  ],
+  "egg_groups": [
+    "动物组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "两栖组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 24.325,
+    "weight_max": 35.04,
+    "giant_weight_line": 34.8257,
+    "tiny_weight_line": 24.5393
+  },
+  "evolution_chain": [
+    "海豹战士",
+    "海豹船长"
+  ],
+  "stats": {
+    "hp": 72,
+    "atk": 91,
+    "def": 89,
+    "sp_atk": 87,
+    "sp_def": 62,
+    "speed": 80,
+    "sum": 481
+  },
+  "height_min": 0.64,
+  "height_max": 0.92,
+  "weight_min": 69.5,
+  "weight_max": 87.6,
+  "giant_weight_line": 87.238,
+  "tiny_weight_line": 69.862,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "海豹船长",
+      "id": 182,
+      "types": [
+        "武",
+        "水"
+      ],
+      "egg_groups": [
+        "动物组",
+        "两栖组"
+      ],
+      "height_min": 1.26,
+      "height_max": 1.8,
+      "weight_min": 145,
+      "weight_max": 165,
+      "giant_weight_line": 164.6,
+      "tiny_weight_line": 145.4,
+      "stats": {
+        "hp": 90,
+        "atk": 113,
+        "def": 111,
+        "sp_atk": 109,
+        "sp_def": 77,
+        "speed": 100,
+        "sum": 600
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/182-海豹船长.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/181-海豹战士.png"
+}

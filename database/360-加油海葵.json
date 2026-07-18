@@ -1,0 +1,110 @@
+{
+  "id": 360,
+  "name": "加油海葵",
+  "types": [
+    "水",
+    "萌"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "两栖组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.2,
+    "weight_min": 1.015,
+    "weight_max": 1.66,
+    "giant_weight_line": 1.6471,
+    "tiny_weight_line": 1.0279
+  },
+  "evolution_chain": [
+    "加油海葵",
+    "加油蟹"
+  ],
+  "stats": {
+    "hp": 93,
+    "atk": 87,
+    "def": 102,
+    "sp_atk": 87,
+    "sp_def": 102,
+    "speed": 76,
+    "sum": 547
+  },
+  "height_min": 0.35,
+  "height_max": 0.47,
+  "weight_min": 2.9,
+  "weight_max": 4.15,
+  "giant_weight_line": 4.125,
+  "tiny_weight_line": 2.925,
+  "regional_forms": [
+    {
+      "name": "加油蟹（单只海葵的样子）",
+      "id": 361,
+      "types": [
+        "水",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "两栖组"
+      ],
+      "height_min": 0.51,
+      "height_max": 0.78,
+      "weight_min": 5.35,
+      "weight_max": 9.87,
+      "giant_weight_line": 9.7796,
+      "tiny_weight_line": 5.4404,
+      "stats": {
+        "hp": 116,
+        "atk": 155,
+        "def": 128,
+        "sp_atk": 61,
+        "sp_def": 128,
+        "speed": 95,
+        "sum": 683
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/361-加油蟹（单只海葵的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "加油蟹",
+      "id": 361,
+      "types": [
+        "水",
+        "萌"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "两栖组"
+      ],
+      "height_min": 0.51,
+      "height_max": 0.78,
+      "weight_min": 6.75,
+      "weight_max": 11.7,
+      "giant_weight_line": 11.601,
+      "tiny_weight_line": 6.849,
+      "stats": {
+        "hp": 116,
+        "atk": 108,
+        "def": 128,
+        "sp_atk": 108,
+        "sp_def": 128,
+        "speed": 95,
+        "sum": 683
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/361-加油蟹.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/360-加油海葵.png"
+}

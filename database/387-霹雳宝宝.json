@@ -1,0 +1,107 @@
+{
+  "id": 387,
+  "name": "霹雳宝宝",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "拟人组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.29,
+    "weight_min": 2.338,
+    "weight_max": 4.32,
+    "giant_weight_line": 4.2804,
+    "tiny_weight_line": 2.3776
+  },
+  "evolution_chain": [
+    "霹雳宝宝",
+    "雷鸣小子",
+    "雷神之子"
+  ],
+  "stats": {
+    "hp": 54,
+    "atk": 66,
+    "def": 67,
+    "sp_atk": 66,
+    "sp_def": 56,
+    "speed": 72,
+    "sum": 381
+  },
+  "height_min": 0.57,
+  "height_max": 0.71,
+  "weight_min": 6.68,
+  "weight_max": 10.8,
+  "giant_weight_line": 10.7176,
+  "tiny_weight_line": 6.7624,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "雷鸣小子",
+      "id": 388,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 0.85,
+      "height_max": 1.1,
+      "weight_min": 27.9,
+      "weight_max": 57.1,
+      "giant_weight_line": 56.516,
+      "tiny_weight_line": 28.484,
+      "stats": {
+        "hp": 72,
+        "atk": 88,
+        "def": 90,
+        "sp_atk": 88,
+        "sp_def": 74,
+        "speed": 96,
+        "sum": 508
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/388-雷鸣小子.png"
+    },
+    {
+      "name": "雷神之子",
+      "id": 389,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 1.44,
+      "height_max": 1.73,
+      "weight_min": 77,
+      "weight_max": 91.3,
+      "giant_weight_line": 91.014,
+      "tiny_weight_line": 77.286,
+      "stats": {
+        "hp": 90,
+        "atk": 110,
+        "def": 112,
+        "sp_atk": 110,
+        "sp_def": 93,
+        "speed": 120,
+        "sum": 635
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/389-雷神之子.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/387-霹雳宝宝.png"
+}

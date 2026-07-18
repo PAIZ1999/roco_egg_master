@@ -1,0 +1,103 @@
+{
+  "id": 66,
+  "name": "电咩咩",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.25,
+    "height_max": 0.34,
+    "weight_min": 2.51,
+    "weight_max": 3.64,
+    "giant_weight_line": 3.6174,
+    "tiny_weight_line": 2.5326
+  },
+  "evolution_chain": [
+    "电咩咩",
+    "粉咩咩",
+    "电球咩咩"
+  ],
+  "stats": {
+    "hp": 47,
+    "atk": 49,
+    "def": 55,
+    "sp_atk": 49,
+    "sp_def": 57,
+    "speed": 75,
+    "sum": 332
+  },
+  "height_min": 0.58,
+  "height_max": 0.83,
+  "weight_min": 7.17,
+  "weight_max": 9.1,
+  "giant_weight_line": 9.0614,
+  "tiny_weight_line": 7.2086,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "粉咩咩",
+      "id": 67,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.8,
+      "height_max": 1.14,
+      "weight_min": 15.3,
+      "weight_max": 18.6,
+      "giant_weight_line": 18.534,
+      "tiny_weight_line": 15.366,
+      "stats": {
+        "hp": 62,
+        "atk": 66,
+        "def": 73,
+        "sp_atk": 66,
+        "sp_def": 76,
+        "speed": 100,
+        "sum": 443
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/67-粉咩咩.png"
+    },
+    {
+      "name": "电球咩咩",
+      "id": 68,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.13,
+      "height_max": 1.62,
+      "weight_min": 48.6,
+      "weight_max": 58,
+      "giant_weight_line": 57.812,
+      "tiny_weight_line": 48.788,
+      "stats": {
+        "hp": 78,
+        "atk": 82,
+        "def": 91,
+        "sp_atk": 82,
+        "sp_def": 95,
+        "speed": 125,
+        "sum": 553
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/68-电球咩咩.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/66-电咩咩.png"
+}

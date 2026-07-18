@@ -1,0 +1,222 @@
+{
+  "id": 258,
+  "name": "乌达",
+  "types": [
+    "恶",
+    "火"
+  ],
+  "egg_groups": [
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.24,
+    "weight_min": 1.61,
+    "weight_max": 2.44,
+    "giant_weight_line": 2.4234,
+    "tiny_weight_line": 1.6266
+  },
+  "evolution_chain": [
+    "乌达",
+    "迷你乌",
+    "乌拉塔"
+  ],
+  "stats": {
+    "hp": 80,
+    "atk": 95,
+    "def": 70,
+    "sp_atk": 49,
+    "sp_def": 42,
+    "speed": 33,
+    "sum": 369
+  },
+  "height_min": 0.44,
+  "height_max": 0.58,
+  "weight_min": 4.6,
+  "weight_max": 6.1,
+  "giant_weight_line": 6.07,
+  "tiny_weight_line": 4.63,
+  "regional_forms": [
+    {
+      "name": "乌达（极昼的样子）",
+      "id": 258,
+      "types": [
+        "恶",
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.44,
+      "height_max": 0.58,
+      "weight_min": 4.6,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.07,
+      "tiny_weight_line": 4.63,
+      "stats": {
+        "hp": 80,
+        "atk": 95,
+        "def": 70,
+        "sp_atk": 49,
+        "sp_def": 42,
+        "speed": 33,
+        "sum": 369
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/258-乌达（极昼的样子）.png"
+    },
+    {
+      "name": "迷你乌（极昼的样子）",
+      "id": 259,
+      "types": [
+        "恶",
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.97,
+      "height_max": 1.2,
+      "weight_min": 27.9,
+      "weight_max": 39.1,
+      "giant_weight_line": 38.876,
+      "tiny_weight_line": 28.124,
+      "stats": {
+        "hp": 107,
+        "atk": 126,
+        "def": 93,
+        "sp_atk": 66,
+        "sp_def": 56,
+        "speed": 44,
+        "sum": 492
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/259-迷你乌（极昼的样子）.png"
+    },
+    {
+      "name": "乌拉塔（极昼的样子）",
+      "id": 260,
+      "types": [
+        "恶",
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.1,
+      "weight_min": 48.8,
+      "weight_max": 63.29,
+      "giant_weight_line": 63.0002,
+      "tiny_weight_line": 49.0898,
+      "stats": {
+        "hp": 134,
+        "atk": 158,
+        "def": 116,
+        "sp_atk": 82,
+        "sp_def": 70,
+        "speed": 55,
+        "sum": 615
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/260-乌拉塔（极昼的样子）.png"
+    },
+    {
+      "name": "乌达（极夜的样子）",
+      "id": 258,
+      "types": [
+        "恶",
+        "冰"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.44,
+      "height_max": 0.58,
+      "weight_min": 4.6,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.07,
+      "tiny_weight_line": 4.63,
+      "stats": {
+        "hp": 96,
+        "atk": 95,
+        "def": 64,
+        "sp_atk": 55,
+        "sp_def": 34,
+        "speed": 30,
+        "sum": 374
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/258-乌达（极夜的样子）.png"
+    },
+    {
+      "name": "迷你乌（极夜的样子）",
+      "id": 259,
+      "types": [
+        "恶",
+        "冰"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 0.97,
+      "height_max": 1.2,
+      "weight_min": 27.9,
+      "weight_max": 39.1,
+      "giant_weight_line": 38.876,
+      "tiny_weight_line": 28.124,
+      "stats": {
+        "hp": 128,
+        "atk": 126,
+        "def": 85,
+        "sp_atk": 73,
+        "sp_def": 46,
+        "speed": 40,
+        "sum": 498
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/259-迷你乌（极夜的样子）.png"
+    },
+    {
+      "name": "乌拉塔（极夜的样子）",
+      "id": 260,
+      "types": [
+        "恶",
+        "冰"
+      ],
+      "egg_groups": [
+        "巨灵组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.1,
+      "weight_min": 48.8,
+      "weight_max": 63.29,
+      "giant_weight_line": 63.0002,
+      "tiny_weight_line": 49.0898,
+      "stats": {
+        "hp": 160,
+        "atk": 158,
+        "def": 106,
+        "sp_atk": 91,
+        "sp_def": 57,
+        "speed": 50,
+        "sum": 622
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/260-乌拉塔（极夜的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/258-乌达（极夜的样子）.png"
+}

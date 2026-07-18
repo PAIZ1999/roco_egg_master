@@ -365,38 +365,166 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
-      // 特殊多形态宠物 conf_id 映射：如鸭吉吉 (base_conf_id: 3742)
-      const isYajiji = (rawId === 3742 || rawName === "鸭吉吉" || rawOriginalName === "鸭吉吉");
+      // 特殊多形态宠物 conf_id 映射：如鸭吉吉 (base_conf_id: 3742/3744/3745/3495/3012/3036/3452/3453)
+      const isYajiji = (
+        [3742, 3744, 3745, 3495, 3012, 3036, 3452, 3453].includes(rawId) ||
+        ["鸭吉吉", "火红尾", "雅丹鬃"].includes(rawName) ||
+        ["鸭吉吉", "火红尾", "雅丹鬃"].includes(rawOriginalName)
+      );
       if (isYajiji) {
         const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
-        if (confIdVal === 3742001) {
+        if (confIdVal === 3742001 || confIdVal === 410012) {
           formSuffix = "蓬松的样子";
-        } else if (confIdVal === 410738) {
+        } else if (confIdVal === 410738 || confIdVal === 410739 || confIdVal === 410740) {
           formSuffix = "起来鸭"; // 即睡帽鸭
-        } else if (confIdVal === 300710) {
+        } else if (confIdVal === 300710 || confIdVal === 300711 || confIdVal === 410032) {
           formSuffix = "紧实的样子";
-        } else if (confIdVal === 300463) {
+        } else if (confIdVal === 300463 || confIdVal === 410449) {
           formSuffix = "等一等鸭";
+        } else if (confIdVal === 410448) {
+          formSuffix = "急急急鸭";
+        } else if (confIdVal === 410491) {
+          formSuffix = "燃了鸭";
         }
       }
 
-      // 特殊多形态宠物 conf_id 映射：如丢丢/卡卡虫/卡瓦重 (丢丢进化链，基础 ID 3040/3041/3042，以及沙地 3290/3291/3292)
+      // 特殊多形态宠物 conf_id 映射：如丢丢/卡卡虫/卡瓦重 (丢丢进化链，基础 ID 3040/3041/3042，以及沙地 3290/3291/3292，新版火山 3295/雪山 3296)
       const isDiudiuChain = (
-        rawId === 3040 || rawId === 3041 || rawId === 3042 ||
-        rawId === 3290 || rawId === 3291 || rawId === 3292 ||
-        rawName === "丢丢" || rawName === "卡卡虫" || rawName === "卡瓦重" ||
-        rawOriginalName === "丢丢" || rawOriginalName === "卡卡虫" || rawOriginalName === "卡瓦重"
+        [3040, 3041, 3042, 3290, 3291, 3292, 3295, 3296].includes(rawId) ||
+        ["丢丢", "卡卡虫", "卡瓦重"].includes(rawName) ||
+        ["丢丢", "卡卡虫", "卡瓦重"].includes(rawOriginalName)
       );
       if (isDiudiuChain) {
         const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
-        if (confIdVal === 2200004) {
+        if (confIdVal === 2200004 || confIdVal === 3040001) {
           formSuffix = "草地附近的样子";
-        } else if (confIdVal && Math.floor(confIdVal / 10000) === 329) {
+        } else if (confIdVal && (Math.floor(confIdVal / 10000) === 329 || confIdVal === 3290001 || confIdVal === 3292001)) {
           formSuffix = "沙地附近的样子";
-        } else if (confIdVal === 300036) {
+        } else if (confIdVal === 300036 || confIdVal === 410286) {
           formSuffix = "雪山附近的样子";
-        } else if (confIdVal === 410036) {
+        } else if (confIdVal === 410036 || confIdVal === 410285) {
           formSuffix = "火山附近的样子";
+        }
+      }
+
+      // 特殊多形态宠物 conf_id 映射：如晶石蜗 (基础 ID 3308/3448/3449/3450/3451/3486)
+      const isJingshiwo = (
+        [3308, 3448, 3449, 3450, 3451, 3486].includes(rawId) ||
+        rawName === "晶石蜗" || rawOriginalName === "晶石蜗"
+      );
+      if (isJingshiwo) {
+        const baseIdMap: Record<number, string> = {
+          3308: "西瓜碧玺的样子",
+          3448: "莲花刚玉的样子",
+          3449: "星彩榴石的样子",
+          3450: "火山琉璃的样子",
+          3451: "蓝锥矿的样子",
+          3486: "烧蓝黄金的样子"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      }
+
+      // 特殊多形态宠物 conf_id 映射：如星光狮
+      const isXingguangshi = (rawId === 3194 || rawId === 3443 || rawName === "星光狮" || rawOriginalName === "星光狮");
+      if (isXingguangshi) {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 410190) {
+          formSuffix = "星光能量的样子";
+        } else if (confIdVal === 410439) {
+          formSuffix = "月光能量的样子";
+        }
+      }
+
+      // 特殊多形态宠物 conf_id 映射：如冬羽雀 / 雪绒鸟 / 岚鸟
+      const isXuerongniao = (
+        [3282, 3280, 3279, 3037, 3285, 3286, 3287].includes(rawId) ||
+        ["冬羽雀", "雪绒鸟", "岚鸟"].includes(rawName) ||
+        ["冬羽雀", "雪绒鸟", "岚鸟"].includes(rawOriginalName)
+      );
+      if (isXuerongniao) {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 410278 || confIdVal === 3279001) {
+          formSuffix = "春天的样子";
+        } else if (confIdVal === 410279 || confIdVal === 3280001) {
+          formSuffix = "夏天的样子";
+        } else if (confIdVal === 410280) {
+          formSuffix = "秋天的样子";
+        } else {
+          formSuffix = "冬天的样子";
+        }
+      }
+
+      // 进一步通过 base_conf_id 特殊处理其他 3.2.4 新版独立 ID 分支的多形态精灵
+      if (rawName === "圣代甜甜") {
+        const baseIdMap: Record<number, string> = {
+          3459: "樱桃抹茶口味",
+          3460: "蓝莓巧克力口味",
+          3461: "蓝莓草莓口味",
+          3462: "蓝莓抹茶口味",
+          3463: "杨桃巧克力口味",
+          3464: "杨桃草莓口味",
+          3465: "杨桃抹茶口味"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "海枝枝") {
+        const baseIdMap: Record<number, string> = {
+          3430: "碧蓝珊瑚",
+          3431: "杏黄百合",
+          3432: "洋红沙丁",
+          3433: "翠绿纶布"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "月亮砣" || rawName === "刺轮砣") {
+        const baseIdMap: Record<number, string> = {
+          3583: "上弦的样子",
+          3585: "下弦的样子",
+          3584: "下弦的样子"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "乌拉塔" || rawName === "乌达" || rawName === "迷你乌") {
+        const baseIdMap: Record<number, string> = {
+          3538: "极昼的样子",
+          3541: "极夜的样子"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "地鼠" || rawName === "遁地鼠" || rawName === "遁鼠") {
+        const baseIdMap: Record<number, string> = {
+          3020: "枯水期的样子",
+          3022: "枯水期的样子",
+          3456: "储水时的样子"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "蹦蹦种子" || rawName === "蹦蹦果" || rawName === "蹦蹦花" || rawName === "蹦蹦草") {
+        const baseIdMap: Record<number, string> = {
+          3019: "海神球形态",
+          3303: "彩玉球形态",
+          3304: "短毛球形态",
+          3305: "象牙球形态"
+        };
+        if (baseIdMap[rawId]) {
+          formSuffix = baseIdMap[rawId];
+        }
+      } else if (rawName === "加油蟹") {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 410753 || confIdVal === 410655) {
+          formSuffix = "单只海葵的样子";
+        }
+      } else if (rawName === "落陨星兔") {
+        const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+        if (confIdVal === 410315) {
+          formSuffix = "信使精灵";
         }
       }
 
@@ -753,6 +881,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     }
     // 4. 牌子与临近关系过滤
     if (filterBrand === "全部") {
+      // 真正的全部精灵，不做任何限制，直接通过
+    } else if (filterBrand === "全部达标牌子") {
       const allowedBrands = ["单大块头", "大粗", "大婉", "单小不点", "小粗", "小婉", "单粗嗓门", "单婉转声"];
       if (!allowedBrands.includes(pet.brand)) {
         return false;
@@ -1080,11 +1210,12 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                     value={filterBrand}
                     onChange={(val) => setFilterBrand(val)}
                     options={[
-                      "全部", "大粗", "大婉", "单大块头", "单粗嗓门", "单婉转声", "小粗", "小婉", "单小不点",
+                      "全部", "全部达标牌子", "大粗", "大婉", "单大块头", "单粗嗓门", "单婉转声", "小粗", "小婉", "单小不点",
                       "临近大块头", "临近声音", "大块头 + 临近声音", "声音牌 + 临近大块头"
                     ]}
                     displayMap={{
-                      "全部": "全部达标牌子",
+                      "全部": "全部精灵",
+                      "全部达标牌子": "全部达标牌子 ✨",
                       "大粗": "大粗 🧱",
                       "大婉": "大婉 🎵",
                       "单大块头": "单大块头",

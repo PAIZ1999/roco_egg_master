@@ -1,0 +1,76 @@
+{
+  "id": 242,
+  "name": "胆小鳗鱼",
+  "types": [
+    "电",
+    "水"
+  ],
+  "egg_groups": [
+    "海洋组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组"
+    ],
+    "height_min": 0.31,
+    "height_max": 0.44,
+    "weight_min": 6.125,
+    "weight_max": 10.74,
+    "giant_weight_line": 10.6477,
+    "tiny_weight_line": 6.2173
+  },
+  "evolution_chain": [
+    "胆小鳗鱼",
+    "闪电鳗鱼"
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 92,
+    "def": 83,
+    "sp_atk": 92,
+    "sp_def": 90,
+    "speed": 92,
+    "sum": 517
+  },
+  "height_min": 0.74,
+  "height_max": 1.07,
+  "weight_min": 17.5,
+  "weight_max": 26.85,
+  "giant_weight_line": 26.663,
+  "tiny_weight_line": 17.687,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "闪电鳗鱼",
+      "id": 243,
+      "types": [
+        "电",
+        "水"
+      ],
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": 0.83,
+      "height_max": 1.19,
+      "weight_min": 68.9,
+      "weight_max": 76.5,
+      "giant_weight_line": 76.348,
+      "tiny_weight_line": 69.052,
+      "stats": {
+        "hp": 85,
+        "atk": 115,
+        "def": 104,
+        "sp_atk": 115,
+        "sp_def": 112,
+        "speed": 115,
+        "sum": 646
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/243-闪电鳗鱼.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/242-胆小鳗鱼.png"
+}

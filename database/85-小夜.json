@@ -1,0 +1,107 @@
+{
+  "id": 85,
+  "name": "小夜",
+  "types": [
+    "恶"
+  ],
+  "egg_groups": [
+    "拟人组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "拟人组",
+      "妖精组"
+    ],
+    "height_min": 0.22,
+    "height_max": 0.3,
+    "weight_min": 1.575,
+    "weight_max": 3.04,
+    "giant_weight_line": 3.0107,
+    "tiny_weight_line": 1.6043
+  },
+  "evolution_chain": [
+    "小夜",
+    "紫夜",
+    "朔夜伊芙"
+  ],
+  "stats": {
+    "hp": 60,
+    "atk": 69,
+    "def": 62,
+    "sp_atk": 63,
+    "sp_def": 51,
+    "speed": 69,
+    "sum": 374
+  },
+  "height_min": 0.51,
+  "height_max": 0.73,
+  "weight_min": 4.5,
+  "weight_max": 7.6,
+  "giant_weight_line": 7.538,
+  "tiny_weight_line": 4.562,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "紫夜",
+      "id": 86,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "拟人组",
+        "妖精组"
+      ],
+      "height_min": 0.72,
+      "height_max": 1.03,
+      "weight_min": 17.6,
+      "weight_max": 22.5,
+      "giant_weight_line": 22.402,
+      "tiny_weight_line": 17.698,
+      "stats": {
+        "hp": 80,
+        "atk": 92,
+        "def": 83,
+        "sp_atk": 84,
+        "sp_def": 68,
+        "speed": 92,
+        "sum": 499
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/86-紫夜.png"
+    },
+    {
+      "name": "朔夜伊芙",
+      "id": 87,
+      "types": [
+        "恶"
+      ],
+      "egg_groups": [
+        "拟人组",
+        "妖精组"
+      ],
+      "height_min": 1.06,
+      "height_max": 1.51,
+      "weight_min": 46.2,
+      "weight_max": 57.5,
+      "giant_weight_line": 57.274,
+      "tiny_weight_line": 46.426,
+      "stats": {
+        "hp": 100,
+        "atk": 115,
+        "def": 104,
+        "sp_atk": 105,
+        "sp_def": 85,
+        "speed": 115,
+        "sum": 624
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/87-朔夜伊芙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/85-小夜.png"
+}

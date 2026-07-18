@@ -1,0 +1,107 @@
+{
+  "id": 342,
+  "name": "春团",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "动物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "妖精组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.21,
+    "weight_min": 1.44,
+    "weight_max": 7.35,
+    "giant_weight_line": 7.2318,
+    "tiny_weight_line": 1.5582
+  },
+  "evolution_chain": [
+    "春团",
+    "春兔",
+    "春花兔"
+  ],
+  "stats": {
+    "hp": 48,
+    "atk": 51,
+    "def": 65,
+    "sp_atk": 57,
+    "sp_def": 57,
+    "speed": 63,
+    "sum": 341
+  },
+  "height_min": 0.35,
+  "height_max": 0.51,
+  "weight_min": 2.1,
+  "weight_max": 3.6,
+  "giant_weight_line": 3.57,
+  "tiny_weight_line": 2.13,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "春兔",
+      "id": 343,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 0.61,
+      "height_max": 0.87,
+      "weight_min": 6.8,
+      "weight_max": 8.5,
+      "giant_weight_line": 8.466,
+      "tiny_weight_line": 6.834,
+      "stats": {
+        "hp": 63,
+        "atk": 68,
+        "def": 87,
+        "sp_atk": 76,
+        "sp_def": 77,
+        "speed": 84,
+        "sum": 455
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/343-春兔.png"
+    },
+    {
+      "name": "春花兔",
+      "id": 344,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 0.85,
+      "height_max": 1.15,
+      "weight_min": 18.5,
+      "weight_max": 33.5,
+      "giant_weight_line": 33.2,
+      "tiny_weight_line": 18.8,
+      "stats": {
+        "hp": 79,
+        "atk": 85,
+        "def": 103,
+        "sp_atk": 95,
+        "sp_def": 90,
+        "speed": 105,
+        "sum": 557
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/344-春花兔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/342-春团.png"
+}

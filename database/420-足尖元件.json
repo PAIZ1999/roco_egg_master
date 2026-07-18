@@ -1,0 +1,76 @@
+{
+  "id": 420,
+  "name": "足尖元件",
+  "types": [
+    "幻",
+    "机械"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.11,
+    "height_max": 0.16,
+    "weight_min": 1.085,
+    "weight_max": 2.052,
+    "giant_weight_line": 2.0327,
+    "tiny_weight_line": 1.1043
+  },
+  "evolution_chain": [
+    "足尖元件",
+    "离心舞者"
+  ],
+  "stats": {
+    "hp": 91,
+    "atk": 40,
+    "def": 62,
+    "sp_atk": 88,
+    "sp_def": 96,
+    "speed": 100,
+    "sum": 477
+  },
+  "height_min": 0.26,
+  "height_max": 0.39,
+  "weight_min": 3.1,
+  "weight_max": 5.13,
+  "giant_weight_line": 5.0894,
+  "tiny_weight_line": 3.1406,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "离心舞者",
+      "id": 421,
+      "types": [
+        "幻",
+        "机械"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.67,
+      "height_max": 2.01,
+      "weight_min": 36.7,
+      "weight_max": 59.3,
+      "giant_weight_line": 58.848,
+      "tiny_weight_line": 37.152,
+      "stats": {
+        "hp": 114,
+        "atk": 50,
+        "def": 77,
+        "sp_atk": 110,
+        "sp_def": 120,
+        "speed": 125,
+        "sum": 596
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/421-离心舞者.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/420-足尖元件.png"
+}

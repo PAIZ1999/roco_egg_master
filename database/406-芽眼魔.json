@@ -1,0 +1,110 @@
+{
+  "id": 406,
+  "name": "芽眼魔",
+  "types": [
+    "恶",
+    "水"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "妖精组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.27,
+    "weight_min": 1.033,
+    "weight_max": 1.36,
+    "giant_weight_line": 1.3535,
+    "tiny_weight_line": 1.0395
+  },
+  "evolution_chain": [
+    "芽眼魔",
+    "叶眼魔",
+    "障眼魔"
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 62,
+    "def": 51,
+    "sp_atk": 59,
+    "sp_def": 59,
+    "speed": 45,
+    "sum": 344
+  },
+  "height_min": 0.44,
+  "height_max": 0.64,
+  "weight_min": 2.95,
+  "weight_max": 3.4,
+  "giant_weight_line": 3.391,
+  "tiny_weight_line": 2.959,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "叶眼魔",
+      "id": 407,
+      "types": [
+        "恶",
+        "水"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "妖精组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.98,
+      "weight_min": 20.5,
+      "weight_max": 28.6,
+      "giant_weight_line": 28.438,
+      "tiny_weight_line": 20.662,
+      "stats": {
+        "hp": 91,
+        "atk": 82,
+        "def": 68,
+        "sp_atk": 78,
+        "sp_def": 78,
+        "speed": 60,
+        "sum": 457
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/407-叶眼魔.png"
+    },
+    {
+      "name": "障眼魔",
+      "id": 408,
+      "types": [
+        "恶",
+        "水"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "妖精组"
+      ],
+      "height_min": 1.49,
+      "height_max": 1.8,
+      "weight_min": 66.5,
+      "weight_max": 89,
+      "giant_weight_line": 88.55,
+      "tiny_weight_line": 66.95,
+      "stats": {
+        "hp": 113,
+        "atk": 103,
+        "def": 85,
+        "sp_atk": 98,
+        "sp_def": 98,
+        "speed": 75,
+        "sum": 572
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/408-障眼魔.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/406-芽眼魔.png"
+}

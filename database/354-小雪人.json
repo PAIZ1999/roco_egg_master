@@ -1,0 +1,74 @@
+{
+  "id": 354,
+  "name": "小雪人",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.32,
+    "height_max": 0.39,
+    "weight_min": 15.155,
+    "weight_max": 35,
+    "giant_weight_line": 34.6031,
+    "tiny_weight_line": 15.5519
+  },
+  "evolution_chain": [
+    "小雪人",
+    "雪怪"
+  ],
+  "stats": {
+    "hp": 101,
+    "atk": 85,
+    "def": 78,
+    "sp_atk": 80,
+    "sp_def": 105,
+    "speed": 60,
+    "sum": 509
+  },
+  "height_min": 0.75,
+  "height_max": 0.94,
+  "weight_min": 43.3,
+  "weight_max": 87.5,
+  "giant_weight_line": 86.616,
+  "tiny_weight_line": 44.184,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "雪怪",
+      "id": 355,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.75,
+      "height_max": 2.33,
+      "weight_min": 120,
+      "weight_max": 187.4,
+      "giant_weight_line": 186.052,
+      "tiny_weight_line": 121.348,
+      "stats": {
+        "hp": 126,
+        "atk": 107,
+        "def": 98,
+        "sp_atk": 99,
+        "sp_def": 131,
+        "speed": 75,
+        "sum": 636
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/355-雪怪.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/354-小雪人.png"
+}

@@ -1,0 +1,112 @@
+{
+  "id": 296,
+  "name": "毛头小蛛",
+  "types": [
+    "虫",
+    "地"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "妖精组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.19,
+    "weight_min": 0.333,
+    "weight_max": 0.62,
+    "giant_weight_line": 0.6143,
+    "tiny_weight_line": 0.3387
+  },
+  "evolution_chain": [
+    "毛头小蛛",
+    [
+      "捕尘长绒",
+      "食尘短绒"
+    ]
+  ],
+  "stats": {
+    "hp": 85,
+    "atk": 80,
+    "def": 93,
+    "sp_atk": 27,
+    "sp_def": 79,
+    "speed": 88,
+    "sum": 452
+  },
+  "height_min": 0.3,
+  "height_max": 0.45,
+  "weight_min": 0.95,
+  "weight_max": 2,
+  "giant_weight_line": 1.979,
+  "tiny_weight_line": 0.971,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "捕尘长绒",
+      "id": 297,
+      "types": [
+        "虫",
+        "地"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "妖精组"
+      ],
+      "height_min": 1.15,
+      "height_max": 1.45,
+      "weight_min": 2.35,
+      "weight_max": 4.19,
+      "giant_weight_line": 4.1532,
+      "tiny_weight_line": 2.3868,
+      "stats": {
+        "hp": 106,
+        "atk": 100,
+        "def": 116,
+        "sp_atk": 34,
+        "sp_def": 99,
+        "speed": 110,
+        "sum": 565
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/297-捕尘长绒.png"
+    },
+    {
+      "name": "食尘短绒",
+      "id": 298,
+      "types": [
+        "虫",
+        "地"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "妖精组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.9,
+      "weight_min": 2.65,
+      "weight_max": 5.15,
+      "giant_weight_line": 5.1,
+      "tiny_weight_line": 2.7,
+      "stats": {
+        "hp": 109,
+        "atk": 105,
+        "def": 113,
+        "sp_atk": 37,
+        "sp_def": 97,
+        "speed": 115,
+        "sum": 576
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/298-食尘短绒.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/296-毛头小蛛.png"
+}

@@ -1,0 +1,104 @@
+{
+  "id": 15,
+  "name": "锥尾羊",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.34,
+    "weight_min": 4.655,
+    "weight_max": 6.6,
+    "giant_weight_line": 6.5611,
+    "tiny_weight_line": 4.6939
+  },
+  "evolution_chain": [
+    "锥尾羊",
+    "铃兰羊",
+    "花影羚羊"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 66,
+    "def": 72,
+    "sp_atk": 29,
+    "sp_def": 49,
+    "speed": 66,
+    "sum": 349
+  },
+  "height_min": 0.57,
+  "height_max": 0.81,
+  "weight_min": 13.3,
+  "weight_max": 16.5,
+  "giant_weight_line": 16.436,
+  "tiny_weight_line": 13.364,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "铃兰羊",
+      "id": 16,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1.01,
+      "weight_min": 29,
+      "weight_max": 36,
+      "giant_weight_line": 35.86,
+      "tiny_weight_line": 29.14,
+      "stats": {
+        "hp": 89,
+        "atk": 89,
+        "def": 96,
+        "sp_atk": 39,
+        "sp_def": 65,
+        "speed": 88,
+        "sum": 466
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/16-铃兰羊.png"
+    },
+    {
+      "name": "花影羚羊",
+      "id": 17,
+      "types": [
+        "幽",
+        "恶"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.42,
+      "height_max": 1.92,
+      "weight_min": 76.9,
+      "weight_max": 98,
+      "giant_weight_line": 97.578,
+      "tiny_weight_line": 77.322,
+      "stats": {
+        "hp": 112,
+        "atk": 111,
+        "def": 120,
+        "sp_atk": 48,
+        "sp_def": 81,
+        "speed": 110,
+        "sum": 582
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/17-花影羚羊.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/15-锥尾羊.png"
+}

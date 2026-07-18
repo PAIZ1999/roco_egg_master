@@ -1,0 +1,45 @@
+{
+  "id": 440,
+  "name": "睡铃雪影娃娃",
+  "types": [
+    "冰",
+    "草"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": false,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": null,
+    "height_max": null,
+    "weight_min": null,
+    "weight_max": null,
+    "giant_weight_line": null,
+    "tiny_weight_line": null
+  },
+  "evolution_chain": [
+    "睡铃雪影娃娃"
+  ],
+  "stats": {
+    "hp": 116,
+    "atk": 42,
+    "def": 85,
+    "sp_atk": 104,
+    "sp_def": 116,
+    "speed": 100,
+    "sum": 563
+  },
+  "height_min": 0.71,
+  "height_max": 0.89,
+  "weight_min": 41,
+  "weight_max": 55,
+  "giant_weight_line": 54.72,
+  "tiny_weight_line": 41.28,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/440-睡铃雪影娃娃.png"
+}

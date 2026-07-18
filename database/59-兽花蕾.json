@@ -1,0 +1,45 @@
+{
+  "id": 59,
+  "name": "兽花蕾",
+  "types": [
+    "光",
+    "草"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.19,
+    "weight_min": 1.488,
+    "weight_max": 2.6,
+    "giant_weight_line": 2.5778,
+    "tiny_weight_line": 1.5102
+  },
+  "evolution_chain": [
+    "兽花蕾"
+  ],
+  "stats": {
+    "hp": 70,
+    "atk": 79,
+    "def": 70,
+    "sp_atk": 82,
+    "sp_def": 97,
+    "speed": 115,
+    "sum": 513
+  },
+  "height_min": 0.38,
+  "height_max": 0.45,
+  "weight_min": 4.25,
+  "weight_max": 6.5,
+  "giant_weight_line": 6.455,
+  "tiny_weight_line": 4.295,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/59-兽花蕾.png"
+}

@@ -1,0 +1,107 @@
+{
+  "id": 393,
+  "name": "火豆丁",
+  "types": [
+    "火"
+  ],
+  "egg_groups": [
+    "巨灵组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "巨灵组",
+      "拟人组"
+    ],
+    "height_min": 0.37,
+    "height_max": 0.52,
+    "weight_min": 2.625,
+    "weight_max": 4.4,
+    "giant_weight_line": 4.3645,
+    "tiny_weight_line": 2.6605
+  },
+  "evolution_chain": [
+    "火豆丁",
+    "火蛮人",
+    "火巨人"
+  ],
+  "stats": {
+    "hp": 45,
+    "atk": 46,
+    "def": 49,
+    "sp_atk": 15,
+    "sp_def": 30,
+    "speed": 29,
+    "sum": 214
+  },
+  "height_min": 0.88,
+  "height_max": 1.25,
+  "weight_min": 7.5,
+  "weight_max": 11,
+  "giant_weight_line": 10.93,
+  "tiny_weight_line": 7.57,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "火蛮人",
+      "id": 394,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 1.48,
+      "height_max": 1.76,
+      "weight_min": 41,
+      "weight_max": 67.7,
+      "giant_weight_line": 67.166,
+      "tiny_weight_line": 41.534,
+      "stats": {
+        "hp": 60,
+        "atk": 62,
+        "def": 65,
+        "sp_atk": 20,
+        "sp_def": 41,
+        "speed": 39,
+        "sum": 287
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/394-火蛮人.png"
+    },
+    {
+      "name": "火巨人",
+      "id": 395,
+      "types": [
+        "火"
+      ],
+      "egg_groups": [
+        "巨灵组",
+        "拟人组"
+      ],
+      "height_min": 1.82,
+      "height_max": 2.35,
+      "weight_min": 110,
+      "weight_max": 159,
+      "giant_weight_line": 158.02,
+      "tiny_weight_line": 110.98,
+      "stats": {
+        "hp": 75,
+        "atk": 77,
+        "def": 81,
+        "sp_atk": 26,
+        "sp_def": 51,
+        "speed": 49,
+        "sum": 359
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/395-火巨人.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/393-火豆丁.png"
+}

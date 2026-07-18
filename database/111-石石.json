@@ -1,0 +1,78 @@
+{
+  "id": 111,
+  "name": "石石",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "大地组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "大地组",
+      "魔力组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.21,
+    "weight_min": 21.35,
+    "weight_max": 30,
+    "giant_weight_line": 29.827,
+    "tiny_weight_line": 21.523
+  },
+  "evolution_chain": [
+    "石石",
+    "巨灵石"
+  ],
+  "stats": {
+    "hp": 76,
+    "atk": 79,
+    "def": 101,
+    "sp_atk": 79,
+    "sp_def": 56,
+    "speed": 76,
+    "sum": 467
+  },
+  "height_min": 0.35,
+  "height_max": 0.5,
+  "weight_min": 61,
+  "weight_max": 75,
+  "giant_weight_line": 74.72,
+  "tiny_weight_line": 61.28,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "巨灵石",
+      "id": 112,
+      "types": [
+        "地",
+        "幽"
+      ],
+      "egg_groups": [
+        "大地组",
+        "魔力组"
+      ],
+      "height_min": 1.95,
+      "height_max": 2.3,
+      "weight_min": 205,
+      "weight_max": 240,
+      "giant_weight_line": 239.3,
+      "tiny_weight_line": 205.7,
+      "stats": {
+        "hp": 95,
+        "atk": 99,
+        "def": 126,
+        "sp_atk": 99,
+        "sp_def": 70,
+        "speed": 95,
+        "sum": 584
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/112-巨灵石.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/111-石石.png"
+}

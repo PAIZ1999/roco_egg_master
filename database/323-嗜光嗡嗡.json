@@ -1,0 +1,76 @@
+{
+  "id": 323,
+  "name": "嗜光嗡嗡",
+  "types": [
+    "恶",
+    "光"
+  ],
+  "egg_groups": [
+    "昆虫组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组"
+    ],
+    "height_min": 0.1,
+    "height_max": 0.13,
+    "weight_min": 0.511,
+    "weight_max": 1.22,
+    "giant_weight_line": 1.2058,
+    "tiny_weight_line": 0.5252
+  },
+  "evolution_chain": [
+    "嗜光嗡嗡",
+    "窃光蚊"
+  ],
+  "stats": {
+    "hp": 74,
+    "atk": 91,
+    "def": 57,
+    "sp_atk": 91,
+    "sp_def": 100,
+    "speed": 92,
+    "sum": 505
+  },
+  "height_min": 0.24,
+  "height_max": 0.32,
+  "weight_min": 1.46,
+  "weight_max": 3.05,
+  "giant_weight_line": 3.0182,
+  "tiny_weight_line": 1.4918,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "窃光蚊",
+      "id": 324,
+      "types": [
+        "恶",
+        "光"
+      ],
+      "egg_groups": [
+        "昆虫组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.66,
+      "weight_min": 7.05,
+      "weight_max": 9.62,
+      "giant_weight_line": 9.5686,
+      "tiny_weight_line": 7.1014,
+      "stats": {
+        "hp": 93,
+        "atk": 113,
+        "def": 71,
+        "sp_atk": 113,
+        "sp_def": 125,
+        "speed": 115,
+        "sum": 630
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/324-窃光蚊.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/323-嗜光嗡嗡.png"
+}

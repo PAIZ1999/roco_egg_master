@@ -1,0 +1,77 @@
+{
+  "id": 373,
+  "name": "牵线木偶",
+  "types": [
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "拟人组"
+    ],
+    "height_min": 0.27,
+    "height_max": 0.38,
+    "weight_min": 2.09,
+    "weight_max": 3.48,
+    "giant_weight_line": 3.4522,
+    "tiny_weight_line": 2.1178
+  },
+  "evolution_chain": [
+    "牵线木偶",
+    "帅帅魔偶"
+  ],
+  "stats": {
+    "hp": 77,
+    "atk": 83,
+    "def": 69,
+    "sp_atk": 89,
+    "sp_def": 107,
+    "speed": 84,
+    "sum": 509
+  },
+  "height_min": 0.63,
+  "height_max": 0.91,
+  "weight_min": 5.97,
+  "weight_max": 8.7,
+  "giant_weight_line": 8.6454,
+  "tiny_weight_line": 6.0246,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "帅帅魔偶",
+      "id": 374,
+      "types": [
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "拟人组"
+      ],
+      "height_min": 0.89,
+      "height_max": 1.27,
+      "weight_min": 15.1,
+      "weight_max": 21.2,
+      "giant_weight_line": 21.078,
+      "tiny_weight_line": 15.222,
+      "stats": {
+        "hp": 97,
+        "atk": 104,
+        "def": 86,
+        "sp_atk": 111,
+        "sp_def": 133,
+        "speed": 105,
+        "sum": 636
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/374-帅帅魔偶.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/373-牵线木偶.png"
+}

@@ -1,0 +1,168 @@
+{
+  "id": 220,
+  "name": "海枝枝",
+  "types": [
+    "水",
+    "幽"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "植物组"
+    ],
+    "height_min": 0.32,
+    "height_max": 0.35,
+    "weight_min": 1.229,
+    "weight_max": 2.728,
+    "giant_weight_line": 2.698,
+    "tiny_weight_line": 1.259
+  },
+  "evolution_chain": [
+    "海枝枝"
+  ],
+  "stats": {
+    "hp": 78,
+    "atk": 58,
+    "def": 96,
+    "sp_atk": 148,
+    "sp_def": 120,
+    "speed": 110,
+    "sum": 610
+  },
+  "height_min": 0.75,
+  "height_max": 0.85,
+  "weight_min": 3.51,
+  "weight_max": 6.82,
+  "giant_weight_line": 6.7538,
+  "tiny_weight_line": 3.5762,
+  "regional_forms": [
+    {
+      "name": "海枝枝（碧蓝珊瑚）",
+      "id": 220,
+      "types": [
+        "水",
+        "幽"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "植物组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.85,
+      "weight_min": 3.51,
+      "weight_max": 6.82,
+      "giant_weight_line": 6.7538,
+      "tiny_weight_line": 3.5762,
+      "stats": {
+        "hp": 78,
+        "atk": 58,
+        "def": 96,
+        "sp_atk": 148,
+        "sp_def": 120,
+        "speed": 110,
+        "sum": 610
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/220-海枝枝（碧蓝珊瑚）.png"
+    },
+    {
+      "name": "海枝枝（杏黄百合）",
+      "id": 220,
+      "types": [
+        "水",
+        "幽"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "植物组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.85,
+      "weight_min": 3.51,
+      "weight_max": 6.82,
+      "giant_weight_line": 6.7538,
+      "tiny_weight_line": 3.5762,
+      "stats": {
+        "hp": 91,
+        "atk": 48,
+        "def": 104,
+        "sp_atk": 125,
+        "sp_def": 129,
+        "speed": 110,
+        "sum": 607
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/220-海枝枝（杏黄百合）.png"
+    },
+    {
+      "name": "海枝枝（洋红沙丁）",
+      "id": 220,
+      "types": [
+        "水",
+        "幽"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "植物组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.85,
+      "weight_min": 3.51,
+      "weight_max": 6.82,
+      "giant_weight_line": 6.7538,
+      "tiny_weight_line": 3.5762,
+      "stats": {
+        "hp": 97,
+        "atk": 62,
+        "def": 84,
+        "sp_atk": 136,
+        "sp_def": 121,
+        "speed": 110,
+        "sum": 610
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/220-海枝枝（洋红沙丁）.png"
+    },
+    {
+      "name": "海枝枝（翠绿纶布）",
+      "id": 220,
+      "types": [
+        "水",
+        "幽"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "植物组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.85,
+      "weight_min": 3.51,
+      "weight_max": 6.82,
+      "giant_weight_line": 6.7538,
+      "tiny_weight_line": 3.5762,
+      "stats": {
+        "hp": 90,
+        "atk": 53,
+        "def": 92,
+        "sp_atk": 135,
+        "sp_def": 113,
+        "speed": 120,
+        "sum": 603
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/220-海枝枝（翠绿纶布）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/220-海枝枝（杏黄百合）.png"
+}

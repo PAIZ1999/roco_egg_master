@@ -1,0 +1,79 @@
+{
+  "id": 425,
+  "name": "苞米仔",
+  "types": [
+    "草",
+    "火"
+  ],
+  "egg_groups": [
+    "植物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "拟人组"
+    ],
+    "height_min": 0.22,
+    "height_max": 0.3,
+    "weight_min": 3.115,
+    "weight_max": 5.2,
+    "giant_weight_line": 5.1583,
+    "tiny_weight_line": 3.1567
+  },
+  "evolution_chain": [
+    "苞米仔",
+    "炮米花"
+  ],
+  "stats": {
+    "hp": 86,
+    "atk": 74,
+    "def": 84,
+    "sp_atk": 76,
+    "sp_def": 84,
+    "speed": 60,
+    "sum": 464
+  },
+  "height_min": 0.51,
+  "height_max": 0.73,
+  "weight_min": 8.9,
+  "weight_max": 13,
+  "giant_weight_line": 12.918,
+  "tiny_weight_line": 8.982,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "炮米花",
+      "id": 426,
+      "types": [
+        "草",
+        "火"
+      ],
+      "egg_groups": [
+        "植物组",
+        "拟人组"
+      ],
+      "height_min": 1.37,
+      "height_max": 1.59,
+      "weight_min": 48,
+      "weight_max": 71,
+      "giant_weight_line": 70.54,
+      "tiny_weight_line": 48.46,
+      "stats": {
+        "hp": 107,
+        "atk": 93,
+        "def": 105,
+        "sp_atk": 95,
+        "sp_def": 105,
+        "speed": 75,
+        "sum": 580
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/426-炮米花.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/425-苞米仔.png"
+}

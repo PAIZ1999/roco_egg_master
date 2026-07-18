@@ -1,0 +1,103 @@
+{
+  "id": 139,
+  "name": "雪娃娃",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.12,
+    "height_max": 0.17,
+    "weight_min": 2.38,
+    "weight_max": 3.264,
+    "giant_weight_line": 3.2463,
+    "tiny_weight_line": 2.3977
+  },
+  "evolution_chain": [
+    "雪娃娃",
+    "冰封怨灵",
+    "雪灵"
+  ],
+  "stats": {
+    "hp": 56,
+    "atk": 67,
+    "def": 63,
+    "sp_atk": 67,
+    "sp_def": 63,
+    "speed": 69,
+    "sum": 385
+  },
+  "height_min": 0.29,
+  "height_max": 0.42,
+  "weight_min": 6.8,
+  "weight_max": 8.16,
+  "giant_weight_line": 8.1328,
+  "tiny_weight_line": 6.8272,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "冰封怨灵",
+      "id": 140,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 0.96,
+      "height_max": 1.37,
+      "weight_min": 24.5,
+      "weight_max": 31.6,
+      "giant_weight_line": 31.458,
+      "tiny_weight_line": 24.642,
+      "stats": {
+        "hp": 75,
+        "atk": 90,
+        "def": 84,
+        "sp_atk": 90,
+        "sp_def": 84,
+        "speed": 92,
+        "sum": 515
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/140-冰封怨灵.png"
+    },
+    {
+      "name": "雪灵",
+      "id": 141,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.09,
+      "height_max": 1.56,
+      "weight_min": 56.4,
+      "weight_max": 68.4,
+      "giant_weight_line": 68.16,
+      "tiny_weight_line": 56.64,
+      "stats": {
+        "hp": 94,
+        "atk": 112,
+        "def": 105,
+        "sp_atk": 112,
+        "sp_def": 105,
+        "speed": 115,
+        "sum": 643
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/141-雪灵.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/139-雪娃娃.png"
+}

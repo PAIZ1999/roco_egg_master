@@ -1,0 +1,159 @@
+{
+  "id": 54,
+  "name": "小灵面",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.23,
+    "weight_min": 0.035,
+    "weight_max": 0.06,
+    "giant_weight_line": 0.0595,
+    "tiny_weight_line": 0.0355
+  },
+  "evolution_chain": [
+    "小灵面",
+    "暗影灵面",
+    "幽冥眼"
+  ],
+  "stats": {
+    "hp": 55,
+    "atk": 30,
+    "def": 59,
+    "sp_atk": 72,
+    "sp_def": 81,
+    "speed": 69,
+    "sum": 366
+  },
+  "height_min": 0.38,
+  "height_max": 0.55,
+  "weight_min": 0.1,
+  "weight_max": 0.55,
+  "giant_weight_line": 0.541,
+  "tiny_weight_line": 0.109,
+  "regional_forms": [
+    {
+      "name": "暗影灵面（睁眼的样子）",
+      "id": 55,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.86,
+      "weight_min": 0.12,
+      "weight_max": 1.16,
+      "giant_weight_line": 1.1392,
+      "tiny_weight_line": 0.1408,
+      "stats": {
+        "hp": 74,
+        "atk": 40,
+        "def": 78,
+        "sp_atk": 96,
+        "sp_def": 108,
+        "speed": 92,
+        "sum": 488
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/55-暗影灵面（睁眼的样子）.png"
+    },
+    {
+      "name": "幽冥眼（睁眼的样子）",
+      "id": 56,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 1.55,
+      "height_max": 1.65,
+      "weight_min": 1.5,
+      "weight_max": 2.86,
+      "giant_weight_line": 2.8328,
+      "tiny_weight_line": 1.5272,
+      "stats": {
+        "hp": 92,
+        "atk": 50,
+        "def": 98,
+        "sp_atk": 120,
+        "sp_def": 135,
+        "speed": 115,
+        "sum": 610
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/56-幽冥眼（睁眼的样子）.png"
+    },
+    {
+      "name": "暗影灵面（闭眼的样子）",
+      "id": 55,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 0.75,
+      "height_max": 0.86,
+      "weight_min": 0.12,
+      "weight_max": 1.16,
+      "giant_weight_line": 1.1392,
+      "tiny_weight_line": 0.1408,
+      "stats": {
+        "hp": 84,
+        "atk": 30,
+        "def": 83,
+        "sp_atk": 96,
+        "sp_def": 88,
+        "speed": 92,
+        "sum": 473
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/55-暗影灵面（闭眼的样子）.png"
+    },
+    {
+      "name": "幽冥眼（闭眼的样子）",
+      "id": 56,
+      "types": [
+        "幽"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 1.55,
+      "height_max": 1.65,
+      "weight_min": 1.5,
+      "weight_max": 2.86,
+      "giant_weight_line": 2.8328,
+      "tiny_weight_line": 1.5272,
+      "stats": {
+        "hp": 105,
+        "atk": 38,
+        "def": 104,
+        "sp_atk": 120,
+        "sp_def": 110,
+        "speed": 115,
+        "sum": 592
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/56-幽冥眼（闭眼的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/54-小灵面.png"
+}

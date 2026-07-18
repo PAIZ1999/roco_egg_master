@@ -1,0 +1,141 @@
+{
+  "id": 105,
+  "name": "阿米亚特",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "大地组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "大地组",
+      "巨灵组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.33,
+    "weight_min": 13.475,
+    "weight_max": 19.68,
+    "giant_weight_line": 19.5559,
+    "tiny_weight_line": 13.5991
+  },
+  "evolution_chain": [
+    "阿米亚特",
+    "阿米樱",
+    "罗隐",
+    [
+      "深渊罗隐"
+    ]
+  ],
+  "stats": {
+    "hp": 64,
+    "atk": 95,
+    "def": 67,
+    "sp_atk": 47,
+    "sp_def": 42,
+    "speed": 45,
+    "sum": 360
+  },
+  "height_min": 0.57,
+  "height_max": 0.79,
+  "weight_min": 38.5,
+  "weight_max": 49.2,
+  "giant_weight_line": 48.986,
+  "tiny_weight_line": 38.714,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "深渊罗隐",
+      "id": 107,
+      "types": [
+        "地",
+        "恶"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.48,
+      "height_max": 2.12,
+      "weight_min": 290,
+      "weight_max": 305,
+      "giant_weight_line": 304.7,
+      "tiny_weight_line": 290.3,
+      "stats": {
+        "hp": 107,
+        "atk": 159,
+        "def": 167,
+        "sp_atk": 78,
+        "sp_def": 32,
+        "speed": 75,
+        "sum": 618
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/107-深渊罗隐.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "阿米樱",
+      "id": 106,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ],
+      "height_min": 0.78,
+      "height_max": 1.12,
+      "weight_min": 94.2,
+      "weight_max": 143,
+      "giant_weight_line": 142.024,
+      "tiny_weight_line": 95.176,
+      "stats": {
+        "hp": 86,
+        "atk": 127,
+        "def": 89,
+        "sp_atk": 62,
+        "sp_def": 56,
+        "speed": 60,
+        "sum": 480
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/106-阿米樱.png"
+    },
+    {
+      "name": "罗隐",
+      "id": 107,
+      "types": [
+        "地",
+        "恶"
+      ],
+      "egg_groups": [
+        "大地组",
+        "巨灵组"
+      ],
+      "height_min": 1.48,
+      "height_max": 2.12,
+      "weight_min": 290,
+      "weight_max": 305,
+      "giant_weight_line": 304.7,
+      "tiny_weight_line": 290.3,
+      "stats": {
+        "hp": 107,
+        "atk": 159,
+        "def": 112,
+        "sp_atk": 78,
+        "sp_def": 70,
+        "speed": 75,
+        "sum": 601
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/107-罗隐.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/105-阿米亚特.png"
+}

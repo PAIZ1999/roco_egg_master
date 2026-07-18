@@ -1,0 +1,111 @@
+{
+  "id": 280,
+  "name": "墨鱿士",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "海洋组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "海洋组",
+      "软体组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.19,
+    "weight_min": 1.138,
+    "weight_max": 2.008,
+    "giant_weight_line": 1.9906,
+    "tiny_weight_line": 1.1554
+  },
+  "evolution_chain": [
+    "墨鱿士",
+    [
+      "混乱鱿彩",
+      "秩序鱿墨"
+    ]
+  ],
+  "stats": {
+    "hp": 103,
+    "atk": 97,
+    "def": 105,
+    "sp_atk": 42,
+    "sp_def": 79,
+    "speed": 56,
+    "sum": 482
+  },
+  "height_min": 0.35,
+  "height_max": 0.46,
+  "weight_min": 3.25,
+  "weight_max": 5.02,
+  "giant_weight_line": 4.9846,
+  "tiny_weight_line": 3.2854,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "混乱鱿彩",
+      "id": 281,
+      "types": [
+        "幽",
+        "恶"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ],
+      "height_min": 1.36,
+      "height_max": 1.54,
+      "weight_min": 36.9,
+      "weight_max": 48.2,
+      "giant_weight_line": 47.974,
+      "tiny_weight_line": 37.126,
+      "stats": {
+        "hp": 129,
+        "atk": 122,
+        "def": 131,
+        "sp_atk": 53,
+        "sp_def": 99,
+        "speed": 70,
+        "sum": 604
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/281-混乱鱿彩.png"
+    },
+    {
+      "name": "秩序鱿墨",
+      "id": 282,
+      "types": [
+        "幽",
+        "萌"
+      ],
+      "egg_groups": [
+        "海洋组",
+        "软体组"
+      ],
+      "height_min": 1.59,
+      "height_max": 1.72,
+      "weight_min": 45.6,
+      "weight_max": 60.1,
+      "giant_weight_line": 59.81,
+      "tiny_weight_line": 45.89,
+      "stats": {
+        "hp": 78,
+        "atk": 120,
+        "def": 124,
+        "sp_atk": 39,
+        "sp_def": 113,
+        "speed": 130,
+        "sum": 604
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/282-秩序鱿墨.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/280-墨鱿士.png"
+}

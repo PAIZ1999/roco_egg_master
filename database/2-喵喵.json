@@ -1,0 +1,168 @@
+{
+  "id": 2,
+  "name": "喵喵",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "动物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "拟人组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.31,
+    "weight_min": 1.267,
+    "weight_max": 1.84,
+    "giant_weight_line": 1.8285,
+    "tiny_weight_line": 1.2785
+  },
+  "evolution_chain": [
+    "喵喵",
+    "喵呜",
+    "魔力猫",
+    [
+      "叶冕魔力猫",
+      "武斗酷猫"
+    ]
+  ],
+  "stats": {
+    "hp": 65,
+    "atk": 66,
+    "def": 49,
+    "sp_atk": 66,
+    "sp_def": 91,
+    "speed": 33,
+    "sum": 370
+  },
+  "height_min": 0.53,
+  "height_max": 0.75,
+  "weight_min": 3.62,
+  "weight_max": 4.6,
+  "giant_weight_line": 4.5804,
+  "tiny_weight_line": 3.6396,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "叶冕魔力猫",
+      "id": 4,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.4,
+      "height_max": 3,
+      "weight_min": 246,
+      "weight_max": 315,
+      "giant_weight_line": 313.62,
+      "tiny_weight_line": 247.38,
+      "stats": {
+        "hp": 108,
+        "atk": 127,
+        "def": 81,
+        "sp_atk": 127,
+        "sp_def": 151,
+        "speed": 55,
+        "sum": 649
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/4-叶冕魔力猫.png"
+    },
+    {
+      "name": "武斗酷猫",
+      "id": 4,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.48,
+      "height_max": 1.75,
+      "weight_min": 65,
+      "weight_max": 97,
+      "giant_weight_line": 96.36,
+      "tiny_weight_line": 65.64,
+      "stats": {
+        "hp": 126,
+        "atk": 134,
+        "def": 110,
+        "sp_atk": 57,
+        "sp_def": 80,
+        "speed": 135,
+        "sum": 642
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/4-武斗酷猫.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "魔力猫",
+      "id": 4,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 1.5,
+      "height_max": 2.15,
+      "weight_min": 105,
+      "weight_max": 125,
+      "giant_weight_line": 124.6,
+      "tiny_weight_line": 105.4,
+      "stats": {
+        "hp": 108,
+        "atk": 109,
+        "def": 81,
+        "sp_atk": 109,
+        "sp_def": 151,
+        "speed": 55,
+        "sum": 613
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/4-魔力猫.png"
+    },
+    {
+      "name": "喵呜",
+      "id": 3,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.92,
+      "weight_min": 14.2,
+      "weight_max": 15.6,
+      "giant_weight_line": 15.572,
+      "tiny_weight_line": 14.228,
+      "stats": {
+        "hp": 86,
+        "atk": 87,
+        "def": 65,
+        "sp_atk": 87,
+        "sp_def": 121,
+        "speed": 44,
+        "sum": 490
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/3-喵呜.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/2-喵喵.png"
+}

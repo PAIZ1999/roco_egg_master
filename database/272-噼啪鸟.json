@@ -1,0 +1,47 @@
+{
+  "id": 272,
+  "name": "噼啪鸟",
+  "types": [
+    "电",
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "巨灵组"
+    ],
+    "height_min": 0.85,
+    "height_max": 0.89,
+    "weight_min": 31.325,
+    "weight_max": 51,
+    "giant_weight_line": 50.6065,
+    "tiny_weight_line": 31.7185
+  },
+  "evolution_chain": [
+    "噼啪鸟"
+  ],
+  "stats": {
+    "hp": 78,
+    "atk": 116,
+    "def": 85,
+    "sp_atk": 109,
+    "sp_def": 85,
+    "speed": 145,
+    "sum": 618
+  },
+  "height_min": 2,
+  "height_max": 2.15,
+  "weight_min": 89.5,
+  "weight_max": 127.5,
+  "giant_weight_line": 126.74,
+  "tiny_weight_line": 90.26,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/272-噼啪鸟.png"
+}

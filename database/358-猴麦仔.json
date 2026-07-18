@@ -1,0 +1,79 @@
+{
+  "id": 358,
+  "name": "猴麦仔",
+  "types": [
+    "普通",
+    "机械"
+  ],
+  "egg_groups": [
+    "动物组",
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "机械组"
+    ],
+    "height_min": 0.24,
+    "height_max": 0.33,
+    "weight_min": 2.94,
+    "weight_max": 7.04,
+    "giant_weight_line": 6.958,
+    "tiny_weight_line": 3.022
+  },
+  "evolution_chain": [
+    "猴麦仔",
+    "音碟吼"
+  ],
+  "stats": {
+    "hp": 93,
+    "atk": 75,
+    "def": 50,
+    "sp_atk": 121,
+    "sp_def": 102,
+    "speed": 88,
+    "sum": 529
+  },
+  "height_min": 0.57,
+  "height_max": 0.79,
+  "weight_min": 8.4,
+  "weight_max": 17.6,
+  "giant_weight_line": 17.416,
+  "tiny_weight_line": 8.584,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "音碟吼",
+      "id": 359,
+      "types": [
+        "普通",
+        "机械"
+      ],
+      "egg_groups": [
+        "动物组",
+        "机械组"
+      ],
+      "height_min": 0.77,
+      "height_max": 1.08,
+      "weight_min": 23.1,
+      "weight_max": 40.8,
+      "giant_weight_line": 40.446,
+      "tiny_weight_line": 23.454,
+      "stats": {
+        "hp": 116,
+        "atk": 94,
+        "def": 63,
+        "sp_atk": 151,
+        "sp_def": 127,
+        "speed": 110,
+        "sum": 661
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/359-音碟吼.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/358-猴麦仔.png"
+}

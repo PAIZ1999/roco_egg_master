@@ -1,0 +1,398 @@
+{
+  "id": 234,
+  "name": "脆筒甜甜",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "软体组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "软体组",
+      "魔力组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.17,
+    "weight_min": 0.63,
+    "weight_max": 1.52,
+    "giant_weight_line": 1.5022,
+    "tiny_weight_line": 0.6478
+  },
+  "evolution_chain": [
+    "脆筒甜甜",
+    "香草甜甜（樱桃饰品）",
+    "圣代甜甜（樱桃巧克力口味）"
+  ],
+  "stats": {
+    "hp": 72,
+    "atk": 67,
+    "def": 42,
+    "sp_atk": 72,
+    "sp_def": 55,
+    "speed": 60,
+    "sum": 368
+  },
+  "height_min": 0.3,
+  "height_max": 0.4,
+  "weight_min": 1.8,
+  "weight_max": 3.8,
+  "giant_weight_line": 3.76,
+  "tiny_weight_line": 1.84,
+  "regional_forms": [
+    {
+      "name": "圣代甜甜（樱桃草莓口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 107,
+        "atk": 120,
+        "def": 81,
+        "sp_atk": 110,
+        "sp_def": 96,
+        "speed": 100,
+        "sum": 614
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（樱桃草莓口味）.png"
+    },
+    {
+      "name": "圣代甜甜（樱桃抹茶口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 113,
+        "atk": 112,
+        "def": 79,
+        "sp_atk": 110,
+        "sp_def": 92,
+        "speed": 105,
+        "sum": 611
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（樱桃抹茶口味）.png"
+    },
+    {
+      "name": "圣代甜甜（蓝莓巧克力口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 114,
+        "atk": 117,
+        "def": 79,
+        "sp_atk": 110,
+        "sp_def": 92,
+        "speed": 100,
+        "sum": 612
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（蓝莓巧克力口味）.png"
+    },
+    {
+      "name": "圣代甜甜（蓝莓草莓口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 113,
+        "atk": 109,
+        "def": 90,
+        "sp_atk": 100,
+        "sp_def": 96,
+        "speed": 100,
+        "sum": 608
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（蓝莓草莓口味）.png"
+    },
+    {
+      "name": "圣代甜甜（蓝莓抹茶口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 121,
+        "atk": 100,
+        "def": 86,
+        "sp_atk": 101,
+        "sp_def": 92,
+        "speed": 105,
+        "sum": 605
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（蓝莓抹茶口味）.png"
+    },
+    {
+      "name": "圣代甜甜（杨桃巧克力口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 110,
+        "atk": 116,
+        "def": 73,
+        "sp_atk": 120,
+        "sp_def": 96,
+        "speed": 100,
+        "sum": 615
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（杨桃巧克力口味）.png"
+    },
+    {
+      "name": "圣代甜甜（杨桃草莓口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 108,
+        "atk": 110,
+        "def": 84,
+        "sp_atk": 110,
+        "sp_def": 99,
+        "speed": 100,
+        "sum": 611
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（杨桃草莓口味）.png"
+    },
+    {
+      "name": "圣代甜甜（杨桃抹茶口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 110,
+        "atk": 107,
+        "def": 82,
+        "sp_atk": 110,
+        "sp_def": 96,
+        "speed": 105,
+        "sum": 610
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（杨桃抹茶口味）.png"
+    },
+    {
+      "name": "香草甜甜（杨桃饰品）",
+      "id": 235,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.4,
+      "height_max": 0.6,
+      "weight_min": 5.15,
+      "weight_max": 7.8,
+      "giant_weight_line": 7.747,
+      "tiny_weight_line": 5.203,
+      "stats": {
+        "hp": 88,
+        "atk": 92,
+        "def": 58,
+        "sp_atk": 96,
+        "sp_def": 77,
+        "speed": 80,
+        "sum": 491
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/235-香草甜甜（杨桃饰品）.png"
+    },
+    {
+      "name": "香草甜甜（蓝莓饰品）",
+      "id": 235,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.4,
+      "height_max": 0.6,
+      "weight_min": 5.15,
+      "weight_max": 7.8,
+      "giant_weight_line": 7.747,
+      "tiny_weight_line": 5.203,
+      "stats": {
+        "hp": 91,
+        "atk": 94,
+        "def": 63,
+        "sp_atk": 88,
+        "sp_def": 74,
+        "speed": 80,
+        "sum": 490
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/235-香草甜甜（蓝莓饰品）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "香草甜甜（樱桃饰品）",
+      "id": 235,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.4,
+      "height_max": 0.6,
+      "weight_min": 5.15,
+      "weight_max": 7.8,
+      "giant_weight_line": 7.747,
+      "tiny_weight_line": 5.203,
+      "stats": {
+        "hp": 96,
+        "atk": 90,
+        "def": 56,
+        "sp_atk": 95,
+        "sp_def": 74,
+        "speed": 80,
+        "sum": 491
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/235-香草甜甜（樱桃饰品）.png"
+    },
+    {
+      "name": "圣代甜甜（樱桃巧克力口味）",
+      "id": 236,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "软体组",
+        "魔力组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 16.5,
+      "weight_max": 22.75,
+      "giant_weight_line": 22.625,
+      "tiny_weight_line": 16.625,
+      "stats": {
+        "hp": 119,
+        "atk": 112,
+        "def": 70,
+        "sp_atk": 119,
+        "sp_def": 92,
+        "speed": 100,
+        "sum": 612
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/236-圣代甜甜（樱桃巧克力口味）.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/234-脆筒甜甜.png"
+}

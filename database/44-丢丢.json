@@ -1,0 +1,392 @@
+{
+  "id": 44,
+  "name": "丢丢",
+  "types": [
+    "草"
+  ],
+  "egg_groups": [
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.21,
+    "weight_min": 1.505,
+    "weight_max": 2.44,
+    "giant_weight_line": 2.4213,
+    "tiny_weight_line": 1.5237
+  },
+  "evolution_chain": [
+    "丢丢",
+    "卡卡虫",
+    "卡瓦重"
+  ],
+  "stats": {
+    "hp": 44,
+    "atk": 45,
+    "def": 49,
+    "sp_atk": 12,
+    "sp_def": 40,
+    "speed": 78,
+    "sum": 268
+  },
+  "height_min": 0.35,
+  "height_max": 0.51,
+  "weight_min": 4.3,
+  "weight_max": 6.1,
+  "giant_weight_line": 6.064,
+  "tiny_weight_line": 4.336,
+  "regional_forms": [
+    {
+      "name": "丢丢（草地附近的样子）",
+      "id": 44,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.51,
+      "weight_min": 4.3,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.064,
+      "tiny_weight_line": 4.336,
+      "stats": {
+        "hp": 44,
+        "atk": 45,
+        "def": 49,
+        "sp_atk": 12,
+        "sp_def": 40,
+        "speed": 78,
+        "sum": 268
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/44-丢丢（草地附近的样子）.png"
+    },
+    {
+      "name": "卡卡虫（草地附近的样子）",
+      "id": 45,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 18.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.538,
+      "tiny_weight_line": 18.562,
+      "stats": {
+        "hp": 59,
+        "atk": 60,
+        "def": 65,
+        "sp_atk": 16,
+        "sp_def": 53,
+        "speed": 104,
+        "sum": 357
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/45-卡卡虫（草地附近的样子）.png"
+    },
+    {
+      "name": "卡瓦重（草地附近的样子）",
+      "id": 46,
+      "types": [
+        "草"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.09,
+      "weight_min": 29,
+      "weight_max": 35.85,
+      "giant_weight_line": 35.713,
+      "tiny_weight_line": 29.137,
+      "stats": {
+        "hp": 74,
+        "atk": 75,
+        "def": 81,
+        "sp_atk": 20,
+        "sp_def": 67,
+        "speed": 130,
+        "sum": 447
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/46-卡瓦重（草地附近的样子）.png"
+    },
+    {
+      "name": "丢丢（火山附近的样子）",
+      "id": 44,
+      "types": [
+        "草",
+        "火"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.51,
+      "weight_min": 4.3,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.064,
+      "tiny_weight_line": 4.336,
+      "stats": {
+        "hp": 47,
+        "atk": 52,
+        "def": 38,
+        "sp_atk": 11,
+        "sp_def": 37,
+        "speed": 78,
+        "sum": 263
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/44-丢丢（火山附近的样子）.png"
+    },
+    {
+      "name": "丢丢（沙地附近的样子）",
+      "id": 44,
+      "types": [
+        "草",
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.51,
+      "weight_min": 4.3,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.064,
+      "tiny_weight_line": 4.336,
+      "stats": {
+        "hp": 44,
+        "atk": 42,
+        "def": 55,
+        "sp_atk": 12,
+        "sp_def": 43,
+        "speed": 75,
+        "sum": 271
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/44-丢丢（沙地附近的样子）.png"
+    },
+    {
+      "name": "丢丢（雪山附近的样子）",
+      "id": 44,
+      "types": [
+        "草",
+        "冰"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.51,
+      "weight_min": 4.3,
+      "weight_max": 6.1,
+      "giant_weight_line": 6.064,
+      "tiny_weight_line": 4.336,
+      "stats": {
+        "hp": 46,
+        "atk": 41,
+        "def": 48,
+        "sp_atk": 8,
+        "sp_def": 44,
+        "speed": 81,
+        "sum": 268
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/44-丢丢（雪山附近的样子）.png"
+    },
+    {
+      "name": "卡卡虫（火山附近的样子）",
+      "id": 45,
+      "types": [
+        "草",
+        "火"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 18.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.538,
+      "tiny_weight_line": 18.562,
+      "stats": {
+        "hp": 62,
+        "atk": 69,
+        "def": 51,
+        "sp_atk": 15,
+        "sp_def": 49,
+        "speed": 104,
+        "sum": 350
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/45-卡卡虫（火山附近的样子）.png"
+    },
+    {
+      "name": "卡卡虫（沙地附近的样子）",
+      "id": 45,
+      "types": [
+        "草",
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 18.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.538,
+      "tiny_weight_line": 18.562,
+      "stats": {
+        "hp": 58,
+        "atk": 56,
+        "def": 74,
+        "sp_atk": 16,
+        "sp_def": 57,
+        "speed": 100,
+        "sum": 361
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/45-卡卡虫（沙地附近的样子）.png"
+    },
+    {
+      "name": "卡卡虫（雪山附近的样子）",
+      "id": 45,
+      "types": [
+        "草",
+        "冰"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.53,
+      "height_max": 0.76,
+      "weight_min": 18.5,
+      "weight_max": 21.6,
+      "giant_weight_line": 21.538,
+      "tiny_weight_line": 18.562,
+      "stats": {
+        "hp": 62,
+        "atk": 54,
+        "def": 64,
+        "sp_atk": 11,
+        "sp_def": 58,
+        "speed": 108,
+        "sum": 357
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/45-卡卡虫（雪山附近的样子）.png"
+    },
+    {
+      "name": "卡瓦重（火山附近的样子）",
+      "id": 46,
+      "types": [
+        "草",
+        "火"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.09,
+      "weight_min": 29,
+      "weight_max": 35.85,
+      "giant_weight_line": 35.713,
+      "tiny_weight_line": 29.137,
+      "stats": {
+        "hp": 78,
+        "atk": 86,
+        "def": 64,
+        "sp_atk": 19,
+        "sp_def": 62,
+        "speed": 130,
+        "sum": 439
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/46-卡瓦重（火山附近的样子）.png"
+    },
+    {
+      "name": "卡瓦重（沙地附近的样子）",
+      "id": 46,
+      "types": [
+        "草",
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.09,
+      "weight_min": 29,
+      "weight_max": 35.85,
+      "giant_weight_line": 35.713,
+      "tiny_weight_line": 29.137,
+      "stats": {
+        "hp": 73,
+        "atk": 70,
+        "def": 92,
+        "sp_atk": 20,
+        "sp_def": 71,
+        "speed": 125,
+        "sum": 451
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/46-卡瓦重（沙地附近的样子）.png"
+    },
+    {
+      "name": "卡瓦重（雪山附近的样子）",
+      "id": 46,
+      "types": [
+        "草",
+        "冰"
+      ],
+      "egg_groups": [
+        "两栖组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.09,
+      "weight_min": 29,
+      "weight_max": 35.85,
+      "giant_weight_line": 35.713,
+      "tiny_weight_line": 29.137,
+      "stats": {
+        "hp": 77,
+        "atk": 68,
+        "def": 79,
+        "sp_atk": 14,
+        "sp_def": 73,
+        "speed": 135,
+        "sum": 446
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/46-卡瓦重（雪山附近的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/44-丢丢（草地附近的样子）.png"
+}

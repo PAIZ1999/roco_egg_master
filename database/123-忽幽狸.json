@@ -1,0 +1,79 @@
+{
+  "id": 123,
+  "name": "忽幽狸",
+  "types": [
+    "幽",
+    "毒"
+  ],
+  "egg_groups": [
+    "动物组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "拟人组"
+    ],
+    "height_min": 0.32,
+    "height_max": 0.45,
+    "weight_min": 2.905,
+    "weight_max": 3.92,
+    "giant_weight_line": 3.8997,
+    "tiny_weight_line": 2.9253
+  },
+  "evolution_chain": [
+    "忽幽狸",
+    "影狸"
+  ],
+  "stats": {
+    "hp": 78,
+    "atk": 87,
+    "def": 84,
+    "sp_atk": 84,
+    "sp_def": 56,
+    "speed": 104,
+    "sum": 493
+  },
+  "height_min": 0.76,
+  "height_max": 1.09,
+  "weight_min": 8.3,
+  "weight_max": 9.8,
+  "giant_weight_line": 9.77,
+  "tiny_weight_line": 8.33,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "影狸",
+      "id": 124,
+      "types": [
+        "幽",
+        "毒"
+      ],
+      "egg_groups": [
+        "动物组",
+        "拟人组"
+      ],
+      "height_min": 1.11,
+      "height_max": 1.59,
+      "weight_min": 23.5,
+      "weight_max": 37.5,
+      "giant_weight_line": 37.22,
+      "tiny_weight_line": 23.78,
+      "stats": {
+        "hp": 97,
+        "atk": 109,
+        "def": 105,
+        "sp_atk": 105,
+        "sp_def": 70,
+        "speed": 130,
+        "sum": 616
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/124-影狸.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/123-忽幽狸.png"
+}

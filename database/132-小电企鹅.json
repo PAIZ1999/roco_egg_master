@@ -1,0 +1,76 @@
+{
+  "id": 132,
+  "name": "小电企鹅",
+  "types": [
+    "冰",
+    "电"
+  ],
+  "egg_groups": [
+    "天空组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.23,
+    "weight_min": 1.337,
+    "weight_max": 2.156,
+    "giant_weight_line": 2.1396,
+    "tiny_weight_line": 1.3534
+  },
+  "evolution_chain": [
+    "小电企鹅",
+    "电企鹅"
+  ],
+  "stats": {
+    "hp": 75,
+    "atk": 45,
+    "def": 59,
+    "sp_atk": 101,
+    "sp_def": 87,
+    "speed": 100,
+    "sum": 467
+  },
+  "height_min": 0.44,
+  "height_max": 0.56,
+  "weight_min": 3.82,
+  "weight_max": 5.39,
+  "giant_weight_line": 5.3586,
+  "tiny_weight_line": 3.8514,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "电企鹅",
+      "id": 133,
+      "types": [
+        "冰",
+        "电"
+      ],
+      "egg_groups": [
+        "天空组"
+      ],
+      "height_min": 0.9,
+      "height_max": 1.14,
+      "weight_min": 14.6,
+      "weight_max": 26.9,
+      "giant_weight_line": 26.654,
+      "tiny_weight_line": 14.846,
+      "stats": {
+        "hp": 94,
+        "atk": 56,
+        "def": 73,
+        "sp_atk": 126,
+        "sp_def": 109,
+        "speed": 125,
+        "sum": 583
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/133-电企鹅.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/132-小电企鹅.png"
+}

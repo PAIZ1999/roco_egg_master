@@ -1,0 +1,77 @@
+{
+  "id": 410,
+  "name": "点点",
+  "types": [
+    "萌"
+  ],
+  "egg_groups": [
+    "动物组",
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "妖精组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.23,
+    "weight_min": 1.019,
+    "weight_max": 1.556,
+    "giant_weight_line": 1.5453,
+    "tiny_weight_line": 1.0297
+  },
+  "evolution_chain": [
+    "点点",
+    "珀尔鼬"
+  ],
+  "stats": {
+    "hp": 94,
+    "atk": 41,
+    "def": 56,
+    "sp_atk": 84,
+    "sp_def": 94,
+    "speed": 80,
+    "sum": 449
+  },
+  "height_min": 0.41,
+  "height_max": 0.55,
+  "weight_min": 2.91,
+  "weight_max": 3.89,
+  "giant_weight_line": 3.8704,
+  "tiny_weight_line": 2.9296,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "珀尔鼬",
+      "id": 411,
+      "types": [
+        "萌"
+      ],
+      "egg_groups": [
+        "动物组",
+        "妖精组"
+      ],
+      "height_min": 0.71,
+      "height_max": 1.01,
+      "weight_min": 10.3,
+      "weight_max": 17.1,
+      "giant_weight_line": 16.964,
+      "tiny_weight_line": 10.436,
+      "stats": {
+        "hp": 117,
+        "atk": 51,
+        "def": 69,
+        "sp_atk": 105,
+        "sp_def": 117,
+        "speed": 100,
+        "sum": 559
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/411-珀尔鼬.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/410-点点.png"
+}

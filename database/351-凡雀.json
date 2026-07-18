@@ -1,0 +1,103 @@
+{
+  "id": 351,
+  "name": "凡雀",
+  "types": [
+    "翼"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.15,
+    "height_max": 0.21,
+    "weight_min": 1.078,
+    "weight_max": 2.4,
+    "giant_weight_line": 2.3736,
+    "tiny_weight_line": 1.1044
+  },
+  "evolution_chain": [
+    "凡雀",
+    "紫翎鹰",
+    "凡鹰"
+  ],
+  "stats": {
+    "hp": 71,
+    "atk": 55,
+    "def": 52,
+    "sp_atk": 53,
+    "sp_def": 66,
+    "speed": 75,
+    "sum": 372
+  },
+  "height_min": 0.35,
+  "height_max": 0.5,
+  "weight_min": 3.08,
+  "weight_max": 6,
+  "giant_weight_line": 5.9416,
+  "tiny_weight_line": 3.1384,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "紫翎鹰",
+      "id": 352,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.65,
+      "height_max": 0.85,
+      "weight_min": 13.04,
+      "weight_max": 20.5,
+      "giant_weight_line": 20.3508,
+      "tiny_weight_line": 13.1892,
+      "stats": {
+        "hp": 94,
+        "atk": 74,
+        "def": 69,
+        "sp_atk": 71,
+        "sp_def": 88,
+        "speed": 100,
+        "sum": 496
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/352-紫翎鹰.png"
+    },
+    {
+      "name": "凡鹰",
+      "id": 353,
+      "types": [
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.64,
+      "height_max": 2.23,
+      "weight_min": 46.35,
+      "weight_max": 68.27,
+      "giant_weight_line": 67.8316,
+      "tiny_weight_line": 46.7884,
+      "stats": {
+        "hp": 118,
+        "atk": 92,
+        "def": 86,
+        "sp_atk": 89,
+        "sp_def": 110,
+        "speed": 125,
+        "sum": 620
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/353-凡鹰.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/351-凡雀.png"
+}

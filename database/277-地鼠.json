@@ -1,0 +1,215 @@
+{
+  "id": 277,
+  "name": "地鼠",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.46,
+    "height_max": 0.66,
+    "weight_min": 1.8,
+    "weight_max": 2.85,
+    "giant_weight_line": 2.829,
+    "tiny_weight_line": 1.821
+  },
+  "evolution_chain": [
+    "地鼠",
+    "遁鼠",
+    "遁地鼠"
+  ],
+  "stats": {
+    "hp": 66,
+    "atk": 71,
+    "def": 72,
+    "sp_atk": 31,
+    "sp_def": 51,
+    "speed": 66,
+    "sum": 357
+  },
+  "height_min": 0.46,
+  "height_max": 0.66,
+  "weight_min": 1.8,
+  "weight_max": 2.85,
+  "giant_weight_line": 2.829,
+  "tiny_weight_line": 1.821,
+  "regional_forms": [
+    {
+      "name": "地鼠（枯水期的样子）",
+      "id": 277,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.66,
+      "weight_min": 1.8,
+      "weight_max": 2.85,
+      "giant_weight_line": 2.829,
+      "tiny_weight_line": 1.821,
+      "stats": {
+        "hp": 66,
+        "atk": 71,
+        "def": 72,
+        "sp_atk": 31,
+        "sp_def": 51,
+        "speed": 66,
+        "sum": 357
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/277-地鼠（枯水期的样子）.png"
+    },
+    {
+      "name": "遁鼠（枯水期的样子）",
+      "id": 278,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.48,
+      "height_max": 0.69,
+      "weight_min": 3.4,
+      "weight_max": 4.8,
+      "giant_weight_line": 4.772,
+      "tiny_weight_line": 3.428,
+      "stats": {
+        "hp": 88,
+        "atk": 95,
+        "def": 97,
+        "sp_atk": 41,
+        "sp_def": 68,
+        "speed": 88,
+        "sum": 477
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/278-遁鼠（枯水期的样子）.png"
+    },
+    {
+      "name": "遁地鼠（枯水期的样子）",
+      "id": 279,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.92,
+      "weight_min": 6.4,
+      "weight_max": 7.5,
+      "giant_weight_line": 7.478,
+      "tiny_weight_line": 6.422,
+      "stats": {
+        "hp": 110,
+        "atk": 119,
+        "def": 121,
+        "sp_atk": 51,
+        "sp_def": 85,
+        "speed": 110,
+        "sum": 596
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/279-遁地鼠（枯水期的样子）.png"
+    },
+    {
+      "name": "地鼠（储水时的样子）",
+      "id": 277,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.46,
+      "height_max": 0.66,
+      "weight_min": 3.8,
+      "weight_max": 5.13,
+      "giant_weight_line": 5.1034,
+      "tiny_weight_line": 3.8266,
+      "stats": {
+        "hp": 67,
+        "atk": 71,
+        "def": 51,
+        "sp_atk": 14,
+        "sp_def": 79,
+        "speed": 60,
+        "sum": 342
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/277-地鼠（储水时的样子）.png"
+    },
+    {
+      "name": "遁鼠（储水时的样子）",
+      "id": 278,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.48,
+      "height_max": 0.69,
+      "weight_min": 5.42,
+      "weight_max": 6.82,
+      "giant_weight_line": 6.792,
+      "tiny_weight_line": 5.448,
+      "stats": {
+        "hp": 89,
+        "atk": 94,
+        "def": 68,
+        "sp_atk": 18,
+        "sp_def": 105,
+        "speed": 80,
+        "sum": 454
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/278-遁鼠（储水时的样子）.png"
+    },
+    {
+      "name": "遁地鼠（储水时的样子）",
+      "id": 279,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.92,
+      "weight_min": 9.4,
+      "weight_max": 11.5,
+      "giant_weight_line": 11.458,
+      "tiny_weight_line": 9.442,
+      "stats": {
+        "hp": 112,
+        "atk": 118,
+        "def": 85,
+        "sp_atk": 23,
+        "sp_def": 131,
+        "speed": 100,
+        "sum": 569
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/279-遁地鼠（储水时的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/277-地鼠（枯水期的样子）.png"
+}

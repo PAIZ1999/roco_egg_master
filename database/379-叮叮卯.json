@@ -1,0 +1,79 @@
+{
+  "id": 379,
+  "name": "叮叮卯",
+  "types": [
+    "机械",
+    "虫"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "机械组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "机械组"
+    ],
+    "height_min": 0.06,
+    "height_max": 0.13,
+    "weight_min": 0.105,
+    "weight_max": 0.36,
+    "giant_weight_line": 0.3549,
+    "tiny_weight_line": 0.1101
+  },
+  "evolution_chain": [
+    "叮叮卯",
+    "飞飞钥"
+  ],
+  "stats": {
+    "hp": 117,
+    "atk": 45,
+    "def": 75,
+    "sp_atk": 81,
+    "sp_def": 136,
+    "speed": 48,
+    "sum": 502
+  },
+  "height_min": 0.14,
+  "height_max": 0.31,
+  "weight_min": 0.3,
+  "weight_max": 0.9,
+  "giant_weight_line": 0.888,
+  "tiny_weight_line": 0.312,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "飞飞钥",
+      "id": 380,
+      "types": [
+        "机械",
+        "虫"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "机械组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.51,
+      "weight_min": 1.15,
+      "weight_max": 1.9,
+      "giant_weight_line": 1.885,
+      "tiny_weight_line": 1.165,
+      "stats": {
+        "hp": 146,
+        "atk": 57,
+        "def": 94,
+        "sp_atk": 101,
+        "sp_def": 170,
+        "speed": 60,
+        "sum": 628
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/380-飞飞钥.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/379-叮叮卯.png"
+}

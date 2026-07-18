@@ -1,0 +1,107 @@
+{
+  "id": 134,
+  "name": "雪豆丁",
+  "types": [
+    "冰"
+  ],
+  "egg_groups": [
+    "拟人组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "拟人组",
+      "巨灵组"
+    ],
+    "height_min": 0.37,
+    "height_max": 0.51,
+    "weight_min": 3.325,
+    "weight_max": 5,
+    "giant_weight_line": 4.9665,
+    "tiny_weight_line": 3.3585
+  },
+  "evolution_chain": [
+    "雪豆丁",
+    "雪蛮人",
+    "雪巨人"
+  ],
+  "stats": {
+    "hp": 97,
+    "atk": 104,
+    "def": 83,
+    "sp_atk": 47,
+    "sp_def": 62,
+    "speed": 36,
+    "sum": 429
+  },
+  "height_min": 0.86,
+  "height_max": 1.23,
+  "weight_min": 9.5,
+  "weight_max": 12.5,
+  "giant_weight_line": 12.44,
+  "tiny_weight_line": 9.56,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "雪蛮人",
+      "id": 135,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "拟人组",
+        "巨灵组"
+      ],
+      "height_min": 1.11,
+      "height_max": 1.59,
+      "weight_min": 59,
+      "weight_max": 76,
+      "giant_weight_line": 75.66,
+      "tiny_weight_line": 59.34,
+      "stats": {
+        "hp": 130,
+        "atk": 139,
+        "def": 111,
+        "sp_atk": 63,
+        "sp_def": 83,
+        "speed": 48,
+        "sum": 574
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/135-雪蛮人.png"
+    },
+    {
+      "name": "雪巨人",
+      "id": 136,
+      "types": [
+        "冰"
+      ],
+      "egg_groups": [
+        "拟人组",
+        "巨灵组"
+      ],
+      "height_min": 1.61,
+      "height_max": 2.31,
+      "weight_min": 156,
+      "weight_max": 187,
+      "giant_weight_line": 186.38,
+      "tiny_weight_line": 156.62,
+      "stats": {
+        "hp": 162,
+        "atk": 174,
+        "def": 139,
+        "sp_atk": 79,
+        "sp_def": 104,
+        "speed": 60,
+        "sum": 718
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/136-雪巨人.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/134-雪豆丁.png"
+}

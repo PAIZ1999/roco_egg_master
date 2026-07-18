@@ -1,0 +1,109 @@
+{
+  "id": 345,
+  "name": "幽星光",
+  "types": [
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "巨灵组"
+    ],
+    "height_min": 0.17,
+    "height_max": 0.23,
+    "weight_min": 0.21,
+    "weight_max": 0.48,
+    "giant_weight_line": 0.4746,
+    "tiny_weight_line": 0.2154
+  },
+  "evolution_chain": [
+    "幽星光",
+    "曜星光",
+    "暮星辰"
+  ],
+  "stats": {
+    "hp": 49,
+    "atk": 21,
+    "def": 48,
+    "sp_atk": 63,
+    "sp_def": 63,
+    "speed": 75,
+    "sum": 319
+  },
+  "height_min": 0.4,
+  "height_max": 0.55,
+  "weight_min": 0.6,
+  "weight_max": 1.65,
+  "giant_weight_line": 1.629,
+  "tiny_weight_line": 0.621,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "曜星光",
+      "id": 346,
+      "types": [
+        "幻",
+        "翼"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ],
+      "height_min": 0.88,
+      "height_max": 1.05,
+      "weight_min": 3,
+      "weight_max": 4.5,
+      "giant_weight_line": 4.47,
+      "tiny_weight_line": 3.03,
+      "stats": {
+        "hp": 65,
+        "atk": 28,
+        "def": 64,
+        "sp_atk": 84,
+        "sp_def": 84,
+        "speed": 100,
+        "sum": 425
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/346-曜星光.png"
+    },
+    {
+      "name": "暮星辰",
+      "id": 347,
+      "types": [
+        "幻",
+        "翼"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "巨灵组"
+      ],
+      "height_min": 1.85,
+      "height_max": 2.05,
+      "weight_min": 7.5,
+      "weight_max": 10.5,
+      "giant_weight_line": 10.44,
+      "tiny_weight_line": 7.56,
+      "stats": {
+        "hp": 81,
+        "atk": 35,
+        "def": 80,
+        "sp_atk": 106,
+        "sp_def": 105,
+        "speed": 125,
+        "sum": 532
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/347-暮星辰.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/345-幽星光.png"
+}

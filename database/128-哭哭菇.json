@@ -1,0 +1,103 @@
+{
+  "id": 128,
+  "name": "哭哭菇",
+  "types": [
+    "幻"
+  ],
+  "egg_groups": [
+    "植物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组"
+    ],
+    "height_min": 0.14,
+    "height_max": 0.2,
+    "weight_min": 0.63,
+    "weight_max": 1.28,
+    "giant_weight_line": 1.267,
+    "tiny_weight_line": 0.643
+  },
+  "evolution_chain": [
+    "哭哭菇",
+    "怖须菇",
+    "怖哭菇"
+  ],
+  "stats": {
+    "hp": 74,
+    "atk": 38,
+    "def": 30,
+    "sp_atk": 41,
+    "sp_def": 60,
+    "speed": 36,
+    "sum": 279
+  },
+  "height_min": 0.33,
+  "height_max": 0.47,
+  "weight_min": 1.8,
+  "weight_max": 3.2,
+  "giant_weight_line": 3.172,
+  "tiny_weight_line": 1.828,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "怖须菇",
+      "id": 129,
+      "types": [
+        "幻"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.99,
+      "weight_min": 8.72,
+      "weight_max": 15.6,
+      "giant_weight_line": 15.4624,
+      "tiny_weight_line": 8.8576,
+      "stats": {
+        "hp": 99,
+        "atk": 50,
+        "def": 40,
+        "sp_atk": 55,
+        "sp_def": 80,
+        "speed": 48,
+        "sum": 372
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/129-怖须菇.png"
+    },
+    {
+      "name": "怖哭菇",
+      "id": 130,
+      "types": [
+        "幻"
+      ],
+      "egg_groups": [
+        "植物组"
+      ],
+      "height_min": 1.23,
+      "height_max": 1.76,
+      "weight_min": 22.5,
+      "weight_max": 28.6,
+      "giant_weight_line": 28.478,
+      "tiny_weight_line": 22.622,
+      "stats": {
+        "hp": 124,
+        "atk": 63,
+        "def": 50,
+        "sp_atk": 69,
+        "sp_def": 100,
+        "speed": 60,
+        "sum": 466
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/130-怖哭菇.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/128-哭哭菇.png"
+}

@@ -1,0 +1,44 @@
+{
+  "id": 375,
+  "name": "学院呱呱",
+  "types": [
+    "武"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.27,
+    "weight_min": 1.687,
+    "weight_max": 2.2,
+    "giant_weight_line": 2.1897,
+    "tiny_weight_line": 1.6973
+  },
+  "evolution_chain": [
+    "学院呱呱"
+  ],
+  "stats": {
+    "hp": 132,
+    "atk": 99,
+    "def": 92,
+    "sp_atk": 99,
+    "sp_def": 92,
+    "speed": 100,
+    "sum": 614
+  },
+  "height_min": 0.49,
+  "height_max": 0.66,
+  "weight_min": 4.82,
+  "weight_max": 5.5,
+  "giant_weight_line": 5.4864,
+  "tiny_weight_line": 4.8336,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/375-学院呱呱.png"
+}

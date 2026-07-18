@@ -1,0 +1,106 @@
+{
+  "id": 125,
+  "name": "多多",
+  "types": [
+    "毒",
+    "地"
+  ],
+  "egg_groups": [
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "拟人组"
+    ],
+    "height_min": 0.19,
+    "height_max": 0.27,
+    "weight_min": 5.11,
+    "weight_max": 7.44,
+    "giant_weight_line": 7.3934,
+    "tiny_weight_line": 5.1566
+  },
+  "evolution_chain": [
+    "多多",
+    "多啦多",
+    "古啦多"
+  ],
+  "stats": {
+    "hp": 51,
+    "atk": 53,
+    "def": 80,
+    "sp_atk": 53,
+    "sp_def": 44,
+    "speed": 54,
+    "sum": 335
+  },
+  "height_min": 0.45,
+  "height_max": 0.65,
+  "weight_min": 14.6,
+  "weight_max": 18.6,
+  "giant_weight_line": 18.52,
+  "tiny_weight_line": 14.68,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "多啦多",
+      "id": 126,
+      "types": [
+        "毒",
+        "地"
+      ],
+      "egg_groups": [
+        "拟人组"
+      ],
+      "height_min": 0.58,
+      "height_max": 0.83,
+      "weight_min": 28.5,
+      "weight_max": 34.6,
+      "giant_weight_line": 34.478,
+      "tiny_weight_line": 28.622,
+      "stats": {
+        "hp": 68,
+        "atk": 70,
+        "def": 107,
+        "sp_atk": 70,
+        "sp_def": 59,
+        "speed": 72,
+        "sum": 446
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/126-多啦多.png"
+    },
+    {
+      "name": "古啦多",
+      "id": 127,
+      "types": [
+        "毒",
+        "地"
+      ],
+      "egg_groups": [
+        "拟人组"
+      ],
+      "height_min": 0.69,
+      "height_max": 0.99,
+      "weight_min": 43.5,
+      "weight_max": 58.6,
+      "giant_weight_line": 58.298,
+      "tiny_weight_line": 43.802,
+      "stats": {
+        "hp": 85,
+        "atk": 88,
+        "def": 134,
+        "sp_atk": 88,
+        "sp_def": 74,
+        "speed": 90,
+        "sum": 559
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/127-古啦多.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/125-多多.png"
+}

@@ -1,0 +1,79 @@
+{
+  "id": 289,
+  "name": "大头骨龙",
+  "types": [
+    "龙",
+    "幽"
+  ],
+  "egg_groups": [
+    "飞龙组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "飞龙组",
+      "巨灵组"
+    ],
+    "height_min": 0.36,
+    "height_max": 0.42,
+    "weight_min": 6.51,
+    "weight_max": 13.4,
+    "giant_weight_line": 13.2622,
+    "tiny_weight_line": 6.6478
+  },
+  "evolution_chain": [
+    "大头骨龙",
+    "寂灭骨龙"
+  ],
+  "stats": {
+    "hp": 96,
+    "atk": 109,
+    "def": 84,
+    "sp_atk": 40,
+    "sp_def": 65,
+    "speed": 48,
+    "sum": 442
+  },
+  "height_min": 0.85,
+  "height_max": 1,
+  "weight_min": 18.6,
+  "weight_max": 33.5,
+  "giant_weight_line": 33.202,
+  "tiny_weight_line": 18.898,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "寂灭骨龙",
+      "id": 290,
+      "types": [
+        "龙",
+        "幽"
+      ],
+      "egg_groups": [
+        "飞龙组",
+        "巨灵组"
+      ],
+      "height_min": 2.25,
+      "height_max": 2.45,
+      "weight_min": 85.7,
+      "weight_max": 105,
+      "giant_weight_line": 104.614,
+      "tiny_weight_line": 86.086,
+      "stats": {
+        "hp": 120,
+        "atk": 137,
+        "def": 104,
+        "sp_atk": 50,
+        "sp_def": 81,
+        "speed": 60,
+        "sum": 552
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/290-寂灭骨龙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/289-大头骨龙.png"
+}

@@ -1,0 +1,106 @@
+{
+  "id": 153,
+  "name": "松仔",
+  "types": [
+    "草",
+    "武"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.22,
+    "height_max": 0.28,
+    "weight_min": 2.188,
+    "weight_max": 3.14,
+    "giant_weight_line": 3.121,
+    "tiny_weight_line": 2.207
+  },
+  "evolution_chain": [
+    "松仔",
+    "松叶羊",
+    "针叶巡林"
+  ],
+  "stats": {
+    "hp": 63,
+    "atk": 83,
+    "def": 77,
+    "sp_atk": 34,
+    "sp_def": 60,
+    "speed": 63,
+    "sum": 380
+  },
+  "height_min": 0.52,
+  "height_max": 0.68,
+  "weight_min": 6.25,
+  "weight_max": 7.85,
+  "giant_weight_line": 7.818,
+  "tiny_weight_line": 6.282,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "松叶羊",
+      "id": 154,
+      "types": [
+        "草",
+        "武"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.08,
+      "height_max": 1.33,
+      "weight_min": 19.09,
+      "weight_max": 28.06,
+      "giant_weight_line": 27.8806,
+      "tiny_weight_line": 19.2694,
+      "stats": {
+        "hp": 84,
+        "atk": 111,
+        "def": 102,
+        "sp_atk": 46,
+        "sp_def": 80,
+        "speed": 84,
+        "sum": 507
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/154-松叶羊.png"
+    },
+    {
+      "name": "针叶巡林",
+      "id": 155,
+      "types": [
+        "草",
+        "武"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.86,
+      "height_max": 2.14,
+      "weight_min": 56.8,
+      "weight_max": 69.02,
+      "giant_weight_line": 68.7756,
+      "tiny_weight_line": 57.0444,
+      "stats": {
+        "hp": 105,
+        "atk": 139,
+        "def": 128,
+        "sp_atk": 57,
+        "sp_def": 100,
+        "speed": 105,
+        "sum": 634
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/155-针叶巡林.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/153-松仔.png"
+}

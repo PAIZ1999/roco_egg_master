@@ -1,0 +1,112 @@
+{
+  "id": 287,
+  "name": "吸泥鸥",
+  "types": [
+    "地",
+    "翼"
+  ],
+  "egg_groups": [
+    "天空组",
+    "两栖组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "天空组",
+      "两栖组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.29,
+    "weight_min": 3.325,
+    "weight_max": 5,
+    "giant_weight_line": 4.9665,
+    "tiny_weight_line": 3.3585
+  },
+  "evolution_chain": [
+    "吸泥鸥",
+    "泥吼牙",
+    [
+      "淤泥乌泽"
+    ]
+  ],
+  "stats": {
+    "hp": 99,
+    "atk": 89,
+    "def": 87,
+    "sp_atk": 33,
+    "sp_def": 71,
+    "speed": 76,
+    "sum": 455
+  },
+  "height_min": 0.55,
+  "height_max": 0.71,
+  "weight_min": 9.5,
+  "weight_max": 12.5,
+  "giant_weight_line": 12.44,
+  "tiny_weight_line": 9.56,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "淤泥乌泽",
+      "id": 288,
+      "types": [
+        "地",
+        "翼"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.63,
+      "height_max": 1.9,
+      "weight_min": 64.3,
+      "weight_max": 93,
+      "giant_weight_line": 92.426,
+      "tiny_weight_line": 64.874,
+      "stats": {
+        "hp": 124,
+        "atk": 138,
+        "def": 132,
+        "sp_atk": 58,
+        "sp_def": 108,
+        "speed": 95,
+        "sum": 655
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/288-淤泥乌泽.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "泥吼牙",
+      "id": 288,
+      "types": [
+        "地",
+        "翼"
+      ],
+      "egg_groups": [
+        "天空组",
+        "两栖组"
+      ],
+      "height_min": 1.05,
+      "height_max": 1.45,
+      "weight_min": 21.5,
+      "weight_max": 32.5,
+      "giant_weight_line": 32.28,
+      "tiny_weight_line": 21.72,
+      "stats": {
+        "hp": 124,
+        "atk": 112,
+        "def": 109,
+        "sp_atk": 41,
+        "sp_def": 88,
+        "speed": 95,
+        "sum": 569
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/288-泥吼牙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/287-吸泥鸥.png"
+}

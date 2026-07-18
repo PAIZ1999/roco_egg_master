@@ -1,0 +1,106 @@
+{
+  "id": 156,
+  "name": "小勇狮",
+  "types": [
+    "火",
+    "武"
+  ],
+  "egg_groups": [
+    "动物组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组"
+    ],
+    "height_min": 0.28,
+    "height_max": 0.34,
+    "weight_min": 2.975,
+    "weight_max": 4.82,
+    "giant_weight_line": 4.7831,
+    "tiny_weight_line": 3.0119
+  },
+  "evolution_chain": [
+    "小勇狮",
+    "炽焰狮",
+    "炽心勇狮"
+  ],
+  "stats": {
+    "hp": 82,
+    "atk": 31,
+    "def": 53,
+    "sp_atk": 66,
+    "sp_def": 78,
+    "speed": 48,
+    "sum": 358
+  },
+  "height_min": 0.67,
+  "height_max": 0.81,
+  "weight_min": 8.5,
+  "weight_max": 12.05,
+  "giant_weight_line": 11.979,
+  "tiny_weight_line": 8.571,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "炽焰狮",
+      "id": 157,
+      "types": [
+        "火",
+        "武"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.12,
+      "height_max": 1.45,
+      "weight_min": 46.02,
+      "weight_max": 67.05,
+      "giant_weight_line": 66.6294,
+      "tiny_weight_line": 46.4406,
+      "stats": {
+        "hp": 110,
+        "atk": 41,
+        "def": 70,
+        "sp_atk": 89,
+        "sp_def": 104,
+        "speed": 64,
+        "sum": 478
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/157-炽焰狮.png"
+    },
+    {
+      "name": "炽心勇狮",
+      "id": 158,
+      "types": [
+        "火",
+        "武"
+      ],
+      "egg_groups": [
+        "动物组"
+      ],
+      "height_min": 1.78,
+      "height_max": 1.97,
+      "weight_min": 94.7,
+      "weight_max": 118.05,
+      "giant_weight_line": 117.583,
+      "tiny_weight_line": 95.167,
+      "stats": {
+        "hp": 137,
+        "atk": 51,
+        "def": 88,
+        "sp_atk": 111,
+        "sp_def": 130,
+        "speed": 80,
+        "sum": 597
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/158-炽心勇狮.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/156-小勇狮.png"
+}

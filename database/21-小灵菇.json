@@ -1,0 +1,109 @@
+{
+  "id": 21,
+  "name": "小灵菇",
+  "types": [
+    "幽"
+  ],
+  "egg_groups": [
+    "植物组",
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "植物组",
+      "魔力组"
+    ],
+    "height_min": 0.18,
+    "height_max": 0.25,
+    "weight_min": 1.89,
+    "weight_max": 2.84,
+    "giant_weight_line": 2.821,
+    "tiny_weight_line": 1.909
+  },
+  "evolution_chain": [
+    "小灵菇",
+    "幻灵菇",
+    "幻影灵菇"
+  ],
+  "stats": {
+    "hp": 67,
+    "atk": 59,
+    "def": 62,
+    "sp_atk": 59,
+    "sp_def": 82,
+    "speed": 45,
+    "sum": 374
+  },
+  "height_min": 0.43,
+  "height_max": 0.61,
+  "weight_min": 5.4,
+  "weight_max": 7.1,
+  "giant_weight_line": 7.066,
+  "tiny_weight_line": 5.434,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "幻灵菇",
+      "id": 22,
+      "types": [
+        "幽",
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "魔力组"
+      ],
+      "height_min": 0.64,
+      "height_max": 0.92,
+      "weight_min": 13.2,
+      "weight_max": 16.5,
+      "giant_weight_line": 16.434,
+      "tiny_weight_line": 13.266,
+      "stats": {
+        "hp": 89,
+        "atk": 79,
+        "def": 83,
+        "sp_atk": 79,
+        "sp_def": 109,
+        "speed": 60,
+        "sum": 499
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/22-幻灵菇.png"
+    },
+    {
+      "name": "幻影灵菇",
+      "id": 23,
+      "types": [
+        "幽",
+        "草"
+      ],
+      "egg_groups": [
+        "植物组",
+        "魔力组"
+      ],
+      "height_min": 0.92,
+      "height_max": 1.32,
+      "weight_min": 39.4,
+      "weight_max": 48.4,
+      "giant_weight_line": 48.22,
+      "tiny_weight_line": 39.58,
+      "stats": {
+        "hp": 111,
+        "atk": 98,
+        "def": 103,
+        "sp_atk": 98,
+        "sp_def": 136,
+        "speed": 75,
+        "sum": 621
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/23-幻影灵菇.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/21-小灵菇.png"
+}

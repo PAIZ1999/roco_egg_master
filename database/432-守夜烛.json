@@ -1,0 +1,76 @@
+{
+  "id": 432,
+  "name": "守夜烛",
+  "types": [
+    "火",
+    "光"
+  ],
+  "egg_groups": [
+    "妖精组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.2,
+    "weight_min": 4.225,
+    "weight_max": 7.32,
+    "giant_weight_line": 7.2581,
+    "tiny_weight_line": 4.2869
+  },
+  "evolution_chain": [
+    "守夜烛",
+    "流明坎德拉"
+  ],
+  "stats": {
+    "hp": 89,
+    "atk": 87,
+    "def": 86,
+    "sp_atk": 94,
+    "sp_def": 98,
+    "speed": 84,
+    "sum": 538
+  },
+  "height_min": 0.3,
+  "height_max": 0.49,
+  "weight_min": 12.07,
+  "weight_max": 18.3,
+  "giant_weight_line": 18.1754,
+  "tiny_weight_line": 12.1946,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "流明坎德拉",
+      "id": 433,
+      "types": [
+        "火",
+        "光"
+      ],
+      "egg_groups": [
+        "妖精组"
+      ],
+      "height_min": 1.19,
+      "height_max": 1.51,
+      "weight_min": 58.6,
+      "weight_max": 74.9,
+      "giant_weight_line": 74.574,
+      "tiny_weight_line": 58.926,
+      "stats": {
+        "hp": 111,
+        "atk": 109,
+        "def": 108,
+        "sp_atk": 118,
+        "sp_def": 123,
+        "speed": 105,
+        "sum": 674
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/433-流明坎德拉.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/432-守夜烛.png"
+}

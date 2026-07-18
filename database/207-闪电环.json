@@ -1,0 +1,103 @@
+{
+  "id": 207,
+  "name": "闪电环",
+  "types": [
+    "电"
+  ],
+  "egg_groups": [
+    "魔力组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "魔力组"
+    ],
+    "height_min": 0.16,
+    "height_max": 0.19,
+    "weight_min": 0.84,
+    "weight_max": 1.24,
+    "giant_weight_line": 1.232,
+    "tiny_weight_line": 0.848
+  },
+  "evolution_chain": [
+    "闪电环",
+    "刺电环",
+    "荆棘电环"
+  ],
+  "stats": {
+    "hp": 64,
+    "atk": 49,
+    "def": 51,
+    "sp_atk": 49,
+    "sp_def": 50,
+    "speed": 72,
+    "sum": 335
+  },
+  "height_min": 0.37,
+  "height_max": 0.46,
+  "weight_min": 2.4,
+  "weight_max": 3.1,
+  "giant_weight_line": 3.086,
+  "tiny_weight_line": 2.414,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "刺电环",
+      "id": 208,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 0.58,
+      "height_max": 0.73,
+      "weight_min": 10.16,
+      "weight_max": 16.74,
+      "giant_weight_line": 16.6084,
+      "tiny_weight_line": 10.2916,
+      "stats": {
+        "hp": 85,
+        "atk": 65,
+        "def": 68,
+        "sp_atk": 65,
+        "sp_def": 67,
+        "speed": 96,
+        "sum": 446
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/208-刺电环.png"
+    },
+    {
+      "name": "荆棘电环",
+      "id": 209,
+      "types": [
+        "电"
+      ],
+      "egg_groups": [
+        "魔力组"
+      ],
+      "height_min": 0.78,
+      "height_max": 0.98,
+      "weight_min": 29.5,
+      "weight_max": 34.3,
+      "giant_weight_line": 34.204,
+      "tiny_weight_line": 29.596,
+      "stats": {
+        "hp": 106,
+        "atk": 81,
+        "def": 85,
+        "sp_atk": 81,
+        "sp_def": 84,
+        "speed": 120,
+        "sum": 557
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/209-荆棘电环.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/207-闪电环.png"
+}

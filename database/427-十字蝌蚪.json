@@ -1,0 +1,108 @@
+{
+  "id": 427,
+  "name": "十字蝌蚪",
+  "types": [
+    "水"
+  ],
+  "egg_groups": [
+    "两栖组",
+    "拟人组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组",
+      "拟人组"
+    ],
+    "height_min": 0.09,
+    "height_max": 0.1,
+    "weight_min": 0.122,
+    "weight_max": 0.38,
+    "giant_weight_line": 0.3748,
+    "tiny_weight_line": 0.1272
+  },
+  "evolution_chain": [
+    "十字蝌蚪",
+    "十字蛙",
+    "深渊蛙"
+  ],
+  "stats": {
+    "hp": 68,
+    "atk": 78,
+    "def": 63,
+    "sp_atk": 31,
+    "sp_def": 47,
+    "speed": 66,
+    "sum": 353
+  },
+  "height_min": 0.2,
+  "height_max": 0.25,
+  "weight_min": 0.35,
+  "weight_max": 0.95,
+  "giant_weight_line": 0.938,
+  "tiny_weight_line": 0.362,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "十字蛙",
+      "id": 428,
+      "types": [
+        "水"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "拟人组"
+      ],
+      "height_min": 0.38,
+      "height_max": 0.45,
+      "weight_min": 1.8,
+      "weight_max": 3.13,
+      "giant_weight_line": 3.1034,
+      "tiny_weight_line": 1.8266,
+      "stats": {
+        "hp": 91,
+        "atk": 104,
+        "def": 85,
+        "sp_atk": 41,
+        "sp_def": 63,
+        "speed": 88,
+        "sum": 472
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/428-十字蛙.png"
+    },
+    {
+      "name": "深渊蛙",
+      "id": 429,
+      "types": [
+        "水",
+        "武"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "拟人组"
+      ],
+      "height_min": 0.87,
+      "height_max": 1.15,
+      "weight_min": 6,
+      "weight_max": 9.05,
+      "giant_weight_line": 8.989,
+      "tiny_weight_line": 6.061,
+      "stats": {
+        "hp": 113,
+        "atk": 130,
+        "def": 106,
+        "sp_atk": 51,
+        "sp_def": 78,
+        "speed": 110,
+        "sum": 588
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/429-深渊蛙.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/427-十字蝌蚪.png"
+}

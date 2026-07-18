@@ -1,0 +1,103 @@
+{
+  "id": 348,
+  "name": "钨丝贝贝",
+  "types": [
+    "机械"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.3,
+    "weight_min": 3.395,
+    "weight_max": 5.92,
+    "giant_weight_line": 5.8695,
+    "tiny_weight_line": 3.4455
+  },
+  "evolution_chain": [
+    "钨丝贝贝",
+    "辉光幕机",
+    "机幕方舟"
+  ],
+  "stats": {
+    "hp": 62,
+    "atk": 68,
+    "def": 78,
+    "sp_atk": 63,
+    "sp_def": 54,
+    "speed": 33,
+    "sum": 358
+  },
+  "height_min": 0.54,
+  "height_max": 0.73,
+  "weight_min": 9.7,
+  "weight_max": 14.8,
+  "giant_weight_line": 14.698,
+  "tiny_weight_line": 9.802,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "辉光幕机",
+      "id": 349,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.03,
+      "height_max": 1.41,
+      "weight_min": 31.5,
+      "weight_max": 57.6,
+      "giant_weight_line": 57.078,
+      "tiny_weight_line": 32.022,
+      "stats": {
+        "hp": 83,
+        "atk": 91,
+        "def": 104,
+        "sp_atk": 84,
+        "sp_def": 72,
+        "speed": 44,
+        "sum": 478
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/349-辉光幕机.png"
+    },
+    {
+      "name": "机幕方舟",
+      "id": 350,
+      "types": [
+        "机械"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 1.68,
+      "height_max": 2.01,
+      "weight_min": 128,
+      "weight_max": 237,
+      "giant_weight_line": 234.82,
+      "tiny_weight_line": 130.18,
+      "stats": {
+        "hp": 104,
+        "atk": 113,
+        "def": 130,
+        "sp_atk": 105,
+        "sp_def": 90,
+        "speed": 55,
+        "sum": 597
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/350-机幕方舟.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/348-钨丝贝贝.png"
+}

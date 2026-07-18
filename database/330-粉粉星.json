@@ -1,0 +1,79 @@
+{
+  "id": 330,
+  "name": "粉粉星",
+  "types": [
+    "电",
+    "幻"
+  ],
+  "egg_groups": [
+    "妖精组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "妖精组",
+      "软体组"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.32,
+    "weight_min": 0.735,
+    "weight_max": 1.2,
+    "giant_weight_line": 1.1907,
+    "tiny_weight_line": 0.7443
+  },
+  "evolution_chain": [
+    "粉粉星",
+    "小皮球"
+  ],
+  "stats": {
+    "hp": 93,
+    "atk": 54,
+    "def": 57,
+    "sp_atk": 102,
+    "sp_def": 101,
+    "speed": 88,
+    "sum": 495
+  },
+  "height_min": 0.53,
+  "height_max": 0.76,
+  "weight_min": 2.1,
+  "weight_max": 3,
+  "giant_weight_line": 2.982,
+  "tiny_weight_line": 2.118,
+  "regional_forms": [],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "小皮球",
+      "id": 331,
+      "types": [
+        "电",
+        "幻"
+      ],
+      "egg_groups": [
+        "妖精组",
+        "软体组"
+      ],
+      "height_min": 0.7,
+      "height_max": 1,
+      "weight_min": 6.4,
+      "weight_max": 8.12,
+      "giant_weight_line": 8.0856,
+      "tiny_weight_line": 6.4344,
+      "stats": {
+        "hp": 116,
+        "atk": 68,
+        "def": 71,
+        "sp_atk": 127,
+        "sp_def": 126,
+        "speed": 110,
+        "sum": 618
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/331-小皮球.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/330-粉粉星.png"
+}

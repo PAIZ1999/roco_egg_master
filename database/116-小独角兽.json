@@ -1,0 +1,109 @@
+{
+  "id": 116,
+  "name": "小独角兽",
+  "types": [
+    "光"
+  ],
+  "egg_groups": [
+    "动物组",
+    "巨灵组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "动物组",
+      "巨灵组"
+    ],
+    "height_min": 0.42,
+    "height_max": 0.59,
+    "weight_min": 14.525,
+    "weight_max": 22.24,
+    "giant_weight_line": 22.0857,
+    "tiny_weight_line": 14.6793
+  },
+  "evolution_chain": [
+    "小独角兽",
+    "白金独角兽",
+    [
+      "彩虹独角兽"
+    ]
+  ],
+  "stats": {
+    "hp": 79,
+    "atk": 48,
+    "def": 62,
+    "sp_atk": 129,
+    "sp_def": 74,
+    "speed": 84,
+    "sum": 476
+  },
+  "height_min": 0.98,
+  "height_max": 1.41,
+  "weight_min": 41.5,
+  "weight_max": 55.6,
+  "giant_weight_line": 55.318,
+  "tiny_weight_line": 41.782,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "彩虹独角兽",
+      "id": 117,
+      "types": [
+        "光"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 2.72,
+      "height_max": 3.04,
+      "weight_min": 160.5,
+      "weight_max": 211.08,
+      "giant_weight_line": 210.0684,
+      "tiny_weight_line": 161.5116,
+      "stats": {
+        "hp": 99,
+        "atk": 78,
+        "def": 77,
+        "sp_atk": 192,
+        "sp_def": 92,
+        "speed": 105,
+        "sum": 643
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/117-彩虹独角兽.png"
+    }
+  ],
+  "other_forms": [
+    {
+      "name": "白金独角兽",
+      "id": 117,
+      "types": [
+        "光"
+      ],
+      "egg_groups": [
+        "动物组",
+        "巨灵组"
+      ],
+      "height_min": 1.35,
+      "height_max": 1.93,
+      "weight_min": 94.5,
+      "weight_max": 105,
+      "giant_weight_line": 104.79,
+      "tiny_weight_line": 94.71,
+      "stats": {
+        "hp": 99,
+        "atk": 61,
+        "def": 77,
+        "sp_atk": 161,
+        "sp_def": 92,
+        "speed": 105,
+        "sum": 595
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/117-白金独角兽.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/116-小独角兽.png"
+}

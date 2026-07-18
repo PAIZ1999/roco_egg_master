@@ -1,0 +1,206 @@
+{
+  "id": 32,
+  "name": "毛毛",
+  "types": [
+    "虫",
+    "萌"
+  ],
+  "egg_groups": [
+    "昆虫组",
+    "软体组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "昆虫组",
+      "软体组"
+    ],
+    "height_min": 0.13,
+    "height_max": 0.19,
+    "weight_min": 1.05,
+    "weight_max": 1.8,
+    "giant_weight_line": 1.785,
+    "tiny_weight_line": 1.065
+  },
+  "evolution_chain": [
+    "毛毛",
+    "爬爬",
+    [
+      "化蝶（平常的样子）",
+      "化蝶（幽冥眼的样子）",
+      "化蝶（喵喵的样子）",
+      "化蝶（奇丽花的样子）"
+    ]
+  ],
+  "stats": {
+    "hp": 32,
+    "atk": 28,
+    "def": 40,
+    "sp_atk": 28,
+    "sp_def": 40,
+    "speed": 60,
+    "sum": 228
+  },
+  "height_min": 0.31,
+  "height_max": 0.45,
+  "weight_min": 3,
+  "weight_max": 4.5,
+  "giant_weight_line": 4.47,
+  "tiny_weight_line": 3.03,
+  "regional_forms": [
+    {
+      "name": "化蝶（平常的样子）",
+      "id": 34,
+      "types": [
+        "虫",
+        "萌"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.08,
+      "weight_min": 15.6,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.756,
+      "tiny_weight_line": 15.644,
+      "stats": {
+        "hp": 53,
+        "atk": 46,
+        "def": 66,
+        "sp_atk": 46,
+        "sp_def": 66,
+        "speed": 100,
+        "sum": 377
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/34-化蝶（平常的样子）.png"
+    },
+    {
+      "name": "化蝶（幽冥眼的样子）",
+      "id": 34,
+      "types": [
+        "虫",
+        "萌"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.08,
+      "weight_min": 15.6,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.756,
+      "tiny_weight_line": 15.644,
+      "stats": {
+        "hp": 43,
+        "atk": 42,
+        "def": 67,
+        "sp_atk": 42,
+        "sp_def": 70,
+        "speed": 105,
+        "sum": 369
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/34-化蝶（幽冥眼的样子）.png"
+    },
+    {
+      "name": "化蝶（喵喵的样子）",
+      "id": 34,
+      "types": [
+        "虫",
+        "萌"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.08,
+      "weight_min": 15.6,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.756,
+      "tiny_weight_line": 15.644,
+      "stats": {
+        "hp": 49,
+        "atk": 47,
+        "def": 67,
+        "sp_atk": 41,
+        "sp_def": 67,
+        "speed": 95,
+        "sum": 366
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/34-化蝶（喵喵的样子）.png"
+    },
+    {
+      "name": "化蝶（奇丽花的样子）",
+      "id": 34,
+      "types": [
+        "虫",
+        "萌"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ],
+      "height_min": 0.76,
+      "height_max": 1.08,
+      "weight_min": 15.6,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.756,
+      "tiny_weight_line": 15.644,
+      "stats": {
+        "hp": 55,
+        "atk": 46,
+        "def": 62,
+        "sp_atk": 44,
+        "sp_def": 65,
+        "speed": 90,
+        "sum": 362
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/34-化蝶（奇丽花的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "爬爬",
+      "id": 33,
+      "types": [
+        "虫",
+        "萌"
+      ],
+      "egg_groups": [
+        "昆虫组",
+        "软体组"
+      ],
+      "height_min": 0.35,
+      "height_max": 0.51,
+      "weight_min": 5.5,
+      "weight_max": 8.4,
+      "giant_weight_line": 8.342,
+      "tiny_weight_line": 5.558,
+      "stats": {
+        "hp": 42,
+        "atk": 37,
+        "def": 53,
+        "sp_atk": 37,
+        "sp_def": 53,
+        "speed": 80,
+        "sum": 302
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/33-爬爬.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/32-毛毛.png"
+}

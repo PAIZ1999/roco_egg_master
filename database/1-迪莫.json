@@ -1,0 +1,166 @@
+{
+  "id": 1,
+  "name": "迪莫",
+  "types": [
+    "光"
+  ],
+  "egg_groups": [
+    "无法孵蛋"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "无法孵蛋"
+    ],
+    "height_min": 0.23,
+    "height_max": 0.32,
+    "weight_min": 1.925,
+    "weight_max": 2.8,
+    "giant_weight_line": 2.7825,
+    "tiny_weight_line": 1.9425
+  },
+  "evolution_chain": [
+    "迪莫",
+    [
+      "圣光迪莫",
+      "圣草迪莫",
+      "圣火迪莫",
+      "圣水迪莫"
+    ]
+  ],
+  "stats": {
+    "hp": 120,
+    "atk": 80,
+    "def": 105,
+    "sp_atk": 80,
+    "sp_def": 105,
+    "speed": 92,
+    "sum": 582
+  },
+  "height_min": 0.54,
+  "height_max": 0.78,
+  "weight_min": 5.5,
+  "weight_max": 7,
+  "giant_weight_line": 6.97,
+  "tiny_weight_line": 5.53,
+  "regional_forms": [],
+  "lord_forms": [
+    {
+      "name": "圣光迪莫",
+      "id": 1,
+      "types": [
+        "光"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.05,
+      "weight_min": 13.5,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.714,
+      "tiny_weight_line": 13.586,
+      "stats": {
+        "hp": 122,
+        "atk": 84,
+        "def": 107,
+        "sp_atk": 84,
+        "sp_def": 107,
+        "speed": 92,
+        "sum": 596
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/1-圣光迪莫.png"
+    },
+    {
+      "name": "圣草迪莫",
+      "id": 1,
+      "types": [
+        "光",
+        "草"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.05,
+      "weight_min": 13.5,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.714,
+      "tiny_weight_line": 13.586,
+      "stats": {
+        "hp": 132,
+        "atk": 80,
+        "def": 105,
+        "sp_atk": 80,
+        "sp_def": 105,
+        "speed": 92,
+        "sum": 594
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/1-圣草迪莫.png"
+    },
+    {
+      "name": "圣火迪莫",
+      "id": 1,
+      "types": [
+        "光",
+        "火"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.05,
+      "weight_min": 13.5,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.714,
+      "tiny_weight_line": 13.586,
+      "stats": {
+        "hp": 120,
+        "atk": 88,
+        "def": 105,
+        "sp_atk": 88,
+        "sp_def": 105,
+        "speed": 92,
+        "sum": 598
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/1-圣火迪莫.png"
+    },
+    {
+      "name": "圣水迪莫",
+      "id": 1,
+      "types": [
+        "光",
+        "水"
+      ],
+      "egg_groups": [
+        "无法孵蛋"
+      ],
+      "height_min": 0.84,
+      "height_max": 1.05,
+      "weight_min": 13.5,
+      "weight_max": 17.8,
+      "giant_weight_line": 17.714,
+      "tiny_weight_line": 13.586,
+      "stats": {
+        "hp": 120,
+        "atk": 80,
+        "def": 113,
+        "sp_atk": 80,
+        "sp_def": 113,
+        "speed": 92,
+        "sum": 598
+      },
+      "is_regional": false,
+      "is_lord": true,
+      "avatar": "../高清精灵头像/1-圣水迪莫.png"
+    }
+  ],
+  "other_forms": [],
+  "avatar": "../高清精灵头像/1-迪莫.png"
+}

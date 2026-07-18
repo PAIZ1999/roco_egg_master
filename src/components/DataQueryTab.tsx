@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Sparkles, BookOpen, Layers, Zap, Info, ChevronRight, HelpCircle, Activity } from "lucide-react";
 import { Autocomplete } from "./Autocomplete";
-import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult, petsRaceMap } from "../queryHelper";
+import { queryPet, queryEgg, queryEggGroups, parseEggParams, parseEggGroupParams, QueryPetResult, PredictedEggResult } from "../queryHelper";
 import { ALL_PET_NAMES, getImagePath, getSpriteFileName } from "../petHelper";
 
 // 六边形内联雷达图组件
@@ -184,16 +184,9 @@ export function DataQueryTab() {
 
   // 处理形态选择切换
   const handleFormSelect = (formItem: any) => {
-    const cleanFormName = formItem.name.trim();
-    const raceInfo = petsRaceMap[cleanFormName];
-    const race = raceInfo && raceInfo.stats ? {
-      sum: raceInfo.sum,
-      stats: raceInfo.stats
-    } : null;
-
     setActiveForm({
       ...formItem,
-      race
+      race: formItem.stats || null
     });
   };
 
@@ -381,12 +374,12 @@ export function DataQueryTab() {
                       <span className="text-[10px] text-slate-455 dark:text-slate-550 font-black text-left block mb-2.5 uppercase tracking-wider">切换形态样式:</span>
                       <div className="flex flex-wrap gap-2 justify-center max-h-36 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 scrollbar-track-transparent">
                         {petResult.avatars.map((avatar, idx) => {
-                          const formBaseName = petResult.currentForm.name.split(/[（(]/)[0].trim();
+                          const parts = avatar.absolutePath.split('/');
+                          const fileBase = parts[parts.length - 1].replace(/^\d+-/, '').slice(0, -4).trim().toLowerCase();
+                          
                           const formItem = petResult.forms.find((f: any) => {
-                            if (avatar.styleName === '本来的样子' || avatar.styleName === '默认') {
-                              return f.name === formBaseName;
-                            }
-                            return f.name.includes(avatar.styleName);
+                            const cleanName = f.name.replace(/[（(]/g, "_").replace(/[）)]/g, "").trim().toLowerCase();
+                            return cleanName === fileBase;
                           }) || petResult.forms[idx] || petResult.currentForm;
                           const isSelected = activeForm && activeForm.name === formItem.name;
                           return (

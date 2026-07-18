@@ -1,0 +1,195 @@
+{
+  "id": 24,
+  "name": "石肤蜥",
+  "types": [
+    "地"
+  ],
+  "egg_groups": [
+    "两栖组",
+    "大地组"
+  ],
+  "egg_data": {
+    "has_egg": true,
+    "egg_groups": [
+      "两栖组",
+      "大地组"
+    ],
+    "height_min": 0.21,
+    "height_max": 0.29,
+    "weight_min": 7.35,
+    "weight_max": 13.6,
+    "giant_weight_line": 13.475,
+    "tiny_weight_line": 7.475
+  },
+  "evolution_chain": [
+    "石肤蜥",
+    "石刺蜥",
+    "石冠王蜥"
+  ],
+  "stats": {
+    "hp": 69,
+    "atk": 61,
+    "def": 72,
+    "sp_atk": 60,
+    "sp_def": 50,
+    "speed": 57,
+    "sum": 369
+  },
+  "height_min": 0.49,
+  "height_max": 0.7,
+  "weight_min": 21,
+  "weight_max": 34,
+  "giant_weight_line": 33.74,
+  "tiny_weight_line": 21.26,
+  "regional_forms": [
+    {
+      "name": "石肤蜥（球球尾巴的样子）",
+      "id": 24,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.49,
+      "height_max": 0.7,
+      "weight_min": 19.5,
+      "weight_max": 32.5,
+      "giant_weight_line": 32.24,
+      "tiny_weight_line": 19.76,
+      "stats": {
+        "hp": 68,
+        "atk": 61,
+        "def": 70,
+        "sp_atk": 60,
+        "sp_def": 50,
+        "speed": 60,
+        "sum": 369
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/24-石肤蜥（球球尾巴的样子）.png"
+    },
+    {
+      "name": "石刺蜥（球球尾巴的样子）",
+      "id": 25,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.67,
+      "height_max": 0.96,
+      "weight_min": 56.5,
+      "weight_max": 68.5,
+      "giant_weight_line": 68.26,
+      "tiny_weight_line": 56.74,
+      "stats": {
+        "hp": 91,
+        "atk": 82,
+        "def": 94,
+        "sp_atk": 80,
+        "sp_def": 66,
+        "speed": 80,
+        "sum": 493
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/25-石刺蜥（球球尾巴的样子）.png"
+    },
+    {
+      "name": "石冠王蜥（球球尾巴的样子）",
+      "id": 26,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.94,
+      "height_max": 1.18,
+      "weight_min": 76.5,
+      "weight_max": 95.5,
+      "giant_weight_line": 95.12,
+      "tiny_weight_line": 76.88,
+      "stats": {
+        "hp": 113,
+        "atk": 102,
+        "def": 117,
+        "sp_atk": 100,
+        "sp_def": 83,
+        "speed": 100,
+        "sum": 615
+      },
+      "is_regional": true,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/26-石冠王蜥（球球尾巴的样子）.png"
+    }
+  ],
+  "lord_forms": [],
+  "other_forms": [
+    {
+      "name": "石刺蜥",
+      "id": 25,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.67,
+      "height_max": 0.96,
+      "weight_min": 59.5,
+      "weight_max": 70.5,
+      "giant_weight_line": 70.28,
+      "tiny_weight_line": 59.72,
+      "stats": {
+        "hp": 92,
+        "atk": 81,
+        "def": 96,
+        "sp_atk": 80,
+        "sp_def": 67,
+        "speed": 76,
+        "sum": 492
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/25-石刺蜥.png"
+    },
+    {
+      "name": "石冠王蜥",
+      "id": 26,
+      "types": [
+        "地"
+      ],
+      "egg_groups": [
+        "两栖组",
+        "大地组"
+      ],
+      "height_min": 0.94,
+      "height_max": 1.18,
+      "weight_min": 78.5,
+      "weight_max": 98.5,
+      "giant_weight_line": 98.1,
+      "tiny_weight_line": 78.9,
+      "stats": {
+        "hp": 115,
+        "atk": 101,
+        "def": 120,
+        "sp_atk": 100,
+        "sp_def": 84,
+        "speed": 95,
+        "sum": 615
+      },
+      "is_regional": false,
+      "is_lord": false,
+      "avatar": "../高清精灵头像/26-石冠王蜥.png"
+    }
+  ],
+  "avatar": "../高清精灵头像/24-石肤蜥.png"
+}
