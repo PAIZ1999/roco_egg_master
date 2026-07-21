@@ -1,43 +1,31 @@
-# Task Plan: 洛克王国 S3 赛季精灵数据与高清头像更新
+# Task Plan: 优化全选父母配对卡顿与导入数据保存机制
 
 ## Goal
-全面更新洛克王国精灵数据源至 S3 赛季新数据，废除旧版数据，同步更新为 596 张带图鉴 ID 的高清精灵与子形态头像，并重构头像匹配检索逻辑，确保桌面端和打包后的桌面软件中多形态头像、进化链和蛋物理参数均能无缝且精准地展示。
+彻底解决 1000+ 级大容量精灵导入及全选父母本时的软件卡顿/卡死问题，并确保大批量导入数据时瞬时存盘，防范崩溃导致的数据丢失。
 
 ## MCP Status
-- [x] memory 检索完成 (已查询到有关 forms 重构及甜甜/晶石蜗等多形态排重解决历史)
+- [x] memory 检索完成
 - [ ] context7/deepwiki 查询完成
-- [ ] sequential-thinking 分析完成
+- [x] sequential-thinking 分析完成
 - [ ] memory 知识存储完成
 
 ## Phases
-- [x] Phase 1: 规划与准备
-  - [x] 研究并分析 `洛克精灵数据打包/database` 及 `高清精灵头像` 目录下的新数据结构。
-  - [x] 制定 `implementation_plan.md` 精确数据合并与归一化图片路径寻路算法实施方案。
-  - [x] 提交实施计划并取得用户审批。
-- [x] Phase 2: 头像资源更新与索引重建
-  - [x] 清空旧的 `images/sprites/` 目录，拷贝 596 张全新高清头像。
-  - [x] 编写脚本并自动生成新的 `src/sprite_files.json` 头像文件名缓存索引。
-- [x] Phase 3: 精灵数据清洗与物理合并
-  - [x] 编写 Node.js 数据合并脚本 `scratch/merge_new_data.cjs`，将 178 个独立 JSON 重新合并构建为 React 所需的单一 `src/pets_data.json`，确保格式兼容。
-- [x] Phase 4: 头像与形态寻路匹配重构
-  - [x] 修改 `src/petHelper.ts` 中 `getSpriteFileName`、`findForm` 的匹配方法，使其支持带有 ID 前缀和中文括号的头像寻路。
-  - [x] 修改 `src/queryHelper.ts` 中的匹配规则，保证在查询面板与桌面助理中点击进化链及多形态时能正确锁定对应的头像图片。
-- [x] Phase 5: 测试验证与最终交付
-  - [x] 编写并执行自校验脚本，检查 S3 新数据下所有精灵与多形态头像的对齐覆盖率是否为 100%
-  - [x] 运行 `npm run build` 进行 TS 编译和 Electron 打包资源拷贝测试
-  - [x] 运行 Vite dev 服务器进行浏览器端多 Tab 交互手动验证
-  - [x] 更新项目知识库 `.claude\PROJECT_KNOWLEDGE.md` 并生成 `walkthrough.md` 报告
+- [ ] Phase 1: 规划与准备 (当前阶段，编写实施方案并征求确认)
+- [ ] Phase 2: 核心修改 (使用 useMemo 提取与缓存配对，加入熔断保护机制，重构 executeSave 并引入即时存盘)
+- [ ] Phase 3: 本地编译与功能验证 (进行 Electron 本地编译及大批量导入性能极限测试)
+- [ ] Phase 4: 知识库整理与最终交付 (更新 PROJECT_KNOWLEDGE.md 并沉淀 memory)
 
 ## Key Questions
-1. 以前的数据在 React 运行时会依赖 `pets_race_data.json` 中的变体形态并动态补充到 `forms` 中。我们在新版 `pets_data.json` 中是否应该直接把 `regional_forms`、`lord_forms` 等一次性打包进主精灵的 `forms` 中以去冗余？
-   *决策*: 是的，新版 JSON 直接物理包含所有形态属性，能最大化提高性能并避免脏数据。
+1. 3000 对作为熔断阈值是否能够满足用户通常的繁育查看需要？
+2. 熔断提示在 UI 界面上是否需要支持“仍然强制计算”选项？（考虑到防止卡顿的核心目标，建议默认不支持强制，以保障软件稳定性）
 
 ## Decisions Made
-- [决策]: 彻底废除旧的 `images/sprites` 目录，将其重构为纯净的 `[ID]-[精灵形态名].png` 的高清头像数据库，减少 800+ 冗余非繁育垃圾图片。
-- [决策]: `getSpriteFileName` 匹配时对传入参数与 spriteFiles 文件名同时进行归一化（剥离数字 ID 前缀，去除后缀，中英文括号统一映射为下划线后强对比），从而完美穿透 ID 和括号的阻隔。
+- [决策]: 必须将 JSX 内部的所有大数组链式去重、筛选与分组运算全部迁移到组件顶层的 `useMemo` 中。
+- [决策]: 引入安全阈值（暂定 3000 组配对），超出则只进行熔断警示，防止产生数十万次无价值笛卡尔积计算挂起主线程。
+- [决策]: 重构 `executeSave` 保存执行器以支持状态字段覆盖，并在精灵导入/数据恢复等批量操作中执行即时物理存盘，切断“卡死->丢失数据”的恶性链条。
 
 ## Errors Encountered
 - 无
 
 ## Status
-**Currently in Phase 2** - 正在进行头像清空、拷贝和索引重建。
+**Currently in Phase 1** - 规划与准备。已定位问题成因并设计优化策略，正在向用户呈递 Implementation Plan。

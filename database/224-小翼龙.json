@@ -7,13 +7,13 @@
   ],
   "egg_groups": [
     "天空组",
-    "飞龙组"
+    "龙组"
   ],
   "egg_data": {
     "has_egg": true,
     "egg_groups": [
       "天空组",
-      "飞龙组"
+      "龙组"
     ],
     "height_min": 0.26,
     "height_max": 0.36,
@@ -53,7 +53,7 @@
       ],
       "egg_groups": [
         "天空组",
-        "飞龙组"
+        "龙组"
       ],
       "height_min": 1.79,
       "height_max": 1.99,

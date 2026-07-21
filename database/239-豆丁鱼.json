@@ -7,13 +7,13 @@
   ],
   "egg_groups": [
     "海洋组",
-    "飞龙组"
+    "龙组"
   ],
   "egg_data": {
     "has_egg": true,
     "egg_groups": [
       "海洋组",
-      "飞龙组"
+      "龙组"
     ],
     "height_min": 0.13,
     "height_max": 0.18,
@@ -54,7 +54,7 @@
       ],
       "egg_groups": [
         "海洋组",
-        "飞龙组"
+        "龙组"
       ],
       "height_min": 0.27,
       "height_max": 0.39,
@@ -84,7 +84,7 @@
       ],
       "egg_groups": [
         "海洋组",
-        "飞龙组"
+        "龙组"
       ],
       "height_min": 0.69,
       "height_max": 0.99,

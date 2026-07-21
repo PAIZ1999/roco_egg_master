@@ -43,7 +43,11 @@ export const chainMaxStageMap: Record<string, string[]> = {
 
 // 清洗蛋组里的脏数据，如月亮砣包含“海洋组身高：...”
 const cleanEggGroups = (groups: string[]): string[] => {
-  return groups.map(g => g.includes("海洋组") ? "海洋组" : g);
+  return groups.map(g => {
+    if (g.includes("海洋组")) return "海洋组";
+    if (g === "飞龙组") return "龙组";
+    return g;
+  });
 };
 
 // 预处理 cleanedPetsData，提取所有的 forms 并初始化 petDataMap

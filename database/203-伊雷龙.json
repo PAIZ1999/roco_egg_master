@@ -5,12 +5,12 @@
     "龙"
   ],
   "egg_groups": [
-    "飞龙组"
+    "龙组"
   ],
   "egg_data": {
     "has_egg": true,
     "egg_groups": [
-      "飞龙组"
+      "龙组"
     ],
     "height_min": 0.31,
     "height_max": 0.39,
@@ -80,7 +80,7 @@
         "龙"
       ],
       "egg_groups": [
-        "飞龙组"
+        "龙组"
       ],
       "height_min": 3.65,
       "height_max": 4,

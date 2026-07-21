@@ -36,7 +36,8 @@ import {
   GripVertical,
   Calendar,
   Table,
-  Minus
+  Minus,
+  AlertTriangle
 } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import {
@@ -1665,9 +1666,21 @@ export default function App() {
     }, 100);
   }, [setParents]);
 
-  const getPairings = useCallback(() => {
+  const { allPairings, isPairingOverloaded, totalPairingCombinations, checkedFathersCount, checkedMothersCount } = useMemo(() => {
     const checkedFathers = parents.filter(p => p.gender === "♂" && p.checked && p.sprite);
     const checkedMothers = parents.filter(p => p.gender === "♀" && p.checked && p.sprite);
+    const totalCombinations = checkedFathers.length * checkedMothers.length;
+
+    if (totalCombinations > 3000) {
+      return {
+        allPairings: [],
+        isPairingOverloaded: true,
+        totalPairingCombinations: totalCombinations,
+        checkedFathersCount: checkedFathers.length,
+        checkedMothersCount: checkedMothers.length
+      };
+    }
+
     const results: Array<{
       father: ParentPet;
       mother: ParentPet;
@@ -1699,234 +1712,85 @@ export default function App() {
     for (const father of checkedFathers) {
       for (const mother of checkedMothers) {
         const matchingGroups = father.groups.filter(g => mother.groups.includes(g));
-        if (matchingGroups.length === 0) continue;let brand = "";
-
-
-                const isFatherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(father.brand);
-
-
-                const isMotherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(mother.brand);
-
-
-                const isFatherSoft = ["大婉", "小婉", "单婉转声"].includes(father.brand);
-
-
-                const isMotherSoft = ["大婉", "小婉", "单婉转声"].includes(mother.brand);
-
-
-
-                const isCoarseIncompatible = (father.brand === "大粗" && mother.brand === "小粗") || (father.brand === "小粗" && mother.brand === "大粗");
-
-
-                const isSoftIncompatible = (father.brand === "大婉" && mother.brand === "小婉") || (father.brand === "小婉" && mother.brand === "大婉");
-
-
-
-                if (isFatherCoarse && isMotherCoarse && !isCoarseIncompatible) {
-
-
-                  // 粗嗓门组：大粗/小粗/单粗嗓门
-
-
-                  if (father.brand === "大粗" && mother.brand === "大粗") {
-
-
-                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "大粗";
-
-
-                  } else if (father.brand === "小粗" && mother.brand === "小粗") {
-
-
-                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "小粗";
-
-
-                  } else if (
-
-
-                    (father.brand === "大粗" && mother.brand === "单粗嗓门") ||
-
-
-                    (mother.brand === "大粗" && father.brand === "单粗嗓门")
-
-
-                  ) {
-
-
-                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "单粗嗓门";
-
-
-                  } else if (
-
-
-                    (father.brand === "小粗" && mother.brand === "单粗嗓门") ||
-
-
-                    (mother.brand === "小粗" && father.brand === "单粗嗓门")
-
-
-                  ) {
-
-
-                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "单粗嗓门";
-
-
-                  } else {
-
-
-                    brand = "单粗嗓门";
-
-
-                  }
-
-
-                } else if (isFatherSoft && isMotherSoft && !isSoftIncompatible) {
-
-
-                  // 婉转声组：大婉/小婉/单婉转声
-
-
-                  if (father.brand === "大婉" && mother.brand === "大婉") {
-
-
-                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "大婉";
-
-
-                  } else if (father.brand === "小婉" && mother.brand === "小婉") {
-
-
-                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "小婉";
-
-
-                  } else if (
-
-
-                    (father.brand === "大婉" && mother.brand === "单婉转声") ||
-
-
-                    (mother.brand === "大婉" && father.brand === "单婉转声")
-
-
-                  ) {
-
-
-                    brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "单婉转声";
-
-
-                  } else if (
-
-
-                    (father.brand === "小婉" && mother.brand === "单婉转声") ||
-
-
-                    (mother.brand === "小婉" && father.brand === "单婉转声")
-
-
-                  ) {
-
-
-                    brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "单婉转声";
-
-
-                  } else {
-
-
-                    brand = "单婉转声";
-
-
-                  }
-
-
-                } else if (
-
-
-                  (father.brand === "普通" && isNearGiantLimit(father) && mother.brand === "单大块头") ||
-
-
-                  (mother.brand === "普通" && isNearGiantLimit(mother) && father.brand === "单大块头")
-
-
-                ) {
-
-
-                  brand = "概率大块头";
-
-
-                } else if (
-
-
-                  (father.brand === "普通" && isNearTinyLimit(father) && mother.brand === "单小不点") ||
-
-
-                  (mother.brand === "普通" && isNearTinyLimit(mother) && father.brand === "单小不点")
-
-
-                ) {
-
-
-                  brand = "概率小不点";
-
-
-                } else if (
-
-
-                  father.brand === "普通" && isNearGiantLimit(father) &&
-
-
-                  mother.brand === "普通" && isNearGiantLimit(mother)
-
-
-                ) {
-
-
-                  brand = "概率大块头";
-
-
-                } else if (
-
-
-                  father.brand === "普通" && isNearTinyLimit(father) &&
-
-
-                  mother.brand === "普通" && isNearTinyLimit(mother)
-
-
-                ) {
-
-
-                  brand = "概率小不点";
-
-
-                } else if (
-
-
-                  (father.brand === "普通" && (mother.brand === "单大块头" || mother.brand === "单小不点" || mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
-
-
-                  (mother.brand === "普通" && (father.brand === "单大块头" || father.brand === "单小不点" || father.brand === "单粗嗓门" || father.brand === "单婉转声"))
-
-
-                ) {
-
-
-                  // 普通 + 单XX = 普通
-
-
-                  brand = "普通";
-
-
-                } else if (father.brand === mother.brand) {
-
-
-                  brand = father.brand;
-
-
-                } else {
-
-
-                  continue;
-
-
-                }
+        if (matchingGroups.length === 0) continue;
+        
+        let brand = "";
+        const isFatherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(father.brand);
+        const isMotherCoarse = ["大粗", "小粗", "单粗嗓门"].includes(mother.brand);
+        const isFatherSoft = ["大婉", "小婉", "单婉转声"].includes(father.brand);
+        const isMotherSoft = ["大婉", "小婉", "单婉转声"].includes(mother.brand);
+
+        const isCoarseIncompatible = (father.brand === "大粗" && mother.brand === "小粗") || (father.brand === "小粗" && mother.brand === "大粗");
+        const isSoftIncompatible = (father.brand === "大婉" && mother.brand === "小婉") || (father.brand === "小婉" && mother.brand === "大婉");
+
+        if (isFatherCoarse && isMotherCoarse && !isCoarseIncompatible) {
+          // 粗嗓门组：大粗/小粗/单粗嗓门
+          if (father.brand === "大粗" && mother.brand === "大粗") {
+            brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "大粗";
+          } else if (father.brand === "小粗" && mother.brand === "小粗") {
+            brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "小粗";
+          } else if (
+            (father.brand === "大粗" && mother.brand === "单粗嗓门") ||
+            (mother.brand === "大粗" && father.brand === "单粗嗓门")
+          ) {
+            brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大粗" : "单粗嗓门";
+          } else if (
+            (father.brand === "小粗" && mother.brand === "单粗嗓门") ||
+            (mother.brand === "小粗" && father.brand === "单粗嗓门")
+          ) {
+            brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小粗" : "单粗嗓门";
+          } else {
+            brand = "单粗嗓门";
+          }
+        } else if (isFatherSoft && isMotherSoft && !isSoftIncompatible) {
+          // 婉转声组：大婉/小婉/单婉转声
+          if (father.brand === "大婉" && mother.brand === "大婉") {
+            brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "大婉";
+          } else if (father.brand === "小婉" && mother.brand === "小婉") {
+            brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "小婉";
+          } else if (
+            (father.brand === "大婉" && mother.brand === "单婉转声") ||
+            (mother.brand === "大婉" && father.brand === "单婉转声")
+          ) {
+            brand = (isNearGiantLimit(father) || isNearGiantLimit(mother)) ? "概率大婉" : "单婉转声";
+          } else if (
+            (father.brand === "小婉" && mother.brand === "单婉转声") ||
+            (mother.brand === "小婉" && father.brand === "单婉转声")
+          ) {
+            brand = (isNearTinyLimit(father) || isNearTinyLimit(mother)) ? "概率小婉" : "单婉转声";
+          } else {
+            brand = "单婉转声";
+          }
+        } else if (
+          (father.brand === "普通" && isNearGiantLimit(father) && mother.brand === "单大块头") ||
+          (mother.brand === "普通" && isNearGiantLimit(mother) && father.brand === "单大块头")
+        ) {
+          brand = "概率大块头";
+        } else if (
+          (father.brand === "普通" && isNearTinyLimit(father) && mother.brand === "单小不点") ||
+          (mother.brand === "普通" && isNearTinyLimit(mother) && father.brand === "单小不点")
+        ) {
+          brand = "概率小不点";
+        } else if (
+          father.brand === "普通" && isNearGiantLimit(father) &&
+          mother.brand === "普通" && isNearGiantLimit(mother)
+        ) {
+          brand = "概率大块头";
+        } else if (
+          father.brand === "普通" && isNearTinyLimit(father) &&
+          mother.brand === "普通" && isNearTinyLimit(mother)
+        ) {
+          brand = "概率小不点";
+        } else if (
+          (father.brand === "普通" && (mother.brand === "单大块头" || mother.brand === "单小不点" || mother.brand === "单粗嗓门" || mother.brand === "单婉转声")) ||
+          (mother.brand === "普通" && (father.brand === "单大块头" || father.brand === "单小不点" || father.brand === "单粗嗓门" || father.brand === "单婉转声"))
+        ) {
+          brand = "普通";
+        } else if (father.brand === mother.brand) {
+          brand = father.brand;
+        } else {
+          continue;
+        }
 
         results.push({
           father,
@@ -1937,8 +1801,140 @@ export default function App() {
         });
       }
     }
-    return results;
+
+    return {
+      allPairings: results,
+      isPairingOverloaded: false,
+      totalPairingCombinations: totalCombinations,
+      checkedFathersCount: checkedFathers.length,
+      checkedMothersCount: checkedMothers.length
+    };
   }, [parents]);
+
+  // 过滤后的 pairings
+  const filteredPairings = useMemo(() => {
+    if (isPairingOverloaded) return [];
+    return allPairings.filter(pair => {
+      const fatherValidStats = pair.father.stats.filter(s => s && s !== "无");
+      const motherValidStats = pair.mother.stats.filter(s => s && s !== "无");
+      const isStatsMatch = fatherValidStats.length > 0 &&
+        fatherValidStats.length === motherValidStats.length &&
+        fatherValidStats.every(s => motherValidStats.includes(s));
+
+      const matchSprite = (spriteName: string) => {
+        if (!spriteName) return false;
+        const nameFilter = pairingFilterName.toLowerCase().trim();
+        const lowerName = spriteName.toLowerCase();
+        const initials = getPinyinInitials(spriteName).toLowerCase();
+        return lowerName.includes(nameFilter) || initials.includes(nameFilter);
+      };
+
+      const nameMatch = !pairingFilterName ||
+        matchSprite(pair.father.sprite) ||
+        matchSprite(pair.mother.sprite) ||
+        matchSprite(pair.eggSprite);
+      const groupMatch = !pairingFilterGroup || pair.matchingGroups.includes(pairingFilterGroup);
+      const brandMatch = !pairingFilterBrand || pair.brand === pairingFilterBrand;
+      const natureMatch = !pairingFilterNature ||
+        (pair.father.nature && pair.father.nature.includes(pairingFilterNature)) ||
+        (pair.mother.nature && pair.mother.nature.includes(pairingFilterNature));
+
+      let v3Match = true;
+      if (pairingFilter3V === "3V") {
+        v3Match = isStatsMatch;
+      } else if (pairingFilter3V === "非3V") {
+        v3Match = !isStatsMatch;
+      }
+
+      const isSameN = !!pair.father.nature && !!pair.mother.nature && pair.father.nature === pair.mother.nature;
+      let sameNatureMatch = true;
+      if (pairingFilterSameNature === "same") {
+        sameNatureMatch = isSameN;
+      } else if (pairingFilterSameNature === "diff") {
+        sameNatureMatch = !isSameN;
+      } else if (pairingFilterSameNature === "diff3V") {
+        sameNatureMatch = isStatsMatch && !isSameN;
+      }
+
+      return nameMatch && groupMatch && brandMatch && v3Match && sameNatureMatch && natureMatch;
+    });
+  }, [allPairings, isPairingOverloaded, pairingFilterName, pairingFilterGroup, pairingFilterBrand, pairingFilterNature, pairingFilter3V, pairingFilterSameNature]);
+
+  // 分组后的 pairings
+  const groupedPairings = useMemo(() => {
+    if (isPairingOverloaded) return [];
+    interface GroupedPairing {
+      eggSprite: string;
+      pairings: Array<{
+        father: ParentPet;
+        mother: ParentPet;
+        brand: string;
+        eggSprite: string;
+        matchingGroups: string[];
+      }>;
+    }
+
+    const list: GroupedPairing[] = [];
+    const eggMap = new Map<string, GroupedPairing>();
+
+    for (const pair of filteredPairings) {
+      const eggKey = pair.eggSprite;
+      if (!eggMap.has(eggKey)) {
+        const group: GroupedPairing = {
+          eggSprite: eggKey,
+          pairings: []
+        };
+        eggMap.set(eggKey, group);
+        list.push(group);
+      }
+      eggMap.get(eggKey)!.pairings.push({
+        father: pair.father,
+        mother: pair.mother,
+        brand: pair.brand,
+        eggSprite: pair.eggSprite,
+        matchingGroups: pair.matchingGroups
+      });
+    }
+    return list;
+  }, [filteredPairings, isPairingOverloaded]);
+
+  // 可用的蛋组和牌子去重列表
+  const allPairGroups = useMemo(() => {
+    return Array.from(new Set(allPairings.flatMap(p => p.matchingGroups))).sort();
+  }, [allPairings]);
+
+  const allPairBrands = useMemo(() => {
+    return Array.from(new Set(allPairings.map(p => p.brand))).filter(Boolean).sort();
+  }, [allPairings]);
+
+  // 当前可展示显示的配对（按 activeFatherIndices 折叠）
+  const activePairings = useMemo(() => {
+    return groupedPairings.map(group => {
+      const groupKey = group.eggSprite;
+      const activeIndex = activeFatherIndices[groupKey] || 0;
+      const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
+      return group.pairings[safeIdx];
+    }).filter(Boolean);
+  }, [groupedPairings, activeFatherIndices]);
+
+  // 被勾选的配对
+  const selectedPairings = useMemo(() => {
+    return activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
+  }, [activePairings, excludedPairKeys]);
+
+  const handleSelectAllPairings = useCallback(() => {
+    setExcludedPairKeys(new Set());
+    showToast("已全选当前显示的繁育配对！", "success");
+  }, []);
+
+  const handleUnselectAllPairings = useCallback(() => {
+    const newSet = new Set<string>();
+    activePairings.forEach(pair => {
+      newSet.add(pair.father.id + "-" + pair.mother.id);
+    });
+    setExcludedPairKeys(newSet);
+    showToast("已清空选中当前显示的繁育配对！", "info");
+  }, [activePairings]);
 
   const handleImportPairingsToNest = (pairings: Array<{
     father: ParentPet;
@@ -5549,115 +5545,40 @@ export default function App() {
         {/* 智能配对与导入中心 */}
         <div id="parents-pairing-section" className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mt-4">
           {(() => {
-            const allPairings = getPairings();
-            const allPairGroups = Array.from(new Set(allPairings.flatMap(p => p.matchingGroups))).sort();
-            const allPairBrands = Array.from(new Set(allPairings.map(p => p.brand))).filter(Boolean).sort();
-
-            // 筛选逻辑
-            const filteredPairings = allPairings.filter(pair => {
-              const fatherValidStats = pair.father.stats.filter(s => s && s !== "无");
-              const motherValidStats = pair.mother.stats.filter(s => s && s !== "无");
-              const isStatsMatch = fatherValidStats.length > 0 &&
-                fatherValidStats.length === motherValidStats.length &&
-                fatherValidStats.every(s => motherValidStats.includes(s));
-
-              const matchSprite = (spriteName: string) => {
-                if (!spriteName) return false;
-                const nameFilter = pairingFilterName.toLowerCase().trim();
-                const lowerName = spriteName.toLowerCase();
-                const initials = getPinyinInitials(spriteName).toLowerCase();
-                return lowerName.includes(nameFilter) || initials.includes(nameFilter);
-              };
-
-              const nameMatch = !pairingFilterName ||
-                matchSprite(pair.father.sprite) ||
-                matchSprite(pair.mother.sprite) ||
-                matchSprite(pair.eggSprite);
-              const groupMatch = !pairingFilterGroup || pair.matchingGroups.includes(pairingFilterGroup);
-              const brandMatch = !pairingFilterBrand || pair.brand === pairingFilterBrand;
-              const natureMatch = !pairingFilterNature ||
-                (pair.father.nature && pair.father.nature.includes(pairingFilterNature)) ||
-                (pair.mother.nature && pair.mother.nature.includes(pairingFilterNature));
-
-              let v3Match = true;
-              if (pairingFilter3V === "3V") {
-                v3Match = isStatsMatch;
-              } else if (pairingFilter3V === "非3V") {
-                v3Match = !isStatsMatch;
-              }
-
-              const isSameN = !!pair.father.nature && !!pair.mother.nature && pair.father.nature === pair.mother.nature;
-              let sameNatureMatch = true;
-              if (pairingFilterSameNature === "same") {
-                sameNatureMatch = isSameN;
-              } else if (pairingFilterSameNature === "diff") {
-                sameNatureMatch = !isSameN;
-              } else if (pairingFilterSameNature === "diff3V") {
-                sameNatureMatch = isStatsMatch && !isSameN;
-              }
-
-              return nameMatch && groupMatch && brandMatch && v3Match && sameNatureMatch && natureMatch;
-            });
-
-            // 按子代精灵蛋 (eggSprite) 分组合并，以此实现同一进化链同样子的母本合并
-            interface GroupedPairing {
-              eggSprite: string;
-              pairings: Array<{
-                father: ParentPet;
-                mother: ParentPet;
-                brand: string;
-                eggSprite: string;
-                matchingGroups: string[];
-              }>;
+            if (isPairingOverloaded) {
+              return (
+                <>
+                  {/* Header (一键导入与勾选控制) */}
+                  <div className="p-4 bg-slate-900 dark:bg-slate-950/60 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-1.5 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
+                        <Dna className="w-4.5 h-4.5 text-indigo-300 animate-pulse" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold tracking-wide">🧬 智能繁育配对与一键导入中心</h3>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-550 mt-0.5">
+                          同蛋组且同牌子的勾选宠物可进行繁育，子代精灵品种及形态随母本，三围相同自动判定3V
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <div className="py-10 px-6 flex flex-col items-center justify-center text-center select-none bg-slate-50/50 dark:bg-slate-950/20 rounded-xl border border-slate-200/50 dark:border-slate-850">
+                      <AlertTriangle className="w-10 h-10 text-amber-500 stroke-1.5 mb-3.5 animate-bounce" />
+                      <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">⚠️ 勾选的父母本配对数量过多</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 max-w-lg leading-relaxed">
+                        当前已勾选了 <span className="font-semibold text-indigo-500 dark:text-indigo-400">{checkedFathersCount}</span> 只父本与 <span className="font-semibold text-pink-500 dark:text-pink-400">{checkedMothersCount}</span> 只母本，合计可产生 <span className="font-semibold text-slate-800 dark:text-slate-100">{totalPairingCombinations}</span> 组配对组合。
+                      </p>
+                      <p className="text-xs text-slate-400 dark:text-slate-550 mt-1.5 max-w-lg">
+                        为了防止软件卡顿与内存崩溃，已自动暂停配对计算。请通过上方的“性格”、“蛋组”、“牌子”等筛选栏过滤父母本以缩小范围。
+                      </p>
+                    </div>
+                  </div>
+                </>
+              );
             }
-
-            const groupedPairings: GroupedPairing[] = [];
-            const eggMap = new Map<string, GroupedPairing>();
-
-            for (const pair of filteredPairings) {
-              const eggKey = pair.eggSprite;
-              if (!eggMap.has(eggKey)) {
-                const group: GroupedPairing = {
-                  eggSprite: eggKey,
-                  pairings: []
-                };
-                eggMap.set(eggKey, group);
-                groupedPairings.push(group);
-              }
-              eggMap.get(eggKey)!.pairings.push({
-                father: pair.father,
-                mother: pair.mother,
-                brand: pair.brand,
-                eggSprite: pair.eggSprite,
-                matchingGroups: pair.matchingGroups
-              });
-            }
-
-            // 找出每一个 group 当前选择显示的配对（默认一个母本卡片只选中/导入当前选择显示的那个父本）
-            const activePairings = groupedPairings.map(group => {
-              const groupKey = group.eggSprite;
-              const activeIndex = activeFatherIndices[groupKey] || 0;
-              const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
-              return group.pairings[safeIdx];
-            }).filter(Boolean);
-
-            // 已选中的配对：只从当前显示的配对中提取未被排除的！
-            const selectedPairings = activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
 
             const hasFilter = pairingFilterName || pairingFilterGroup || pairingFilterBrand || pairingFilter3V || pairingFilterSameNature || pairingFilterNature;
-
-            const handleSelectAllPairings = () => {
-              setExcludedPairKeys(new Set());
-              showToast("已全选当前显示的繁育配对！", "success");
-            };
-const handleUnselectAllPairings = () => {
-              const newSet = new Set<string>();
-              activePairings.forEach(pair => {
-                newSet.add(pair.father.id + "-" + pair.mother.id);
-              });
-              setExcludedPairKeys(newSet);
-              showToast("已清空选中当前显示的繁育配对！", "info");
-            };
 
             return (
               <>

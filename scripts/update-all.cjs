@@ -49,6 +49,15 @@ function mergeDatabaseData() {
     process.exit(1);
   }
 
+  const cleanEggGroups = (groups) => {
+    if (!groups) return [];
+    return groups.map(g => {
+      if (g.includes("海洋组")) return "海洋组";
+      if (g === "飞龙组") return "龙组";
+      return g;
+    });
+  };
+
   const jsonFiles = fs.readdirSync(LOCAL_DATABASE_DIR).filter(file => file.endsWith('.json'));
   const mergedList = [];
 
@@ -62,7 +71,7 @@ function mergeDatabaseData() {
 
     // 2. 过滤构建 egg_data，排除 has_egg 等无用属性，保持与 React 原结构对齐
     const egg_data = pet.egg_data && pet.egg_data.has_egg ? {
-      egg_groups: pet.egg_data.egg_groups || [],
+      egg_groups: cleanEggGroups(pet.egg_data.egg_groups || []),
       height_min: pet.egg_data.height_min,
       height_max: pet.egg_data.height_max,
       weight_min: pet.egg_data.weight_min,
@@ -70,7 +79,7 @@ function mergeDatabaseData() {
       giant_weight_line: pet.egg_data.giant_weight_line,
       tiny_weight_line: pet.egg_data.tiny_weight_line
     } : {
-      egg_groups: pet.egg_groups || ["无法孵蛋"],
+      egg_groups: cleanEggGroups(pet.egg_groups || ["无法孵蛋"]),
       height_min: null,
       height_max: null,
       weight_min: null,
@@ -84,8 +93,9 @@ function mergeDatabaseData() {
 
     // 4. 构建 baseForm (主精灵本身形态)
     const baseForm = {
+      id: pet.id,
       name: pet.name,
-      egg_groups: pet.egg_groups || [],
+      egg_groups: cleanEggGroups(pet.egg_groups || []),
       height_min: pet.height_min,
       height_max: pet.height_max,
       weight_min: pet.weight_min,
@@ -113,8 +123,9 @@ function mergeDatabaseData() {
       ...(pet.other_forms || [])
     ].map(f => {
       return {
+        id: f.id,
         name: f.name,
-        egg_groups: f.egg_groups || [],
+        egg_groups: cleanEggGroups(f.egg_groups || []),
         height_min: f.height_min,
         height_max: f.height_max,
         weight_min: f.weight_min,
@@ -176,8 +187,42 @@ function mergeDatabaseData() {
   mergedList.sort((a, b) => a.id - b.id);
 
   // 写入最终 pets_data.json
-  fs.writeFileSync(PETS_DATA_JSON, JSON.stringify(mergedList, null, 2), 'utf8');
+    fs.writeFileSync(PETS_DATA_JSON, JSON.stringify(mergedList, null, 2), 'utf8');
   console.log(`✔ 成功合并 ${mergedList.length} 条主精灵数据至: ${PETS_DATA_JSON}`);
+}
+
+function generateGameIdToName() {
+  console.log('▶ 正在自动生成游戏 ID 到真实品种名的硬映射表...');
+  const CRAWLED_RAW_CORE_JSON = path.join(PROJECT_ROOT, '洛克精灵数据打包', 'crawled_raw_core.json');
+  const GAME_ID_TO_NAME_JSON = path.join(PROJECT_ROOT, 'src', 'game_id_to_name.json');
+
+  if (!fs.existsSync(CRAWLED_RAW_CORE_JSON)) {
+    console.warn(`⚠ 警告: 洛克精灵原始数据不存在，跳过映射生成。路径: ${CRAWLED_RAW_CORE_JSON}`);
+    return;
+  }
+
+  const rawData = JSON.parse(fs.readFileSync(CRAWLED_RAW_CORE_JSON, 'utf8'));
+  const mapping = {};
+
+  for (const key in rawData) {
+    const item = rawData[key];
+    if (item && item.n && item.img && item.img.hd) {
+      const parts = item.img.hd.split('_');
+      if (parts.length > 1) {
+        const num = parseInt(parts[1]);
+        if (!isNaN(num)) {
+          // 优先使用 t (带后缀的全称，例如：迷你乌（极昼的样子）)，无 t 则使用 n
+          mapping[num] = item.t || item.n;
+        }
+      }
+    }
+  }
+
+  // 物理兜底，确保特别精灵数据完整
+  mapping[3070] = "西瓜小狗子";
+
+  fs.writeFileSync(GAME_ID_TO_NAME_JSON, JSON.stringify(mapping, null, 2), 'utf8');
+  console.log(`✔ 成功生成了 ${Object.keys(mapping).length} 条 ID 映射至: ${GAME_ID_TO_NAME_JSON}`);
 }
 
 function run() {
@@ -191,8 +236,10 @@ function run() {
     rebuildSpriteIndex();
     console.log('');
     mergeDatabaseData();
+    console.log('');
+    generateGameIdToName();
     console.log('\n==================================================');
-    console.log('   🎉 数据与头像全部同步整合成功！');
+    console.log('   🎉 数据与头像及 ID 映射底表全部同步整合成功！');
     console.log('==================================================');
   } catch (err) {
     console.error('\n❌ 整合失败。错误详情:');

@@ -27,6 +27,7 @@ import {
   getEggGroupStyle
 } from "../petHelper";
 import petsData from "../pets_data.json";
+import gameIdToName from "../game_id_to_name.json";
 
 // 洛克王国世界性格 ID 映射修正 (对齐官方 BMwuucP5.js 性格配置)
 const NATURE_ID_MAP: Record<number, string> = {
@@ -309,27 +310,39 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   // 自适应字段猜测解析单只宠物
   const parseSinglePet = (item: any, index: number, existingSet: Set<string>): ParsedPet | null => {
     try {
-      // 1. 识别并解码精灵名字 (优先使用 ID 在本地 petsData 中反查，以实现 100% 官方数据库无缝对接)
+      // 1. 优先使用 conf_id 和 base_conf_id 在 gameIdToName 权威映射底表里高精度反查真实品种/形态全称 (免疫改名)
       let rawName = "";
+      const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
+      const baseConfIdVal = item.base_conf_id !== undefined ? parseInt(String(item.base_conf_id)) : null;
       const rawId = item.base_conf_id !== undefined ? item.base_conf_id : (item.pet_id !== undefined ? item.pet_id : (item.id !== undefined ? item.id : item.sprite_id));
-      if (rawId !== undefined) {
-        const idNum = parseInt(String(rawId));
-        const foundPet = petsData.find((p: any) => p.id === idNum);
-        if (foundPet) {
-          rawName = foundPet.name;
-        } else {
-          // 查找 forms
-          for (const p of petsData) {
-            const f = p.forms.find((form: any) => form.id === idNum);
-            if (f) {
-              rawName = f.name;
-              break;
+
+      if (confIdVal && (gameIdToName as any)[confIdVal]) {
+        rawName = (gameIdToName as any)[confIdVal];
+      } else if (baseConfIdVal && (gameIdToName as any)[baseConfIdVal]) {
+        rawName = (gameIdToName as any)[baseConfIdVal];
+      }
+
+      // 如果查映射表没查到，才尝试使用 ID 在本地 petsData 顺序 ID 中反查
+      if (!rawName) {
+        if (rawId !== undefined) {
+          const idNum = parseInt(String(rawId));
+          const foundPet = petsData.find((p: any) => p.id === idNum);
+          if (foundPet) {
+            rawName = foundPet.name;
+          } else {
+            // 查找 forms
+            for (const p of petsData) {
+              const f = p.forms.find((form: any) => form.id === idNum);
+              if (f) {
+                rawName = f.name;
+                break;
+              }
             }
           }
         }
       }
 
-      // 如果通过 ID 没查到，再使用名字字段解码兜底 (提前执行，确保后续形态映射与拼接能获取到 rawName)
+      // 如果通过 ID 没查到，再使用名字字段解码兜底
       if (!rawName) {
         if (typeof item.name === "string" && item.name) {
           rawName = decodeBase64Name(item.name);
@@ -354,6 +367,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         rawOriginalName = decodeBase64Name(item.displayName);
       }
 
+      // 如果反查出了带形态的品种名称，则直接用来作为 rawOriginalName 以提取形态后缀
+      if (rawName && (rawName.includes("（") || rawName.includes("("))) {
+        rawOriginalName = rawName;
+      }
+
       // 提取原始名称中可能的形态信息 (如 "古钟蛇（本来的样子）" -> "本来的样子")
       let formSuffix = "";
       if (rawOriginalName) {
@@ -365,19 +383,20 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       }
 
-      // 特殊多形态宠物 conf_id 映射：如鸭吉吉 (base_conf_id: 3742/3744/3745/3495/3012/3036/3452/3453)
+
+      // 特殊多形态宠物 conf_id 映射：如鸭吉吉 (base_conf_id: 3742)
       const isYajiji = (
-        [3742, 3744, 3745, 3495, 3012, 3036, 3452, 3453].includes(rawId) ||
-        ["鸭吉吉", "火红尾", "雅丹鬃"].includes(rawName) ||
-        ["鸭吉吉", "火红尾", "雅丹鬃"].includes(rawOriginalName)
+        rawId === 3742 ||
+        rawName === "鸭吉吉" ||
+        rawOriginalName === "鸭吉吉"
       );
       if (isYajiji) {
         const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
         if (confIdVal === 3742001 || confIdVal === 410012) {
           formSuffix = "蓬松的样子";
-        } else if (confIdVal === 410738 || confIdVal === 410739 || confIdVal === 410740) {
+        } else if (confIdVal === 410738) {
           formSuffix = "起来鸭"; // 即睡帽鸭
-        } else if (confIdVal === 300710 || confIdVal === 300711 || confIdVal === 410032) {
+        } else if (confIdVal === 300710 || confIdVal === 410032) {
           formSuffix = "紧实的样子";
         } else if (confIdVal === 300463 || confIdVal === 410449) {
           formSuffix = "等一等鸭";
@@ -491,7 +510,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         }
       } else if (rawName === "乌拉塔" || rawName === "乌达" || rawName === "迷你乌") {
         const baseIdMap: Record<number, string> = {
+          3536: "极昼的样子",
+          3537: "极昼的样子",
           3538: "极昼的样子",
+          3539: "极夜的样子",
+          3540: "极夜的样子",
           3541: "极夜的样子"
         };
         if (baseIdMap[rawId]) {

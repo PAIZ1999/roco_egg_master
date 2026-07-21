@@ -6,13 +6,13 @@
     "幽"
   ],
   "egg_groups": [
-    "飞龙组",
+    "龙组",
     "巨灵组"
   ],
   "egg_data": {
     "has_egg": true,
     "egg_groups": [
-      "飞龙组",
+      "龙组",
       "巨灵组"
     ],
     "height_min": 0.36,
@@ -52,7 +52,7 @@
         "幽"
       ],
       "egg_groups": [
-        "飞龙组",
+        "龙组",
         "巨灵组"
       ],
       "height_min": 2.25,

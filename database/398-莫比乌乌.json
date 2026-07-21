@@ -7,13 +7,13 @@
   ],
   "egg_groups": [
     "妖精组",
-    "飞龙组"
+    "龙组"
   ],
   "egg_data": {
     "has_egg": true,
     "egg_groups": [
       "妖精组",
-      "飞龙组"
+      "龙组"
     ],
     "height_min": 0.25,
     "height_max": 0.32,
@@ -53,7 +53,7 @@
       ],
       "egg_groups": [
         "妖精组",
-        "飞龙组"
+        "龙组"
       ],
       "height_min": 1.38,
       "height_max": 1.68,
