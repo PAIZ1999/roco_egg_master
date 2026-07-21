@@ -313,6 +313,8 @@ export default function App() {
   const [fatherCurrentPage, setFatherCurrentPage] = useState(1);
   const [motherCurrentPage, setMotherCurrentPage] = useState(1);
   const [nestCurrentPage, setNestCurrentPage] = useState(1);
+  const [pairingCurrentPage, setPairingCurrentPage] = useState(1);
+  const PAIRING_PAGE_SIZE = 20;
   const [nestViewMode, setNestViewMode] = useState<"card" | "table">(() => {
     const saved = localStorage.getItem("roco_egg_nest_view_mode");
     return (saved === "table" || saved === "card") ? saved : "card";
@@ -1921,6 +1923,33 @@ export default function App() {
   const selectedPairings = useMemo(() => {
     return activePairings.filter(pair => !excludedPairKeys.has(pair.father.id + "-" + pair.mother.id));
   }, [activePairings, excludedPairKeys]);
+
+  const totalPairingPages = useMemo(() => {
+    return Math.ceil(groupedPairings.length / PAIRING_PAGE_SIZE);
+  }, [groupedPairings.length]);
+
+  const paginatedGroupedPairings = useMemo(() => {
+    if (isExporting) return groupedPairings;
+    return groupedPairings.slice((pairingCurrentPage - 1) * PAIRING_PAGE_SIZE, pairingCurrentPage * PAIRING_PAGE_SIZE);
+  }, [groupedPairings, pairingCurrentPage, isExporting]);
+
+  useEffect(() => {
+    setPairingCurrentPage(1);
+  }, [
+    pairingFilterName,
+    pairingFilterGroup,
+    pairingFilterBrand,
+    pairingFilter3V,
+    pairingFilterSameNature,
+    pairingFilterNature,
+    allPairings.length
+  ]);
+
+  useEffect(() => {
+    if (pairingCurrentPage > totalPairingPages && totalPairingPages > 0) {
+      setPairingCurrentPage(totalPairingPages);
+    }
+  }, [totalPairingPages, pairingCurrentPage]);
 
   const handleSelectAllPairings = useCallback(() => {
     setExcludedPairKeys(new Set());
@@ -5740,8 +5769,9 @@ export default function App() {
                           <p className="text-xs text-slate-400 dark:text-slate-550 mt-1">请尝试调整或重置筛选条件</p>
                         </div>
                       ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          {groupedPairings.map((group) => {
+                        <>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                          {paginatedGroupedPairings.map((group) => {
                             const groupKey = group.eggSprite; // 分组键使用蛋品种 (eggSprite)
                             const activeIndex = activeFatherIndices[groupKey] || 0;
                             const safeIdx = activeIndex >= group.pairings.length ? 0 : activeIndex;
@@ -5988,7 +6018,69 @@ export default function App() {
                             );
                           })}
                         </div>
-                      )}
+
+                        {/* 配对中心分页组件 */}
+                        {totalPairingPages > 1 && (
+                          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200/60 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 select-none">
+                            <div>
+                              当前展示第 <span className="font-bold font-mono text-indigo-600 dark:text-indigo-400">{(pairingCurrentPage - 1) * PAIRING_PAGE_SIZE + 1}-{Math.min(pairingCurrentPage * PAIRING_PAGE_SIZE, groupedPairings.length)}</span> 组，共 {groupedPairings.length} 组配对
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={() => setPairingCurrentPage(1)}
+                                disabled={pairingCurrentPage === 1}
+                                className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                              >
+                                首页
+                              </button>
+                              <button
+                                onClick={() => setPairingCurrentPage(prev => Math.max(1, prev - 1))}
+                                disabled={pairingCurrentPage === 1}
+                                className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                              >
+                                <ChevronLeft className="w-3.5 h-3.5" />
+                              </button>
+                              
+                              <div className="flex items-center gap-1">
+                                {getPageNumbersHelper(pairingCurrentPage, totalPairingPages).map((pageNum, idx) => {
+                                  if (pageNum === "...") {
+                                    return <span key={`ellipsis-${idx}`} className="px-2 text-slate-400">...</span>;
+                                  }
+                                  return (
+                                    <button
+                                      key={`page-${pageNum}`}
+                                      onClick={() => setPairingCurrentPage(Number(pageNum))}
+                                      className={`w-7 h-7 rounded text-[10px] font-black cursor-pointer transition-all ${
+                                        pairingCurrentPage === pageNum
+                                          ? "bg-indigo-600 text-white shadow-xs border border-indigo-600"
+                                          : "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                                      }`}
+                                    >
+                                      {pageNum}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+
+                              <button
+                                onClick={() => setPairingCurrentPage(prev => Math.min(totalPairingPages, prev + 1))}
+                                disabled={pairingCurrentPage === totalPairingPages}
+                                className="p-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                              >
+                                <ChevronRight className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setPairingCurrentPage(totalPairingPages)}
+                                disabled={pairingCurrentPage === totalPairingPages}
+                                className="px-1.5 py-1 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-355 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed text-[10px] font-bold"
+                              >
+                                末页
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
                     </>
                   )}
                 </div>
